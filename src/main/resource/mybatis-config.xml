@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <!-- 官方文档参考：http://www.mybatis.org/mybatis-3/zh/configuration.html -->
 <configuration>
     <!-- 这是 MyBatis 中极为重要的调整设置，它们会改变 MyBatis 的运行时行为。 -->
