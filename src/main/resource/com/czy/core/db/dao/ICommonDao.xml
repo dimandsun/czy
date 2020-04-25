@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.czy.core.db.dao.ICommonDao">
+    <!--useGeneratedKeys="true" keyProperty="id"-->
+    <select id="insert" parameterType="map" resultType="int">
+        insert into ${tableName}
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <foreach collection="parMap.entrySet()" item="value" index="key">
+                <if test='value!=null'>
+                    ${key},
+                </if>
+            </foreach>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <foreach collection="parMap.entrySet()" item="value" index="key">
+                <if test='value!=null'>
+                    '${value}',
+                </if>
+            </foreach>
+        </trim>;
+        select LAST_INSERT_ID();
+    </select>
+    <update id="update" parameterType="map">
+        update ${tableName}
+        <set>
+            <trim suffixOverrides=",">
+                <foreach collection="setMap.entrySet()" item="value" index="key">
+                    <if test='value!=null'>
+                        ${key}='${value}',
+                    </if>
+                </foreach>
+            </trim>
+        </set>
+        <where>
+            <foreach collection="whereMap.entrySet()" item="value" index="key">
+                <if test='value!=null'>
+                    and ${key}='${value}'
+                </if>
+            </foreach>
+        </where>
+    </update>
+    <delete id="delete" parameterType="map">
+        delete ${tableName}
+        <where>
+            <foreach collection="whereMap.entrySet()" item="value" index="key">
+                <if test='value!=null'>
+                    and ${key}='${value}'
+                </if>
+            </foreach>
+        </where>
+    </delete>
+    <select id="get" parameterType="map">
+        select
+        <trim suffixOverrides=",">
+            <foreach collection="columns" item="column" index="index">
+                ${column},
+            </foreach>
+        </trim>
+        from ${tableName}
+        <where>
+            <foreach collection="whereMap.entrySet()" item="value" index="key">
+                <if test='value!=null'>
+                    and ${key}='${value}'
+                </if>
+            </foreach>
+        </where>
+    </select>
+</mapper>
