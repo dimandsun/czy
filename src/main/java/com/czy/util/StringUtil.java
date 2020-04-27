@@ -1,8 +1,5 @@
 package com.czy.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Map;
@@ -17,9 +14,20 @@ import java.util.regex.Pattern;
  * @date 2019.12.19
  */
 public class StringUtil {
-    private final static Logger logger = LoggerFactory.getLogger(StringUtil.class);
 
     private StringUtil() {
+    }
+
+    public static String println(String msg, Object... args) {
+        if (args == null || args.length == 0||!msg.contains("{}")) {
+            System.out.println(msg);
+            return msg;
+        }
+        for (Object arg:args){
+            msg=msg.replaceFirst("\\{}",arg==null?"":arg.toString());
+        }
+        System.out.println(msg);
+        return msg;
     }
 
     public static boolean hasLength(String str) {
@@ -454,16 +462,18 @@ public class StringUtil {
         }
         return Long.valueOf(temp);
     }
+
     public static Long getLong(Object value, Long defaultValue) {
         if (value == null) {
             return defaultValue;
         }
-        if (value instanceof Long){
+        if (value instanceof Long) {
             return (Long) value;
         }
         String temp = value.toString().toLowerCase();
         return Long.valueOf(temp);
     }
+
     public static String getStr(Object value, String defaultValue) {
         if (value == null) {
             return defaultValue;
@@ -651,7 +661,7 @@ public class StringUtil {
 
 
     public static void main(String[] args) {
-
+        println("{1},{2}",1,2);
     }
 
 
