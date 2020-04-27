@@ -1,4 +1,6 @@
-package com.czy.swing.user;
+package com.czy.user;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author chenzy
@@ -9,9 +11,21 @@ public class User {
     private Integer id;
     private String code;
     private String name;
+    /*加密后的密码*/
     private String ps;
+    /*原密码*/
+    @JsonProperty("original_ps")
+    private String originalPS;
     private String email;
     private String mobile;
+
+    public String getOriginalPS() {
+        return originalPS;
+    }
+
+    public void setOriginalPS(String originalPS) {
+        this.originalPS = originalPS;
+    }
 
     public String getEmail() {
         return email;

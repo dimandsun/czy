@@ -20,6 +20,24 @@
         </trim>;
         select LAST_INSERT_ID();
     </select>
+
+    <insert id="insertFQ" parameterType="map" useGeneratedKeys="true" keyProperty="id">
+        insert into ${tableName}
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <foreach collection="parMap.entrySet()" item="value" index="key">
+                <if test='value!=null'>
+                    ${key},
+                </if>
+            </foreach>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <foreach collection="parMap.entrySet()" item="value" index="key">
+                <if test='value!=null'>
+                    '${value}',
+                </if>
+            </foreach>
+        </trim>;
+    </insert>
     <update id="update" parameterType="map">
         update ${tableName}
         <set>

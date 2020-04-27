@@ -52,6 +52,7 @@ public class CoreContainer {
     public static CoreContainer getInstance() {
         return instance;
     }
+
     public CoreProject getCoreProject() {
         return coreProject;
     }
@@ -59,6 +60,7 @@ public class CoreContainer {
     public void setCoreProject(CoreProject coreProject) {
         this.coreProject = coreProject;
     }
+
     public void setProjectInfo() {
         this.coreProject = CoreProject.getInstance();
     }
@@ -216,7 +218,7 @@ public class CoreContainer {
         }
     }
 
-    public void setProjectInfo( Map<String, Object> projectMap) {
+    public void setProjectInfo(Map<String, Object> projectMap) {
         if (projectMap != null) {
             Object projectName = projectMap.get("name");
             if (projectName != null) {
@@ -284,7 +286,6 @@ public class CoreContainer {
     public MyMap<BeanModel> getBeanMap() {
         return beanMap;
     }
-
 
 
     /**
@@ -379,25 +380,27 @@ public class CoreContainer {
         Class c = controllerBeanModel.getPrimaryBeanClass();
         Controller controllerAnnotation = (Controller) c.getAnnotation(Controller.class);
         String urlPrefix = controllerAnnotation.value();
-
+        if (!urlPrefix.isBlank()&&!urlPrefix.startsWith("/")) {
+            urlPrefix="/"+urlPrefix;
+        }
         QuestEnum questEnum = null;
         String url = null;
         for (Method method : c.getMethods()) {
             if (method.isAnnotationPresent(Mapping.class)) {
                 questEnum = QuestEnum.All;
-                url = urlPrefix + method.getAnnotation(Mapping.class).value();
+                url = getURL(method.getAnnotation(Mapping.class).value(),urlPrefix);
             } else if (method.isAnnotationPresent(PostMapping.class)) {
                 questEnum = QuestEnum.Post;
-                url = urlPrefix + method.getAnnotation(PostMapping.class).value();
+                url = getURL(method.getAnnotation(PostMapping.class).value(),urlPrefix);
             } else if (method.isAnnotationPresent(PutMapping.class)) {
                 questEnum = QuestEnum.Put;
-                url = urlPrefix + method.getAnnotation(PutMapping.class).value();
+                url = getURL(method.getAnnotation(PutMapping.class).value(),urlPrefix);
             } else if (method.isAnnotationPresent(GetMapping.class)) {
                 questEnum = QuestEnum.Get;
-                url = urlPrefix + method.getAnnotation(GetMapping.class).value();
+                url =getURL(method.getAnnotation(GetMapping.class).value(),urlPrefix);
             } else if (method.isAnnotationPresent(DeleteMapping.class)) {
                 questEnum = QuestEnum.Delete;
-                url = urlPrefix + method.getAnnotation(DeleteMapping.class).value();
+                url =getURL(method.getAnnotation(DeleteMapping.class).value(),urlPrefix);
             } else {
                 continue;
             }
@@ -410,7 +413,12 @@ public class CoreContainer {
         }
 
     }
-
+    private String getURL(String url2,String urlPrefix){
+        if (!url2.isBlank()&&!url2.startsWith("/")) {
+            url2="/"+url2;
+        }
+        return urlPrefix + url2;
+    }
     private String getBeanName(Class interfaceClass) {
         String inteSimpleName = interfaceClass.getSimpleName();
         if (inteSimpleName.startsWith("I")) {

@@ -1,6 +1,7 @@
 package com.czy.core.db.dao;
 
 import com.czy.core.annotation.Dao;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Map;
 
@@ -11,5 +12,6 @@ import java.util.Map;
  */
 @Dao
 public interface ICommonDao {
-    Integer insert(Map<String, Object> par, String tableName);
+    Integer insertFQ(@Param("parMap") Map<String, Object> parMap, @Param("tableName") String tableName);
+    Integer insert(@Param("parMap") Map<String, Object> parMap, @Param("tableName")String tableName);
 }

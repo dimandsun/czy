@@ -35,7 +35,7 @@ public class DaoUtil {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
-            throw e.getTargetException().getCause();
+            throw e.getTargetException();
         }finally {
             if (sqlSession!=null){
                 sqlSession.close();

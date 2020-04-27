@@ -19,12 +19,14 @@ import java.util.Map;
 public class CommonServiceImpl implements ICommonService {
     @Auto
     private ICommonDao commonDao;
+
     @Override
     public <Bean> Integer insert(Bean bean) {
-        Map<String,Object> par =JsonUtil.model2Model(bean, Map.class);
-        Class beanClass =bean.getClass();
-        String tableName= beanClass.isAnnotationPresent(Table.class)?((Table)beanClass.getAnnotation(Table.class)).value():
+        Map<String, Object> par = JsonUtil.model2Model(bean, Map.class);
+        Class beanClass = bean.getClass();
+        String tableName = beanClass.isAnnotationPresent(Table.class) ? ((Table) beanClass.getAnnotation(Table.class)).value() :
                 StringUtil.lowFirst(beanClass.getSimpleName().replace(".class", ""));
-       return commonDao.insert(par,tableName);
+        Integer id = commonDao.insert(par, tableName);
+        return id;
     }
 }

@@ -21,7 +21,7 @@ public class DaoAspect$ {
      * @param args
      * @return
      */
-    @Aspect(pointcuts = "public.* com.czy.core.test.dao..*.*(..)", order = 1, type = AspectTypeEnum.Around)
+    @Aspect(pointcuts = "public.* com.czy.core\\.[(a-zA-Z)]*\\.dao..*.*(..)", order = 1, type = AspectTypeEnum.Around)
     public Object daoAspect$(Object target, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
        return DaoUtil.exeSql(target,method,args,methodProxy);
     }
