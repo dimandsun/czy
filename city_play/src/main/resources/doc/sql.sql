@@ -19,7 +19,7 @@ create table order(
 )COMMENT='订单';
 
 
-create table city{
+create table city(
   id int primary key auto_increment
 	,code nvarchar(20) comment '城市编号'
 	,name nvarchar(20) comment '城市名称'
@@ -28,9 +28,9 @@ create table city{
   ,money int comment '城市账面金额，为0则城市倒闭'
   ,create_time date comment '城市开始时间'
   ,total_time nvarchar(20) comment '在此城市游戏总时长'
-}comment='城市';
+)comment='城市';
 
-create table building{
+create table building(
   id int primary key auto_increment
 	,code nvarchar(20) comment '建筑编号'
 	,name nvarchar(20) comment '建筑名称'
@@ -43,9 +43,9 @@ create table building{
 	,remove_money int comment '拆迁补偿'
 	,levle int commnet '等级：最高三级'
 	,next_level_money int comment '升级费用'
-}comment='建筑';
+)comment='建筑';
 
-create table citizen{
+create table citizen(
   id int primary key auto_increment
 	,code nvarchar(20) comment '编号'
 	,name nvarchar(20) comment '名称'
@@ -60,23 +60,23 @@ create table citizen{
   ,moeny int comment '现金'
   ,role_time_type comment '角色扮演时间'
   ,work_type int comment '工作类型：'
-}comment='市民';
+)comment='市民';
 
 
-create table {
+create table (
   id int primary key auto_increment
 	,code nvarchar(20) comment '编号'
 	,name nvarchar(20) comment '名称'
 	,des nvarchar(200) comment '描述'
-}comment='';
+)comment='';
 
 
-create table {
+create table (
   id int primary key auto_increment
 	,code nvarchar(20) comment '编号'
 	,name nvarchar(20) comment '名称'
 	,des nvarchar(200) comment '描述'
-}comment='';
+)comment='';
 
 
 

@@ -1,11 +1,12 @@
-package com.czy.core.db.service.impl;
+package com.czy.core.service.impl;
 
 import com.czy.core.annotation.Auto;
 import com.czy.core.annotation.Service;
 import com.czy.core.db.dao.ICommonDao;
-import com.czy.core.db.service.ICommonService;
+import com.czy.core.service.ICommonService;
 import com.czy.util.TableUtil;
 import com.czy.util.json.JsonUtil;
+import com.czy.util.model.ResultVO;
 
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,36 @@ import java.util.Map;
 public class CommonServiceImpl implements ICommonService {
     @Auto
     private ICommonDao commonDao;
+
+    @Override
+    public ResultVO insert(Map<String, Object> par) {
+        String tableName= (String) par.get("tableName");
+        par.remove("tableName");
+        Integer id = commonDao.insert(par, tableName);
+        return new ResultVO(id);
+    }
+
+    @Override
+    public ResultVO update(Map<String, Object> par) {
+        Integer count = commonDao.update((Map<String, Object>)par.get("setPar"),(Map<String, Object>)par.get("wherePar"), (String) par.get("tableName"));
+        return new ResultVO(count);
+    }
+
+    @Override
+    public ResultVO delete(Map<String, Object> par) {
+        String tableName= (String) par.get("tableName");
+        par.remove("tableName");
+        Integer count = commonDao.delete(par, tableName);
+        return new ResultVO(count);
+    }
+
+    @Override
+    public ResultVO get(Map<String, Object> par) {
+        String tableName= (String) par.get("tableName");
+        par.remove("tableName");
+        List<Map<String, Object>> mapList= commonDao.getList(par, tableName);
+        return new ResultVO(mapList);
+    }
 
     @Override
     public <Bean> Integer insert(Bean bean) {
@@ -89,7 +120,7 @@ public class CommonServiceImpl implements ICommonService {
         return true;
     }
     @Override
-    public <Bean> Boolean delete(Map<String, Object> wherePar,String tableName) {
+    public <Bean> Boolean delete(Map<String, Object> wherePar, String tableName) {
         Integer count = commonDao.delete(wherePar,tableName);
         if (count==null||count.equals(0)){
             return false;

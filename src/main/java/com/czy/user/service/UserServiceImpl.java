@@ -2,7 +2,7 @@ package com.czy.user.service;
 
 import com.czy.core.annotation.Auto;
 import com.czy.core.annotation.Service;
-import com.czy.core.db.service.ICommonService;
+import com.czy.core.service.ICommonService;
 import com.czy.user.User;
 import com.czy.util.SecretUtil;
 import com.czy.util.enums.ResCodeEnum;

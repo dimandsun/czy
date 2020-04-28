@@ -1,6 +1,5 @@
 package com.czy.util;
 
-import com.czy.util.StringUtil;
 import com.czy.util.model.MyMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +25,30 @@ public class FileUtil {
 
     private FileUtil() {
     }
-
+    public static String readFile(File file) {
+        BufferedReader reader = null;
+        StringBuffer sbf = new StringBuffer();
+        try {
+            reader = new BufferedReader(new FileReader(file));
+            String tempStr;
+            while ((tempStr = reader.readLine()) != null) {
+                sbf.append(tempStr);
+            }
+            reader.close();
+            return sbf.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return sbf.toString();
+    }
     private static void copy(File file) {
         String url2 = "C:\\Users\\Administrator\\Desktop\\新建文件夹2\\";
         // 获取源文件夹当前下的文件或目录
@@ -228,6 +250,8 @@ public class FileUtil {
     }
 
     public static File getFile(String fileName) {
+//        Thread.currentThread().getContextClassLoader().getResource("doc/sql.sql");
+//        FileUtil.class.getClassLoader().getResource("/doc/sql.sql")
         String configPath = Thread.currentThread().getContextClassLoader().getResource(fileName).getPath();
         return new File(configPath);
     }
