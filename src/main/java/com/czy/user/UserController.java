@@ -1,9 +1,6 @@
 package com.czy.user;
 
-import com.czy.core.annotation.Auto;
-import com.czy.core.annotation.Controller;
-import com.czy.core.annotation.GetMapping;
-import com.czy.core.annotation.PostMapping;
+import com.czy.core.annotation.*;
 import com.czy.user.service.IUserService;
 import com.czy.util.model.ResultVO;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -24,8 +21,19 @@ public class UserController {
         return "登录成功";
     }
     @PostMapping
-    public ResultVO creatUser(User user){
-        userService.insert(user);
-        return new ResultVO(user);
+    public ResultVO insert(User user){
+        return userService.insert(user);
+    }
+    @DeleteMapping
+    public ResultVO delete(User user){
+        return userService.delete(user);
+    }
+    @PutMapping
+    public ResultVO update(User user){
+        return userService.update(user);
+    }
+    @GetMapping
+    public ResultVO get(User user){
+        return userService.get(user);
     }
 }
