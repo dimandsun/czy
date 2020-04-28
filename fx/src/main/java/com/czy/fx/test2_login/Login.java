@@ -1,15 +1,14 @@
 package com.czy.fx.test2_login;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -29,7 +28,7 @@ public class Login extends Application {
     public void start(Stage stage) throws Exception {
         stage.setTitle("JavaFX Welcome");
 
-        GridPane grid = new GridPane();
+        var grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);//行间隔
         grid.setVgap(10);//列间隔
@@ -45,6 +44,17 @@ public class Login extends Application {
 
         //创建文本输入框，放到第1列，第1行
         TextField userTextField = new TextField();
+        userTextField.setTooltip(new Tooltip("输入任意字符"));//鼠标悬停提示
+        userTextField.setPromptText("背景提示：输入任意字符");//
+        userTextField.setFocusTraversable(false);//取消焦点
+        /*文本改变监听*/
+        userTextField.textProperty().addListener((observableValue,  oldValue,  newValue)->{
+
+        });
+        /*文本被选中监听*/
+        userTextField.selectedTextProperty().addListener((observableValue,  oldValue,  newValue)->{
+
+        });
         grid.add(userTextField, 1, 1);
 
         Label pw = new Label("Password:");
