@@ -1,6 +1,7 @@
 package com.czy.user.service;
 
 import com.czy.user.User;
+import com.czy.util.model.ResultVO;
 
 /**
  * @author chenzy
@@ -8,5 +9,11 @@ import com.czy.user.User;
  * @since 2020-04-27
  */
 public interface IUserService {
-    void insert(User user);
+    ResultVO insert(User user);
+
+    ResultVO update(User user);
+
+    ResultVO delete(User user);
+
+    ResultVO get(User user);
 }
