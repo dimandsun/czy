@@ -194,6 +194,9 @@ public class CoreContainer {
         try {
 
             Map<String, Object> proMap = getProMap();
+            if (proMap==null){
+                return;
+            }
             /*1、注入数据源*/
             Map<String, Map<String, Object>> datasourceMap = (Map<String, Map<String, Object>>) proMap.get("datasource");
             if (datasourceMap != null) {
