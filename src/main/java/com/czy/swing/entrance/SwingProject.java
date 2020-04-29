@@ -25,6 +25,7 @@ public class SwingProject extends CoreProject {
         super.addProjectGroupId();
         var coreContainer = CoreContainer.getInstance();
         coreContainer.addProjectGroupId(groupId);
+        coreContainer.addProjectGroupId("com.czy.user");
     }
     private final String projectName="czy_swing";
     private final String groupId = "com.czy.swing";

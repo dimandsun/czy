@@ -1,4 +1,4 @@
-package com.czy.user;
+package com.czy.user.control;
 
 import com.czy.core.annotation.*;
 import com.czy.user.model.User;

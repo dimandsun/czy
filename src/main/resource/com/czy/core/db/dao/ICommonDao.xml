@@ -62,7 +62,7 @@
         <include refid="whereSQL"/>
     </update>
     <delete id="delete" parameterType="map">
-        delete ${tableName} <include refid="whereSQL"/>
+        delete from ${tableName} <include refid="whereSQL"/>
     </delete>
     <select id="getOne" parameterType="map" resultType="map">
         select * from ${tableName} <include refid="whereSQL"/>
@@ -88,8 +88,6 @@
         </trim>
         from ${tableName} <include refid="whereSQL"/>
     </select>
-    <delete id="delete" parameterType="map">
-        delete from ${tableName} <include refid="whereSQL"/>
-    </delete>
+
 
 </mapper>
