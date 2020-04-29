@@ -1,7 +1,7 @@
 package com.czy.core;
 
 import com.czy.core.model.AspectModel;
-import com.czy.enums.AspectTypeEnum;
+import com.czy.core.enums.AspectTypeEnum;
 import com.czy.util.enums.ResCodeEnum;
 import com.czy.util.model.ResultVO;
 import net.sf.cglib.proxy.Enhancer;

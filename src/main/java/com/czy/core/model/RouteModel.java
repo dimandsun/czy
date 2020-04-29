@@ -1,7 +1,7 @@
 package com.czy.core.model;
 
 
-import com.czy.enums.QuestEnum;
+import com.czy.core.enums.QuestEnum;
 
 import java.lang.reflect.Method;
 

@@ -1,7 +1,7 @@
 package com.czy.core.annotation;
 
 
-import com.czy.enums.AspectTypeEnum;
+import com.czy.core.enums.AspectTypeEnum;
 
 import java.lang.annotation.*;
 

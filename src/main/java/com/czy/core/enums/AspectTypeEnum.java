@@ -1,4 +1,4 @@
-package com.czy.enums;
+package com.czy.core.enums;
 
 import com.czy.util.enums.IEnum;
 

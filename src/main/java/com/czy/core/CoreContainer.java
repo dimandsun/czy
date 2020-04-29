@@ -8,7 +8,7 @@ import com.czy.core.db.model.TypeAliases;
 import com.czy.core.model.BeanModel;
 import com.czy.core.model.CoreProject;
 import com.czy.core.model.RouteModel;
-import com.czy.enums.QuestEnum;
+import com.czy.core.enums.QuestEnum;
 import com.czy.util.FileUtil;
 import com.czy.util.StringUtil;
 import com.czy.util.model.MyMap;
@@ -181,6 +181,9 @@ public class CoreContainer {
     public Map<String, Object> getProMap() {
         String proFileName = "application.yml";
         Map<String, Map<String, Object>> proMap = FileUtil.readConfigFileByYML(proFileName);
+        if (proMap==null){
+            return null;
+        }
         String active = proMap.get("profiles").get("active").toString();
         proFileName = "application-" + active + ".yml";
         Map<String, Object> resultMap = FileUtil.readConfigFileByYML(proFileName);

@@ -1,7 +1,7 @@
 package com.czy.core.model;
 
 
-import com.czy.enums.AspectTypeEnum;
+import com.czy.core.enums.AspectTypeEnum;
 
 import java.lang.reflect.Method;
 

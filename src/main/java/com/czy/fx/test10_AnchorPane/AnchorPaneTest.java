@@ -5,7 +5,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
 /**
@@ -15,7 +14,7 @@ import javafx.stage.Stage;
  */
 public class AnchorPaneTest extends Application {
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage)  {
         var btn =new Button("按钮1");
         var btn2 =new Button("按钮2");
         var btn3 =new Button("按钮3");
