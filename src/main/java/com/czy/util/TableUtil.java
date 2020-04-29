@@ -1,5 +1,6 @@
 package com.czy.util;
 
+
 import com.czy.core.annotation.Table;
 
 /**

@@ -1,6 +1,7 @@
 package com.czy.english.enums;
 
-import com.czy.util.IEnum;
+
+import com.czy.enums.IEnum;
 
 /**
  * @author chenzy

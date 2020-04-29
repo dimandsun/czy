@@ -1,6 +1,7 @@
 package com.czy.user;
 
 import com.czy.core.annotation.*;
+import com.czy.user.model.User;
 import com.czy.user.service.IUserService;
 import com.czy.util.model.ResultVO;
 import com.fasterxml.jackson.databind.node.ObjectNode;

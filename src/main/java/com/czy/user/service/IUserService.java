@@ -1,6 +1,6 @@
 package com.czy.user.service;
 
-import com.czy.user.User;
+import com.czy.user.model.User;
 import com.czy.util.model.ResultVO;
 
 /**
