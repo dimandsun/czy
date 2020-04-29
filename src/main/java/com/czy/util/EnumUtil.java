@@ -1,7 +1,7 @@
 package com.czy.util;
 
 
-import com.czy.enums.IEnum;
+import com.czy.util.enums.IEnum;
 
 public class EnumUtil {
     private EnumUtil(){}

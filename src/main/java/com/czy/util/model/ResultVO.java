@@ -1,6 +1,6 @@
 package com.czy.util.model;
 
-import com.czy.enums.ResCodeEnum;
+import com.czy.util.enums.ResCodeEnum;
 import com.czy.util.json.JsonUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

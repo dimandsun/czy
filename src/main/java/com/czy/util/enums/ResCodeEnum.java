@@ -1,4 +1,4 @@
-package com.czy.enums;
+package com.czy.util.enums;
 
 
 /**
@@ -26,10 +26,10 @@ public enum ResCodeEnum implements IEnum<Integer> {
     , BusInExce(7, ResCodeLevelEnum.Debug, "内部业务异常")
     , UnknownExce(8, ResCodeLevelEnum.Debug, "未知异常")
     , UnknownCodeExce(9, ResCodeLevelEnum.Debug, "未知响应码")
-    , NotFound(10,ResCodeLevelEnum.Lev3,"找不到相关资源")
-    , DBExce(11,ResCodeLevelEnum.Lev3,"数据库异常")
-    , CashExce(12,ResCodeLevelEnum.Lev3,"缓存出错")
-    , FuncNoOpen(13,ResCodeLevelEnum.Info,"功能暂未开放")
+    , NotFound(10, ResCodeLevelEnum.Lev3,"找不到相关资源")
+    , DBExce(11, ResCodeLevelEnum.Lev3,"数据库异常")
+    , CashExce(12, ResCodeLevelEnum.Lev3,"缓存出错")
+    , FuncNoOpen(13, ResCodeLevelEnum.Info,"功能暂未开放")
     ;
     public boolean isError() {
         return !isNotError();

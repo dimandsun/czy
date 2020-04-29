@@ -1,7 +1,7 @@
 package com.czy.util.json;
 
 
-import com.czy.enums.IEnum;
+import com.czy.util.enums.IEnum;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;

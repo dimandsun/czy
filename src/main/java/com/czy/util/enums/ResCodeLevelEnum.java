@@ -1,4 +1,4 @@
-package com.czy.enums;
+package com.czy.util.enums;
 
 /**
  * 响应码级别

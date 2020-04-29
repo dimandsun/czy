@@ -1,4 +1,4 @@
-package com.czy.enums;
+package com.czy.util.enums;
 
 /**
  * 枚举都要继承此接口，

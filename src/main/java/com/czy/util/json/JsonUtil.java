@@ -1,7 +1,7 @@
 package com.czy.util.json;
 
-import com.czy.enums.IEnum;
 import com.czy.util.StringUtil;
+import com.czy.util.enums.IEnum;
 import com.czy.util.model.ResultVO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
