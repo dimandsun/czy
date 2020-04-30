@@ -10,9 +10,6 @@ import com.czy.fx.test8_group.GroupTest;
 import com.czy.fx.test9_button.ButtonTest;
 import javafx.application.Application;
 
-import java.io.InputStream;
-import java.util.Map;
-
 /**
  * @author chenzy
  * @description
@@ -21,13 +18,6 @@ import java.util.Map;
 public class Main {
 
     public static void main(String[] args) {
-        String javafxPath ="D:\\soft\\Java\\javafx-sdk-11.0.2\\lib";
-//        System.setProperty("jdk.module.path","D:\\soft\\Java\\javafx-sdk-11.0.2\\lib");
-        for (Map.Entry aa:System.getProperties().entrySet()){
-            System.out.println(aa.getKey()+":"+aa.getValue());
-        }
-
-        System.getProperties().put("jdk.module.path",javafxPath);
         Class entrance = HelloWorld.class;
         entrance = Login.class;
         entrance = com.czy.fx.test3_css.Login.class;
@@ -36,8 +26,7 @@ public class Main {
         entrance= SceneTest.class;
         entrance= GroupTest.class;
         entrance= ButtonTest.class;
-        entrance = Login.class;
-        entrance= AnchorPaneTest.class;
+        entrance = AnchorPaneTest.class;
         Application.launch(entrance,args);
 
 

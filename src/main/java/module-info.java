@@ -2,7 +2,7 @@
  * @author chenzy
  * @description
  * @since 2020/4/29
- */module czy {
+ */module all {
     requires javafx.graphics;
     requires javafx.controls;
     requires com.fasterxml.jackson.core;
@@ -19,4 +19,6 @@
     requires org.yaml.snakeyaml;
     requires org.apache.commons.lang3;
     requires java.naming;
+//    opens com.czy.fx.test10_AnchorPane;
+    opens com.czy.swing.view;
 }
