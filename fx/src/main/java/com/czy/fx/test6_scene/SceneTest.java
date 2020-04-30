@@ -20,7 +20,7 @@ public class SceneTest extends Application {
         var btn = new Button("按钮");
         btn.setPrefWidth(10);
         btn.setPrefHeight(100);
-        String path=getClass().getClassLoader().getResource("com/czy/fx/img/草莓.jpg").toExternalForm();
+        String path=getClass().getClassLoader().getResource("src/main/java/com/czy/fx/img/草莓.jpg").toExternalForm();
         btn.setCursor(Cursor.cursor(path));
 
         var btn2 = new Button("百度一下");
