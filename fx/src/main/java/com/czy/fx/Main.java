@@ -27,6 +27,7 @@ public class Main {
         entrance= GroupTest.class;
         entrance= ButtonTest.class;
         entrance = AnchorPaneTest.class;
+        entrance = HelloWorld.class;
         Application.launch(entrance,args);
 
 

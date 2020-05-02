@@ -114,8 +114,10 @@ public class CoreContainer {
 
     private List<Class> getClassList(String packageName) {
         List<Class> classList = new ArrayList<>();
+        String classPathP = this.getClass().getResource("").getPath();
+        classPathP=classPathP.substring(0,classPathP.indexOf(CoreProject.getInstance().getGroupId().replace(".","/")));
         for (String projectGroupId : projectGroupIdList) {
-            String classPath = this.getClass().getResource("/").getPath() + projectGroupId.replace(".", File.separator);
+            String classPath = classPathP+ projectGroupId.replace(".", File.separator);
             classList.addAll(FileUtil.getClassList(classPath, projectGroupId, packageName));
         }
         return classList;
@@ -123,8 +125,10 @@ public class CoreContainer {
 
     private List<Class> getClassList(Class<? extends Annotation> annotationClass) {
         List<Class> classList = new ArrayList<>();
+        String classPathP = this.getClass().getResource("").getPath();
+        classPathP=classPathP.substring(0,classPathP.indexOf(CoreProject.getInstance().getGroupId().replace(".","/")));
         for (String projectGroupId : projectGroupIdList) {
-            String classPath = this.getClass().getResource("/").getPath() + projectGroupId.replace(".", File.separator);
+            String classPath = classPathP+ projectGroupId.replace(".", File.separator);
             classList.addAll(FileUtil.getClassList(classPath, projectGroupId, annotationClass));
         }
         return classList;

@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>com.czy</groupId>
-            <artifactId>all</artifactId>
+            <artifactId>base</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <!--        javafx-->
@@ -56,5 +56,28 @@
             <version>${javafx.version}</version>
         </dependency>
     </dependencies>
-
+    <build>
+        <finalName>czy_fx</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resource</directory>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${maven.compiler.release}</source>
+                    <target>${maven.compiler.release}</target>
+                    <release>${maven.compiler.release}</release>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

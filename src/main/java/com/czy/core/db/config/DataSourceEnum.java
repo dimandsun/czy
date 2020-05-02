@@ -12,7 +12,7 @@ import javax.sql.DataSource;
  */
 public enum DataSourceEnum implements IEnum<String> {
 
-    DEFAULT("mysql-czy-test",null),;
+    DEFAULT("mysql-com.czy-test",null),;
     private String beanName;
     private DataSource dataSource;
 

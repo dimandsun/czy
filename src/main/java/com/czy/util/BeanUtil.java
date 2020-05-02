@@ -4,6 +4,7 @@ import com.czy.util.json.JsonUtil;
 import com.czy.util.model.MyMap;
 import net.sf.cglib.beans.BeanMap;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,13 +52,17 @@ public class BeanUtil {
      */
     public static <T> T map2Model(MyMap map, Class<T> modelClass) {
         try {
-            T model = modelClass.newInstance();
+            T model = modelClass.getDeclaredConstructor().newInstance();
             BeanMap beanMap = BeanMap.create(model);
             beanMap.putAll(map);
             return model;
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
         return null;

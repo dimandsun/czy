@@ -2,9 +2,10 @@
  * @author chenzy
  * @description
  * @since 2020-04-30
- */module fx {
+ */module com.czy.fx {
     requires javafx.graphics;
     requires javafx.controls;
     requires javafx.media;
     requires javafx.fxml;
+    requires com.czy.base;
 }

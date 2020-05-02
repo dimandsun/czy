@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * Created by czy on 2019/5/15.
+ * Created by com.czy on 2019/5/15.
  */
 public class FileUtil {
     private static Logger logger = LoggerFactory.getLogger(FileUtil.class);

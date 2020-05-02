@@ -4,7 +4,6 @@ package com.czy.fx.test6_scene
 import javafx.application.Application;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -20,7 +19,7 @@ public class SceneTest extends Application {
         var btn = new Button("按钮");
         btn.setPrefWidth(10);
         btn.setPrefHeight(100);
-        String path=getClass().getClassLoader().getResource("src/main/java/com/czy/fx/img/草莓.jpg").toExternalForm();
+        String path=getClass().getClassLoader().getResource("src/main/java/com/com.czy/fx/img/草莓.jpg").toExternalForm();
         btn.setCursor(Cursor.cursor(path));
 
         var btn2 = new Button("百度一下");
