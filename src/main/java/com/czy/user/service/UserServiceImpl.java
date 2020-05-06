@@ -55,7 +55,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public ResultVO get(User user) {
+    public ResultVO<List<User>> get(User user) {
         List<User> userList = commonService.getListBean(user);
         return new ResultVO(userList);
     }

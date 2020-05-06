@@ -5,7 +5,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +27,21 @@ public class StringUtil {
     private final static Logger logger = LoggerFactory.getLogger(StringUtil.class);
 
     private StringUtil() {
+    }
+    /*jdk序列化*/
+    public static byte[] serialize(Object object) {
+        ObjectOutputStream objectOutputStream = null;
+        ByteArrayOutputStream byteArrayOutputStream = null;
+        try {
+            byteArrayOutputStream = new ByteArrayOutputStream();
+            objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+            objectOutputStream.writeObject(object);
+            byte[] getByte = byteArrayOutputStream.toByteArray();
+            return getByte;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     public static String println(String msg, Object... pars) {
         if (msg==null||!msg.contains("{}")||pars==null||pars.length==0){

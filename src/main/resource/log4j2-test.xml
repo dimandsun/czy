@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Properties>
+        <!--root日志路径-->
+        <Property name="rootFolder">/czy/log/root</Property>
+        <!--日志格式-->
+        <Property name="pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} %level %logger %msg%n</Property>
+        <!--编码格式-->
+        <Property name="charset">UTF-8</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d %-5p (%F:%L) - %m%n"/>
+        </Console>
+        <!--主日志-->
+        <RollingFile name="Root" fileName="${rootFolder}/root.log"
+                     filePattern="${rootFolder}/root-%d{yyyy-MM-dd}.log" append="true">
+            <!--日志格式-->
+            <PatternLayout charset="${charset}" pattern="${pattern}"/>
+            <!-- 设置间隔时间 -->
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${rootFolder}" maxDepth="1">
+                    <IfFileName glob="root-*.log"/>
+                    <IfLastModified age="30d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+
+    <loggers>
+        <Root level="INFO">
+            <appender-ref ref="Console"/>
+            <AppenderRef ref="Root"/>
+        </Root>
+    </loggers>
+</Configuration>

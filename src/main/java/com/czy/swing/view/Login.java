@@ -21,8 +21,8 @@ public class Login {
         var psField = new JTextField();
         var loginButton = new MyButton("登录").addListener(e -> {
             var par = JsonUtil.createJsonNode();
-            par.put("userName",userField.getText());
-            par.put("userPS",psField.getText());
+            par.put("mobile",userField.getText());
+            par.put("ps",psField.getText());
             Object result = Dispatch.getInstance().get("/login",par);
             System.out.println(result);
         });
@@ -30,7 +30,7 @@ public class Login {
             userField.setText(null);
             psField.setText(null);
         });
-        frame.add(new JLabel("用户名：")).add(userField)
+        frame.add(new JLabel("手机号：")).add(userField)
                 .add(new JLabel("密  码：")).add(psField)
                 .add(loginButton).add(resetButton).setVisible(true);
     }

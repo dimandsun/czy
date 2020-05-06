@@ -3,6 +3,8 @@ package com.czy.user.service;
 import com.czy.user.model.User;
 import com.czy.util.model.ResultVO;
 
+import java.util.List;
+
 /**
  * @author chenzy
  * @description
@@ -15,5 +17,5 @@ public interface IUserService {
 
     ResultVO delete(User user);
 
-    ResultVO get(User user);
+    ResultVO<List<User>> get(User user);
 }

@@ -9,7 +9,7 @@ datasource:
   mysql-czy-test:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://106.54.230.187:3306/com.czy?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT&allowPublicKeyRetrievalx=true
+    url: jdbc:mysql://106.54.230.187:3306/czy?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT&allowPublicKeyRetrievalx=true
     username: root
     password: chen
     initial-size: 1

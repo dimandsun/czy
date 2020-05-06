@@ -16,8 +16,7 @@ public class SwingProject extends CoreProject {
     protected SwingProject(){
     }
     public void init(){
-        addProjectGroupId();
-        CoreContainer.getInstance().initProject();
+        super.init();
     }
 
     @Override

@@ -3,7 +3,7 @@
 <mapper namespace="com.czy.core.db.dao.ICommonDao">
     <sql id="whereSQL">
         <where>
-            <foreach collection="whereMap.entrySet()" item="value" index="key">
+            <foreach collection="wherePar.entrySet()" item="value" index="key">
                 <if test='value!=null'>
                     and ${key}='${value}'
                 </if>
@@ -77,7 +77,7 @@
         from ${tableName} <include refid="whereSQL"/>
     </select>
     <select id="getList" parameterType="map" resultType="map">
-        select * from ${tableName}  <include refid="whereSQL"/>
+        select * from ${tableName}        <include refid="whereSQL"/>
     </select>
     <select id="getListPart" parameterType="map" resultType="map">
         select
