@@ -599,6 +599,9 @@ public class StringUtil {
     public static boolean isEmpty(Object[] array) {
         return (array == null || array.length == 0);
     }
+    public static boolean isEmpty(List list) {
+        return (list == null || list.size() == 0);
+    }
     /**
      * 字符串首字母小写
      *

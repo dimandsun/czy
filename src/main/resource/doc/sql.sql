@@ -78,7 +78,6 @@ create table word(
 	,des nvarchar(200) comment '描述'
 	,type int comment '单词类型：动词、名词、形容词、副词'
 	,tense int comment '时态：十六种'
-
 )comment='单词';
 
 

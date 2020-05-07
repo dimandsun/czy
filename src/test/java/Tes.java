@@ -1,4 +1,3 @@
-import com.czy.util.FileUtil;
 import org.junit.Test;
 
 /**
@@ -9,7 +8,7 @@ import org.junit.Test;
 public class Tes {
 
     @Test
-    public static void a(){
-        FileUtil.readFile(FileUtil.getFile("/doc/sql.sql"));
+    public void a() {
+
     }
 }
