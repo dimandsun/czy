@@ -1,4 +1,4 @@
-package com.czy.fx.test9_button;
+package com.czy.fx.test.test9_button;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;

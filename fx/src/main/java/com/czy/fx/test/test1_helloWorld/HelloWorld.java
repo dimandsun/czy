@@ -1,4 +1,4 @@
-package com.czy.fx.test1_helloWorld;
+package com.czy.fx.test.test1_helloWorld;
 
 import com.czy.util.StringUtil;
 import javafx.application.Application;

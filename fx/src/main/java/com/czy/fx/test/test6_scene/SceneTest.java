@@ -1,4 +1,4 @@
-package com.czy.fx.test6_scene
+package com.czy.fx.test.test6_scene
         ;
 
 import javafx.application.Application;

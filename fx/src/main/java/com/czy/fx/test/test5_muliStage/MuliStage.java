@@ -1,4 +1,4 @@
-package com.czy.fx.test5_muliStage;
+package com.czy.fx.test.test5_muliStage;
 
 import javafx.application.Application;
 import javafx.stage.Modality;

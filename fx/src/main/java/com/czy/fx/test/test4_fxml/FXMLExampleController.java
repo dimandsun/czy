@@ -1,4 +1,4 @@
-package com.czy.fx.test4_fxml;
+package com.czy.fx.test.test4_fxml;
  
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

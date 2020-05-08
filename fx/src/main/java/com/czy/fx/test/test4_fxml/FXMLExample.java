@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.czy.fx.test4_fxml;
+package com.czy.fx.test.test4_fxml;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

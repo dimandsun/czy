@@ -1,4 +1,4 @@
-package com.czy.fx.test3_css;
+package com.czy.fx.test.test3_css;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;

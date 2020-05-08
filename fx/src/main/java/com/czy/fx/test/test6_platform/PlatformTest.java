@@ -1,4 +1,4 @@
-package com.czy.fx.test6_platform;
+package com.czy.fx.test.test6_platform;
 
 import com.czy.util.StringUtil;
 import javafx.application.Application;

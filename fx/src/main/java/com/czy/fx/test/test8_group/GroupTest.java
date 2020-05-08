@@ -1,4 +1,4 @@
-package com.czy.fx.test8_group;
+package com.czy.fx.test.test8_group;
 
 import javafx.application.Application;
 import javafx.collections.ListChangeListener;

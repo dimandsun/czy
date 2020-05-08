@@ -1,4 +1,4 @@
-package com.czy.fx.test7_screen;
+package com.czy.fx.test.test7_screen;
 
 import javafx.application.Application;
 import javafx.stage.Screen;

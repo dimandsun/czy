@@ -1,4 +1,4 @@
-package com.czy.fx.test2_login;
+package com.czy.fx.test.test2_login;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
