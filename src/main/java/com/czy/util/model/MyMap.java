@@ -19,7 +19,6 @@ public class MyMap<T extends Object> extends LinkedHashMap<String,T> {
         this.add(key,value);
     }
     public MyMap(String key, T value) {
-
         this.add(key,value);
     }
 

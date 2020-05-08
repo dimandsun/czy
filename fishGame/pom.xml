@@ -11,6 +11,13 @@
 
     <groupId>com.czy</groupId>
     <artifactId>fishGame</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>com.czy</groupId>
+            <artifactId>base</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 
 </project>

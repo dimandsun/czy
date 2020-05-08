@@ -11,17 +11,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
-      <library name="lib_fishGame">
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/src/main/java/com/czy/swing/fishGame/lib" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-        <jarDirectory url="file://$MODULE_DIR$/src/main/java/com/czy/swing/fishGame/lib" recursive="false" />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" name="lib_fishGame" level="project" />
     <orderEntry type="library" name="Maven: cglib:cglib:3.3.0" level="project" />
     <orderEntry type="library" name="Maven: org.ow2.asm:asm:7.1" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.13" level="project" />
@@ -33,6 +22,7 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.10.3" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.10.3" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.24" level="project" />
+    <orderEntry type="library" name="Maven: org.jyaml:jyaml:1.3" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:druid:1.1.8" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.13" level="project" />
     <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.6.1" level="project" />

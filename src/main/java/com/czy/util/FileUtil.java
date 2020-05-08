@@ -4,10 +4,18 @@ package com.czy.util;
 import com.czy.util.model.MyMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 import org.yaml.snakeyaml.Yaml;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.lang.annotation.Annotation;
+import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +34,7 @@ public class FileUtil {
 
     private FileUtil() {
     }
+
     public static String readFile(File file) {
         BufferedReader reader = null;
         StringBuffer sbf = new StringBuffer();
@@ -50,6 +59,7 @@ public class FileUtil {
         }
         return sbf.toString();
     }
+
     private static void copy(File file) {
         String url2 = "C:\\Users\\Administrator\\Desktop\\新建文件夹2\\";
         // 获取源文件夹当前下的文件或目录
@@ -238,8 +248,8 @@ public class FileUtil {
                         reNameJavaList(childFile.getPath(), newName);
                     } else {
                         oldName = childFile.getName();
-                        String newFileName =newName.replace("oldName"
-                                , oldName.substring(0,oldName.indexOf(".java")))+".java";
+                        String newFileName = newName.replace("oldName"
+                                , oldName.substring(0, oldName.indexOf(".java"))) + ".java";
 //                        newFileName=newFileName.substring(0,newFileName.indexOf(".java"))+".java";
                         childFile.renameTo(new File(childFile.getParentFile() + "/" + newFileName));
                     }
@@ -250,11 +260,144 @@ public class FileUtil {
         }
     }
 
+    /**
+     * 获取资源文件
+     * @param fileName
+     * @return
+     */
     public static File getFile(String fileName) {
-//        Thread.currentThread().getContextClassLoader().getResource("doc/sql.sql");
-//        FileUtil.class.getClassLoader().getResource("/doc/sql.sql")
-        String configPath = Thread.currentThread().getContextClassLoader().getResource(fileName).getPath();
-        return new File(configPath);
+//        FileUtil.class.getClassLoader().getResource("doc/sql.sql")
+        URL url = Thread.currentThread().getContextClassLoader().getResource(fileName);
+        if (url!=null){
+            /*资源文件存在时，直接返回文件*/
+            return new File(url.getPath());
+        }
+        /*资源文件不存在时，也会返回file对象*/
+        String projectPath = null;
+        try {
+            projectPath = new File("").getCanonicalPath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new File(projectPath + "/src/main/resource/"+fileName);
+    }
+
+    public static void writeConfigFileByXML2YML(String xmlFilePath, String ymlFilePath) {
+        List<MyMap> dataList = readConfigFileByXML(xmlFilePath);
+        File ymlFile = FileUtil.getFile(ymlFilePath);
+        createFile(ymlFile);
+        try {
+            org.ho.yaml.Yaml.dump(dataList, ymlFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 文件不存在时创建，存在则不做任何操作
+     *
+     * @param file
+     */
+    public static void createFile(File file) {
+        if (!file.exists()) {
+            /*如果参数是目录，直接创建目录。这里用file.isDirectory()无法区分file是否是目录，需要根据文件名是否有后缀来判断*/
+            if (file.getName().indexOf(".")==-1){
+                file.mkdirs();
+                return;
+            }
+
+            /*若参数是文件，要先判断文件所在目录是否存在，若不存在，则需要创建*/
+            File pathFile=file.getParentFile();
+            if (!pathFile.exists()){
+                pathFile.mkdirs();
+            }
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        file.getPath();
+    }
+
+    /**
+     * 文件中写入指定内容
+     *
+     * @param file
+     * @param contents
+     */
+    public static void write(File file, String... contents) {
+        if (contents == null || contents.length < 1) {
+            return;
+        }
+        createFile(file);
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(file);
+            for (String content : contents) {
+                writer.write(content);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static List<MyMap> readConfigFileByXML(String filePath) {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = null;
+        try {
+            builder = factory.newDocumentBuilder();
+            Document document = builder.parse(FileUtil.getFile(filePath));
+            NodeList nodeList = document.getChildNodes();
+            List<MyMap> list = nodeList2MapList(nodeList);
+            return list;
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+            logger.error("加载配置文件{}失败。", filePath);
+            return null;
+        } catch (SAXException e) {
+            e.printStackTrace();
+            logger.error("加载配置文件{}失败。", filePath);
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            logger.error("加载配置文件{}失败。", filePath);
+            return null;
+        }
+
+    }
+
+    private static List<MyMap> nodeList2MapList(NodeList nodeList) {
+        List<MyMap> list = new ArrayList<>(nodeList.getLength());
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+            String nodeValue = node.getNodeValue();
+            if (!node.hasChildNodes()) {
+                if (StringUtil.isBlank(nodeValue)) {
+                    /*不读取空文本*/
+                    continue;
+                } else {
+                    list.add(new MyMap(1, node.getNodeName(), nodeValue));
+                }
+            } else {
+                NodeList childNodeList = node.getChildNodes();
+                /*文本作为一个#text节点，没有必要把#text作为map的key返回*/
+                if (childNodeList.getLength() == 1 && childNodeList.item(0).getNodeName().equals("#text")) {
+                    list.add(new MyMap(1, node.getNodeName(), childNodeList.item(0).getNodeValue()));
+                } else {
+                    list.add(new MyMap(1, node.getNodeName(), nodeList2MapList(node.getChildNodes())));
+                }
+            }
+        }
+        return list;
     }
 
     public static <T> MyMap<T> readConfigFileByProperty(String filePath) {
@@ -277,8 +420,8 @@ public class FileUtil {
     public static <T> MyMap<T> readConfigFileByYML(String filePath) {
         try {
             InputStream in = FileUtil.class.getClassLoader().getResourceAsStream(filePath);
-            if (in==null){
-                logger.error("文件{}未找到",filePath);
+            if (in == null) {
+                logger.error("文件{}未找到", filePath);
                 return null;
             }
             MyMap<T> proMap = new Yaml().loadAs(in, MyMap.class);
@@ -291,7 +434,7 @@ public class FileUtil {
     }
 
     public static void main(String[] args) {
-
+        createFile(getFile("a/b.txt"));
     }
 
 

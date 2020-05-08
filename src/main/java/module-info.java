@@ -16,6 +16,8 @@
     requires org.yaml.snakeyaml;
     requires java.naming;
     requires org.objectweb.asm;
+    requires jyaml;
     exports com.czy.util.model;
     exports com.czy.util;
+    exports com.czy.util.enums;
 }
