@@ -14,7 +14,7 @@
     <bytecodeTargetLevel target="11">
       <module name="czy" target="11" />
       <module name="fishGame" target="11" />
-      <module name="fx" target="1.5" />
+      <module name="fx" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
