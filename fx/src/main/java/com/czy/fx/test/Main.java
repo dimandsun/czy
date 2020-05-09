@@ -8,6 +8,7 @@ import com.czy.fx.test.test14_GridPane.GridPaneTest;
 import com.czy.fx.test.test15_StackPane.StackPaneTest;
 import com.czy.fx.test.test16_TextFlow.TextFlowTest;
 import com.czy.fx.test.test18_DialogPane.DialogPaneTest;
+import com.czy.fx.test.test19_ScheduledService.ScheduledServiceTest;
 import com.czy.fx.test.test1_helloWorld.HelloWorld;
 import com.czy.fx.test.test2_login.Login;
 import com.czy.fx.test.test6_platform.PlatformTest;
@@ -44,6 +45,7 @@ public class Main {
         entrance= StackPaneTest.class;
         entrance= TextFlowTest.class;
         entrance= DialogPaneTest.class;
+        entrance= ScheduledServiceTest.class;
         Application.launch(entrance,args);
 
 //        createDirs();

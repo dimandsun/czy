@@ -8,8 +8,8 @@ import javafx.stage.Stage;
 
 /**
  * @author chenzy
- * @description
  * @since 2020/4/27
+ * @description
  */
 public class PlatformTest extends Application {
     @Override
