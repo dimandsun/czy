@@ -23,6 +23,26 @@ public class FXUtil {
     private FXUtil() {
     }
 
+    public static<T extends Node> List<T> getNodeList(Class<T> nodeClass,String... nodeNames) {
+        if (nodeClass==null||nodeNames == null || nodeNames.length == 0) {
+            return null;
+        }
+        var nodeList = new ArrayList<T>(nodeNames.length);
+        for (String nodeName : nodeNames) {
+            try {
+                nodeList.add(nodeClass.getDeclaredConstructor(String.class).newInstance(nodeName));
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+        }
+        return nodeList;
+    }
     public static List<Button> getButtonList(String... btnNames) {
         if (btnNames == null || btnNames.length == 0) {
             return null;

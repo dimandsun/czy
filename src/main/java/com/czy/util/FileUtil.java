@@ -262,13 +262,14 @@ public class FileUtil {
 
     /**
      * 获取资源文件
+     *
      * @param fileName
      * @return
      */
-    public static File getFile(String fileName) {
+    public static File getResourceFile(String fileName) {
 //        FileUtil.class.getClassLoader().getResource("doc/sql.sql")
         URL url = Thread.currentThread().getContextClassLoader().getResource(fileName);
-        if (url!=null){
+        if (url != null) {
             /*资源文件存在时，直接返回文件*/
             return new File(url.getPath());
         }
@@ -279,12 +280,30 @@ public class FileUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new File(projectPath + "/src/main/resource/"+fileName);
+        return new File(projectPath + "/src/main/resource/" + fileName);
+    }
+
+    /**
+     * 获取原代码文件或者目录
+     *
+     * @param moduleDir module目录，可以不传此参数
+     * @param beanName
+     * @return
+     */
+    public static File getCodeFile(String moduleDir,String beanName) {
+        String projectPath = null;
+        try {
+            projectPath = new File(StringUtil.isBlank(moduleDir)?"":moduleDir).getCanonicalPath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String path = projectPath + "/src/main/java" + File.separator + beanName.replace(".", File.separator);
+        return new File(path);
     }
 
     public static void writeConfigFileByXML2YML(String xmlFilePath, String ymlFilePath) {
         List<MyMap> dataList = readConfigFileByXML(xmlFilePath);
-        File ymlFile = FileUtil.getFile(ymlFilePath);
+        File ymlFile = FileUtil.getResourceFile(ymlFilePath);
         createFile(ymlFile);
         try {
             org.ho.yaml.Yaml.dump(dataList, ymlFile);
@@ -301,14 +320,14 @@ public class FileUtil {
     public static void createFile(File file) {
         if (!file.exists()) {
             /*如果参数是目录，直接创建目录。这里用file.isDirectory()无法区分file是否是目录，需要根据文件名是否有后缀来判断*/
-            if (file.getName().indexOf(".")==-1){
+            if (file.getName().indexOf(".") == -1) {
                 file.mkdirs();
                 return;
             }
 
             /*若参数是文件，要先判断文件所在目录是否存在，若不存在，则需要创建*/
-            File pathFile=file.getParentFile();
-            if (!pathFile.exists()){
+            File pathFile = file.getParentFile();
+            if (!pathFile.exists()) {
                 pathFile.mkdirs();
             }
             try {
@@ -319,6 +338,7 @@ public class FileUtil {
         }
         file.getPath();
     }
+
 
     /**
      * 文件中写入指定内容
@@ -355,7 +375,7 @@ public class FileUtil {
         DocumentBuilder builder = null;
         try {
             builder = factory.newDocumentBuilder();
-            Document document = builder.parse(FileUtil.getFile(filePath));
+            Document document = builder.parse(FileUtil.getResourceFile(filePath));
             NodeList nodeList = document.getChildNodes();
             List<MyMap> list = nodeList2MapList(nodeList);
             return list;
@@ -403,7 +423,7 @@ public class FileUtil {
     public static <T> MyMap<T> readConfigFileByProperty(String filePath) {
         try {
             Properties prop = new Properties();
-            FileInputStream in = new FileInputStream(FileUtil.getFile(filePath));
+            FileInputStream in = new FileInputStream(FileUtil.getResourceFile(filePath));
             prop.load(in);
             MyMap<T> proMap = new MyMap();
             for (String key : prop.stringPropertyNames()) {
@@ -434,7 +454,7 @@ public class FileUtil {
     }
 
     public static void main(String[] args) {
-        createFile(getFile("a/b.txt"));
+        createFile(getResourceFile("a/b.txt"));
     }
 
 

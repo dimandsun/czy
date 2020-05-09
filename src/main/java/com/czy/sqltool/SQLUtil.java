@@ -8,7 +8,6 @@ import com.czy.util.FileUtil;
 import com.czy.util.StringUtil;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,18 +41,12 @@ public class SQLUtil {
         String date = DateUtil.data2Str(new Date(), DateUtil.yyyy_MM_dd);
         /*创建bean目录*/
         String modelPath = null;
-        try {
-            String projectPath = new File("").getCanonicalPath();
-            modelPath = projectPath + "/src/main/java" + File.separator + beanPackage.replace(".", File.separator);
-            File modelDir = new File(modelPath);
-            if (!modelDir.exists()) {
-                modelDir.mkdirs();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        File modelDir = FileUtil.getCodeFile(null,beanPackage);
+        if (!modelDir.exists()) {
+            modelDir.mkdirs();
         }
         /*获取sql文本*/
-        String sqlContents = FileUtil.readFile(FileUtil.getFile(sqlPath));
+        String sqlContents = FileUtil.readFile(FileUtil.getResourceFile(sqlPath));
         if (!sqlContents.contains(";")) {
             return;
         }
