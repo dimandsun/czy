@@ -4,6 +4,7 @@ import com.czy.fx.test.test10_AnchorPane.AnchorPaneTest;
 import com.czy.fx.test.test11_HBoxVBox.HBoxTest;
 import com.czy.fx.test.test12_BorderPane.BorderPaneTest;
 import com.czy.fx.test.test13_FlowPane.FlowPaneTest;
+import com.czy.fx.test.test14_GridPane.GridPaneTest;
 import com.czy.fx.test.test1_helloWorld.HelloWorld;
 import com.czy.fx.test.test2_login.Login;
 import com.czy.fx.test.test6_platform.PlatformTest;
@@ -33,6 +34,7 @@ public class Main {
         entrance = HBoxTest.class;
         entrance = BorderPaneTest.class;
         entrance= FlowPaneTest.class;
+        entrance= GridPaneTest.class;
         Application.launch(entrance,args);
 
 

@@ -30,6 +30,20 @@ public class ClassUtil {
         }
     }
 
+    /**
+     * 如果是基本数据类型的包装类，则返回基本数据类型，其他则返回原类型
+     * @param c
+     * @return
+     */
+    public static Class getBasicType(Class c) {
+        try {
+            return  (Class) c.getField("TYPE").get(null);
+        } catch (IllegalAccessException e) {
+            return c;
+        } catch (NoSuchFieldException e) {
+            return c;
+        }
+    }
     public static void main(String[] args) {
         System.out.println(ClassUtil.isBasicDataType(Integer.class));
         System.out.println(ClassUtil.isBasicDataType(String.class));
