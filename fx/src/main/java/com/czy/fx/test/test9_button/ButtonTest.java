@@ -47,7 +47,7 @@ public class ButtonTest extends Application {
         var group = new Group();
         group.getChildren().add(btn);
         var scene = new Scene(group);
-        //添加快捷键
+        //添加快捷键  KeyCodeCombination.valueOf("alt")
         scene.addMnemonic(new Mnemonic(btn, new KeyCodeCombination(KeyCode.C, KeyCombination.ALT_DOWN)));
         btn.setOnAction(actionEvent -> {
             System.out.println("hehhee");

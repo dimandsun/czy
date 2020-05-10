@@ -19,7 +19,7 @@ public class TextFlowTest extends Application {
     public void start(Stage primaryStage) throws Exception {
         var textFlow=new TextFlow();
 
-        textFlow.getChildren().addAll(FXUtil.getNodeList(Text.class,"123大家好爱的发发富士达大叔打饭，这个能缩进吗","嘿嘿","我是陈志源"));
+        textFlow.getChildren().addAll(FXUtil.getObjectList(Text.class,"123大家好爱的发发富士达大叔打饭，这个能缩进吗","嘿嘿","我是陈志源"));
         textFlow.getChildren().forEach(node->{
             var text = (Text)node;
             text.setFont(Font.font(20));

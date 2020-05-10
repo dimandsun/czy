@@ -23,14 +23,18 @@ public class FXUtil {
     private FXUtil() {
     }
 
-    public static<T extends Node> List<T> getNodeList(Class<T> nodeClass,String... nodeNames) {
-        if (nodeClass==null||nodeNames == null || nodeNames.length == 0) {
+    /**
+     * 生成对象集合：
+     * 用反射，根据指定类型，生成对象集合，要求对应类型必须有 只有参数的构造方法，且这个参数是字符串类型
+     */
+    public static<T extends Object> List<T> getObjectList(Class<T> objClass, String... nodeNames) {
+        if (objClass==null||nodeNames == null || nodeNames.length == 0) {
             return null;
         }
-        var nodeList = new ArrayList<T>(nodeNames.length);
+        var objList = new ArrayList<T>(nodeNames.length);
         for (String nodeName : nodeNames) {
             try {
-                nodeList.add(nodeClass.getDeclaredConstructor(String.class).newInstance(nodeName));
+                objList.add(objClass.getDeclaredConstructor(String.class).newInstance(nodeName));
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -41,7 +45,7 @@ public class FXUtil {
                 e.printStackTrace();
             }
         }
-        return nodeList;
+        return objList;
     }
     public static List<Button> getButtonList(String... btnNames) {
         if (btnNames == null || btnNames.length == 0) {

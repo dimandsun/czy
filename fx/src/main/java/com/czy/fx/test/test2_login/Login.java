@@ -1,5 +1,6 @@
 package com.czy.fx.test.test2_login;
 
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,6 +15,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * @author chenzy
@@ -42,7 +44,7 @@ public class Login extends Application {
 
         //创建文本输入框，放到第1列，第1行
         TextField userTextField = new TextField();
-        userTextField.setTooltip(new Tooltip("输入任意字符"));//鼠标悬停提示
+        userTextField.setTooltip(new Tooltip(" "));//鼠标悬停提示
         userTextField.setPromptText("背景提示：输入任意字符");//
         userTextField.setFocusTraversable(false);//取消焦点
         /*文本改变监听*/
@@ -53,7 +55,19 @@ public class Login extends Application {
         userTextField.selectedTextProperty().addListener((observableValue,  oldValue,  newValue)->{
 
         });
+
+
         grid.add(userTextField, 1, 1);
+        {
+            //特效
+            var ff=new FadeTransition();
+            ff.setDuration(Duration.seconds(0.5));
+            ff.setNode(grid);
+            ff.setFromValue(0);
+            ff.setToValue(1);
+            ff.play();
+        }
+
 
         Label pw = new Label("Password:");
         grid.add(pw, 0, 2);
