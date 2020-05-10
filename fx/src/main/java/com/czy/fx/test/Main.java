@@ -1,6 +1,5 @@
 package com.czy.fx.test;
 
-import com.czy.fx.a.Loging;
 import com.czy.fx.test.test10_AnchorPane.AnchorPaneTest;
 import com.czy.fx.test.test11_HBoxVBox.HBoxTest;
 import com.czy.fx.test.test12_BorderPane.BorderPaneTest;
@@ -11,8 +10,10 @@ import com.czy.fx.test.test16_TextFlow.TextFlowTest;
 import com.czy.fx.test.test18_DialogPane.DialogPaneTest;
 import com.czy.fx.test.test19_ScheduledService.ScheduledServiceTest;
 import com.czy.fx.test.test1_helloWorld.HelloWorld;
-import com.czy.fx.test.test20_Hyperlink.HyperlinkTest;
 import com.czy.fx.test.test21_MenuBar_Menu_MenuItem.MenuAboutTest;
+import com.czy.fx.test.test25_TitledPane.TitledPaneTest;
+import com.czy.fx.test.test26_TabPane.TabPaneTest;
+import com.czy.fx.test.test27_RadioButton_CheckBox.RadioButtonTest;
 import com.czy.fx.test.test2_login.Login;
 import com.czy.fx.test.test6_platform.PlatformTest;
 import com.czy.fx.test.test6_scene.SceneTest;
@@ -23,6 +24,8 @@ import com.czy.util.FileUtil;
 import javafx.application.Application;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author chenzy
@@ -49,11 +52,17 @@ public class Main {
         entrance= TextFlowTest.class;
         entrance= DialogPaneTest.class;
         entrance= ScheduledServiceTest.class;
-        entrance= Loging.class;
-        entrance= HyperlinkTest.class;
         entrance= MenuAboutTest.class;
+        entrance= TitledPaneTest.class;
+        entrance= TabPaneTest.class;
+        entrance= RadioButtonTest.class;
         Application.launch(entrance,args);
 
+        var ss=new ArrayList<String>(){{
+           add("啊"); add("a");add("b");add("c");add("");
+        }};
+        ss.stream();
+        System.out.println( ss.stream());
 //        createDirs();
 
     }

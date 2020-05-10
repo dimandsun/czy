@@ -266,7 +266,9 @@ public class StringUtil {
     public static boolean isNotBlank(String str) {
         return !isBlank(str);
     }
-
+    public static<T> boolean isBlank(List<T> objList) {
+        return objList == null||objList.isEmpty();
+    }
     public static boolean isBlank(Object obj) {
         return obj == null ? true : isBlank(obj.toString());
     }

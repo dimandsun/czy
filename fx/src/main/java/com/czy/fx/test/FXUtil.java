@@ -7,6 +7,8 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
@@ -105,21 +107,12 @@ public class FXUtil {
         return pane;
     }
 
+    /**/
     private static Boolean invoke(Object o, String methodName, Object... pars) {
         if (o == null || StringUtil.isBlank(methodName)) {
             return false;
         }
-        Class[] parClasss = null;
-        if (pars != null && pars.length > 0) {
-            parClasss = new Class[pars.length];
-            for (int i = 0; i < pars.length; i++) {
-                if (pars[i] instanceof Node){
-                    parClasss[i]=Node.class;
-                }else {
-                    parClasss[i] = ClassUtil.getBasicType(pars[i].getClass());
-                }
-            }
-        }
+        Class[] parClasss = getClasses(pars);
         var c = o.getClass();
         try {
             var m = c.getMethod(methodName, parClasss);
@@ -136,6 +129,26 @@ public class FXUtil {
         }
     }
 
+    /**
+     * 返回类型数组，
+     * @param pars
+     * @return
+     */
+    private static Class[] getClasses(Object[] pars) {
+        if (pars != null && pars.length > 0) {
+            Class[] parClasss = new Class[pars.length];
+            for (int i = 0; i < pars.length; i++) {
+                if (pars[i] instanceof Node){
+                    parClasss[i]=Node.class;
+                }else {
+                    parClasss[i] = ClassUtil.getBasicType(pars[i].getClass());
+                }
+            }
+            return parClasss;
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         Class c = GridPane.class;
         for (var m : c.getMethods()) {
@@ -145,4 +158,6 @@ public class FXUtil {
         }
 
     }
+
+
 }
