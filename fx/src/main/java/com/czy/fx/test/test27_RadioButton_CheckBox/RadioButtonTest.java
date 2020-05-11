@@ -14,8 +14,8 @@ import java.util.List;
 
 /**
  * @author chenzy
- * @description
  * @since 2020/5/10
+ * @description  RadioButton和CheckBox 复选框有不确定状态indeterminate
  */
 public class RadioButtonTest extends Application {
     @Override

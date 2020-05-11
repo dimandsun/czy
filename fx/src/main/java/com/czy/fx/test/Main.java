@@ -14,6 +14,8 @@ import com.czy.fx.test.test21_MenuBar_Menu_MenuItem.MenuAboutTest;
 import com.czy.fx.test.test25_TitledPane.TitledPaneTest;
 import com.czy.fx.test.test26_TabPane.TabPaneTest;
 import com.czy.fx.test.test27_RadioButton_CheckBox.RadioButtonTest;
+import com.czy.fx.test.test28_TextArea.TextAreaTest;
+import com.czy.fx.test.test29_TextField.TextFieldTest;
 import com.czy.fx.test.test2_login.Login;
 import com.czy.fx.test.test6_platform.PlatformTest;
 import com.czy.fx.test.test6_scene.SceneTest;
@@ -21,10 +23,11 @@ import com.czy.fx.test.test7_screen.ScreenTest;
 import com.czy.fx.test.test8_group.GroupTest;
 import com.czy.fx.test.test9_button.ButtonTest;
 import com.czy.util.FileUtil;
-import javafx.application.Application;
+import com.czy.util.StringUtil;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -38,41 +41,47 @@ public class Main {
         Class entrance = HelloWorld.class;
         entrance = Login.class;
         entrance = com.czy.fx.test.test3_css.Login.class;
-        entrance= PlatformTest.class;
-        entrance= ScreenTest.class;
-        entrance= SceneTest.class;
-        entrance= GroupTest.class;
-        entrance= ButtonTest.class;
+        entrance = PlatformTest.class;
+        entrance = ScreenTest.class;
+        entrance = SceneTest.class;
+        entrance = GroupTest.class;
+        entrance = ButtonTest.class;
         entrance = AnchorPaneTest.class;
         entrance = HBoxTest.class;
         entrance = BorderPaneTest.class;
-        entrance= FlowPaneTest.class;
-        entrance= GridPaneTest.class;
-        entrance= StackPaneTest.class;
-        entrance= TextFlowTest.class;
-        entrance= DialogPaneTest.class;
-        entrance= ScheduledServiceTest.class;
-        entrance= MenuAboutTest.class;
-        entrance= TitledPaneTest.class;
-        entrance= TabPaneTest.class;
-        entrance= RadioButtonTest.class;
-        Application.launch(entrance,args);
+        entrance = FlowPaneTest.class;
+        entrance = GridPaneTest.class;
+        entrance = StackPaneTest.class;
+        entrance = TextFlowTest.class;
+        entrance = DialogPaneTest.class;
+        entrance = ScheduledServiceTest.class;
+        entrance = MenuAboutTest.class;
+        entrance = TitledPaneTest.class;
+        entrance = TabPaneTest.class;
+        entrance = RadioButtonTest.class;
+        entrance = TextAreaTest.class;
+        entrance = TextFieldTest.class;
+//        Application.launch(entrance,args);
 //        createDirs();
+        ;
 
     }
-    private static void createDirs(){
-        //        ,"setCellFactory"
-        String[] ss={"Hyperlink","MenuBar_Menu_MenuItem","chm","MenuItem","Accordion","TitledPane"
-                ,"TabPane","RadioButton_CheckBox","TextArea","TextField","ButtonBar","ChoiceBox","ComboBox"
-                ,"ColorPicke","DatePicker","Pagination","Slider","ProgressBar","ProgressIndicator","SplitPane"
-                ,"Spinner","ScrollBar","ScrollPane","Separator","PropertyChangeSupport","ListProperty","SetProperty","MapProperty"
-                ,"ChangeListener","InvalidationListener"};
 
-        String beanPackage="com.czy.fx.test.test";
-        String moduleDir="fx";
-        Integer i=20;
-        for (String s:ss){
-            File modelDir = FileUtil.getCodeFile(moduleDir,beanPackage+i+"_"+s);
+
+
+    private static void createDirs() {
+        //        ,"setCellFactory"
+        String[] ss = {"Hyperlink", "MenuBar_Menu_MenuItem", "chm", "MenuItem", "Accordion", "TitledPane"
+                , "TabPane", "RadioButton_CheckBox", "TextArea", "TextField", "ButtonBar", "ChoiceBox", "ComboBox"
+                , "ColorPicke", "DatePicker", "Pagination", "Slider", "ProgressBar", "ProgressIndicator", "SplitPane"
+                , "Spinner", "ScrollBar", "ScrollPane", "Separator", "PropertyChangeSupport", "ListProperty", "SetProperty", "MapProperty"
+                , "ChangeListener", "InvalidationListener"};
+
+        String beanPackage = "com.czy.fx.test.test";
+        String moduleDir = "fx";
+        Integer i = 20;
+        for (String s : ss) {
+            File modelDir = FileUtil.getCodeFile(moduleDir, beanPackage + i + "_" + s);
             if (!modelDir.exists()) {
                 modelDir.mkdirs();
             }

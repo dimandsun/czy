@@ -1,20 +1,14 @@
 package com.czy.fx.test.test21_MenuBar_Menu_MenuItem;
 
 import com.czy.fx.test.FXUtil;
-import com.czy.util.ClassUtil;
 import com.czy.util.StringUtil;
 import javafx.application.Application;
-import javafx.collections.ListChangeListener;
-import javafx.collections.MapChangeListener;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.Mnemonic;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
