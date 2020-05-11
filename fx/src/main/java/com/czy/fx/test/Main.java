@@ -57,12 +57,6 @@ public class Main {
         entrance= TabPaneTest.class;
         entrance= RadioButtonTest.class;
         Application.launch(entrance,args);
-
-        var ss=new ArrayList<String>(){{
-           add("啊"); add("a");add("b");add("c");add("");
-        }};
-        ss.stream();
-        System.out.println( ss.stream());
 //        createDirs();
 
     }

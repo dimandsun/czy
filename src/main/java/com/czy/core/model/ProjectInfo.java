@@ -1,5 +1,7 @@
 package com.czy.core.model;
 
+import com.czy.core.enums.ActiveEnum;
+
 /**
  * @author chenzy
  * @since 2020-04-07
@@ -14,6 +16,15 @@ public class ProjectInfo {
 
     }
     private String projectName;
+    private ActiveEnum active;
+
+    public ActiveEnum getActive() {
+        return active;
+    }
+
+    public void setActive(ActiveEnum active) {
+        this.active = active;
+    }
 
     public String getProjectName() {
         return projectName;

@@ -5,8 +5,10 @@ import com.czy.core.annotation.*;
 import com.czy.core.db.config.DataSourceEnum;
 import com.czy.core.db.model.MybatisInfo;
 import com.czy.core.db.model.TypeAliases;
+import com.czy.core.enums.ActiveEnum;
 import com.czy.core.model.BeanModel;
 import com.czy.core.model.CoreProject;
+import com.czy.core.model.ProjectInfo;
 import com.czy.core.model.RouteModel;
 import com.czy.core.enums.QuestEnum;
 import com.czy.util.FileUtil;
@@ -189,7 +191,9 @@ public class CoreContainer {
             return null;
         }
         String active = proMap.get("profiles").get("active").toString();
-        proFileName = "application-" + active + ".yml";
+        ActiveEnum activeEnum=ActiveEnum.getEnum(active);
+        ProjectInfo.getInstance().setActive(activeEnum);
+        proFileName = "application-" + activeEnum.getMsg() + ".yml";
         Map<String, Object> resultMap = FileUtil.readConfigFileByYML(proFileName);
         return resultMap;
     }
