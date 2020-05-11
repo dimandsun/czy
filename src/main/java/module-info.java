@@ -17,6 +17,8 @@
     requires java.naming;
     requires org.objectweb.asm;
     requires jyaml;
+    requires log4j.core;
+    requires log4j.api;
     exports com.czy.util.model;
     exports com.czy.util;
     exports com.czy.util.enums;

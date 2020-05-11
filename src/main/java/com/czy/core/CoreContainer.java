@@ -21,6 +21,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.apache.ibatis.type.TypeAliasRegistry;
+import org.apache.logging.log4j.core.LoggerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.JedisPool;
@@ -32,6 +33,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.logging.LogManager;
 
 /**
  * @author chenzy
@@ -186,14 +188,7 @@ public class CoreContainer {
      */
     public Map<String, Object> getProMap() {
         String proFileName = "application.yml";
-        Map<String, Map<String, Object>> proMap = FileUtil.readConfigFileByYML(proFileName);
-        if (proMap==null){
-            return null;
-        }
-        String active = proMap.get("profiles").get("active").toString();
-        ActiveEnum activeEnum=ActiveEnum.getEnum(active);
-        ProjectInfo.getInstance().setActive(activeEnum);
-        proFileName = "application-" + activeEnum.getMsg() + ".yml";
+        proFileName = "application-" + ProjectInfo.getInstance().getActive().getMsg() + ".yml";
         Map<String, Object> resultMap = FileUtil.readConfigFileByYML(proFileName);
         return resultMap;
     }

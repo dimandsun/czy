@@ -135,10 +135,6 @@
         <resources>
             <resource>
                 <directory>src/main/resource</directory>
-                <includes>
-                    <!--包含文件夹以及子文件夹下所有资源-->
-                    <include>**/*.*</include>
-                </includes>
             </resource>
         </resources>
         <plugins>
@@ -147,8 +143,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-plugin.version}</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <release>${java.version}</release>
                 </configuration>
             </plugin>
         </plugins>

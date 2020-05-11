@@ -8,7 +8,7 @@
     <artifactId>fx</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <encoding>UTF-8</encoding>
         <maven.compiler.release>11</maven.compiler.release>
         <java.version>11</java.version>
         <javafx.version>11.0.2</javafx.version>

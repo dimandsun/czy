@@ -1,6 +1,9 @@
 package com.czy.core.model;
 
 import com.czy.core.enums.ActiveEnum;
+import com.czy.util.FileUtil;
+
+import java.util.Map;
 
 /**
  * @author chenzy
@@ -13,7 +16,12 @@ public class ProjectInfo {
         return instance;
     }
     protected ProjectInfo(){
-
+        String proFileName = "application.yml";
+        Map<String, Map<String, Object>> proMap = FileUtil.readConfigFileByYML(proFileName);
+        if (proMap!=null){
+            String active = proMap.get("profiles").get("active").toString();
+            setActive(ActiveEnum.getEnum(active));
+        }
     }
     private String projectName;
     private ActiveEnum active;

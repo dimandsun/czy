@@ -1,6 +1,7 @@
 package com.czy.core.model;
 
 import com.czy.core.CoreContainer;
+import com.czy.core.LogInfo;
 import com.czy.core.db.config.DataSourceEnum;
 import com.czy.core.db.config.DataSourceHolder;
 
@@ -15,8 +16,10 @@ public class CoreProject {
         return instance;
     }
     protected CoreProject(){
+
     }
     public void init(){
+        LogInfo.initLog();
         addProjectGroupId();
         CoreContainer.getInstance().initProject();
         createDataSourceHolder();
