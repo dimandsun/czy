@@ -1,6 +1,7 @@
 package com.czy.fx.test.test21_MenuBar_Menu_MenuItem;
 
 import com.czy.fx.test.FXUtil;
+import com.czy.util.ObjectUtil;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuButton;
@@ -18,7 +19,7 @@ public class MenuButtonTest extends Application {
     public void start(Stage primaryStage) throws Exception {
         var ap=new AnchorPane();
         var menuButton=new MenuButton("测试");
-        menuButton.getItems().addAll(FXUtil.getObjectList(MenuItem.class,"1","2"));
+        menuButton.getItems().addAll(ObjectUtil.getObjectList(MenuItem.class,"1","2"));
         ap.getChildren().add(menuButton);
 
         primaryStage.setScene(new Scene(ap));

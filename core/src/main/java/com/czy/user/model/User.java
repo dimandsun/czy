@@ -1,5 +1,6 @@
 package com.czy.user.model;
 
+import com.czy.util.json.JsonUtil;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -16,6 +17,18 @@ public class User {
     private String originalPS;//'原密码'
     private String email;
     private String mobile;
+
+    @Override
+    public String toString() {
+        return JsonUtil.model2Str(this);
+    }
+
+    public User() {
+    }
+
+    public User(String name) {
+        this.name = name;
+    }
 
     public Integer getId() {
         return id;

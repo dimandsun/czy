@@ -21,4 +21,5 @@
     requires log4j.api;
     requires com.czy.util;
     exports com.czy.core.util;
+    exports com.czy.user.model;
 }

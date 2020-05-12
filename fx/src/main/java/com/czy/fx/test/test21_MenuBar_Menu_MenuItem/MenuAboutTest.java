@@ -1,6 +1,7 @@
 package com.czy.fx.test.test21_MenuBar_Menu_MenuItem;
 
 import com.czy.fx.test.FXUtil;
+import com.czy.util.ObjectUtil;
 import com.czy.util.StringUtil;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -31,7 +32,7 @@ public class MenuAboutTest extends Application {
         menuBar.getMenus().add(new Menu("菜单" + (i++)));
         menuBar.getMenus().add(new Menu("菜单" + (i++)));
         menuBar.getMenus().add(new Menu("菜单" + (i++)));
-        menuBar.getMenus().get(0).getItems().addAll(FXUtil.getObjectList(MenuItem.class,"1","a"));
+        menuBar.getMenus().get(0).getItems().addAll(ObjectUtil.getObjectList(MenuItem.class,"1","a"));
         /*菜单渲染时触发*/
         menuBar.getMenus().get(0).setOnShowing(event -> System.out.println("setOnShowing"));
         /*菜单渲染完时触发*/
@@ -59,10 +60,10 @@ public class MenuAboutTest extends Application {
 
         /*menu作为菜单项*/
         var m=new Menu("子菜单");
-        m.getItems().addAll(FXUtil.getObjectList(MenuItem.class,"嘿嘿","哈哈"));
+        m.getItems().addAll(ObjectUtil.getObjectList(MenuItem.class,"嘿嘿","哈哈"));
         menuBar.getMenus().get(1).getItems().add(m);
         /*单选菜单项*/
-        List<RadioMenuItem> radioMenuItems = FXUtil.getObjectList(RadioMenuItem.class,"单选项1","单选项2");
+        List<RadioMenuItem> radioMenuItems = ObjectUtil.getObjectList(RadioMenuItem.class,"单选项1","单选项2");
         var tg=new ToggleGroup();
 //        ClassUtil.exexList(radioMenuItems,"setToggleGroup",tg);
         tg.getToggles().addAll(radioMenuItems);
@@ -75,7 +76,7 @@ public class MenuAboutTest extends Application {
         });
 
         /*复选菜单项*/
-        List<CheckMenuItem> checkMenuItemList = FXUtil.getObjectList(CheckMenuItem.class,"复选项1","复选项2");
+        List<CheckMenuItem> checkMenuItemList = ObjectUtil.getObjectList(CheckMenuItem.class,"复选项1","复选项2");
         menuBar.getMenus().get(2).getItems().addAll(checkMenuItemList);
 
         /*自定义菜单项*/
@@ -91,20 +92,20 @@ public class MenuAboutTest extends Application {
 
 
         var menuButton=new MenuButton("menuButton");
-        menuButton.getItems().addAll(FXUtil.getObjectList(MenuItem.class,"1","2"));
+        menuButton.getItems().addAll(ObjectUtil.getObjectList(MenuItem.class,"1","2"));
         ap.getChildren().add(menuButton);
         AnchorPane.setBottomAnchor(menuButton,10d);
 
 
         var splitMenuButton=new SplitMenuButton();
         splitMenuButton.setText("splitMenuButton");
-        splitMenuButton.getItems().addAll(FXUtil.getObjectList(MenuItem.class,"1","2"));
+        splitMenuButton.getItems().addAll(ObjectUtil.getObjectList(MenuItem.class,"1","2"));
         ap.getChildren().add(splitMenuButton);
         AnchorPane.setBottomAnchor(splitMenuButton,50d);
 
 
         var contextMenu=new ContextMenu();
-        contextMenu.getItems().addAll(FXUtil.getObjectList(MenuItem.class,"a"));
+        contextMenu.getItems().addAll(ObjectUtil.getObjectList(MenuItem.class,"a"));
         var btn = new Button("右键弹出菜单");
         btn.setContextMenu(contextMenu);
         btn.setOnContextMenuRequested(event -> {

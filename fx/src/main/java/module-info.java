@@ -12,4 +12,7 @@
     exports com.czy.fx.test.test27_RadioButton_CheckBox;
     exports com.czy.fx.test.test28_TextArea;
     exports com.czy.fx.test.test29_TextField;
+    exports com.czy.fx.test.test30_ButtonBar;
+    exports com.czy.fx.test.test31_ChoiceBox;
+    exports com.czy.fx.test.test32_ComboBox;
 }

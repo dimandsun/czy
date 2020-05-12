@@ -17,6 +17,9 @@ import com.czy.fx.test.test27_RadioButton_CheckBox.RadioButtonTest;
 import com.czy.fx.test.test28_TextArea.TextAreaTest;
 import com.czy.fx.test.test29_TextField.TextFieldTest;
 import com.czy.fx.test.test2_login.Login;
+import com.czy.fx.test.test30_ButtonBar.ButtonBarTest;
+import com.czy.fx.test.test31_ChoiceBox.ChoiceBoxTest;
+import com.czy.fx.test.test32_ComboBox.ComboBoxTest;
 import com.czy.fx.test.test6_platform.PlatformTest;
 import com.czy.fx.test.test6_scene.SceneTest;
 import com.czy.fx.test.test7_screen.ScreenTest;
@@ -24,6 +27,7 @@ import com.czy.fx.test.test8_group.GroupTest;
 import com.czy.fx.test.test9_button.ButtonTest;
 import com.czy.util.FileUtil;
 import com.czy.util.StringUtil;
+import javafx.application.Application;
 
 import java.io.File;
 import java.lang.reflect.Array;
@@ -61,9 +65,10 @@ public class Main {
         entrance = RadioButtonTest.class;
         entrance = TextAreaTest.class;
         entrance = TextFieldTest.class;
-//        Application.launch(entrance,args);
-//        createDirs();
-        ;
+        entrance= ButtonBarTest.class;
+        entrance= ChoiceBoxTest.class;
+        entrance= ComboBoxTest.class;
+        Application.launch(entrance,args);
 
     }
 

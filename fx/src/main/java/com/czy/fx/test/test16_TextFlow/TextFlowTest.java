@@ -1,6 +1,7 @@
 package com.czy.fx.test.test16_TextFlow;
 
 import com.czy.fx.test.FXUtil;
+import com.czy.util.ObjectUtil;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.paint.Paint;
@@ -19,7 +20,7 @@ public class TextFlowTest extends Application {
     public void start(Stage primaryStage) throws Exception {
         var textFlow=new TextFlow();
 
-        textFlow.getChildren().addAll(FXUtil.getObjectList(Text.class,"123大家好爱的发发富士达大叔打饭，这个能缩进吗","嘿嘿","我是陈志源"));
+        textFlow.getChildren().addAll(ObjectUtil.getObjectList(Text.class,"123大家好爱的发发富士达大叔打饭，这个能缩进吗","嘿嘿","我是陈志源"));
         textFlow.getChildren().forEach(node->{
             var text = (Text)node;
             text.setFont(Font.font(20));

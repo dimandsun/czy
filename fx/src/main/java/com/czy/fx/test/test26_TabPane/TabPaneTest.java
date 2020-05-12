@@ -1,6 +1,7 @@
 package com.czy.fx.test.test26_TabPane;
 
 import com.czy.fx.test.FXUtil;
+import com.czy.util.ObjectUtil;
 import javafx.application.Application;
 import javafx.geometry.Side;
 import javafx.scene.Scene;
@@ -21,7 +22,7 @@ public class TabPaneTest extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         var tp = new TabPane();
-        tp.getTabs().addAll(FXUtil.getObjectList(Tab.class,"1","2","3"));
+        tp.getTabs().addAll(ObjectUtil.getObjectList(Tab.class,"1","2","3"));
         var tab = new Tab("页签");
         var box=new VBox();
         box.getChildren().addAll(FXUtil.getButtonList("a","b","b","b","b","b","b","b"));
