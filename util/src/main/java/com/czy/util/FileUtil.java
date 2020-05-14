@@ -2,6 +2,7 @@ package com.czy.util;
 
 
 import com.czy.util.model.MyMap;
+import com.czy.util.model.StringMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -420,12 +421,12 @@ public class FileUtil {
         return list;
     }
 
-    public static <T> MyMap<T> readConfigFileByProperty(String filePath) {
+    public static <T> StringMap<T> readConfigFileByProperty(String filePath) {
         try {
             Properties prop = new Properties();
             FileInputStream in = new FileInputStream(FileUtil.getResourceFile(filePath));
             prop.load(in);
-            MyMap<T> proMap = new MyMap();
+            StringMap<T> proMap = new StringMap();
             for (String key : prop.stringPropertyNames()) {
                 proMap.put(key, (T) prop.getProperty(key));
             }
@@ -437,14 +438,14 @@ public class FileUtil {
         }
     }
 
-    public static <T> MyMap<T> readConfigFileByYML(String filePath) {
+    public static <T> StringMap<T> readConfigFileByYML(String filePath) {
         try {
             InputStream in = FileUtil.class.getClassLoader().getResourceAsStream(filePath);
             if (in == null) {
                 logger.error("文件{}未找到", filePath);
                 return null;
             }
-            MyMap<T> proMap = new Yaml().loadAs(in, MyMap.class);
+            StringMap<T> proMap = new Yaml().loadAs(in, StringMap.class);
             in.close();
             return proMap;
         } catch (IOException e) {

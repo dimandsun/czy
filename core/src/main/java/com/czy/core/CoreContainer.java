@@ -14,6 +14,7 @@ import com.czy.util.FileUtil;
 import com.czy.util.StringUtil;
 import com.czy.util.model.MyMap;
 import com.czy.util.model.OutPar;
+import com.czy.util.model.StringMap;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -42,8 +43,8 @@ public class CoreContainer {
     private static CoreContainer instance = new CoreContainer();
     private Set<String> projectGroupIdList = new HashSet<>();
     /*key是 请求方法+url,value是RouteModel*/
-    private MyMap<BeanModel> beanMap = new MyMap();
-    private MyMap<RouteModel> routeMap = new MyMap();
+    private StringMap<BeanModel> beanMap = new StringMap();
+    private StringMap<RouteModel> routeMap = new StringMap();
     private CoreProject coreProject = null;
 
     public static void setInstance(CoreContainer instance) {
@@ -285,11 +286,11 @@ public class CoreContainer {
         this.projectGroupIdList.add(projectGroupId);
     }
 
-    public MyMap<RouteModel> getRouteMap() {
+    public StringMap<RouteModel> getRouteMap() {
         return routeMap;
     }
 
-    public MyMap<BeanModel> getBeanMap() {
+    public StringMap<BeanModel> getBeanMap() {
         return beanMap;
     }
 

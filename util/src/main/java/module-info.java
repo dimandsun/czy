@@ -11,6 +11,7 @@
     requires cglib;
     requires java.xml;
     requires org.yaml.snakeyaml;
+    requires jyaml;
     exports com.czy.util;
     exports com.czy.util.model;
     exports com.czy.util.enums;
