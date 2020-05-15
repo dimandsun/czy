@@ -15,4 +15,5 @@
     exports com.czy.fx.test.test30_ButtonBar;
     exports com.czy.fx.test.test31_ChoiceBox;
     exports com.czy.fx.test.test32_ComboBox;
+    exports com.czy.fx.test.test33_ColorPicke;
 }

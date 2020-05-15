@@ -12,6 +12,7 @@ import javafx.scene.control.Labeled;
 import javafx.scene.control.Skinnable;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -78,11 +79,17 @@ public class FXUtil {
     }
 
     /**设置组件颜色:参数二可以是rgb值也可以写颜色的英文*/
-    public static <T extends Node>T setColor(T t, String RGB) {
-        t.setStyle("-fx-background-color: " + RGB + ";" + t.getStyle());
+    public static <T extends Node>T setColor(T t, String rgb) {
+        t.setStyle("-fx-background-color: " + rgb + ";" + t.getStyle());
         return t;
     }
-
+    /**设置组件颜色:参数二可以是rgb值也可以写颜色的英文*/
+    public static <T extends Node>T setColor(T t, Color color) {
+        String rgb =color.toString();
+        rgb=rgb.replace("0x","#");
+        setColor(t,rgb);
+        return t;
+    }
     /**/
     private static Boolean invoke(Object o, String methodName, Object... pars) {
         if (o == null || StringUtil.isBlank(methodName)) {
