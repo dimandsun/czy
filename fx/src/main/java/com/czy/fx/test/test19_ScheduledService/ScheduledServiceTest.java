@@ -43,6 +43,9 @@ public class ScheduledServiceTest extends Application {
                 };
             }
         };
+        ss.valueProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println(newValue);
+        });
         var btn = new Button();
         btn.setOnAction(event -> {
             //延迟0毫秒

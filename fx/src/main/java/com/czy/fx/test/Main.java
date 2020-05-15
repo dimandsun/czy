@@ -23,6 +23,7 @@ import com.czy.fx.test.test32_ComboBox.ComboBoxTest;
 import com.czy.fx.test.test33_ColorPicke.ColorPickeTest;
 import com.czy.fx.test.test34_DatePicker.DatePickerTest;
 import com.czy.fx.test.test35_Pagination.PaginationTest;
+import com.czy.fx.test.test36_Slider.SliderTest;
 import com.czy.fx.test.test6_platform.PlatformTest;
 import com.czy.fx.test.test6_scene.SceneTest;
 import com.czy.fx.test.test7_screen.ScreenTest;
@@ -74,6 +75,7 @@ public class Main {
         entrance= ColorPickeTest.class;
         entrance= DatePickerTest.class;
         entrance= PaginationTest.class;
+        entrance= SliderTest.class;
         Application.launch(entrance,args);
 
     }
