@@ -21,6 +21,7 @@ import com.czy.fx.test.test30_ButtonBar.ButtonBarTest;
 import com.czy.fx.test.test31_ChoiceBox.ChoiceBoxTest;
 import com.czy.fx.test.test32_ComboBox.ComboBoxTest;
 import com.czy.fx.test.test33_ColorPicke.ColorPickeTest;
+import com.czy.fx.test.test34_DatePicker.DatePickerTest;
 import com.czy.fx.test.test6_platform.PlatformTest;
 import com.czy.fx.test.test6_scene.SceneTest;
 import com.czy.fx.test.test7_screen.ScreenTest;
@@ -70,6 +71,7 @@ public class Main {
         entrance= ChoiceBoxTest.class;
         entrance= ComboBoxTest.class;
         entrance= ColorPickeTest.class;
+        entrance= DatePickerTest.class;
         Application.launch(entrance,args);
 
     }
