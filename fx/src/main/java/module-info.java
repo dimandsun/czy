@@ -17,4 +17,5 @@
     exports com.czy.fx.test.test32_ComboBox;
     exports com.czy.fx.test.test33_ColorPicke;
     exports com.czy.fx.test.test34_DatePicker;
+    exports com.czy.fx.test.test35_Pagination;
 }
