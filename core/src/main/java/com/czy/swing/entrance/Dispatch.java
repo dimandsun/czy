@@ -7,6 +7,7 @@ import com.czy.core.model.RouteModel;
 import com.czy.util.ClassUtil;
 import com.czy.util.json.JsonUtil;
 import com.czy.util.model.MyMap;
+import com.czy.util.model.StringMap;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.util.Map;
 
 /**
  * @author chenzy
@@ -23,7 +25,7 @@ import java.lang.reflect.Parameter;
  */
 public class Dispatch {
     private static Logger logger= LoggerFactory.getLogger("dispatch_log");
-    private static MyMap<RouteModel> routeModelMap = null;
+    private static StringMap<RouteModel> routeModelMap = null;
     private static Dispatch instance=new Dispatch();
     public static Dispatch getInstance() {
         return instance;

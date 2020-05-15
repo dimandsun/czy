@@ -386,33 +386,32 @@ public class CoreContainer {
     private void setRouteMap(BeanModel controllerBeanModel) {
         Class c = controllerBeanModel.getPrimaryBeanClass();
         Controller controllerAnnotation = (Controller) c.getAnnotation(Controller.class);
-        String urlPrefix = controllerAnnotation.value();
-        if (!urlPrefix.isBlank()&&!urlPrefix.startsWith("/")) {
-            urlPrefix="/"+urlPrefix;
-        }
+        //路由前缀，在Controller类上
+        String urlPrefix = trim(controllerAnnotation.value());
+        //路由后缀，在方法的Mapping注解上
+        String urlSuffix=null;
         QuestEnum questEnum = null;
-        String url = null;
         for (Method method : c.getMethods()) {
             if (method.isAnnotationPresent(Mapping.class)) {
                 questEnum = QuestEnum.All;
-                url = getURL(method.getAnnotation(Mapping.class).value(),urlPrefix);
+                urlSuffix= method.getAnnotation(Mapping.class).value();
             } else if (method.isAnnotationPresent(PostMapping.class)) {
                 questEnum = QuestEnum.Post;
-                url = getURL(method.getAnnotation(PostMapping.class).value(),urlPrefix);
+                urlSuffix= method.getAnnotation(PostMapping.class).value();
             } else if (method.isAnnotationPresent(PutMapping.class)) {
                 questEnum = QuestEnum.Put;
-                url = getURL(method.getAnnotation(PutMapping.class).value(),urlPrefix);
+                urlSuffix= method.getAnnotation(PutMapping.class).value();
             } else if (method.isAnnotationPresent(GetMapping.class)) {
                 questEnum = QuestEnum.Get;
-                url =getURL(method.getAnnotation(GetMapping.class).value(),urlPrefix);
+                urlSuffix= method.getAnnotation(GetMapping.class).value();
             } else if (method.isAnnotationPresent(DeleteMapping.class)) {
                 questEnum = QuestEnum.Delete;
-                url =getURL(method.getAnnotation(DeleteMapping.class).value(),urlPrefix);
+                urlSuffix= method.getAnnotation(DeleteMapping.class).value();
             } else {
                 continue;
             }
             RouteModel routeModel = new RouteModel();
-            routeModel.setUrl(url);
+            routeModel.setUrl(urlPrefix+trim(urlSuffix));
             routeModel.setQuestEnum(questEnum);
             routeModel.setBeanModel(controllerBeanModel);
             routeModel.setMethod(method);
@@ -420,11 +419,17 @@ public class CoreContainer {
         }
 
     }
-    private String getURL(String url2,String urlPrefix){
-        if (!url2.isBlank()&&!url2.startsWith("/")) {
-            url2="/"+url2;
+    private String trim(String url){
+        if (StringUtil.isBlank(url)){
+            return url;
         }
-        return urlPrefix + url2;
+        if (!url.startsWith("/")){
+            url = "/"+url;
+        }
+        if (url.endsWith("/")){
+            url=url.substring(0,url.length()-1);
+        }
+        return url;
     }
     private String getBeanName(Class interfaceClass) {
         String inteSimpleName = interfaceClass.getSimpleName();
