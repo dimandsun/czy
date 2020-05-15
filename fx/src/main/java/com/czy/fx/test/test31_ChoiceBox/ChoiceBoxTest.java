@@ -2,6 +2,7 @@ package com.czy.fx.test.test31_ChoiceBox;
 
 import com.czy.user.model.User;
 import com.czy.util.ObjectUtil;
+import com.czy.util.StringUtil;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -50,7 +51,11 @@ public class ChoiceBoxTest extends Application {
         });
         /*展开列表*/
         cb.show();
-//        cb.getSelectionModel().select(new User("aa啊啊"));
+        //移除选中
+        cb.getSelectionModel().clearSelection();
+        cb.getSelectionModel().selectedItemProperty().addListener((observableValue, oldUser, newUser) -> {
+            StringUtil.println("内容改变:旧值：{}，新值：{}",oldUser,newUser);
+        });
         var btn = new Button("切换");
         btn.setOnAction(event -> {
             String name = "李四";

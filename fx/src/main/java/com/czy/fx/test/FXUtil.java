@@ -2,11 +2,14 @@ package com.czy.fx.test;
 
 import com.czy.util.ClassUtil;
 import com.czy.util.StringUtil;
+import javafx.css.Styleable;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Labeled;
+import javafx.scene.control.Skinnable;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
@@ -74,10 +77,10 @@ public class FXUtil {
         return pane;
     }
 
-    /*设置组件颜色*/
-    public static Pane setColor(Pane pane, String RGB) {
-        pane.setStyle("-fx-background-color: " + RGB + ";" + pane.getStyle());
-        return pane;
+    /**设置组件颜色:参数二可以是rgb值也可以写颜色的英文*/
+    public static <T extends Node>T setColor(T t, String RGB) {
+        t.setStyle("-fx-background-color: " + RGB + ";" + t.getStyle());
+        return t;
     }
 
     /**/
