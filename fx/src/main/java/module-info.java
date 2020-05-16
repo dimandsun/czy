@@ -20,4 +20,6 @@
     exports com.czy.fx.test.test35_Pagination;
     exports com.czy.fx.test.test36_Slider;
     exports com.czy.fx.test.test22_media;
+    exports com.czy.fx.test.test37_ProgressBar;
+    exports com.czy.fx.test.test38_ProgressIndicator;
 }

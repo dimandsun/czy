@@ -25,6 +25,8 @@ import com.czy.fx.test.test33_ColorPicke.ColorPickeTest;
 import com.czy.fx.test.test34_DatePicker.DatePickerTest;
 import com.czy.fx.test.test35_Pagination.PaginationTest;
 import com.czy.fx.test.test36_Slider.SliderTest;
+import com.czy.fx.test.test37_ProgressBar.ProgressBarTest;
+import com.czy.fx.test.test38_ProgressIndicator.ProgressIndicatorTest;
 import com.czy.fx.test.test6_platform.PlatformTest;
 import com.czy.fx.test.test6_scene.SceneTest;
 import com.czy.fx.test.test7_screen.ScreenTest;
@@ -78,6 +80,8 @@ public class Main {
         entrance= PaginationTest.class;
         entrance= SliderTest.class;
         entrance= MediaTest.class;
+        entrance= ProgressBarTest.class;
+        entrance= ProgressIndicatorTest.class;
         Application.launch(entrance,args);
 
     }

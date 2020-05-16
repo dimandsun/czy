@@ -21,7 +21,7 @@ public class MediaTest extends Application {
         var ap=new AnchorPane();
         var btn = new Button("播放");
         String source = "https://other.web.ri03.sycdn.kuwo.cn/resource/a1/93/1/1538412850.aac";
-        source="file:/E:/CloudMusic/Fine乐团配不上你.mp3";
+        source="file:/D:/CloudMusic/Fine乐团配不上你.mp3";
         var mediaPaly = new MediaPlayer(new Media(source));
         btn.setOnAction(event -> {
 
