@@ -19,4 +19,5 @@
     exports com.czy.fx.test.test34_DatePicker;
     exports com.czy.fx.test.test35_Pagination;
     exports com.czy.fx.test.test36_Slider;
+    exports com.czy.fx.test.test22_media;
 }

@@ -11,6 +11,7 @@ import com.czy.fx.test.test18_DialogPane.DialogPaneTest;
 import com.czy.fx.test.test19_ScheduledService.ScheduledServiceTest;
 import com.czy.fx.test.test1_helloWorld.HelloWorld;
 import com.czy.fx.test.test21_MenuBar_Menu_MenuItem.MenuAboutTest;
+import com.czy.fx.test.test22_media.MediaTest;
 import com.czy.fx.test.test25_TitledPane.TitledPaneTest;
 import com.czy.fx.test.test26_TabPane.TabPaneTest;
 import com.czy.fx.test.test27_RadioButton_CheckBox.RadioButtonTest;
@@ -76,6 +77,7 @@ public class Main {
         entrance= DatePickerTest.class;
         entrance= PaginationTest.class;
         entrance= SliderTest.class;
+        entrance= MediaTest.class;
         Application.launch(entrance,args);
 
     }
