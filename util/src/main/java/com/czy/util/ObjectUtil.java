@@ -14,6 +14,32 @@ public class ObjectUtil {
     /**
      * 生成对象集合：
      * 用反射，根据指定类型，生成对象集合，
+     * 要求对应类型必须有 无参构造方法
+     * 参数二为集合长度
+     */
+    public static<T extends Object> List<T> getObjectList(Class<T> objClass,Integer num) {
+        if (num==null||num<1){
+            return null;
+        }
+        var objList = new ArrayList<T>(num);
+        for (int i=0;i<num;i++) {
+            try {
+                objList.add(objClass.getDeclaredConstructor().newInstance());
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+        }
+        return objList;
+    }
+    /**
+     * 生成对象集合：
+     * 用反射，根据指定类型，生成对象集合，
      * 要求对应类型必须有 只有一个参数的构造方法，且这个参数是字符串类型
      */
     public static<T extends Object> List<T> getObjectList(Class<T> objClass, String... pars) {

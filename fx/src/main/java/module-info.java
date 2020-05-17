@@ -22,4 +22,6 @@
     exports com.czy.fx.test.test22_media;
     exports com.czy.fx.test.test37_ProgressBar;
     exports com.czy.fx.test.test38_ProgressIndicator;
+    exports com.czy.fx.test.test39_SplitPane;
+    exports com.czy.fx.test.test40_Spinner;
 }
