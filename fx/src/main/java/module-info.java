@@ -24,4 +24,7 @@
     exports com.czy.fx.test.test38_ProgressIndicator;
     exports com.czy.fx.test.test39_SplitPane;
     exports com.czy.fx.test.test40_Spinner;
+    exports com.czy.fx.test.test41_ScrollBar;
+    exports com.czy.fx.test.test42_ScrollPane;
+    exports com.czy.fx.test.test43_Separator;
 }

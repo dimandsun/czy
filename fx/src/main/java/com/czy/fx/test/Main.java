@@ -29,6 +29,9 @@ import com.czy.fx.test.test37_ProgressBar.ProgressBarTest;
 import com.czy.fx.test.test38_ProgressIndicator.ProgressIndicatorTest;
 import com.czy.fx.test.test39_SplitPane.SplitPaneTest;
 import com.czy.fx.test.test40_Spinner.SpinnerTest;
+import com.czy.fx.test.test41_ScrollBar.ScrollBarTest;
+import com.czy.fx.test.test42_ScrollPane.ScrollPaneTest;
+import com.czy.fx.test.test43_Separator.SeparatorTest;
 import com.czy.fx.test.test6_platform.PlatformTest;
 import com.czy.fx.test.test6_scene.SceneTest;
 import com.czy.fx.test.test7_screen.ScreenTest;
@@ -86,6 +89,9 @@ public class Main {
         entrance= ProgressIndicatorTest.class;
         entrance= SplitPaneTest.class;
         entrance= SpinnerTest.class;
+        entrance= ScrollBarTest.class;
+        entrance= ScrollPaneTest.class;
+        entrance= SeparatorTest.class;
         Application.launch(entrance,args);
 
     }
