@@ -50,6 +50,10 @@ public class HelloWorld extends Application {
         Button btn = new Button();
         btn.setText("Say 'Hello World'");
         btn.setOnAction(event -> System.out.println("Hello World!"));
+        /*setPrefWidth前getPrefWidth得到-1,getWidth有值,得到的是父控件给的值。setPrefWidth后会修改preWidth和width的值，*/
+        btn.setPrefWidth(17);
+        /*最小宽度*/
+        btn.setPrefWidth(Button.USE_PREF_SIZE);
         Button mixBtn = new Button("最小化");
         mixBtn.setOnAction(e->stage.setIconified(true));
         StackPane root = new StackPane();

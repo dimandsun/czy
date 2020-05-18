@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--java命名修改日志配置文件： java -Dlogback.configurationFile=xx/xx.xml-->
+<!--logback-test.xml>logback.xml>com.qos.logback.classic.spi.Configuration第一个实现类>ch.qos.logback.classic.BasicConfiguration实现控制台输出-->
+<!--scan="true"自动扫描配置文件是否修改 scanPeriod="60 seconds" 60秒扫描一次，debug="false"不显示内部日志-->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <!--日志级别：trance<debug<info<warn<error-->
+    <property name="log.level" value="debug"/>
+    <!--文件最大保存历史数量：最多保存多少天-->
+    <property name="log.maxHistory" value="30"/>
+    <!--catalina.base是tomcat根目录-->
+    <property name="log.filePath" value="${catalina.base}/logs/czy/fx"/>
+    <property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS}[%thead] %-5level %logger{50} -%msg%n"/>
+
+
+</configuration>

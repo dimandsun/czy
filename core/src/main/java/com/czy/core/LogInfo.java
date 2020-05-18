@@ -22,5 +22,7 @@ public class LogInfo {
         context.reconfigure();
         System.out.println("------------------------------日志初始化完成------------------------------");
 
+
+
     }
 }

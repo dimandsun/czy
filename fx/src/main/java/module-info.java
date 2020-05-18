@@ -27,4 +27,5 @@
     exports com.czy.fx.test.test41_ScrollBar;
     exports com.czy.fx.test.test42_ScrollPane;
     exports com.czy.fx.test.test43_Separator;
+    exports com.czy.fx.test.test44_Point2D;
 }

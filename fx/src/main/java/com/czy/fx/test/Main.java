@@ -32,6 +32,7 @@ import com.czy.fx.test.test40_Spinner.SpinnerTest;
 import com.czy.fx.test.test41_ScrollBar.ScrollBarTest;
 import com.czy.fx.test.test42_ScrollPane.ScrollPaneTest;
 import com.czy.fx.test.test43_Separator.SeparatorTest;
+import com.czy.fx.test.test44_Point2D.Point2DTest;
 import com.czy.fx.test.test6_platform.PlatformTest;
 import com.czy.fx.test.test6_scene.SceneTest;
 import com.czy.fx.test.test7_screen.ScreenTest;
@@ -92,6 +93,7 @@ public class Main {
         entrance= ScrollBarTest.class;
         entrance= ScrollPaneTest.class;
         entrance= SeparatorTest.class;
+        entrance= Point2DTest.class;
         Application.launch(entrance,args);
 
     }
