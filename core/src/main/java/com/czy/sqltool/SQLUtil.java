@@ -5,6 +5,7 @@ import com.czy.sqltool.model.ColumnSqlInfo;
 import com.czy.sqltool.model.TableSqlInfo;
 import com.czy.util.DateUtil;
 import com.czy.util.FileUtil;
+import com.czy.util.ListUtil;
 import com.czy.util.StringUtil;
 
 import java.io.File;
@@ -70,13 +71,13 @@ public class SQLUtil {
             TableSqlInfo tableSqlInfo = new TableSqlInfo(tableName, tableDes);
             /*循环解析每个字段*/
             String[] columnContentA = sqlContent.split(",");
-            if (StringUtil.isEmpty(columnContentA)) {
+            if (ListUtil.isEmpty(columnContentA)) {
                 continue;
             }
             List<ColumnSqlInfo> columnSqlInfoList = new ArrayList<>(columnContentA.length);
             for (String columnContent : columnContentA) {
                 String[] columnInfoA = columnContent.split(" ");
-                if (StringUtil.isEmpty(columnInfoA)) {
+                if (ListUtil.isEmpty(columnInfoA)) {
                     continue;
                 }
                 if (columnInfoA.length < 2) {
@@ -110,7 +111,7 @@ public class SQLUtil {
                 /*写字段：字段注释，字段类型，字段名
                   写方法: set方法，get方法
                 */
-            if (StringUtil.isEmpty(columnSqlInfoList)) {
+            if (ListUtil.isEmpty(columnSqlInfoList)) {
                 continue;
             }
             String columnContent = "", columnMethodContent = "";
