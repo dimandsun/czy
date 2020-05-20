@@ -9,6 +9,7 @@
     requires javafx.fxml;
     requires com.czy.core;
     requires com.czy.util;
+    requires java.desktop;
     exports com.czy.fx.test.test27_RadioButton_CheckBox;
     exports com.czy.fx.test.test28_TextArea;
     exports com.czy.fx.test.test29_TextField;
@@ -28,4 +29,5 @@
     exports com.czy.fx.test.test42_ScrollPane;
     exports com.czy.fx.test.test43_Separator;
     exports com.czy.fx.test.test44_Point2D;
+    exports com.czy.fx.test.test45_PropertyChangeSupport;
 }
