@@ -34,6 +34,8 @@ import com.czy.fx.test.test42_ScrollPane.ScrollPaneTest;
 import com.czy.fx.test.test43_Separator.SeparatorTest;
 import com.czy.fx.test.test44_Point2D.Point2DTest;
 import com.czy.fx.test.test45_PropertyChangeSupport.PropertyChangeSupportTest;
+import com.czy.fx.test.test46_SimpleIntegerProperty.SimpleIntegerPropertyTest;
+import com.czy.fx.test.test47_ReadOnlyDoubleWrapper.ReadOnlyDoubleWrapperTest;
 import com.czy.fx.test.test6_platform.PlatformTest;
 import com.czy.fx.test.test6_scene.SceneTest;
 import com.czy.fx.test.test7_screen.ScreenTest;
@@ -96,6 +98,8 @@ public class Main {
         entrance= SeparatorTest.class;
         entrance= Point2DTest.class;
         entrance= PropertyChangeSupportTest.class;
+        entrance= SimpleIntegerPropertyTest.class;
+        entrance= ReadOnlyDoubleWrapperTest.class;
         Application.launch(entrance,args);
 //        createDirs();
 
@@ -114,9 +118,9 @@ public class Main {
 
         String beanPackage = "com.czy.fx.test.test";
         String moduleDir = "fx";
-        ss=new String[]{"PropertyChangeSupport", "ListProperty", "SetProperty", "MapProperty"
+        ss=new String[]{"SimpleIntegerProperty","ReadOnlyDoubleWrapper", "ListProperty", "SetProperty", "MapProperty"
                 , "ChangeListener", "InvalidationListener"};
-        Integer i = 45;
+        Integer i = 46;
         for (String s : ss) {
             File modelDir = FileUtil.getCodeFile(moduleDir, beanPackage + i + "_" + s);
             if (!modelDir.exists()) {

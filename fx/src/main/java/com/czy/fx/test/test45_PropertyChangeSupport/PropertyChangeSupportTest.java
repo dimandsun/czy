@@ -40,6 +40,7 @@ public class PropertyChangeSupportTest extends Application {
         primaryStage.setWidth(1000);
         primaryStage.show();
         AnchorPane.setTopAnchor(btn,nameText.getHeight());
+
     }
     private void setName(PropertyChangeSupport propertyChangeSupport,User user,String name){
         propertyChangeSupport.firePropertyChange("userName",user.getName(),name);

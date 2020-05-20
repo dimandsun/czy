@@ -6,10 +6,13 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -33,7 +36,15 @@ public class FXUtil {
         }
         return buttonList;
     }
-
+    public static void setDefaultValue(Stage stage, Parent root, Double width, Double height){
+        stage.setScene(new Scene(root));
+        stage.setWidth(width==null?800:width);
+        stage.setHeight(height==null?1000:height);
+        stage.show();
+    }
+    public static void setDefaultValue(Stage stage, Parent root){
+        setDefaultValue(stage,root,null,null);
+    }
     /**
      * 设置控件内边距
      * ,对齐方式
