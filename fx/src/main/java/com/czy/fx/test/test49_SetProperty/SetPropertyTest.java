@@ -5,19 +5,14 @@ import com.czy.user.model.User;
 import com.czy.util.ListUtil;
 import com.czy.util.ObjectUtil;
 import javafx.application.Application;
-import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleSetProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableSet;
 import javafx.collections.SetChangeListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.util.Arrays;
-import java.util.List;
 
 import static com.czy.util.StringUtil.println;
 
