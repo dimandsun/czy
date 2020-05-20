@@ -39,4 +39,12 @@ public class ListUtil {
     public static <T> boolean isNotEmpty(List<T> list) {
 return !isEmpty(list);
     }
+
+    public static <T> T[] list2Array(List<T> list) {
+        if (isEmpty(list)){
+            return null;
+        }
+        T[] ts= (T[]) list.toArray();
+        return ts;
+    }
 }

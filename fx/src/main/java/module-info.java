@@ -32,4 +32,6 @@
     exports com.czy.fx.test.test45_PropertyChangeSupport;
     exports com.czy.fx.test.test46_SimpleIntegerProperty;
     exports com.czy.fx.test.test47_ReadOnlyDoubleWrapper;
+    exports com.czy.fx.test.test48_ListProperty;
+
 }

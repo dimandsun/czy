@@ -36,6 +36,7 @@ import com.czy.fx.test.test44_Point2D.Point2DTest;
 import com.czy.fx.test.test45_PropertyChangeSupport.PropertyChangeSupportTest;
 import com.czy.fx.test.test46_SimpleIntegerProperty.SimpleIntegerPropertyTest;
 import com.czy.fx.test.test47_ReadOnlyDoubleWrapper.ReadOnlyDoubleWrapperTest;
+import com.czy.fx.test.test48_ListProperty.ListPropertyTest;
 import com.czy.fx.test.test6_platform.PlatformTest;
 import com.czy.fx.test.test6_scene.SceneTest;
 import com.czy.fx.test.test7_screen.ScreenTest;
@@ -100,6 +101,7 @@ public class Main {
         entrance= PropertyChangeSupportTest.class;
         entrance= SimpleIntegerPropertyTest.class;
         entrance= ReadOnlyDoubleWrapperTest.class;
+        entrance= ListPropertyTest.class;
         Application.launch(entrance,args);
 //        createDirs();
 
