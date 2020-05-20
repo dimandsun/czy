@@ -1,13 +1,14 @@
-package com.czy.core.annotation;
+package com.czy.core.annotation.bean;
 
 import java.lang.annotation.*;
 
 /**
- * dao层注解
+ * service层注解
  * @author 陈志源 on 2019-01-08.
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Dao {
+@BeanAnnotation
+public @interface Config {
 }

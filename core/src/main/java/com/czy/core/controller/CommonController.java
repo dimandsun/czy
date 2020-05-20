@@ -1,6 +1,8 @@
 package com.czy.core.controller;
 
 import com.czy.core.annotation.*;
+import com.czy.core.annotation.bean.Controller;
+import com.czy.core.annotation.mapping.*;
 import com.czy.core.service.ICommonService;
 import com.czy.util.model.ResultVO;
 
@@ -11,7 +13,8 @@ import java.util.Map;
  * @description
  * @since 2020-04-23
  */
-@Controller("/common")
+@Controller
+@Mapping("/common")
 public class CommonController {
     @Auto
     private ICommonService commonService;

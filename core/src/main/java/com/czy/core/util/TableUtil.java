@@ -1,6 +1,6 @@
 package com.czy.core.util;
 
-import com.czy.core.annotation.Table;
+import com.czy.core.annotation.db.Table;
 import com.czy.util.StringUtil;
 
 /**

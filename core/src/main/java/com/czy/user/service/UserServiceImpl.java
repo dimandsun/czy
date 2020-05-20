@@ -1,7 +1,7 @@
 package com.czy.user.service;
 
 import com.czy.core.annotation.Auto;
-import com.czy.core.annotation.Service;
+import com.czy.core.annotation.bean.Service;
 import com.czy.core.service.ICommonService;
 import com.czy.user.model.User;
 import com.czy.util.SecretUtil;

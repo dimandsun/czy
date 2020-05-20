@@ -1,7 +1,7 @@
 package com.czy.core.util;
 
 import com.czy.core.CoreContainer;
-import com.czy.core.annotation.Dao;
+import com.czy.core.annotation.bean.Dao;
 import com.czy.core.db.config.DataSourceHolder;
 import net.sf.cglib.proxy.MethodProxy;
 import org.apache.ibatis.session.SqlSession;

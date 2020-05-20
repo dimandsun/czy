@@ -1,7 +1,7 @@
 package com.czy.user.config;
 
 import com.czy.core.annotation.Aspect;
-import com.czy.core.annotation.Config;
+import com.czy.core.annotation.bean.Config;
 import com.czy.core.enums.AspectTypeEnum;
 import com.czy.core.util.DaoUtil;
 import net.sf.cglib.proxy.MethodProxy;

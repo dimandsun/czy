@@ -1,8 +1,9 @@
 package com.czy.user.control;
 
 import com.czy.core.annotation.Auto;
-import com.czy.core.annotation.Controller;
-import com.czy.core.annotation.GetMapping;
+import com.czy.core.annotation.bean.Controller;
+import com.czy.core.annotation.mapping.GetMapping;
+import com.czy.core.annotation.mapping.Mapping;
 import com.czy.user.model.User;
 import com.czy.user.service.IUserService;
 import com.czy.util.SecretUtil;
@@ -16,7 +17,8 @@ import java.util.List;
  * @description
  * @since 2020-04-23
  */
-@Controller("/login")
+@Controller
+@Mapping("/login")
 public class LoginController {
     @Auto
     private IUserService userService;

@@ -2,6 +2,8 @@ package com.czy.core;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.czy.core.annotation.*;
+import com.czy.core.annotation.bean.*;
+import com.czy.core.annotation.mapping.*;
 import com.czy.core.db.config.DataSourceEnum;
 import com.czy.core.db.model.MybatisInfo;
 import com.czy.core.db.model.TypeAliases;
@@ -11,8 +13,8 @@ import com.czy.core.model.ProjectInfo;
 import com.czy.core.model.RouteModel;
 import com.czy.core.enums.QuestEnum;
 import com.czy.util.FileUtil;
+import com.czy.util.ListUtil;
 import com.czy.util.StringUtil;
-import com.czy.util.model.MyMap;
 import com.czy.util.model.OutPar;
 import com.czy.util.model.StringMap;
 import org.apache.ibatis.mapping.Environment;
@@ -117,9 +119,9 @@ public class CoreContainer {
     private List<Class> getClassList(String packageName) {
         List<Class> classList = new ArrayList<>();
         String classPathP = this.getClass().getResource("").getPath();
-        classPathP=classPathP.substring(0,classPathP.indexOf(CoreProject.getInstance().getGroupId().replace(".","/")));
+        classPathP = classPathP.substring(0, classPathP.indexOf(CoreProject.getInstance().getGroupId().replace(".", "/")));
         for (String projectGroupId : projectGroupIdList) {
-            String classPath = classPathP+ projectGroupId.replace(".", File.separator);
+            String classPath = classPathP + projectGroupId.replace(".", File.separator);
             classList.addAll(FileUtil.getClassList(classPath, projectGroupId, packageName));
         }
         return classList;
@@ -128,9 +130,9 @@ public class CoreContainer {
     private List<Class> getClassList(Class<? extends Annotation> annotationClass) {
         List<Class> classList = new ArrayList<>();
         String classPathP = this.getClass().getResource("").getPath();
-        classPathP=classPathP.substring(0,classPathP.indexOf(CoreProject.getInstance().getGroupId().replace(".","/")));
+        classPathP = classPathP.substring(0, classPathP.indexOf(CoreProject.getInstance().getGroupId().replace(".", "/")));
         for (String projectGroupId : projectGroupIdList) {
-            String classPath = classPathP+ projectGroupId.replace(".", File.separator);
+            String classPath = classPathP + projectGroupId.replace(".", File.separator);
             classList.addAll(FileUtil.getClassList(classPath, projectGroupId, annotationClass));
         }
         return classList;
@@ -195,7 +197,7 @@ public class CoreContainer {
         try {
 
             Map<String, Object> proMap = getProMap();
-            if (proMap==null){
+            if (proMap == null) {
                 return;
             }
             /*1、注入数据源*/
@@ -301,23 +303,16 @@ public class CoreContainer {
     public void setJavaBeanMap() {
         Class<? extends Annotation> annotationClass = null;
         for (Class c : getClassList(annotationClass)) {
-            BeanModel beanModel = null;
             /*1、获取beanName*/
-            if (c.isAnnotationPresent(Service.class) || c.isAnnotationPresent(Controller.class)
-                    || c.isAnnotationPresent(Dao.class) || c.isAnnotationPresent(Config.class) || c.isAnnotationPresent(Bean.class)) {
-                OutPar<Class> primaryInterfaceClassPar = new OutPar();
-                String beanName = getBeanName(c, primaryInterfaceClassPar);
-                if (StringUtil.isBlank(beanName)) {
-                    continue;
-                }
-                beanModel = new BeanModel(beanName);
-                if (primaryInterfaceClassPar.get() != null) {
-                    beanModel.setPrimaryInterfaceClass(primaryInterfaceClassPar.get());
-                }
-            } else {
+            OutPar<Class> primaryInterfaceClassPar = new OutPar();
+            String beanName = getBeanName(c, primaryInterfaceClassPar);
+            if (StringUtil.isBlank(beanName)) {
                 continue;
             }
-
+            BeanModel beanModel = new BeanModel(beanName);
+            if (primaryInterfaceClassPar.get() != null) {
+                beanModel.setPrimaryInterfaceClass(primaryInterfaceClassPar.get());
+            }
             /*2、获取bean对象*/
             Object bean = null;
             if (c.isAnnotationPresent(Dao.class)) {
@@ -385,53 +380,164 @@ public class CoreContainer {
 
     private void setRouteMap(BeanModel controllerBeanModel) {
         Class c = controllerBeanModel.getPrimaryBeanClass();
-        Controller controllerAnnotation = (Controller) c.getAnnotation(Controller.class);
         //路由前缀，在Controller类上
-        String urlPrefix = trim(controllerAnnotation.value());
-        //路由后缀，在方法的Mapping注解上
-        String urlSuffix=null;
-        QuestEnum questEnum = null;
+        String urlPrefix = null;
+        if (c.isAnnotationPresent(Mapping.class)) {
+            Mapping mappingAnnotation = (Mapping) c.getAnnotation(Mapping.class);
+            urlPrefix = mappingAnnotation.value();
+        }
         for (Method method : c.getMethods()) {
-            if (method.isAnnotationPresent(Mapping.class)) {
-                questEnum = QuestEnum.All;
-                urlSuffix= method.getAnnotation(Mapping.class).value();
-            } else if (method.isAnnotationPresent(PostMapping.class)) {
-                questEnum = QuestEnum.Post;
-                urlSuffix= method.getAnnotation(PostMapping.class).value();
-            } else if (method.isAnnotationPresent(PutMapping.class)) {
-                questEnum = QuestEnum.Put;
-                urlSuffix= method.getAnnotation(PutMapping.class).value();
-            } else if (method.isAnnotationPresent(GetMapping.class)) {
-                questEnum = QuestEnum.Get;
-                urlSuffix= method.getAnnotation(GetMapping.class).value();
-            } else if (method.isAnnotationPresent(DeleteMapping.class)) {
-                questEnum = QuestEnum.Delete;
-                urlSuffix= method.getAnnotation(DeleteMapping.class).value();
-            } else {
+            /*urlSuffix:路由后缀，在方法的Mapping注解上
+              questEnumOutPar:请求类型
+            */
+            var questEnumOutPar=new OutPar<QuestEnum>();
+            String urlSuffix = getMapping(method,questEnumOutPar);
+            if (questEnumOutPar.get()==null){
                 continue;
             }
             RouteModel routeModel = new RouteModel();
-            routeModel.setUrl(urlPrefix+trim(urlSuffix));
-            routeModel.setQuestEnum(questEnum);
+            routeModel.setUrl(getUrl(urlPrefix,urlSuffix));
+            routeModel.setQuestEnum(questEnumOutPar.get());
             routeModel.setBeanModel(controllerBeanModel);
             routeModel.setMethod(method);
             routeMap.add(routeModel.getRouteKey(), routeModel);
         }
 
     }
-    private String trim(String url){
-        if (StringUtil.isBlank(url)){
-            return url;
+
+    /**
+     * @param urlPrefix 前缀
+     * @param urlSuffix 后缀
+     * @return
+     */
+    private String getUrl(String urlPrefix, String urlSuffix) {
+        String url="";
+        urlPrefix =trim(urlPrefix);
+        if (StringUtil.isNotBlank(urlPrefix)){
+            url=urlPrefix;
         }
-        if (!url.startsWith("/")){
-            url = "/"+url;
-        }
-        if (url.endsWith("/")){
-            url=url.substring(0,url.length()-1);
+        urlSuffix =trim(urlSuffix);
+        if (StringUtil.isNotBlank(urlSuffix)){
+            url+=urlSuffix;
         }
         return url;
     }
-    private String getBeanName(Class interfaceClass) {
+
+    private String getMapping(Method method, OutPar<QuestEnum> questEnumOutPar) {
+        Annotation[] annotations = method.getAnnotations();
+        if (ListUtil.isEmpty(annotations)) {
+            return null;
+        }
+        for (Annotation annotation:annotations){
+            Class annotationClass = annotation.annotationType();
+            if (!annotationClass.isAnnotationPresent(MappingAnnotation.class)) {
+                continue;
+            }
+            MappingAnnotation mappingAnnotation= (MappingAnnotation) annotationClass.getAnnotation(MappingAnnotation.class);
+            questEnumOutPar.set(mappingAnnotation.value());
+            try {
+                Method annotationMethod = annotationClass.getMethod("value");
+                Object temp = method.invoke(annotation);
+                if (temp != null) {
+                    return temp.toString();
+                }
+            } catch (NoSuchMethodException e) {
+                return null;
+            } catch (IllegalAccessException e) {
+                return null;
+            } catch (InvocationTargetException e) {
+                return null;
+            }
+        }
+        return null;
+
+    }
+
+    private String trim(String url) {
+        if (StringUtil.isBlank(url)) {
+            return url;
+        }
+        if (!url.startsWith("/")) {
+            url = "/" + url;
+        }
+        if (url.endsWith("/")) {
+            url = url.substring(0, url.length() - 1);
+        }
+        return url;
+    }
+
+    /**
+     * 获取beanName及primaryInterfaceClass
+     * 注意objectClass本身是接口时，不返还class实现的接口。
+     * <p>
+     * 从注解值中获取beanName
+     * 从接口中获取beanName
+     * 从类中获取beanName
+     *
+     * @param objectClass
+     * @return
+     */
+    public String getBeanName(Class objectClass, OutPar<Class> primaryInterfaceClassPar) {
+        Annotation[] annotations = objectClass.getAnnotations();
+        if (annotations == null || annotations.length < 1) {
+            return null;
+        }
+        String beanName = null;
+        /*1、从注解值中获取beanName*/
+        Boolean isBean = false;
+        for (Annotation annotation : annotations) {
+            Class annotationClass = annotation.annotationType();
+            if (!annotationClass.isAnnotationPresent(BeanAnnotation.class)) {
+                continue;
+            }
+            isBean = true;
+            try {
+                Method method = annotationClass.getMethod("value");
+                Object temp = method.invoke(annotation);
+                if (temp != null) {
+                    beanName = temp.toString();
+                }
+            } catch (NoSuchMethodException e) {
+                return null;
+            } catch (IllegalAccessException e) {
+                return null;
+            } catch (InvocationTargetException e) {
+                return null;
+            }
+        }
+        if (!isBean) {
+            return null;
+        }
+        if (StringUtil.isNotBlank(beanName)) {
+            return beanName;
+        }
+        if (objectClass.isInterface()) {
+            return getBeanNameByInterface(objectClass);
+        }
+        /*2、从接口中获取beanName*/
+        Class primaryInterfaceClass = null;
+        for (Class interfaceClass : objectClass.getInterfaces()) {
+            beanName = getBeanNameByInterface(interfaceClass);
+            if (beanName != null) {
+                primaryInterfaceClass = interfaceClass;
+                break;
+            }
+        }
+        /*3、从类中获取beanName*/
+        if (StringUtil.isBlank(beanName)) {
+            beanName = StringUtil.lowFirst(objectClass.getSimpleName().replace(".class", ""));
+        }
+        if (beanMap.containsKey(beanName)) {
+            logger.error("bean名称重复：{}", beanName);
+            return null;
+        }
+        if (primaryInterfaceClass != null) {
+            primaryInterfaceClassPar.set(primaryInterfaceClass);
+        }
+        return beanName;
+    }
+
+    private String getBeanNameByInterface(Class interfaceClass) {
         String inteSimpleName = interfaceClass.getSimpleName();
         if (inteSimpleName.startsWith("I")) {
             inteSimpleName = inteSimpleName.substring(1);
@@ -442,40 +548,6 @@ public class CoreContainer {
             }
         }
         return null;
-    }
-
-    /**
-     * 根据class名获取beanName，若有实现接口，则根据接口class名获取beanName，同时得到Class所实现的接口。
-     * 注意calss本身是接口时，不返还class实现的接口。
-     *
-     * @return
-     */
-    private String getBeanName(Class c, OutPar<Class> primaryInterfaceClassPar) {
-        if (c.isInterface()) {
-            return getBeanName(c);
-        }
-        String beanName = null;
-        /*如果有bean接口，beanName取接口名*/
-        Class primaryInterfaceClass = null;
-        for (Class interfaceClass : c.getInterfaces()) {
-            beanName = getBeanName(interfaceClass);
-            if (beanName != null) {
-                primaryInterfaceClass = interfaceClass;
-                break;
-            }
-        }
-        /*如果bean没有接口，beanName取类名*/
-        if (beanName == null) {
-            beanName = StringUtil.lowFirst(c.getSimpleName().replace(".class", ""));
-        }
-        if (beanMap.containsKey(beanName)) {
-            logger.error("bean名称重复：{}", beanName);
-            return null;
-        }
-        if (primaryInterfaceClass != null) {
-            primaryInterfaceClassPar.set(primaryInterfaceClass);
-        }
-        return beanName;
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.czy.core.annotation;
+package com.czy.core.annotation.bean;
 
 import java.lang.annotation.*;
 
@@ -10,6 +10,7 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@BeanAnnotation
 public @interface Controller {
     String value() default "";
 }

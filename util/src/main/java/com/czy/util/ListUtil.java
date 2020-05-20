@@ -29,8 +29,9 @@ public class ListUtil {
                 .toArray((int value) -> (T[]) Array.newInstance(tClass, list.size()));
         return Arrays.asList(result);
     }
-
-
+    public static boolean isEmpty(Object[] array) {
+        return (array == null || array.length == 0);
+    }
     public static <T> boolean isEmpty(List<T> list) {
         return list == null || list.isEmpty();
     }

@@ -1,7 +1,7 @@
 package com.czy.core.service.impl;
 
 import com.czy.core.annotation.Auto;
-import com.czy.core.annotation.Service;
+import com.czy.core.annotation.bean.Service;
 import com.czy.core.db.dao.ICommonDao;
 import com.czy.core.service.ICommonService;
 import com.czy.core.util.TableUtil;

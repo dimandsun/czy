@@ -1,6 +1,8 @@
 package com.czy.user.control;
 
 import com.czy.core.annotation.*;
+import com.czy.core.annotation.bean.Controller;
+import com.czy.core.annotation.mapping.*;
 import com.czy.user.model.User;
 import com.czy.user.service.IUserService;
 import com.czy.util.model.ResultVO;
@@ -11,7 +13,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  * @description
  * @since 2020-04-23
  */
-@Controller("/user")
+@Controller
+@Mapping("/user")
 public class UserController {
     @Auto
     private IUserService userService;

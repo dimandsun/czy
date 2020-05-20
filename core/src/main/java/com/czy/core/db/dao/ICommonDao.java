@@ -1,6 +1,6 @@
 package com.czy.core.db.dao;
 
-import com.czy.core.annotation.Dao;
+import com.czy.core.annotation.bean.Dao;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
