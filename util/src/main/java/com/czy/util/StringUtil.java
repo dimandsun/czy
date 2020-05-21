@@ -5,10 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +26,7 @@ public class StringUtil {
     private StringUtil() {
     }
     /*jdk序列化*/
-    public static byte[] serialize(Object object) {
+    public static<T> byte[] serializeJDK(T object) {
         ObjectOutputStream objectOutputStream = null;
         ByteArrayOutputStream byteArrayOutputStream = null;
         try {
@@ -40,6 +37,42 @@ public class StringUtil {
             return getByte;
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (objectOutputStream != null) {
+                    objectOutputStream.close();
+                }
+                if (byteArrayOutputStream!=null){
+                    byteArrayOutputStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+    public static<T extends Object> T derializerJDK(byte[] value){
+        if (value==null||value.length<1){
+            return null;
+        }
+        ObjectInputStream inputStream = null;
+        try {
+            inputStream = new ObjectInputStream(new ByteArrayInputStream(value));
+            T result = (T) inputStream.readObject();
+            inputStream.close();
+            return result;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                if (inputStream!=null){
+                    inputStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }

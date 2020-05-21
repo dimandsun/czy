@@ -274,6 +274,20 @@ public class CoreContainer {
         Boolean nagel = StringUtil.getBoolean(memcacheProMap.get("nagel"), false);
         Integer socketTO = StringUtil.getInt(memcacheProMap.get("socketTO"), 3000);
         Boolean aliveCheck = StringUtil.getBoolean(memcacheProMap.get("aliveCheck"), true);
+        String poolName = StringUtil.getStr(memcacheProMap.get("poolName"), "memcachedPool");
+       /* SockIOPool sockIOPool = SockIOPool.getInstance(poolName);
+        sockIOPool.setServers(servers);
+        sockIOPool.setFailover(failover);
+        sockIOPool.setInitConn(initConn);
+        sockIOPool.setMinConn(minConn);
+        sockIOPool.setMaxConn(maxConn);
+        sockIOPool.setMaintSleep(maintSleep);
+        sockIOPool.setNagle(nagel);
+        sockIOPool.setSocketTO(socketTO);
+        sockIOPool.setAliveCheck(aliveCheck);
+        sockIOPool.initialize();
+        beanMap.add("sockIOPool", new BeanModel("sockIOPool", sockIOPool, SockIOPool.class));
+        beanMap.add("memCachedClient", new BeanModel("memCachedClient", new MemCachedClient(poolName), MemCachedClient.class));*/
     }
 
     public Map<DataSourceEnum, SqlSessionFactory> getDataSourceMap() {

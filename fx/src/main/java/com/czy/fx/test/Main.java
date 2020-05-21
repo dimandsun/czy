@@ -38,6 +38,8 @@ import com.czy.fx.test.test46_SimpleIntegerProperty.SimpleIntegerPropertyTest;
 import com.czy.fx.test.test47_ReadOnlyDoubleWrapper.ReadOnlyDoubleWrapperTest;
 import com.czy.fx.test.test48_ListProperty.ListPropertyTest;
 import com.czy.fx.test.test49_SetProperty.SetPropertyTest;
+import com.czy.fx.test.test51_ChangeListener_InvalidationListener.ChangeAndInvalidationListenerTest;
+import com.czy.fx.test.test52_binding.BindingTest;
 import com.czy.fx.test.test6_platform.PlatformTest;
 import com.czy.fx.test.test6_scene.SceneTest;
 import com.czy.fx.test.test7_screen.ScreenTest;
@@ -104,6 +106,8 @@ public class Main {
         entrance= ReadOnlyDoubleWrapperTest.class;
         entrance= ListPropertyTest.class;
         entrance= SetPropertyTest.class;
+        entrance= ChangeAndInvalidationListenerTest.class;
+        entrance= BindingTest.class;
         Application.launch(entrance,args);
 //        createDirs();
 

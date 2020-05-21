@@ -34,5 +34,7 @@
     exports com.czy.fx.test.test47_ReadOnlyDoubleWrapper;
     exports com.czy.fx.test.test48_ListProperty;
     exports com.czy.fx.test.test49_SetProperty;
+    exports com.czy.fx.test.test51_ChangeListener_InvalidationListener;
+    exports com.czy.fx.test.test52_binding;
 
 }
