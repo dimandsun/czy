@@ -129,6 +129,9 @@ public class Main {
         ss=new String[]{"SimpleIntegerProperty","ReadOnlyDoubleWrapper", "ListProperty", "SetProperty", "MapProperty"
                 , "ChangeListener", "InvalidationListener"};
         Integer i = 46;
+        ss=new String[]{"ListBind","ReadOnlyDoubleWrapper", "ListProperty", "SetProperty", "MapProperty"
+                , "ChangeListener", "InvalidationListener"};
+        i = 53;
         for (String s : ss) {
             File modelDir = FileUtil.getCodeFile(moduleDir, beanPackage + i + "_" + s);
             if (!modelDir.exists()) {
