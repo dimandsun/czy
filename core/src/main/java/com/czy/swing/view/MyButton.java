@@ -1,6 +1,7 @@
 package com.czy.swing.view;
 
-import javax.swing.*;
+
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**
@@ -8,7 +9,7 @@ import java.awt.event.ActionListener;
  * @description
  * @since 2020-04-29
  */
-public class MyButton extends JButton {
+public class MyButton extends Button {
 
     public MyButton(String text) {
         super(text);

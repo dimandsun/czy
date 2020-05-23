@@ -40,6 +40,10 @@ import com.czy.fx.test.test48_ListProperty.ListPropertyTest;
 import com.czy.fx.test.test49_SetProperty.SetPropertyTest;
 import com.czy.fx.test.test51_ChangeListener_InvalidationListener.ChangeAndInvalidationListenerTest;
 import com.czy.fx.test.test52_binding.BindingTest;
+import com.czy.fx.test.test54_FileChooser.FileChooserTest;
+import com.czy.fx.test.test55_Tooltip.TooltipTest;
+import com.czy.fx.test.test56_Image.ImageTest;
+import com.czy.fx.test.test57_ImageView.ImageViewTest;
 import com.czy.fx.test.test6_platform.PlatformTest;
 import com.czy.fx.test.test6_scene.SceneTest;
 import com.czy.fx.test.test7_screen.ScreenTest;
@@ -108,6 +112,10 @@ public class Main {
         entrance= SetPropertyTest.class;
         entrance= ChangeAndInvalidationListenerTest.class;
         entrance= BindingTest.class;
+        entrance= FileChooserTest.class;
+        entrance= TooltipTest.class;
+        entrance= ImageTest.class;
+        entrance= ImageViewTest.class;
         Application.launch(entrance,args);
 //        createDirs();
 
@@ -129,9 +137,9 @@ public class Main {
         ss=new String[]{"SimpleIntegerProperty","ReadOnlyDoubleWrapper", "ListProperty", "SetProperty", "MapProperty"
                 , "ChangeListener", "InvalidationListener"};
         Integer i = 46;
-        ss=new String[]{"ListBind","ReadOnlyDoubleWrapper", "ListProperty", "SetProperty", "MapProperty"
-                , "ChangeListener", "InvalidationListener"};
-        i = 53;
+        ss=new String[]{"FileChooser","Tooltip", "Image", "ImageView", "Pixel"
+                , "ImageIO"};
+        i = 54;
         for (String s : ss) {
             File modelDir = FileUtil.getCodeFile(moduleDir, beanPackage + i + "_" + s);
             if (!modelDir.exists()) {

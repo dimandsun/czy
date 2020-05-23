@@ -37,6 +37,9 @@ public class FileUtil {
     }
 
     public static String readFile(File file) {
+        if (file==null){
+            return null;
+        }
         BufferedReader reader = null;
         StringBuffer sbf = new StringBuffer();
         try {
@@ -348,7 +351,7 @@ public class FileUtil {
      * @param contents
      */
     public static void write(File file, String... contents) {
-        if (contents == null || contents.length < 1) {
+        if (file==null||ListUtil.isEmpty(contents)) {
             return;
         }
         createFile(file);

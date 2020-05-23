@@ -6,8 +6,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -30,6 +30,9 @@ public class HBoxTest extends Application {
         hBox.setPadding(new Insets(10));
         /*子控件的间距*/
         hBox.setSpacing(10);
+
+        /**/
+        hBox.setBackground(new Background(new BackgroundFill(Paint.valueOf("#aa1100"),new CornerRadii(20),new Insets(1))));
 
         var buttonList= FXUtil.getButtonList("btn1","btn2","btn3","btn4");
         /*指定子控件外边距*/

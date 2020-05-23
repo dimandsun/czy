@@ -22,4 +22,5 @@
     requires com.czy.util;
     exports com.czy.core.util;
     exports com.czy.user.model;
+    exports com.czy.swing.view;
 }
