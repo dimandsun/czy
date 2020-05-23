@@ -66,10 +66,11 @@ public class BindingTest extends Application {
     }
 
     public static void main(String[] args) {
-        bind();
+//        bind();
 
 //        danBind();
 //        shuangBind();
+        testBindings();
     }
 
     /**
@@ -132,12 +133,12 @@ public class BindingTest extends Application {
 
     public static void listBind() {
 
-        var userList = ObjectUtil.getObjectList(User.class,"陈志源","张三");
-        var userObservableList=FXCollections.observableArrayList(userList);
+        var userList = ObjectUtil.getObjectList(User.class, "陈志源", "张三");
+        var userObservableList = FXCollections.observableArrayList(userList);
         var userListProperty = new SimpleListProperty<>(userObservableList);
 
-        var userList2 = ObjectUtil.getObjectList(User.class,"陈晓云","李四");
-        var userObservableList2=FXCollections.observableArrayList(userList);
+        var userList2 = ObjectUtil.getObjectList(User.class, "陈晓云", "李四");
+        var userObservableList2 = FXCollections.observableArrayList(userList);
         var userListProperty2 = new SimpleListProperty<>(userObservableList);
         /*单向绑定后，两个都是维护userList2，userListProperty将无法对userList做任何操作*/
         userListProperty.bind(userListProperty2);
@@ -156,8 +157,8 @@ public class BindingTest extends Application {
 
 
         /**/
-        var userBinding=userListProperty.valueAt(0);
-        var userBinding2=userListProperty.valueAt(new SimpleIntegerProperty(0));
+        var userBinding = userListProperty.valueAt(0);
+        var userBinding2 = userListProperty.valueAt(new SimpleIntegerProperty(0));
     }
 
     /**
@@ -168,6 +169,7 @@ public class BindingTest extends Application {
         var userSetProperty = new SimpleSetProperty<>(userObservableSet);
 
     }
+
     /**
      * 和list一样
      */
@@ -177,19 +179,38 @@ public class BindingTest extends Application {
 
 
         /**/
-        var mapBinding=mapProperty.valueAt("key");
-        var mapBinding2=mapProperty.valueAt(new SimpleStringProperty("key"));
+        var mapBinding = mapProperty.valueAt("key");
+        var mapBinding2 = mapProperty.valueAt(new SimpleStringProperty("key"));
     }
-    public static void testBindings(){
-        var value=new SimpleIntegerProperty(10);
-        var stringExpression=Bindings.concat("value=",value.asString(Locale.getDefault(),"%s"));
+
+    public static void testBindings() {
+        var value = new SimpleIntegerProperty(10);
+        var stringExpression = Bindings.concat("value=", value.asString(Locale.getDefault(), "%s"));
         System.out.println(stringExpression.getValue());
+        var expression2 = Bindings.format("value=%s", value);
+        {
+            /**/
+            Bindings.max(new SimpleIntegerProperty(1),new SimpleIntegerProperty(2));
+        }
 
-        var expression2=Bindings.format("value=%s",value);
-
-
-
+        {
+            /*调用get()方法时，执行call(),返回结果*/
+            var stringBinding=Bindings.createStringBinding(()->{
+                System.out.println("asd");
+                return "213";
+            });
+            System.out.println(stringBinding.get());
+        }
+        {
+            var student= new Student();
+            student.setStudentName(new Name("陈志源"));
+            var userProperty = new SimpleObjectProperty<>(student);
+            var stringBinding = Bindings.selectString(userProperty, "studentName", "name");
+            System.out.println(stringBinding.get());
+            System.out.println(userProperty.getValue().studentNameProperty().get().nameProperty().get());
+        }
 
 
     }
 }
+
