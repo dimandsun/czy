@@ -11,4 +11,5 @@ import java.lang.annotation.*;
 @Documented
 @BeanAnnotation
 public @interface Service {
+    String value() default "";
 }

@@ -11,4 +11,5 @@ import java.lang.annotation.*;
 @Documented
 @BeanAnnotation
 public @interface Dao {
+    String value() default "";
 }

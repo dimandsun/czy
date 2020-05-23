@@ -4,6 +4,7 @@ import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.czy.core.annotation.*;
 import com.czy.core.annotation.bean.*;
 import com.czy.core.annotation.mapping.*;
+import com.czy.core.db.DaoAspect$;
 import com.czy.core.db.config.DataSourceEnum;
 import com.czy.core.db.model.MybatisInfo;
 import com.czy.core.db.model.TypeAliases;
@@ -164,6 +165,8 @@ public class CoreContainer {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
                 e.printStackTrace();
+            }catch (Exception e){
+                e.printStackTrace();
             }
         }
     }
@@ -323,6 +326,7 @@ public class CoreContainer {
             if (StringUtil.isBlank(beanName)) {
                 continue;
             }
+
             BeanModel beanModel = new BeanModel(beanName);
             if (primaryInterfaceClassPar.get() != null) {
                 beanModel.setPrimaryInterfaceClass(primaryInterfaceClassPar.get());
@@ -451,7 +455,7 @@ public class CoreContainer {
             questEnumOutPar.set(mappingAnnotation.value());
             try {
                 Method annotationMethod = annotationClass.getMethod("value");
-                Object temp = method.invoke(annotation);
+                Object temp = annotationMethod.invoke(annotation);
                 if (temp != null) {
                     return temp.toString();
                 }
