@@ -44,6 +44,7 @@ import com.czy.fx.test.test54_FileChooser.FileChooserTest;
 import com.czy.fx.test.test55_Tooltip.TooltipTest;
 import com.czy.fx.test.test56_Image.ImageTest;
 import com.czy.fx.test.test57_ImageView.ImageViewTest;
+import com.czy.fx.test.test58_event.EventTest;
 import com.czy.fx.test.test6_platform.PlatformTest;
 import com.czy.fx.test.test6_scene.SceneTest;
 import com.czy.fx.test.test7_screen.ScreenTest;
@@ -116,6 +117,7 @@ public class Main {
         entrance= TooltipTest.class;
         entrance= ImageTest.class;
         entrance= ImageViewTest.class;
+        entrance= EventTest.class;
         Application.launch(entrance,args);
 //        createDirs();
 

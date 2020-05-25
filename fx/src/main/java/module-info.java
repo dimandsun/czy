@@ -10,6 +10,7 @@
     requires com.czy.core;
     requires com.czy.util;
     requires java.desktop;
+    requires javafx.swing;
     exports com.czy.fx.test.test27_RadioButton_CheckBox;
     exports com.czy.fx.test.test28_TextArea;
     exports com.czy.fx.test.test29_TextField;
@@ -40,4 +41,5 @@
     exports com.czy.fx.test.test55_Tooltip;
     exports com.czy.fx.test.test56_Image;
     exports com.czy.fx.test.test57_ImageView;
+    exports com.czy.fx.test.test58_event;
 }

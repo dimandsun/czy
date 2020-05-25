@@ -134,6 +134,14 @@ public class StringUtil {
     }
 
     /**
+     * 十进制数转十六进制数
+     * @param num
+     * @return
+     */
+    public static Integer decimal2Hex(Integer num){
+       return Integer.parseInt("ff",num);
+    }
+    /**
      * 十进制数转十六进制数，不够指定位数就在前面补零。超过位数不截取
      *
      * @param num    十进制数
