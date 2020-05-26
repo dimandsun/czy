@@ -4,7 +4,10 @@ import com.czy.fx.myfx.MyTextField;
 import com.czy.fx.myfx.Mybutton;
 import com.czy.fx.test.FXUtil;
 import javafx.application.Application;
-import javafx.scene.input.KeyCode;
+import javafx.event.Event;
+import javafx.event.EventType;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -56,15 +59,27 @@ public class EventTest extends Application {
          * 圆圈占用的区域都可以监听事件，默认false
          */
 //        circle.setPickOnBounds(true);
-
+        Button btn =new Mybutton("嘿嘿").onClick(event -> {
+            System.out.println("s黑河");
+        });
         circle.setOnMouseClicked(event -> {
             System.out.println("圆圈被点击");
             //点击信息
             var pickResult=event.getPickResult();
-
+            //是否是触摸屏
+            event.isSynthesized();
+            //事件传递
+//            Event.fireEvent(btn,event);
+            //或者这样
+//            event.copyFor(btn,btn);
         });
+        //事件
+      /*  circle.addEventFilter(MouseEvent.MOUSE_CLICKED,event -> {
+            System.out.println("addEventFilter");
+        });*/
         box.getChildren().add(circle);
         anchorPane.getChildren().add(box);
         FXUtil.setDefaultValue(primaryStage, anchorPane);
+        System.out.println("213321");
     }
 }
