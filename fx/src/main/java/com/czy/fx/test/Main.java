@@ -45,6 +45,10 @@ import com.czy.fx.test.test55_Tooltip.TooltipTest;
 import com.czy.fx.test.test56_Image.ImageTest;
 import com.czy.fx.test.test57_ImageView.ImageViewTest;
 import com.czy.fx.test.test58_event.EventTest;
+import com.czy.fx.test.test59_Filter.FilterTest;
+import com.czy.fx.test.test60_Drag.DragTest;
+import com.czy.fx.test.test61_Clipboard.ClipboardTest;
+import com.czy.fx.test.test61_Clipboard.ClipboardTest2;
 import com.czy.fx.test.test6_platform.PlatformTest;
 import com.czy.fx.test.test6_scene.SceneTest;
 import com.czy.fx.test.test7_screen.ScreenTest;
@@ -118,6 +122,10 @@ public class Main {
         entrance= ImageTest.class;
         entrance= ImageViewTest.class;
         entrance= EventTest.class;
+        entrance= FilterTest.class;
+        entrance= DragTest.class;
+        entrance= ClipboardTest.class;
+        entrance= ClipboardTest2.class;
         Application.launch(entrance,args);
 //        createDirs();
 

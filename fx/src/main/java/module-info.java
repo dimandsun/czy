@@ -42,4 +42,7 @@
     exports com.czy.fx.test.test56_Image;
     exports com.czy.fx.test.test57_ImageView;
     exports com.czy.fx.test.test58_event;
+    exports com.czy.fx.test.test59_Filter;
+    exports com.czy.fx.test.test60_Drag;
+    exports com.czy.fx.test.test61_Clipboard;
 }
