@@ -14,6 +14,7 @@
         <module>../fx</module>
         <module>../core</module>
         <module>../util</module>
+        <module>../mq</module>
     </modules>
     <properties>
         <encoding>UTF-8</encoding>
@@ -41,6 +42,7 @@
         <mybatis.version>3.5.3</mybatis.version>
         <javafx.version>11.0.2</javafx.version>
         <junit.version>4.12</junit.version>
+        <rabbitmq.version>5.9.0</rabbitmq.version>
         <czy.version>1.0-SNAPSHOT</czy.version>
     </properties>
 
@@ -73,6 +75,13 @@
                 <version>${junit.version}</version>
                 <scope>test</scope>
             </dependency>
+            <!--rabbitmq-->
+            <dependency>
+                <groupId>com.rabbitmq</groupId>
+                <artifactId>amqp-client</artifactId>
+                <version>${rabbitmq.version}</version>
+            </dependency>
+
             <!--动态代理-->
             <dependency>
                 <groupId>cglib</groupId>
