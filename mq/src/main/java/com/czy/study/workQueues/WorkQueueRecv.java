@@ -13,7 +13,7 @@ import java.util.concurrent.TimeoutException;
  * @since 2020-05-29
  * <p>
  * 一个生产者发消息给一个队列，多个消费者从队列接收消息
- * 多个消费者平均接收消息，不管消费者的消费能力的差异
+ * 多个消费者平均接收消息，不管消费者的消费能力的差异。轮询分发
  */
 public class WorkQueueRecv {
 
