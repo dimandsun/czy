@@ -2,13 +2,16 @@ package com.czy.fx.test.test61_Clipboard;
 
 import com.czy.fx.test.FXUtil;
 import javafx.application.Application;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
@@ -31,6 +34,12 @@ public class ClipboardTest2 extends Application {
         var text = new TextField();
         label.setOnDragDetected(event -> {
             var dragboard=label.startDragAndDrop(TransferMode.MOVE);
+            var text1=new Text(label.getText());
+            var image=new WritableImage((int)label.getWidth(),(int)label.getHeight());
+            text1.snapshot(new SnapshotParameters(),image);
+            dragboard.setDragView(image,10,10);
+
+
             var content=new ClipboardContent();
             content.putString(label.getText());
             dragboard.setContent(content);
@@ -41,6 +50,13 @@ public class ClipboardTest2 extends Application {
         });
         text.setOnDragDropped(event -> {
             text.setText(event.getDragboard().getString());
+            //拖拽完成
+            event.setDropCompleted(true);
+        });
+        label.setOnDragDone(event -> {
+            if (event.getTransferMode()==TransferMode.MOVE){
+                label.setText("");
+            }
         });
 
         anchorPane.getChildren().addAll(label,text);

@@ -49,19 +49,18 @@ import com.czy.fx.test.test59_Filter.FilterTest;
 import com.czy.fx.test.test60_Drag.DragTest;
 import com.czy.fx.test.test61_Clipboard.ClipboardTest;
 import com.czy.fx.test.test61_Clipboard.ClipboardTest2;
+import com.czy.fx.test.test61_Clipboard.ClipboardTest3;
+import com.czy.fx.test.test62_ListView.ListViewTestBeanList;
+import com.czy.fx.test.test62_ListView.ListViewTestStringList;
 import com.czy.fx.test.test6_platform.PlatformTest;
 import com.czy.fx.test.test6_scene.SceneTest;
 import com.czy.fx.test.test7_screen.ScreenTest;
 import com.czy.fx.test.test8_group.GroupTest;
 import com.czy.fx.test.test9_button.ButtonTest;
 import com.czy.util.FileUtil;
-import com.czy.util.StringUtil;
 import javafx.application.Application;
 
 import java.io.File;
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author chenzy
@@ -126,6 +125,9 @@ public class Main {
         entrance= DragTest.class;
         entrance= ClipboardTest.class;
         entrance= ClipboardTest2.class;
+        entrance= ClipboardTest3.class;
+        entrance= ListViewTestBeanList.class;
+        entrance= ListViewTestStringList.class;
         Application.launch(entrance,args);
 //        createDirs();
 
