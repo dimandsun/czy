@@ -4,11 +4,14 @@ import com.czy.fx.test.FXUtil;
 import com.czy.user.model.User;
 import com.czy.util.ObjectUtil;
 import javafx.application.Application;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxListCell;
+import javafx.scene.control.cell.ChoiceBoxListCell;
+import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -49,6 +52,8 @@ public class ListViewTestStringList extends Application {
         stringListView.getSelectionModel().selectionModeProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("选");
         });
+        //重新加载数据
+        stringListView.refresh();
         //出现滚动条时，滚到指定位置
 //        userListView.scrollTo();
 //        userListView.onScrollToProperty().addListener();
@@ -65,14 +70,43 @@ public class ListViewTestStringList extends Application {
                 return string+"-fromString";
             }
         }));
-        //Data数据时使用
-     /*   stringListView.setCellFactory(CheckBoxListCell.forListView(new Callback<String, ObservableValue<Boolean>>() {
+        /*子项加下拉框。可变参数为下拉框列表*/
+        stringListView.setCellFactory(ComboBoxListCell.forListView(new StringConverter<String>() {
+            @Override
+            public String toString(String object) {
+                return object+"-toString";
+            }
+            @Override
+            public String fromString(String string) {
+                return string+"-fromString";
+            }
+        },"1","2","3"));
+        stringListView.setCellFactory(ChoiceBoxListCell.forListView(new StringConverter<String>() {
+            @Override
+            public String toString(String object) {
+                return object+"-toString";
+            }
+            @Override
+            public String fromString(String string) {
+                return string+"-fromString";
+            }
+        },"1","2","3"));
+        stringListView.setCellFactory(CheckBoxListCell.forListView(new Callback<String, ObservableValue<Boolean>>() {
             @Override
             public ObservableValue<Boolean> call(String param) {
-
-                return new SimpleObjectProperty<>(true);
+                return new SimpleBooleanProperty(true);
             }
-        }));*/
+        }, new StringConverter<String>() {
+            @Override
+            public String toString(String object) {
+                return object+"-toString1";
+            }
+
+            @Override
+            public String fromString(String string) {
+                return string+"-fromString1";
+            }
+        }));
         //
         stringListView.setOnEditStart(event -> {
             System.out.println("开始编辑");

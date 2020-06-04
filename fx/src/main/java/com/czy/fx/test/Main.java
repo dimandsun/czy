@@ -52,6 +52,7 @@ import com.czy.fx.test.test61_Clipboard.ClipboardTest2;
 import com.czy.fx.test.test61_Clipboard.ClipboardTest3;
 import com.czy.fx.test.test62_ListView.ListViewTestBeanList;
 import com.czy.fx.test.test62_ListView.ListViewTestStringList;
+import com.czy.fx.test.test62_ListView.ListViewTestStringList2;
 import com.czy.fx.test.test6_platform.PlatformTest;
 import com.czy.fx.test.test6_scene.SceneTest;
 import com.czy.fx.test.test7_screen.ScreenTest;
@@ -128,6 +129,8 @@ public class Main {
         entrance= ClipboardTest3.class;
         entrance= ListViewTestBeanList.class;
         entrance= ListViewTestStringList.class;
+        entrance=ClipboardTest2.class;
+        entrance= ListViewTestStringList2.class;
         Application.launch(entrance,args);
 //        createDirs();
 
