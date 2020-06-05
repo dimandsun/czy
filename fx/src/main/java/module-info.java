@@ -46,4 +46,5 @@
     exports com.czy.fx.test.test60_Drag;
     exports com.czy.fx.test.test61_Clipboard;
     exports com.czy.fx.test.test62_ListView;
+    exports com.czy.fx.test.test63_TextFont;
 }
