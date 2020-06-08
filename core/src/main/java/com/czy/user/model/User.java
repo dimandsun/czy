@@ -12,11 +12,39 @@ public class User {
     private Integer id;
     private String code;
     private String name;
+    private Integer age;
     private String ps;//'加密后的密码'
     @JsonProperty("original_ps")
     private String originalPS;//'原密码'
     private String email;
     private String mobile;
+    private Double score;//积分
+    /*是否删除，true为删除*/
+    private Boolean delete;
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
+    }
+
+    public Boolean getDelete() {
+        return delete;
+    }
+
+    public void setDelete(Boolean delete) {
+        this.delete = delete;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
 
     @Override
     public String toString() {

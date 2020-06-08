@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 /**
  * @author chenzy
  * @since 2020/5/16
- * @description
+ * @description 进度图：进度条与进度圆
  */
 public class ProgressIndicatorTest extends Application {
     @Override

@@ -54,6 +54,8 @@ import com.czy.fx.test.test62_ListView.ListViewTestBeanList;
 import com.czy.fx.test.test62_ListView.ListViewTestStringList;
 import com.czy.fx.test.test62_ListView.ListViewTestStringList2;
 import com.czy.fx.test.test63_TextFont.TextFontTest;
+import com.czy.fx.test.test64_Dialog.*;
+import com.czy.fx.test.test65_TableView.TableViewTest;
 import com.czy.fx.test.test6_platform.PlatformTest;
 import com.czy.fx.test.test6_scene.SceneTest;
 import com.czy.fx.test.test7_screen.ScreenTest;
@@ -133,6 +135,12 @@ public class Main {
         entrance=ClipboardTest2.class;
         entrance= ListViewTestStringList2.class;
         entrance = TextFontTest.class;
+        entrance= DialogTest.class;
+        entrance= AlertTest.class;
+        entrance= ChoiceDialogTest.class;
+        entrance= TextInputDialogTest.class;
+        entrance= CustomDialogTest.class;
+        entrance= TableViewTest.class;
         Application.launch(entrance,args);
 //        createDirs();
 
