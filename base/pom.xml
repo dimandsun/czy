@@ -15,6 +15,7 @@
         <module>../core</module>
         <module>../util</module>
         <module>../mq</module>
+        <module>../javase-study</module>
     </modules>
     <properties>
         <encoding>UTF-8</encoding>
