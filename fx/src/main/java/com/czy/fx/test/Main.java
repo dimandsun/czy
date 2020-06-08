@@ -56,6 +56,7 @@ import com.czy.fx.test.test62_ListView.ListViewTestStringList2;
 import com.czy.fx.test.test63_TextFont.TextFontTest;
 import com.czy.fx.test.test64_Dialog.*;
 import com.czy.fx.test.test65_TableView.TableViewTest;
+import com.czy.fx.test.test66_TreeView.TreeViewTest;
 import com.czy.fx.test.test6_platform.PlatformTest;
 import com.czy.fx.test.test6_scene.SceneTest;
 import com.czy.fx.test.test7_screen.ScreenTest;
@@ -141,6 +142,7 @@ public class Main {
         entrance= TextInputDialogTest.class;
         entrance= CustomDialogTest.class;
         entrance= TableViewTest.class;
+        entrance= TreeViewTest.class;
         Application.launch(entrance,args);
 //        createDirs();
 

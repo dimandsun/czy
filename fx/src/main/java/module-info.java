@@ -49,4 +49,5 @@
     exports com.czy.fx.test.test63_TextFont;
     exports com.czy.fx.test.test64_Dialog;
     exports com.czy.fx.test.test65_TableView;
+    exports com.czy.fx.test.test66_TreeView;
 }
