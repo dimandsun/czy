@@ -16,6 +16,7 @@
         <module>../util</module>
         <module>../mq</module>
         <module>../javase-study</module>
+        <module>../psychology</module>
     </modules>
     <properties>
         <encoding>UTF-8</encoding>
