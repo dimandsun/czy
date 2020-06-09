@@ -2,6 +2,7 @@ package com.czy.fx.test.test66_TreeView;
 
 import com.czy.fx.test.FXUtil;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTreeCell;
 import javafx.scene.layout.AnchorPane;
@@ -63,6 +64,31 @@ public class TreeViewTest extends Application {
                 return string;
             }
         }));
+        //在跟节点监听，事件会传递给子节点，监听节点值改变
+        treeRoot.addEventHandler(TreeItem.valueChangedEvent(), (EventHandler<TreeItem.TreeModificationEvent<String>>) event -> {
+            System.out.println(event.getNewValue());
+            event.getTreeItem();
+        });
+        //监听节点图标改变
+        treeRoot.addEventHandler(TreeItem.<String>graphicChangedEvent(), event -> System.out.println(event.getNewValue()));
+        //监听节点收起
+        treeRoot.addEventHandler(TreeItem.<String>branchCollapsedEvent(), event -> System.out.println("收起" + event.getNewValue()));
+        //监听节点展开
+        treeRoot.addEventHandler(TreeItem.<String>branchExpandedEvent(), event -> System.out.println("展开" + event.getNewValue()));
+        //监听节点-添加删除
+        treeRoot.addEventHandler(TreeItem.<String>childrenModificationEvent(), event -> {
+            System.out.println("添加/删除" + event.getNewValue());
+            event.wasAdded();
+            event.wasRemoved();
+        });
+        //监听节点所有类型操作
+        treeRoot.addEventHandler(TreeItem.<String>treeNotificationEvent(), event -> {
+            System.out.println("监听节点所有类型操作：" + event.getNewValue());
+            event.wasAdded();
+            event.wasRemoved();
+            event.wasPermutated();//是否是排序操作
+        });
+//            treeCity.getChildren().sort();//排序
         anchorPane.getChildren().addAll(btn, treeView);
         FXUtil.setDefaultValue(primaryStage, anchorPane);
         AnchorPane.setTopAnchor(treeView, btn.getHeight());
