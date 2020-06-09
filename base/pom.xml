@@ -17,6 +17,7 @@
         <module>../mq</module>
         <module>../javase-study</module>
         <module>../psychology</module>
+        <module>../car</module>
     </modules>
     <properties>
         <encoding>UTF-8</encoding>

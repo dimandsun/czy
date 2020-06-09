@@ -11,6 +11,7 @@
     requires com.czy.util;
     requires java.desktop;
     requires javafx.swing;
+    exports com.czy.fx.test.test19_ScheduledService;
     exports com.czy.fx.test.test27_RadioButton_CheckBox;
     exports com.czy.fx.test.test28_TextArea;
     exports com.czy.fx.test.test29_TextField;
@@ -50,4 +51,6 @@
     exports com.czy.fx.test.test64_Dialog;
     exports com.czy.fx.test.test65_TableView;
     exports com.czy.fx.test.test66_TreeView;
+    exports com.czy.fx.test.test67_TreeTableView;
+
 }

@@ -1,4 +1,4 @@
-package com.czy.sqltool.model;
+package com.czy.util.sqltool.model;
 
 import java.util.List;
 

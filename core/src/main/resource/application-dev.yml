@@ -26,6 +26,8 @@ datasource:
 
 
 redis:
+  config-name: jedisPoolConfig
+  pool-name: jedisPool
   host: 106.54.230.187
   port: 6379
   password: chenzy

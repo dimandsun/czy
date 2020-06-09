@@ -1,8 +1,8 @@
-package com.czy.sqltool;
+package com.czy.util.sqltool;
 
-import com.czy.sqltool.enums.ColumnTypeEnum;
-import com.czy.sqltool.model.ColumnSqlInfo;
-import com.czy.sqltool.model.TableSqlInfo;
+import com.czy.util.sqltool.enums.ColumnTypeEnum;
+import com.czy.util.sqltool.model.ColumnSqlInfo;
+import com.czy.util.sqltool.model.TableSqlInfo;
 import com.czy.util.DateUtil;
 import com.czy.util.FileUtil;
 import com.czy.util.ListUtil;
@@ -36,12 +36,12 @@ public class SQLUtil {
      * @param author
      */
     public static void generateBeanFile(String beanPackage, String sqlPath, String author) {
-        beanPackage = "com.czy.a.model";
-        sqlPath = "doc/sql.sql";
-        author = "chenzy";
+//        beanPackage = "com.czy.a.model";
+//        sqlPath = "doc/sql.sql";
+//        author = "chenzy";
         String date = DateUtil.data2Str(new Date(), DateUtil.yyyy_MM_dd);
         /*创建bean目录*/
-        String modelPath = null;
+        String modelPath ="src/main/java/"+beanPackage.replace(".",File.separator);
         File modelDir = FileUtil.getCodeFile(null,beanPackage);
         if (!modelDir.exists()) {
             modelDir.mkdirs();
@@ -69,7 +69,10 @@ public class SQLUtil {
                 sqlContent = sqlContent.substring(0, tableDesIndex);
             }
             TableSqlInfo tableSqlInfo = new TableSqlInfo(tableName, tableDes);
-            /*循环解析每个字段*/
+
+//            sqlContent
+            /*循环解析每个字段：以逗号分割，要对类似decimal(10,4)类型作处理*/
+            sqlContent= sqlContent.replaceAll("(decimal\\(([0-9]*),([0-9]*)\\))","");
             String[] columnContentA = sqlContent.split(",");
             if (ListUtil.isEmpty(columnContentA)) {
                 continue;
@@ -104,7 +107,7 @@ public class SQLUtil {
 
             /*写文件头信息：包名，导入类，注释信息，类注解，类名*/
             String packageContent = "package " + beanPackage + ";\n";
-            String importContent = "import com.czy.core.annotation.Table;\n";
+            String importContent = "import com.czy.core.annotation.db.Table;\n";
             String classDesContent = "/**\n * @author " + author + "\n * @since " + date + "\n * @description " + (tableDes == null ? "" : tableDes) + "\n */\n";
             String clssHeadContent = "@Table(\"" + tableName + "\")\npublic class " + className + " {\n";
 

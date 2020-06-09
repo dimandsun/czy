@@ -248,6 +248,8 @@ public class CoreContainer {
         Integer minIdle = StringUtil.getInt(poolProMap.get("min-idle"), 0);
         Integer maxActive = StringUtil.getInt(poolProMap.get("max-active"), -1);
         Long maxWait = StringUtil.getLongByMS(poolProMap.get("max-wait"), 1000L);
+        String configBeanName = StringUtil.getStr(poolProMap.get("config-name"),"jedisPoolConfig");
+        String poolBeanName = StringUtil.getStr(poolProMap.get("pool-name"),"jedisPool");
         Boolean testOnBorrow = StringUtil.getBoolean(poolProMap.get("test-on-borrow"));
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         jedisPoolConfig.setMaxIdle(maxIdle);
@@ -255,7 +257,7 @@ public class CoreContainer {
         jedisPoolConfig.setMaxTotal(maxActive);
         jedisPoolConfig.setMaxWaitMillis(maxWait);
         jedisPoolConfig.setTestOnBorrow(testOnBorrow);
-        beanMap.add("jedisPoolConfig", new BeanModel("jedisPoolConfig", jedisPoolConfig, JedisPoolConfig.class));
+        beanMap.add(configBeanName, new BeanModel(configBeanName, jedisPoolConfig, JedisPoolConfig.class));
         /*2.2-注入JedisPool*/
         String host = StringUtil.getStr(redisProMap.get("host"), "127.0.0.1");
         Integer port = StringUtil.getInt(redisProMap.get("port"), 6379);
@@ -263,7 +265,7 @@ public class CoreContainer {
         Integer database = StringUtil.getInt(redisProMap.get("database"), 0);
         Integer timeout = StringUtil.getLongByMS(redisProMap.get("timeout"), 60L).intValue();
         JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout, password, database);
-        beanMap.add("jedisPool", new BeanModel("jedisPool", jedisPool, JedisPool.class));
+        beanMap.add(poolBeanName, new BeanModel(poolBeanName, jedisPool, JedisPool.class));
     }
 
     private void setBeanMemcah(Map<String, Object> proMap) {

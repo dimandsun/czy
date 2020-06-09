@@ -1,4 +1,4 @@
-package com.czy.sqltool.enums;
+package com.czy.util.sqltool.enums;
 
 import com.czy.util.StringUtil;
 import com.czy.util.enums.IEnum;
@@ -17,7 +17,7 @@ public enum ColumnTypeEnum implements IEnum<String> {
     ,Date("Date","(date)|(time)|(datetime)")
     ,Float("Float","float")
     ,Double("Double","double")
-    ,BigDecimal("BigDecimal","decimal")
+    ,BigDecimal("BigDecimal","(decimal)|(decimal\\(([0-9]*),([0-9]*)\\))|(decimal\\(([0-9]*)\\))")
     ,Object("Object","other")
     ;
     private String sqlType;//正则表达式
@@ -41,7 +41,10 @@ public enum ColumnTypeEnum implements IEnum<String> {
         return Object;
     }
     public static void main(String[] args) {
-        ColumnTypeEnum columnTypeEnum =getEnum("tinyint(1)");
-        System.out.println(columnTypeEnum);
+//        ColumnTypeEnum columnTypeEnum =getEnum("decimal(10,4)");
+//        System.out.println(columnTypeEnum);
+        String sqlContent="decimal(10,4)";
+        sqlContent=sqlContent.replaceAll("(\\(([0-9]*),([0-9]*)\\))","\\(([0-9]*)-([0-9]*)\\)");
+        System.out.println(sqlContent);
     }
 }

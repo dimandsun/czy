@@ -9,6 +9,7 @@ import com.czy.fx.test.test15_StackPane.StackPaneTest;
 import com.czy.fx.test.test16_TextFlow.TextFlowTest;
 import com.czy.fx.test.test18_DialogPane.DialogPaneTest;
 import com.czy.fx.test.test19_ScheduledService.ScheduledServiceTest;
+import com.czy.fx.test.test19_ScheduledService.TaskTest;
 import com.czy.fx.test.test1_helloWorld.HelloWorld;
 import com.czy.fx.test.test21_MenuBar_Menu_MenuItem.MenuAboutTest;
 import com.czy.fx.test.test22_media.MediaTest;
@@ -59,6 +60,7 @@ import com.czy.fx.test.test65_TableView.TableViewTest;
 import com.czy.fx.test.test66_TreeView.TreeViewTest;
 import com.czy.fx.test.test66_TreeView.TreeViewTest2;
 import com.czy.fx.test.test66_TreeView.TreeViewTest3;
+import com.czy.fx.test.test67_TreeTableView.TreeTableViewTest;
 import com.czy.fx.test.test6_platform.PlatformTest;
 import com.czy.fx.test.test6_scene.SceneTest;
 import com.czy.fx.test.test7_screen.ScreenTest;
@@ -147,6 +149,8 @@ public class Main {
         entrance= TreeViewTest.class;
         entrance= TreeViewTest3.class;
         entrance= TreeViewTest2.class;
+        entrance= TreeTableViewTest.class;
+        entrance= TaskTest.class;
         Application.launch(entrance,args);
 //        createDirs();
 

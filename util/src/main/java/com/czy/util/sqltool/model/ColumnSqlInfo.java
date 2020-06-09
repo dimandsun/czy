@@ -1,6 +1,6 @@
-package com.czy.sqltool.model;
+package com.czy.util.sqltool.model;
 
-import com.czy.sqltool.enums.ColumnTypeEnum;
+import com.czy.util.sqltool.enums.ColumnTypeEnum;
 
 /**
  * @author chenzy
