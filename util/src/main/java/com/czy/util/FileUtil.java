@@ -37,7 +37,7 @@ public class FileUtil {
     }
 
     public static String readFile(File file) {
-        if (file==null){
+        if (file == null) {
             return null;
         }
         BufferedReader reader = null;
@@ -294,14 +294,26 @@ public class FileUtil {
      * @param beanName
      * @return
      */
-    public static File getCodeFile(String moduleDir,String beanName) {
+    public static File getCodeFile(String moduleDir, String beanName) {
         String projectPath = null;
         try {
-            projectPath = new File(StringUtil.isBlank(moduleDir)?"":moduleDir).getCanonicalPath();
+            projectPath = new File(StringUtil.isBlank(moduleDir) ? "" : moduleDir).getCanonicalPath();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String path = projectPath + "/src/main/java" + File.separator + beanName.replace(".", File.separator);
+        if (beanName==null){
+            beanName="";
+        }
+        if (beanName.endsWith(".java")){
+            beanName=beanName.substring(0,beanName.lastIndexOf(".java"));
+            beanName=beanName.replace(".", File.separator);
+            beanName+=".java";
+        }else if (beanName.endsWith(".fxml")){
+            beanName=beanName.substring(0,beanName.lastIndexOf(".fxml"));
+            beanName=beanName.replace(".", File.separator);
+            beanName+=".fxml";
+        }
+        String path = projectPath + "/src/main/java" + File.separator +beanName;
         return new File(path);
     }
 
@@ -351,7 +363,7 @@ public class FileUtil {
      * @param contents
      */
     public static void write(File file, String... contents) {
-        if (file==null||ListUtil.isEmpty(contents)) {
+        if (file == null || ListUtil.isEmpty(contents)) {
             return;
         }
         createFile(file);

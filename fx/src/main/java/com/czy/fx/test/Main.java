@@ -62,6 +62,7 @@ import com.czy.fx.test.test66_TreeView.TreeViewTest;
 import com.czy.fx.test.test66_TreeView.TreeViewTest2;
 import com.czy.fx.test.test66_TreeView.TreeViewTest3;
 import com.czy.fx.test.test67_TreeTableView.TreeTableViewTest;
+import com.czy.fx.test.test68_FXML.FXMLTest;
 import com.czy.fx.test.test6_platform.PlatformTest;
 import com.czy.fx.test.test6_scene.SceneTest;
 import com.czy.fx.test.test7_screen.ScreenTest;
@@ -153,6 +154,7 @@ public class Main {
         entrance= TreeTableViewTest.class;
         entrance= TaskTest.class;
         entrance= ServiceTest.class;
+        entrance= FXMLTest.class;
         Application.launch(entrance,args);
 //        createDirs();
 
