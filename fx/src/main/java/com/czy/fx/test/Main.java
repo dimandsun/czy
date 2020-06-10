@@ -9,6 +9,7 @@ import com.czy.fx.test.test15_StackPane.StackPaneTest;
 import com.czy.fx.test.test16_TextFlow.TextFlowTest;
 import com.czy.fx.test.test18_DialogPane.DialogPaneTest;
 import com.czy.fx.test.test19_ScheduledService.ScheduledServiceTest;
+import com.czy.fx.test.test19_ScheduledService.ServiceTest;
 import com.czy.fx.test.test19_ScheduledService.TaskTest;
 import com.czy.fx.test.test1_helloWorld.HelloWorld;
 import com.czy.fx.test.test21_MenuBar_Menu_MenuItem.MenuAboutTest;
@@ -151,6 +152,7 @@ public class Main {
         entrance= TreeViewTest2.class;
         entrance= TreeTableViewTest.class;
         entrance= TaskTest.class;
+        entrance= ServiceTest.class;
         Application.launch(entrance,args);
 //        createDirs();
 
