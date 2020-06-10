@@ -4,9 +4,36 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.121" fx:controller="com.czy.fx.test.test68_FXML.MyController">
     <children>
         <Label fx:id="a" text="la" />
         <Button fx:id="buttonId" onAction="#action" prefHeight="100" prefWidth="100" text="按钮名称" AnchorPane.leftAnchor="100"/>
+        <ImageView AnchorPane.topAnchor="300" AnchorPane.leftAnchor="100" fitWidth="100" fitHeight="100" preserveRatio="true">
+            <Image url="@/girl.png"/>
+        </ImageView>
+        <BorderPane AnchorPane.topAnchor="300" AnchorPane.leftAnchor="200">
+            <top><Button text="上"/>
+                <ListView>
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="a"/>
+                            <String fx:value="b"/>
+                        </FXCollections>
+                    </items>
+                </ListView>
+            </top>
+            <bottom><Button text="下"/>
+
+            </bottom>
+            <left><Button text="左"/></left>
+            <right><Button text="右"/></right>
+            <center><Button text="中"/></center>
+        </BorderPane>
     </children>
 </AnchorPane>
