@@ -22,6 +22,13 @@ public class User {
     /*是否删除，true为删除*/
     private Boolean delete;
 
+    public User() {
+    }
+
+    public User(String name) {
+        this.name = name;
+    }
+
     public Double getScore() {
         return score;
     }
@@ -51,12 +58,6 @@ public class User {
         return JsonUtil.model2Str(this);
     }
 
-    public User() {
-    }
-
-    public User(String name) {
-        this.name = name;
-    }
 
     public Integer getId() {
         return id;

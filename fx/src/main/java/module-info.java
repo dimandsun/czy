@@ -53,5 +53,10 @@
     exports com.czy.fx.test.test66_TreeView;
     exports com.czy.fx.test.test67_TreeTableView;
     exports com.czy.fx.test.test68_FXML;
+    exports com.czy.fx.test.test68_FXML2;
+    exports com.czy.fx.test.test69_GraspData;
+    exports com.czy.fx.test.test70_screenshot;
     opens com.czy.fx.test.test68_FXML;
+    opens com.czy.fx.test.test68_FXML2;
+    opens com.czy.fx.test.test69_GraspData;
 }

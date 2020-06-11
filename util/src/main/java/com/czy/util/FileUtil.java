@@ -271,6 +271,9 @@ public class FileUtil {
      * @return
      */
     public static File getResourceFile(String fileName) {
+        return getResourceFile(null,fileName);
+    }
+    public static File getResourceFile(String moduleDir,String fileName) {
 //        FileUtil.class.getClassLoader().getResource("doc/sql.sql")
         URL url = Thread.currentThread().getContextClassLoader().getResource(fileName);
         if (url != null) {
@@ -280,13 +283,12 @@ public class FileUtil {
         /*资源文件不存在时，也会返回file对象*/
         String projectPath = null;
         try {
-            projectPath = new File("").getCanonicalPath();
+            projectPath = new File(StringUtil.isBlank(moduleDir) ? "" : moduleDir).getCanonicalPath();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return new File(projectPath + "/src/main/resource/" + fileName);
     }
-
     /**
      * 获取原代码文件或者目录
      *

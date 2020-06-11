@@ -10,6 +10,10 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.geometry.Insets?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.121" fx:controller="com.czy.fx.test.test68_FXML.MyController">
     <children>
         <Label fx:id="a" text="la" />
@@ -23,17 +27,29 @@
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="a"/>
+
                             <String fx:value="b"/>
                         </FXCollections>
                     </items>
                 </ListView>
             </top>
             <bottom><Button text="下"/>
-
             </bottom>
             <left><Button text="左"/></left>
             <right><Button text="右"/></right>
             <center><Button text="中"/></center>
         </BorderPane>
+        <fx:define>
+            <ToggleGroup fx:id="btnGroup"/>
+            <Insets fx:id="margin" top="10" left="10" bottom="10"/>
+        </fx:define>
+        <HBox alignment="CENTER">
+            <Button fx:id="buttonId2" HBox.margin="$margin" prefWidth="20"/>
+            <Button prefWidth="${buttonId2.prefWidth}"/>
+            <RadioButton text="A" toggleGroup="$btnGroup"/>
+            <RadioButton text="B" toggleGroup="$btnGroup"/>
+            <RadioButton text="C" toggleGroup="$btnGroup"/>
+        </HBox>
+        <fx:include source="../test68_FXML2/User.fxml"/>
     </children>
 </AnchorPane>

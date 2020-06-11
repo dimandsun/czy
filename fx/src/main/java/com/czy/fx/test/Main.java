@@ -63,8 +63,11 @@ import com.czy.fx.test.test66_TreeView.TreeViewTest2;
 import com.czy.fx.test.test66_TreeView.TreeViewTest3;
 import com.czy.fx.test.test67_TreeTableView.TreeTableViewTest;
 import com.czy.fx.test.test68_FXML.FXMLTest;
+import com.czy.fx.test.test68_FXML2.FXMLTest2;
+import com.czy.fx.test.test69_GraspData.GraspData;
 import com.czy.fx.test.test6_platform.PlatformTest;
 import com.czy.fx.test.test6_scene.SceneTest;
+import com.czy.fx.test.test70_screenshot.ScreenshotTest;
 import com.czy.fx.test.test7_screen.ScreenTest;
 import com.czy.fx.test.test8_group.GroupTest;
 import com.czy.fx.test.test9_button.ButtonTest;
@@ -155,6 +158,9 @@ public class Main {
         entrance= TaskTest.class;
         entrance= ServiceTest.class;
         entrance= FXMLTest.class;
+        entrance= FXMLTest2.class;
+        entrance= GraspData.class;
+        entrance= ScreenshotTest.class;
         Application.launch(entrance,args);
 //        createDirs();
 
