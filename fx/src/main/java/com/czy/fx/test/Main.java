@@ -68,6 +68,11 @@ import com.czy.fx.test.test69_GraspData.GraspData;
 import com.czy.fx.test.test6_platform.PlatformTest;
 import com.czy.fx.test.test6_scene.SceneTest;
 import com.czy.fx.test.test70_screenshot.ScreenshotTest;
+import com.czy.fx.test.test71_ResourceBundle.ResourceBundleTest;
+import com.czy.fx.test.test73_Transform.*;
+import com.czy.fx.test.test74_Chart.BarChartTest;
+import com.czy.fx.test.test74_Chart.LineChartTest;
+import com.czy.fx.test.test74_Chart.PieChartTest;
 import com.czy.fx.test.test7_screen.ScreenTest;
 import com.czy.fx.test.test8_group.GroupTest;
 import com.czy.fx.test.test9_button.ButtonTest;
@@ -107,66 +112,74 @@ public class Main {
         entrance = RadioButtonTest.class;
         entrance = TextAreaTest.class;
         entrance = TextFieldTest.class;
-        entrance= ButtonBarTest.class;
-        entrance= ChoiceBoxTest.class;
-        entrance= ComboBoxTest.class;
-        entrance= ColorPickeTest.class;
-        entrance= DatePickerTest.class;
-        entrance= PaginationTest.class;
-        entrance= SliderTest.class;
-        entrance= MediaTest.class;
-        entrance= ProgressBarTest.class;
-        entrance= ProgressIndicatorTest.class;
-        entrance= SplitPaneTest.class;
-        entrance= SpinnerTest.class;
-        entrance= ScrollBarTest.class;
-        entrance= ScrollPaneTest.class;
-        entrance= SeparatorTest.class;
-        entrance= Point2DTest.class;
-        entrance= PropertyChangeSupportTest.class;
-        entrance= SimpleIntegerPropertyTest.class;
-        entrance= ReadOnlyDoubleWrapperTest.class;
-        entrance= ListPropertyTest.class;
-        entrance= SetPropertyTest.class;
-        entrance= ChangeAndInvalidationListenerTest.class;
-        entrance= BindingTest.class;
-        entrance= FileChooserTest.class;
-        entrance= TooltipTest.class;
-        entrance= ImageTest.class;
-        entrance= ImageViewTest.class;
-        entrance= EventTest.class;
-        entrance= FilterTest.class;
-        entrance= DragTest.class;
-        entrance= ClipboardTest.class;
-        entrance= ClipboardTest2.class;
-        entrance= ClipboardTest3.class;
-        entrance= ListViewTestBeanList.class;
-        entrance= ListViewTestStringList.class;
-        entrance=ClipboardTest2.class;
-        entrance= ListViewTestStringList2.class;
+        entrance = ButtonBarTest.class;
+        entrance = ChoiceBoxTest.class;
+        entrance = ComboBoxTest.class;
+        entrance = ColorPickeTest.class;
+        entrance = DatePickerTest.class;
+        entrance = PaginationTest.class;
+        entrance = SliderTest.class;
+        entrance = MediaTest.class;
+        entrance = ProgressBarTest.class;
+        entrance = ProgressIndicatorTest.class;
+        entrance = SplitPaneTest.class;
+        entrance = SpinnerTest.class;
+        entrance = ScrollBarTest.class;
+        entrance = ScrollPaneTest.class;
+        entrance = SeparatorTest.class;
+        entrance = Point2DTest.class;
+        entrance = PropertyChangeSupportTest.class;
+        entrance = SimpleIntegerPropertyTest.class;
+        entrance = ReadOnlyDoubleWrapperTest.class;
+        entrance = ListPropertyTest.class;
+        entrance = SetPropertyTest.class;
+        entrance = ChangeAndInvalidationListenerTest.class;
+        entrance = BindingTest.class;
+        entrance = FileChooserTest.class;
+        entrance = TooltipTest.class;
+        entrance = ImageTest.class;
+        entrance = ImageViewTest.class;
+        entrance = EventTest.class;
+        entrance = FilterTest.class;
+        entrance = DragTest.class;
+        entrance = ClipboardTest.class;
+        entrance = ClipboardTest2.class;
+        entrance = ClipboardTest3.class;
+        entrance = ListViewTestBeanList.class;
+        entrance = ListViewTestStringList.class;
+        entrance = ClipboardTest2.class;
+        entrance = ListViewTestStringList2.class;
         entrance = TextFontTest.class;
-        entrance= DialogTest.class;
-        entrance= AlertTest.class;
-        entrance= ChoiceDialogTest.class;
-        entrance= TextInputDialogTest.class;
-        entrance= CustomDialogTest.class;
-        entrance= TableViewTest.class;
-        entrance= TreeViewTest.class;
-        entrance= TreeViewTest3.class;
-        entrance= TreeViewTest2.class;
-        entrance= TreeTableViewTest.class;
-        entrance= TaskTest.class;
-        entrance= ServiceTest.class;
-        entrance= FXMLTest.class;
-        entrance= FXMLTest2.class;
-        entrance= GraspData.class;
-        entrance= ScreenshotTest.class;
-        Application.launch(entrance,args);
+        entrance = DialogTest.class;
+        entrance = AlertTest.class;
+        entrance = ChoiceDialogTest.class;
+        entrance = TextInputDialogTest.class;
+        entrance = CustomDialogTest.class;
+        entrance = TableViewTest.class;
+        entrance = TreeViewTest.class;
+        entrance = TreeViewTest3.class;
+        entrance = TreeViewTest2.class;
+        entrance = TreeTableViewTest.class;
+        entrance = TaskTest.class;
+        entrance = ServiceTest.class;
+        entrance = FXMLTest.class;
+        entrance = FXMLTest2.class;
+        entrance = GraspData.class;
+        entrance = ScreenshotTest.class;
+        entrance = ResourceBundleTest.class;
+        entrance = TranslateTest.class;
+        entrance = ScaleTest.class;
+        entrance = RotateTest.class;
+        entrance = ShearTest.class;
+        entrance = AffineTest.class;
+        entrance= PieChartTest.class;
+        entrance= BarChartTest.class;
+        entrance= LineChartTest.class;
+        Application.launch(entrance, args);
 //        createDirs();
 
 
     }
-
 
 
     private static void createDirs() {
@@ -179,10 +192,10 @@ public class Main {
 
         String beanPackage = "com.czy.fx.test.test";
         String moduleDir = "fx";
-        ss=new String[]{"SimpleIntegerProperty","ReadOnlyDoubleWrapper", "ListProperty", "SetProperty", "MapProperty"
+        ss = new String[]{"SimpleIntegerProperty", "ReadOnlyDoubleWrapper", "ListProperty", "SetProperty", "MapProperty"
                 , "ChangeListener", "InvalidationListener"};
         Integer i = 46;
-        ss=new String[]{"FileChooser","Tooltip", "Image", "ImageView", "Pixel"
+        ss = new String[]{"FileChooser", "Tooltip", "Image", "ImageView", "Pixel"
                 , "ImageIO"};
         i = 54;
         for (String s : ss) {

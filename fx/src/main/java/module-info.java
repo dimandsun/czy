@@ -56,7 +56,11 @@
     exports com.czy.fx.test.test68_FXML2;
     exports com.czy.fx.test.test69_GraspData;
     exports com.czy.fx.test.test70_screenshot;
+    exports com.czy.fx.test.test71_ResourceBundle;
+    exports com.czy.fx.test.test73_Transform;
+    exports com.czy.fx.test.test74_Chart;
     opens com.czy.fx.test.test68_FXML;
     opens com.czy.fx.test.test68_FXML2;
     opens com.czy.fx.test.test69_GraspData;
+    opens com.czy.fx.test.test71_ResourceBundle;
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.czy.fx.test.test71_ResourceBundle.ResourceBundleController"
+            prefHeight="400.0" prefWidth="600.0">
+    <Button text="%value" fx:id="btn"/>
+    <Button text="%value2" fx:id="btn2" />
+    <Button text="%value3" fx:id="btn3"/>
+
+</AnchorPane>

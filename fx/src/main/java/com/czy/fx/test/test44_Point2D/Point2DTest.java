@@ -90,13 +90,13 @@ public class Point2DTest extends Application {
 
         /*获得相对于父组件的坐标*/
         var localToParent = person.localToParent(bounds);
-        println("相对于父组件最小坐标({},{},{}):", localToParent.getMinX(), localToParent.getMinY(), localToParent.getMinZ());
+        println("在父组件最小坐标({},{},{}):", localToParent.getMinX(), localToParent.getMinY(), localToParent.getMinZ());
         /*获得相对于场景中的坐标*/
         var localToScene = person.localToScene(bounds);
-        println("相对于场景最小坐标({},{},{}):", localToScene.getMinX(), localToScene.getMinY(), localToScene.getMinZ());
+        println("在场景最小坐标({},{},{}):", localToScene.getMinX(), localToScene.getMinY(), localToScene.getMinZ());
         /*获得相对于屏幕的坐标*/
         var localToScreen = person.localToScreen(bounds);
-        println("获得相对于屏幕的坐标({},{},{}):", localToScreen.getMinX(), localToScreen.getMinY(), localToScreen.getMinZ());
+        println("在屏幕的坐标({},{},{}):", localToScreen.getMinX(), localToScreen.getMinY(), localToScreen.getMinZ());
 
 //        btn.parentToLocal(localToParent);
 

@@ -1,7 +1,9 @@
 package com.czy.fx.test;
 
 import com.czy.util.ClassUtil;
+import com.czy.util.FileUtil;
 import com.czy.util.StringUtil;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -9,11 +11,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +31,21 @@ import java.util.List;
 public class FXUtil {
     private FXUtil() {
     }
+    /**
+     * fileName:"com.czy.fx.test.test69_GraspData.GraspData.fxml"
+     */
+    public static <T extends Node> T getNodeByFXML(String fileName){
+        var fxmlLoader=new FXMLLoader();
+        var file = FileUtil.getCodeFile("fx",fileName);
+        try {
+           return fxmlLoader.load(new FileInputStream(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
     public static List<Button> getButtonList(String... btnNames) {
         if (btnNames == null || btnNames.length == 0) {
             return null;
