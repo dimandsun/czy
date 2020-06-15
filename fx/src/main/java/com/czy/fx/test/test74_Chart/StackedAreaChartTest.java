@@ -12,28 +12,27 @@ import javafx.stage.Stage;
 /**
  * @author chenzy
  * @since 2020-06-12
+ * 堆积区域图
  */
-public class LineChartTest extends Application {
+public class StackedAreaChartTest extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         var anchorPane = new AnchorPane();
         var btn = new Button("按钮");
         //X轴是字符串
-        var xt = new CategoryAxis();
-        //x轴是数字
-        var x = new NumberAxis("x轴", 0, 100, 10);
+        var x = new CategoryAxis();
+
         var y = new NumberAxis("y轴", 0, 100, 10);
 
-
-        var xy1 = new XYChart.Series<Number,Number>(FXCollections.observableArrayList(new XYChart.Data<>(10, 10)
-                , new XYChart.Data<>(10, 20), new XYChart.Data<>(50, 56)));
+        var xy1 = new XYChart.Series<String,Number>(FXCollections.observableArrayList(new XYChart.Data<>("a", 10)
+                , new XYChart.Data<>("b", 20), new XYChart.Data<>("c", 56)));
         xy1.setName("xy1");
-        var xy2 = new XYChart.Series<Number,Number>(FXCollections.observableArrayList(new XYChart.Data<>(9, 10)
-                , new XYChart.Data<>(25, 20), new XYChart.Data<>(23, 56)));
+        var xy2 = new XYChart.Series<String,Number>(FXCollections.observableArrayList(new XYChart.Data<>("a", 15)
+                , new XYChart.Data<>("b", 12), new XYChart.Data<>("c", 42)));
         xy2.setName("xy2");
 
 
-        var lineChart = new LineChart<>(x, y, FXCollections.observableArrayList(xy1, xy2));
+        var stackedAreaChart = new StackedAreaChart<>(x, y, FXCollections.observableArrayList(xy1, xy2));
         xy1.getData().forEach(data->{
 //            data.setNode(new HBox());
             Tooltip.install(data.getNode(),new Tooltip("xy1:"+data.getXValue()+"-"+data.getYValue()));
@@ -46,11 +45,9 @@ public class LineChartTest extends Application {
             Tooltip.install(data.getNode(),new Tooltip("xy2:"+data.getXValue()+"-"+data.getYValue()));
         });
 
-        //不显示折点的点
-//        lineChart.setCreateSymbols(false);
 
-        anchorPane.getChildren().addAll(btn, lineChart);
+        anchorPane.getChildren().addAll(btn, stackedAreaChart);
         FXUtil.setDefaultValue(primaryStage, anchorPane);
-        AnchorPane.setTopAnchor(lineChart, btn.getHeight());
+        AnchorPane.setTopAnchor(stackedAreaChart, btn.getHeight());
     }
 }

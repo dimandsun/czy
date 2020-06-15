@@ -11,6 +11,7 @@
     requires com.czy.util;
     requires java.desktop;
     requires javafx.swing;
+    requires javafx.web;
     exports com.czy.fx.test.test19_ScheduledService;
     exports com.czy.fx.test.test27_RadioButton_CheckBox;
     exports com.czy.fx.test.test28_TextArea;
@@ -18,7 +19,7 @@
     exports com.czy.fx.test.test30_ButtonBar;
     exports com.czy.fx.test.test31_ChoiceBox;
     exports com.czy.fx.test.test32_ComboBox;
-    exports com.czy.fx.test.test33_ColorPicke;
+    exports com.czy.fx.test.test33_Color;
     exports com.czy.fx.test.test34_DatePicker;
     exports com.czy.fx.test.test35_Pagination;
     exports com.czy.fx.test.test36_Slider;
@@ -59,6 +60,8 @@
     exports com.czy.fx.test.test71_ResourceBundle;
     exports com.czy.fx.test.test73_Transform;
     exports com.czy.fx.test.test74_Chart;
+    exports com.czy.fx.test.test75_HTMLEditor;
+    exports com.czy.fx.test.test76_WebView;
     opens com.czy.fx.test.test68_FXML;
     opens com.czy.fx.test.test68_FXML2;
     opens com.czy.fx.test.test69_GraspData;

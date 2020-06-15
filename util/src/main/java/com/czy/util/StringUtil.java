@@ -680,9 +680,10 @@ public class StringUtil {
      * @return
      */
     public static boolean matcher(String str, String patternS) {
-        Pattern pattern = Pattern.compile(patternS);
-        Matcher matcher = pattern.matcher(str);
-        return matcher.matches();
+//        Pattern pattern = Pattern.compile(patternS);
+//        Matcher matcher = pattern.matcher(str);
+//        return matcher.matches();
+        return Pattern.compile(patternS).matcher(str).matches();
     }
 
     /**

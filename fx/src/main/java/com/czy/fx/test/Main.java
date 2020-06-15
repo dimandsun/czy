@@ -23,7 +23,7 @@ import com.czy.fx.test.test2_login.Login;
 import com.czy.fx.test.test30_ButtonBar.ButtonBarTest;
 import com.czy.fx.test.test31_ChoiceBox.ChoiceBoxTest;
 import com.czy.fx.test.test32_ComboBox.ComboBoxTest;
-import com.czy.fx.test.test33_ColorPicke.ColorPickeTest;
+import com.czy.fx.test.test33_Color.ColorPickeTest;
 import com.czy.fx.test.test34_DatePicker.DatePickerTest;
 import com.czy.fx.test.test35_Pagination.PaginationTest;
 import com.czy.fx.test.test36_Slider.SliderTest;

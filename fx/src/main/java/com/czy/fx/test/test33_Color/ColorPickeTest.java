@@ -1,4 +1,4 @@
-package com.czy.fx.test.test33_ColorPicke;
+package com.czy.fx.test.test33_Color;
 
 import com.czy.fx.test.FXUtil;
 import javafx.application.Application;
