@@ -12,6 +12,10 @@
     requires java.desktop;
     requires javafx.swing;
     requires javafx.web;
+    exports com.czy.fx.test.test2_login;
+    exports com.czy.fx.test.test3_css;
+    exports com.czy.fx.test.test4_fxml;
+    exports com.czy.fx.test.test5_muliStage;
     exports com.czy.fx.test.test19_ScheduledService;
     exports com.czy.fx.test.test27_RadioButton_CheckBox;
     exports com.czy.fx.test.test28_TextArea;
@@ -66,4 +70,5 @@
     opens com.czy.fx.test.test68_FXML2;
     opens com.czy.fx.test.test69_GraspData;
     opens com.czy.fx.test.test71_ResourceBundle;
+    exports com.czy.fx.util;
 }

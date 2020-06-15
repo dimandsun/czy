@@ -24,9 +24,7 @@ public class FXMLTest2 extends Application {
         var fxmlLoader=new FXMLLoader();
         var file = FileUtil.getCodeFile("fx","com.czy.fx.test.test68_FXML2.User.fxml");
         fxmlLoader.setLocation(file.toURI().toURL());
-
         fxmlLoader.setBuilderFactory(type -> new UserBuilder());
-
         User user =fxmlLoader.load();
 
         System.out.println(user);

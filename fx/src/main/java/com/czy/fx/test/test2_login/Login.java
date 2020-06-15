@@ -37,7 +37,6 @@ public class Login extends Application {
         Text scenetitle = new Text("Welcome");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
-
         //创建Label对象，放到第0列，第1行
         Label userName = new Label("User Name:");
         grid.add(userName, 0, 1);

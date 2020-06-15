@@ -21,7 +21,8 @@ public class ColorPickeTest extends Application {
         cp.valueProperty().addListener((observable, oldValue, newValue) -> {
             FXUtil.setColor(ap,newValue);
         });
-
+        cp.setPromptText("123");
+//        cp.promptTextProperty()
 
         ap.getChildren().add(cp);
         ap.setPrefWidth(100);

@@ -23,4 +23,10 @@
     exports com.czy.core.util;
     exports com.czy.user.model;
     exports com.czy.swing.view;
+    exports com.czy.core.annotation.db;
+    exports com.czy.core.annotation.bean;
+    exports com.czy.core.annotation;
+    exports com.czy.core.redis.service;
+    exports com.czy.core.service;
+    exports com.czy.core.annotation.mapping;
 }

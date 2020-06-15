@@ -275,12 +275,15 @@ public class FileUtil {
     }
     public static File getResourceFile(String moduleDir,String fileName) {
 //        FileUtil.class.getClassLoader().getResource("doc/sql.sql")
-        URL url = Thread.currentThread().getContextClassLoader().getResource(fileName);
-        if (url != null) {
-            /*资源文件存在时，直接返回文件*/
-            return new File(url.getPath());
+        //当前模块，直接返回url
+        if (StringUtil.isBlank(moduleDir)){
+            URL url = Thread.currentThread().getContextClassLoader().getResource(fileName);
+            if (url != null) {
+                /*资源文件存在时，直接返回文件*/
+                return new File(url.getPath());
+            }
         }
-        /*资源文件不存在时，也会返回file对象*/
+        /*非当前模块，资源文件不存在时，也会返回file对象*/
         String projectPath = null;
         try {
             projectPath = new File(StringUtil.isBlank(moduleDir) ? "" : moduleDir).getCanonicalPath();
@@ -474,6 +477,7 @@ public class FileUtil {
     public static void main(String[] args) {
         createFile(getResourceFile("a/b.txt"));
     }
+
 
 
 }
