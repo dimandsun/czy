@@ -18,6 +18,7 @@ import java.util.ArrayList;
 /**
  * @author chenzy
  * @since 2020-06-15
+ * 颜色渐变
  */
 public class LinearGradientTest extends Application {
     @Override
@@ -39,16 +40,16 @@ public class LinearGradientTest extends Application {
         anchorPane.getChildren().addAll(gridPane, box);
 
         var image=new Image("girl2.jpg");
-
-        var list = new ArrayList<Paint>();
-        list.add(new LinearGradient(0,0,width,height,false, CycleMethod.NO_CYCLE,new Stop[]{
-                new Stop(0,Color.valueOf("#3238b0"))
+        var stops=new Stop[]{new Stop(0,Color.valueOf("#3238b0"))
                 ,new Stop(0.5,Color.valueOf("#e7225e"))
-                ,new Stop(1,Color.valueOf("#35da63"))
-        }));
-        list.add(new ImagePattern(image,0,0,0.5,0.5,true));
-        list.add(new ImagePattern(image,0,0,100,100,false));
-        list.add(new ImagePattern(image,50,50,0.5,0.5,false));
+                ,new Stop(1,Color.valueOf("#35da63"))};
+        var list = new ArrayList<Paint>();
+        list.add(new LinearGradient(0,0,width,height,false, CycleMethod.NO_CYCLE,stops));
+        list.add(new LinearGradient(0,0,0.5,0.5,true, CycleMethod.NO_CYCLE,stops));
+        list.add(new LinearGradient(0,0,0.5,0.5,true, CycleMethod.REFLECT,stops));
+        list.add(new LinearGradient(0,0,0.5,0.5,true, CycleMethod.REPEAT,stops));
+        list.add(new LinearGradient(0,0.5,1,0.5,true, CycleMethod.REPEAT,stops));
+
         for (int i = 0; i < list.size(); i++) {
             ((Rectangle)gridPane.getChildren().get(i)).setFill(list.get(i));
         }
