@@ -18,7 +18,7 @@
         <!-- 具体选择哪个日志实现工具由MyBatis的内置日志工厂确定。它会使用最先找到的（按列举的SLF4J、Apache Commons Logging、Log4j 2、Log4j、JDK logging顺序查找） -->
         <!-- 是否允许单一语句返回多结果集（需要兼容驱动）。 -->
         <setting name="multipleResultSetsEnabled" value="true"/>
-
-        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <!-- 具体选择哪个日志实现工具由MyBatis的内置日志工厂确定。它会使用最先找到的（按列举的SLF4J、Apache Commons Logging、Log4j 2、Log4j、JDK logging顺序查找） -->
+        <setting name="logImpl" value="SLF4J" />
     </settings>
 </configuration>

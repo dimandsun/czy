@@ -6,6 +6,7 @@ import com.czy.core.annotation.Auto;
 import com.czy.core.annotation.bean.*;
 import com.czy.core.annotation.mapping.Mapping;
 import com.czy.core.annotation.mapping.MappingAnnotation;
+import com.czy.core.db.config.DataSourceHolder;
 import com.czy.core.db.model.MybatisInfo;
 import com.czy.core.db.model.TypeAliases;
 import com.czy.core.enums.QuestEnum;
@@ -97,8 +98,14 @@ public class ProjectContainer {
                 packageName = ((MybatisInfo) beanMap.get("mybatisInfo").getBean()).getTypeAliases().getPackageName();
             }
             for (Map.Entry<String, DataSource> entry : dataSourceMap.entrySet()) {
+                if (DataSourceHolder.getInstance()==null){
+                    DataSourceHolder.createInstance(String.class,entry.getKey());
+                }
                 var configuration = new Configuration(
                         new Environment("development", new JdbcTransactionFactory(), entry.getValue()));
+                /*是否允许单一语句返回多结果集*/
+                configuration.setMultipleResultSetsEnabled(true);
+
                 /*mybatis设置对象别名*/
                 if (packageName != null) {
                     getClassList(packageName).forEach(c -> configuration.getTypeAliasRegistry().registerAlias(c));
@@ -106,8 +113,10 @@ public class ProjectContainer {
                 /*设值mapper*/
                 setMapper(configuration);
                 configuration.addLoadedResource("mybatis-config.xml");
+//                configuration.isResourceLoaded("mybatis-config.xml")
                 dataFactoryMap.put(entry.getKey(), new SqlSessionFactoryBuilder().build(configuration));
             }
+
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(-1);

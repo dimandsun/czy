@@ -14,10 +14,12 @@ module car {
     requires javafx.web;
     requires com.czy.fx;
     requires cglib;
+    requires com.fasterxml.jackson.databind;
     exports com.czy.car.view;
     exports com.czy.car.view.user;
     exports com.czy.car.controller;
     exports com.czy.car.service.impl;
+    exports com.czy.car.model;
     opens com.czy.car.service.impl;
     opens com.czy.car.controller;
     opens com.czy.car.view.user;

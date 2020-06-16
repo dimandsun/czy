@@ -1,7 +1,8 @@
 package com.czy.swing.view;
 
-import com.czy.swing.entrance.Dispatch;
+import com.czy.core.dispatch.Dispatch;
 import com.czy.util.json.JsonUtil;
+import com.czy.util.model.StringMap;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +20,7 @@ public class Login {
         var userField = new JTextField();
         var psField = new JTextField();
         var loginButton = new MyButton("登录").addListener(e -> {
-            var par = JsonUtil.createJsonNode();
+            var par = new StringMap<>();
             par.put("mobile",userField.getText());
             par.put("ps",psField.getText());
             Object result = Dispatch.getInstance().get("/login",par);

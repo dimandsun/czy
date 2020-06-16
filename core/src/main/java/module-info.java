@@ -31,4 +31,6 @@
     exports com.czy.core.annotation.mapping;
     exports com.czy.core.model;
     exports com.czy.core;
+    exports com.czy.core.enums;
+    exports com.czy.core.dispatch;
 }

@@ -12,6 +12,7 @@ import com.czy.util.model.ResultVO;
 
 import static com.czy.util.enums.ResCodeEnum.ArgAnalyExce;
 import static com.czy.util.enums.ResCodeEnum.DBExce;
+import static java.lang.Enum.valueOf;
 
 /**
  * @author chenzy
@@ -29,6 +30,14 @@ public class UserServiceImpl implements IUserService {
     public ResultVO regist(User user) {
         if (user == null) {
             return new ResultVO(ArgAnalyExce, "未接收到任何参数");
+        }
+        var mobile = user.getMobile();
+        String originalPS=user.getOriginalPS();
+        if (StringUtil.isBlank(mobile)){
+            return new ResultVO(DBExce, "未输入帐号！");
+        }
+        if (StringUtil.isBlank(originalPS)){
+            return new ResultVO(DBExce, "未输入密码！");
         }
         /*用户密码加密*/
         user.setPS();
