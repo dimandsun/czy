@@ -1,22 +1,21 @@
 package com.czy.swing.entrance;
 
-import com.czy.core.CoreContainer;
+import com.czy.core.ProjectContainer;
 import com.czy.core.annotation.Par;
 import com.czy.core.enums.QuestEnum;
 import com.czy.core.model.RouteModel;
 import com.czy.util.ClassUtil;
 import com.czy.util.json.JsonUtil;
-import com.czy.util.model.MyMap;
 import com.czy.util.model.StringMap;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.awt.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
-import java.util.Map;
 
 /**
  * @author chenzy
@@ -34,7 +33,7 @@ public class Dispatch {
         init();
     }
     private void init(){
-        routeModelMap= CoreContainer.getInstance().getRouteMap();
+        routeModelMap= ProjectContainer.getInstance().getRouteMap();
     }
 
     public Object post(String url, ObjectNode dataJson){

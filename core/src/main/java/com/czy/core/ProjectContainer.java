@@ -1,18 +1,17 @@
 package com.czy.core;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
-import com.czy.core.annotation.*;
+import com.czy.core.annotation.Aspect;
+import com.czy.core.annotation.Auto;
 import com.czy.core.annotation.bean.*;
-import com.czy.core.annotation.mapping.*;
-import com.czy.core.db.DaoAspect$;
-import com.czy.core.db.config.DataSourceEnum;
+import com.czy.core.annotation.mapping.Mapping;
+import com.czy.core.annotation.mapping.MappingAnnotation;
 import com.czy.core.db.model.MybatisInfo;
 import com.czy.core.db.model.TypeAliases;
+import com.czy.core.enums.QuestEnum;
 import com.czy.core.model.BeanModel;
-import com.czy.core.model.CoreProject;
 import com.czy.core.model.ProjectInfo;
 import com.czy.core.model.RouteModel;
-import com.czy.core.enums.QuestEnum;
 import com.czy.util.FileUtil;
 import com.czy.util.ListUtil;
 import com.czy.util.StringUtil;
@@ -23,13 +22,12 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
-import org.apache.ibatis.type.TypeAliasRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
-import java.io.File;
+import javax.sql.DataSource;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -41,49 +39,52 @@ import java.util.*;
  * @description 应用容器，维护应用下的属性和bean对象
  * @since 2020-03-31
  */
-public class CoreContainer {
-    private static Logger logger = LoggerFactory.getLogger(CoreContainer.class);
-    private static CoreContainer instance = new CoreContainer();
-    private Set<String> projectGroupIdList = new HashSet<>();
+public class ProjectContainer {
+    private static Logger logger = LoggerFactory.getLogger(ProjectContainer.class);
+    private static ProjectContainer instance = new ProjectContainer();
+    private StringMap<ProjectInfo> projectInfoMap = new StringMap();
+
     /*key是 请求方法+url,value是RouteModel*/
     private StringMap<BeanModel> beanMap = new StringMap();
     private StringMap<RouteModel> routeMap = new StringMap();
-    private CoreProject coreProject = null;
 
-    public static void setInstance(CoreContainer instance) {
-        CoreContainer.instance = instance;
+
+    public static void setInstance(ProjectContainer instance) {
+        ProjectContainer.instance = instance;
     }
 
-    public static CoreContainer getInstance() {
+    public static ProjectContainer getInstance() {
         return instance;
     }
 
-    public CoreProject getCoreProject() {
-        return coreProject;
-    }
-
-    public void setCoreProject(CoreProject coreProject) {
-        this.coreProject = coreProject;
-    }
-
-    public void setProjectInfo() {
-        this.coreProject = CoreProject.getInstance();
-    }
 
     /*数据源集合*/
-    private Map<DataSourceEnum, SqlSessionFactory> dataSourceMap = new HashMap<>();
+    private StringMap<DataSource> dataSourceMap = new StringMap();
+    private StringMap<SqlSessionFactory> dataFactoryMap = new StringMap();
 
-    protected CoreContainer() {
+    public StringMap<SqlSessionFactory> getDataFactoryMap() {
+        return dataFactoryMap;
+    }
+
+    protected ProjectContainer() {
+    }
+
+    public <T extends ProjectInfo> ProjectContainer addProjectInfo(T projectInfo) {
+        projectInfoMap.add(projectInfo.getModuleDir(), projectInfo);
+        return this;
     }
 
     /*初始化项目*/
     public void initProject() {
+        if (!projectInfoMap.containsKey("core")) {
+            addProjectInfo(new ProjectInfo("core"));
+        }
+
         try {
-            if (projectGroupIdList.size() < 1) {
-                return;
-            }
-            /*注入bean：读取配置文件中的bean*/
-            setProBean();
+            projectInfoMap.values().forEach(projectInfo -> {
+                /*注入bean：读取配置文件中的bean*/
+                setProBean(projectInfo);
+            });
             /*注入bean：把代码中的bean信息放入beanMap和routeMap*/
             setJavaBeanMap();
             /*注入bean:把代码中的config注解类中的注解在方法上的bean和切面放入容器*/
@@ -95,21 +96,17 @@ public class CoreContainer {
             if (beanMap.get("mybatisInfo") != null) {
                 packageName = ((MybatisInfo) beanMap.get("mybatisInfo").getBean()).getTypeAliases().getPackageName();
             }
-            for (DataSourceEnum dataSourceEnum : DataSourceEnum.values()) {
-                if (dataSourceEnum.getDataSource() == null) continue;
-                Configuration configuration = new Configuration(
-                        new Environment("development", new JdbcTransactionFactory(), dataSourceEnum.getDataSource()));
+            for (Map.Entry<String, DataSource> entry : dataSourceMap.entrySet()) {
+                var configuration = new Configuration(
+                        new Environment("development", new JdbcTransactionFactory(), entry.getValue()));
                 /*mybatis设置对象别名*/
                 if (packageName != null) {
-                    TypeAliasRegistry typeAliasRegistry = configuration.getTypeAliasRegistry();
-                    for (Class c : getClassList(packageName)) {
-                        typeAliasRegistry.registerAlias(c);
-                    }
+                    getClassList(packageName).forEach(c -> configuration.getTypeAliasRegistry().registerAlias(c));
                 }
                 /*设值mapper*/
                 setMapper(configuration);
                 configuration.addLoadedResource("mybatis-config.xml");
-                dataSourceMap.put(dataSourceEnum, new SqlSessionFactoryBuilder().build(configuration));
+                dataFactoryMap.put(entry.getKey(), new SqlSessionFactoryBuilder().build(configuration));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -117,26 +114,78 @@ public class CoreContainer {
         }
     }
 
-    private List<Class> getClassList(String packageName) {
-        List<Class> classList = new ArrayList<>();
-        String classPathP = this.getClass().getResource("").getPath();
-        classPathP = classPathP.substring(0, classPathP.indexOf(CoreProject.getInstance().getGroupId().replace(".", "/")));
-        for (String projectGroupId : projectGroupIdList) {
-            String classPath = classPathP + projectGroupId.replace(".", File.separator);
-            classList.addAll(FileUtil.getClassList(classPath, projectGroupId, packageName));
+    public void setProBean(ProjectInfo projectInfo) {
+        try {
+            String proFileName = "application-" + projectInfo.getActive().getMsg() + ".yml";
+            var proMap = FileUtil.readConfigFileByYML(FileUtil.getResourceFile(projectInfo.getModuleDir(), proFileName));
+            if (proMap == null) {
+                return;
+            }
+            /*1、注入数据源*/
+            var datasourceMap = (Map<String, Map<String, Object>>) proMap.get("datasource");
+            if (datasourceMap != null) {
+                datasourceMap.entrySet().forEach(entry -> {
+                    try {
+                        dataSourceMap.add(entry.getKey(), DruidDataSourceFactory.createDataSource(entry.getValue()));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+            /*写入mybatis配置信息*/
+            String packageName = Optional.ofNullable((Map<String, Map<String, String>>) proMap.get("mybatis"))
+                    .map(projectMap -> projectMap.get("typeAliases")).map(projectMap -> projectMap.get("packageName")).orElse("");
+            if (packageName != "") {
+                MybatisInfo mybatisInfo = new MybatisInfo(new TypeAliases(packageName));
+                beanMap.add("mybatisInfo", new BeanModel("mybatisInfo", mybatisInfo, MybatisInfo.class));
+            }
+            /*2、注入redis*/
+            setBeanRedis(proMap);
+            /*3-注入memcache*/
+            setBeanMemcah(proMap);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 启动的时候使用，启动完毕清除
+     */
+    private List<Class> classList;
+
+    private void setClassList() {
+        if (classList == null) {
+            classList = new ArrayList<>();
+        }
+        projectInfoMap.values().forEach(projectInfo -> classList.addAll(FileUtil.getClassList(projectInfo.getModuleDir(), projectInfo.getGroupId())));
+    }
+
+    private List<Class> getClassList() {
+        if (classList == null || classList.isEmpty()) {
+            setClassList();
         }
         return classList;
+
+    }
+
+    private List<Class> getClassList(String packageName) {
+        List<Class> result = new ArrayList<>();
+        getClassList().forEach(clas -> {
+            if (StringUtil.matcher(clas.getName(), packageName)) {
+                result.add(clas);
+            }
+        });
+        return result;
     }
 
     private List<Class> getClassList(Class<? extends Annotation> annotationClass) {
-        List<Class> classList = new ArrayList<>();
-        String classPathP = this.getClass().getResource("").getPath();
-        classPathP = classPathP.substring(0, classPathP.indexOf(CoreProject.getInstance().getGroupId().replace(".", "/")));
-        for (String projectGroupId : projectGroupIdList) {
-            String classPath = classPathP + projectGroupId.replace(".", File.separator);
-            classList.addAll(FileUtil.getClassList(classPath, projectGroupId, annotationClass));
-        }
-        return classList;
+        List<Class> result = new ArrayList<>();
+        getClassList().forEach(clas -> {
+            if (clas.isAnnotationPresent(annotationClass)) {
+                result.add(clas);
+            }
+        });
+        return result;
     }
 
     /**
@@ -144,11 +193,9 @@ public class CoreContainer {
      * 注意config注解的类也是个bean，在setBeanMap()中注入了
      */
     public void setConfigClassInner() {
-        Class<? extends Annotation> annotationClass = null;
-        List<Class> classList = getClassList(annotationClass);
-        for (Class c : classList) {
+        getClassList().forEach(c -> {
             if (!c.isAnnotationPresent(Config.class)) {
-                continue;
+                return;//跳过本次循环，继续下一个。
             }
             try {
                 String configBeanName = StringUtil.lowFirst(c.getSimpleName().replace(".class", ""));
@@ -165,10 +212,10 @@ public class CoreContainer {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
                 e.printStackTrace();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        });
     }
 
 
@@ -179,79 +226,27 @@ public class CoreContainer {
     }
 
     private void setMapper(Configuration configuration) {
-        for (Class c : getClassList(Dao.class)) {
+        getClassList(Dao.class).forEach(c -> {
             if (!configuration.hasMapper(c)) {
                 configuration.addMapper(c);
             }
-        }
+        });
     }
 
-    /**
-     * 获取主配置文件application.yml信息
-     */
-    public Map<String, Object> getProMap() {
-        String proFileName = "application.yml";
-        proFileName = "application-" + ProjectInfo.getInstance().getActive().getMsg() + ".yml";
-        Map<String, Object> resultMap = FileUtil.readConfigFileByYML(proFileName);
-        return resultMap;
-    }
-
-    public void setProBean() {
-        try {
-
-            Map<String, Object> proMap = getProMap();
-            if (proMap == null) {
-                return;
-            }
-            /*1、注入数据源*/
-            Map<String, Map<String, Object>> datasourceMap = (Map<String, Map<String, Object>>) proMap.get("datasource");
-            if (datasourceMap != null) {
-                for (Map.Entry<String, Map<String, Object>> entry : datasourceMap.entrySet()) {
-                    /*数据源直接放入枚举中*/
-                    DataSourceEnum.setDataSource(entry.getKey(), DruidDataSourceFactory.createDataSource(entry.getValue()));
-                }
-            }
-            /*写入mybatis配置信息*/
-            String packageName = Optional.ofNullable((Map<String, Map<String, String>>) proMap.get("mybatis"))
-                    .map(projectMap -> projectMap.get("typeAliases")).map(projectMap -> projectMap.get("packageName")).orElse("");
-            if (packageName != "") {
-                MybatisInfo mybatisInfo = new MybatisInfo(new TypeAliases(packageName));
-                beanMap.add("mybatisInfo", new BeanModel("mybatisInfo", mybatisInfo, MybatisInfo.class));
-            }
-            /*2、注入redis*/
-            setBeanRedis(proMap);
-            /*3-注入memcache*/
-            setBeanMemcah(proMap);
-            /*4-注入项目信息*/
-            setProjectInfo();
-            setProjectInfo((Map<String, Object>) proMap.get("project"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void setProjectInfo(Map<String, Object> projectMap) {
-        if (projectMap != null) {
-            Object projectName = projectMap.get("name");
-            if (projectName != null) {
-//                coreProject.setProjectName(projectName.toString());
-            }
-        }
-    }
 
     private void setBeanRedis(Map<String, Object> proMap) {
-        Map<String, Object> redisProMap = (Map<String, Object>) proMap.get("redis");
+        var redisProMap = (Map<String, Object>) proMap.get("redis");
         /*2.1、注入jedisPoolConfig*/
-        Map<String, Object> poolProMap = Optional.ofNullable((Map<String, Object>) redisProMap.get("lettuce"))
+        var poolProMap = Optional.ofNullable((Map<String, Object>) redisProMap.get("lettuce"))
                 .map(lettuceMap -> (Map<String, Object>) lettuceMap.get("pool")).orElse(new HashMap<>(0));
         Integer maxIdle = StringUtil.getInt(poolProMap.get("max-idle"), 300);
         Integer minIdle = StringUtil.getInt(poolProMap.get("min-idle"), 0);
         Integer maxActive = StringUtil.getInt(poolProMap.get("max-active"), -1);
         Long maxWait = StringUtil.getLongByMS(poolProMap.get("max-wait"), 1000L);
-        String configBeanName = StringUtil.getStr(poolProMap.get("config-name"),"jedisPoolConfig");
-        String poolBeanName = StringUtil.getStr(poolProMap.get("pool-name"),"jedisPool");
+        String configBeanName = StringUtil.getStr(poolProMap.get("config-name"), "jedisPoolConfig");
+        String poolBeanName = StringUtil.getStr(poolProMap.get("pool-name"), "jedisPool");
         Boolean testOnBorrow = StringUtil.getBoolean(poolProMap.get("test-on-borrow"));
-        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+        var jedisPoolConfig = new JedisPoolConfig();
         jedisPoolConfig.setMaxIdle(maxIdle);
         jedisPoolConfig.setMinIdle(minIdle);
         jedisPoolConfig.setMaxTotal(maxActive);
@@ -269,6 +264,7 @@ public class CoreContainer {
     }
 
     private void setBeanMemcah(Map<String, Object> proMap) {
+       /*
         Map<String, Object> memcacheProMap = Optional.ofNullable((Map<String, Object>) proMap.get("memcache")).orElse(new HashMap<>(0));
         String[] servers = StringUtil.getStrlist(memcacheProMap.get("servers"), new String[]{""});
         Boolean failover = StringUtil.getBoolean(memcacheProMap.get("failover"), true);
@@ -280,7 +276,7 @@ public class CoreContainer {
         Integer socketTO = StringUtil.getInt(memcacheProMap.get("socketTO"), 3000);
         Boolean aliveCheck = StringUtil.getBoolean(memcacheProMap.get("aliveCheck"), true);
         String poolName = StringUtil.getStr(memcacheProMap.get("poolName"), "memcachedPool");
-       /* SockIOPool sockIOPool = SockIOPool.getInstance(poolName);
+       SockIOPool sockIOPool = SockIOPool.getInstance(poolName);
         sockIOPool.setServers(servers);
         sockIOPool.setFailover(failover);
         sockIOPool.setInitConn(initConn);
@@ -293,18 +289,6 @@ public class CoreContainer {
         sockIOPool.initialize();
         beanMap.add("sockIOPool", new BeanModel("sockIOPool", sockIOPool, SockIOPool.class));
         beanMap.add("memCachedClient", new BeanModel("memCachedClient", new MemCachedClient(poolName), MemCachedClient.class));*/
-    }
-
-    public Map<DataSourceEnum, SqlSessionFactory> getDataSourceMap() {
-        return dataSourceMap;
-    }
-
-    public Set<String> getProjectGroupIdList() {
-        return projectGroupIdList;
-    }
-
-    public void addProjectGroupId(String projectGroupId) {
-        this.projectGroupIdList.add(projectGroupId);
     }
 
     public StringMap<RouteModel> getRouteMap() {
@@ -320,15 +304,13 @@ public class CoreContainer {
      * java代码配置的bean放入容器中
      */
     public void setJavaBeanMap() {
-        Class<? extends Annotation> annotationClass = null;
-        for (Class c : getClassList(annotationClass)) {
+        getClassList().forEach(c -> {
             /*1、获取beanName*/
             OutPar<Class> primaryInterfaceClassPar = new OutPar();
             String beanName = getBeanName(c, primaryInterfaceClassPar);
             if (StringUtil.isBlank(beanName)) {
-                continue;
+                return;//等价于普通for循环的continue
             }
-
             BeanModel beanModel = new BeanModel(beanName);
             if (primaryInterfaceClassPar.get() != null) {
                 beanModel.setPrimaryInterfaceClass(primaryInterfaceClassPar.get());
@@ -356,7 +338,7 @@ public class CoreContainer {
             if (c.isAnnotationPresent(Controller.class)) {
                 setRouteMap(beanModel);
             }
-        }
+        });
     }
 
     private Object getBean(Class beanClass) {
@@ -410,13 +392,13 @@ public class CoreContainer {
             /*urlSuffix:路由后缀，在方法的Mapping注解上
               questEnumOutPar:请求类型
             */
-            var questEnumOutPar=new OutPar<QuestEnum>();
-            String urlSuffix = getMapping(method,questEnumOutPar);
-            if (questEnumOutPar.get()==null){
+            var questEnumOutPar = new OutPar<QuestEnum>();
+            String urlSuffix = getMapping(method, questEnumOutPar);
+            if (questEnumOutPar.get() == null) {
                 continue;
             }
             RouteModel routeModel = new RouteModel();
-            routeModel.setUrl(getUrl(urlPrefix,urlSuffix));
+            routeModel.setUrl(getUrl(urlPrefix, urlSuffix));
             routeModel.setQuestEnum(questEnumOutPar.get());
             routeModel.setBeanModel(controllerBeanModel);
             routeModel.setMethod(method);
@@ -431,14 +413,14 @@ public class CoreContainer {
      * @return
      */
     private String getUrl(String urlPrefix, String urlSuffix) {
-        String url="";
-        urlPrefix =trim(urlPrefix);
-        if (StringUtil.isNotBlank(urlPrefix)){
-            url=urlPrefix;
+        String url = "";
+        urlPrefix = trim(urlPrefix);
+        if (StringUtil.isNotBlank(urlPrefix)) {
+            url = urlPrefix;
         }
-        urlSuffix =trim(urlSuffix);
-        if (StringUtil.isNotBlank(urlSuffix)){
-            url+=urlSuffix;
+        urlSuffix = trim(urlSuffix);
+        if (StringUtil.isNotBlank(urlSuffix)) {
+            url += urlSuffix;
         }
         return url;
     }
@@ -448,12 +430,12 @@ public class CoreContainer {
         if (ListUtil.isEmpty(annotations)) {
             return null;
         }
-        for (Annotation annotation:annotations){
+        for (Annotation annotation : annotations) {
             Class annotationClass = annotation.annotationType();
             if (!annotationClass.isAnnotationPresent(MappingAnnotation.class)) {
                 continue;
             }
-            MappingAnnotation mappingAnnotation= (MappingAnnotation) annotationClass.getAnnotation(MappingAnnotation.class);
+            MappingAnnotation mappingAnnotation = (MappingAnnotation) annotationClass.getAnnotation(MappingAnnotation.class);
             questEnumOutPar.set(mappingAnnotation.value());
             try {
                 Method annotationMethod = annotationClass.getMethod("value");
@@ -562,8 +544,8 @@ public class CoreContainer {
         if (inteSimpleName.startsWith("I")) {
             inteSimpleName = inteSimpleName.substring(1);
         }
-        for (String projectGroupId : projectGroupIdList) {
-            if (interfaceClass.getName().contains(projectGroupId)) {
+        for (ProjectInfo projectInfo : projectInfoMap.values()) {
+            if (interfaceClass.getName().contains(projectInfo.getGroupId())) {
                 return StringUtil.lowFirst(inteSimpleName.replace(".class", ""));
             }
         }
@@ -619,9 +601,10 @@ public class CoreContainer {
     }
 
     public static void main(String[] args) {
-        CoreContainer instance = CoreContainer.getInstance();
+        ProjectContainer instance = ProjectContainer.getInstance();
+        instance.addProjectInfo(new ProjectInfo("core"));
         instance.initProject();
-
+        System.out.println(123);
     }
 
 }

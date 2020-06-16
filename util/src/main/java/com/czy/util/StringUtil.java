@@ -759,7 +759,7 @@ public class StringUtil {
 //            System.out.println(result);
             String projectGroupId ="cn.lexiaotongvip.www";
             String classPath = StringUtil.class.getResource("/").getPath() + projectGroupId.replace(".", File.separator);
-            List<Class> classList=FileUtil.getClassList(classPath, projectGroupId, packageName);
+            List<Class> classList=FileUtil.getClassList(classPath, projectGroupId);
             System.out.println(classList.size());
         }
 

@@ -2,29 +2,48 @@ package com.czy.core.model;
 
 import com.czy.core.enums.ActiveEnum;
 import com.czy.util.FileUtil;
+import com.czy.util.StringUtil;
 
 import java.util.Map;
 
 /**
  * @author chenzy
- * @since 2020-04-07
  * @description 项目信息，在项目启动时实例化
+ * @since 2020-04-07
  */
 public class ProjectInfo {
-    private static ProjectInfo instance=new ProjectInfo();
-    public static ProjectInfo getInstance(){
-        return instance;
-    }
-    protected ProjectInfo(){
-        String proFileName = "application.yml";
-        Map<String, Map<String, Object>> proMap = FileUtil.readConfigFileByYML(proFileName);
-        if (proMap!=null){
-            String active = proMap.get("profiles").get("active").toString();
+    public ProjectInfo(String moduleDir) {
+        Map<String, Map<String, Object>> proMap = FileUtil.readConfigFileByYML(FileUtil.getResourceFile(moduleDir, "application.yml"));
+        if (proMap != null) {
+            Map<String, Object> profileMap = proMap.get("profiles");
+            String active = StringUtil.getStr(profileMap.get("active"),"dev");
+            String groupId = StringUtil.getStr(profileMap.get("groupId"),"com.czy.core");
+            moduleDir = StringUtil.getStr(profileMap.get("moduleDir"),moduleDir);
             setActive(ActiveEnum.getEnum(active));
+            setGroupId(groupId);
+            setModuleDir(moduleDir);
         }
     }
-    private String projectName;
+
     private ActiveEnum active;
+    private String groupId;
+    private String moduleDir;
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+    public String getModuleDir() {
+        return moduleDir;
+    }
+
+    public void setModuleDir(String moduleDir) {
+        this.moduleDir = moduleDir;
+    }
 
     public ActiveEnum getActive() {
         return active;
@@ -34,11 +53,4 @@ public class ProjectInfo {
         this.active = active;
     }
 
-    public String getProjectName() {
-        return projectName;
-    }
-
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
-    }
 }

@@ -29,4 +29,6 @@
     exports com.czy.core.redis.service;
     exports com.czy.core.service;
     exports com.czy.core.annotation.mapping;
+    exports com.czy.core.model;
+    exports com.czy.core;
 }

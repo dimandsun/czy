@@ -1,6 +1,5 @@
 package com.czy.core.util;
-
-import com.czy.core.CoreContainer;
+import com.czy.core.ProjectContainer;
 import com.czy.core.annotation.bean.Dao;
 import com.czy.core.db.config.DataSourceHolder;
 import net.sf.cglib.proxy.MethodProxy;
@@ -22,7 +21,7 @@ public class DaoUtil {
         SqlSession sqlSession = null;
         try {
             if (targetClass.isAnnotationPresent(Dao.class)) {
-                sqlSession = CoreContainer.getInstance().getDataSourceMap().get(DataSourceHolder.getInstance().get())
+                sqlSession = ProjectContainer.getInstance().getDataFactoryMap().get(DataSourceHolder.getInstance().get())
                         .openSession();
                 Object mapper = sqlSession.getMapper(targetClass);
                 Method mapperMethod = mapper.getClass().getMethod(method.getName(), method.getParameterTypes());

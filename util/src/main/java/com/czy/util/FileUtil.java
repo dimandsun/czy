@@ -171,69 +171,63 @@ public class FileUtil {
         return files;
     }
 
-    public static List<Class> getClassList(String filePath, String groupId, String partter) {
+    /**
+     * @param moduleDir
+     * @param groupId
+     * @return
+     */
+    public static List<Class> getClassList(String moduleDir, String groupId) {
         List<Class> classList = new ArrayList();
-        String className = null;
+        String filePath = null;
+        String modulePath=getPath(moduleDir)+"src"+File.separator +"main"+File.separator+"java"+File.separator;
         try {
-            File[] childFiles = new File(filePath).listFiles();
+            File[] childFiles = getCodeFile(moduleDir, groupId).listFiles();
             if (childFiles != null) {
                 for (File childFile : childFiles) {
-
+                    filePath = childFile.getPath();
+                    filePath=filePath.substring(filePath.indexOf(modulePath) + modulePath.length());
                     if (childFile.isDirectory()) {
-                        classList.addAll(getClassList(childFile.getPath(), groupId, partter));
+                        classList.addAll(getClassList(moduleDir, filePath));
                     } else {
-                        className = childFile.getPath().replace(File.separator, ".");
-                        if (className.endsWith(".class")) {
-                            className = className.substring(className.indexOf(groupId), className.lastIndexOf(".class"));
-                            if (!StringUtil.matcher(className, partter)) {
-                                continue;
-                            }
-                            Class c = Class.forName(className);
-                            classList.add(c);
+                        if (filePath.endsWith(".java")) {
+                            var className = filePath.substring(0, filePath.lastIndexOf(".java")).replace(File.separator, ".");
+                            classList.add(Class.forName(className));
                         }
                     }
                 }
             }
         } catch (Exception e) {
-            logger.error("加载类{}错误", className);
+            logger.error("加载类{}错误", filePath);
         }
         return classList;
     }
 
-    /**
-     * 得到当前项目下注解标注的的class。参数三可为空
-     *
-     * @param filePath
-     * @return
-     */
-    public static List<Class> getClassList(String filePath, String groupId, Class<? extends Annotation> annotationClass) {
-        List<Class> classList = new ArrayList();
-        String className = null;
-        try {
-            File[] childFiles = new File(filePath).listFiles();
-            if (childFiles != null) {
-                for (File childFile : childFiles) {
-
-                    if (childFile.isDirectory()) {
-                        classList.addAll(getClassList(childFile.getPath(), groupId, annotationClass));
-                    } else {
-                        className = childFile.getPath().replace(File.separator, ".");
-                        if (className.endsWith(".class")) {
-                            className = className.substring(className.indexOf(groupId), className.lastIndexOf(".class"));
-
-                            Class c = Class.forName(className);
-                            if (annotationClass != null && !c.isAnnotationPresent(annotationClass)) {
-                                continue;
-                            }
-                            classList.add(c);
-                        }
-                    }
-                }
+    /*返回相对目录，以File.separator分割，参数1可能存在以File.separator或者.做目录分割*/
+    private static String getPath(String path) {
+        String result = null;
+        if (StringUtil.isNotBlank(path)) {
+            result = path;
+            var isFile = false;
+            if (result.endsWith(".java")) {
+                result = result.substring(0, result.lastIndexOf(".java"));
+                result = result.replace(".", File.separator);
+                result += ".java";
+                isFile = true;
+            } else if (result.endsWith(".fxml")) {
+                result = result.substring(0, result.lastIndexOf(".fxml"));
+                result = result.replace(".", File.separator);
+                result += ".fxml";
+                isFile = true;
+            } else {
+                result = result.replace(".", File.separator);
             }
-        } catch (Exception e) {
-            logger.error("加载类{}错误", className);
+            if (!isFile && !result.endsWith(File.separator)) {
+                result += File.separator;
+            }
+            return result;
+        }else {
+            return "";
         }
-        return classList;
     }
 
     /**
@@ -271,12 +265,13 @@ public class FileUtil {
      * @return
      */
     public static File getResourceFile(String fileName) {
-        return getResourceFile(null,fileName);
+        return getResourceFile(null, fileName);
     }
-    public static File getResourceFile(String moduleDir,String fileName) {
+
+    public static File getResourceFile(String moduleDir, String fileName) {
 //        FileUtil.class.getClassLoader().getResource("doc/sql.sql")
         //当前模块，直接返回url
-        if (StringUtil.isBlank(moduleDir)){
+        if (StringUtil.isBlank(moduleDir)) {
             URL url = Thread.currentThread().getContextClassLoader().getResource(fileName);
             if (url != null) {
                 /*资源文件存在时，直接返回文件*/
@@ -292,6 +287,31 @@ public class FileUtil {
         }
         return new File(projectPath + "/src/main/resource/" + fileName);
     }
+
+    /*获取class所在目录*/
+    public static File getClassFile(String moduleDir, String filePath) {
+        Thread.currentThread().getContextClassLoader().getResource("com/czy/frame/cash/service");
+        if (StringUtil.isBlank(moduleDir) && StringUtil.isBlank(filePath)) {
+            return null;
+        }
+        String path = StringUtil.isBlank(moduleDir) ? "" : moduleDir;
+        if (!path.endsWith(File.separator) && path.length() > 0) {
+            path += File.separator;
+        }
+        if (filePath.startsWith(File.separator)) {
+            path += filePath.substring(1);
+        } else {
+            path += filePath;
+        }
+        path = path.replace(".", File.separator);
+        URL url = Thread.currentThread().getContextClassLoader().getResource(path);
+        if (url != null) {
+            return new File(url.getPath());
+        } else {
+            return null;
+        }
+    }
+
     /**
      * 获取原代码文件或者目录
      *
@@ -306,19 +326,7 @@ public class FileUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (beanName==null){
-            beanName="";
-        }
-        if (beanName.endsWith(".java")){
-            beanName=beanName.substring(0,beanName.lastIndexOf(".java"));
-            beanName=beanName.replace(".", File.separator);
-            beanName+=".java";
-        }else if (beanName.endsWith(".fxml")){
-            beanName=beanName.substring(0,beanName.lastIndexOf(".fxml"));
-            beanName=beanName.replace(".", File.separator);
-            beanName+=".fxml";
-        }
-        String path = projectPath + "/src/main/java" + File.separator +beanName;
+        String path = projectPath + "/src/main/java" + File.separator +  getPath(beanName);
         return new File(path);
     }
 
@@ -458,26 +466,27 @@ public class FileUtil {
         }
     }
 
-    public static <T> StringMap<T> readConfigFileByYML(String filePath) {
-        try {
-            InputStream in = FileUtil.class.getClassLoader().getResourceAsStream(filePath);
-            if (in == null) {
-                logger.error("文件{}未找到", filePath);
-                return null;
-            }
+    public static <T> StringMap<T> readConfigFileByYML(File file) {
+        if (file == null) {
+            return null;
+        }
+        if (!file.exists()) {
+            logger.error("文件{}未找到", file.getPath());
+            return null;
+        }
+        try (InputStream in = new FileInputStream(file)) {
             StringMap<T> proMap = new Yaml().loadAs(in, StringMap.class);
-            in.close();
             return proMap;
         } catch (IOException e) {
-            logger.error("加载配置文件{}失败。", filePath);
+            logger.error("加载配置文件{}失败。", file.getPath());
             return null;
         }
     }
 
     public static void main(String[] args) {
-        createFile(getResourceFile("a/b.txt"));
+//        createFile(getResourceFile("a/b.txt"));
+        getClassFile("core", "com.czy");
     }
-
 
 
 }
