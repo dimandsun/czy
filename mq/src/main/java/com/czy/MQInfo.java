@@ -21,7 +21,7 @@ public class MQInfo {
         return instance;
     }
     private MQInfo(){
-        StringMap<Map<String,Object>> parMap= FileUtil.readConfigFileByYML("mq.yml");
+        StringMap<Map<String,Object>> parMap= null;//FileUtil.readConfigFileByYML("mq.yml");
         var mqMap =parMap.get("mq");
         host= StringUtil.getStr(mqMap.get("host"),"127.0.0.1");
         port= StringUtil.getInt(mqMap.get("port"),5672);

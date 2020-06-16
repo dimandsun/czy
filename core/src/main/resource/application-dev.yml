@@ -1,10 +1,6 @@
-project:
-  name: czy_all
-
 mybatis:
   typeAliases:
     packageName: com.czy.frame..*model..*dao.*
-
 datasource:
   mysql-czy-test:
     type: com.alibaba.druid.pool.DruidDataSource
@@ -23,8 +19,6 @@ datasource:
     remove-abandoned: true
     log-abandoned: true
     validation-query: select 1
-
-
 redis:
   config-name: jedisPoolConfig
   pool-name: jedisPool

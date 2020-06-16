@@ -1,0 +1,4 @@
+profiles:
+  active: dev
+  groupId: com.czy.car
+  moduleDir: car

@@ -3,6 +3,7 @@ package com.czy.car.view.user;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
 /**
  * @author chenzy
@@ -10,8 +11,11 @@ import javafx.scene.control.TextField;
  */
 public class LoginController {
     @FXML private TextField codeOrMobile;
-    @FXML private PasswordField ps;
+    @FXML private PasswordField pw;
+    @FXML private Text msg;
+    @FXML private void  initialize(){
 
+    }
     public void login() {
 
     }

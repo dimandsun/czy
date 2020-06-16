@@ -13,9 +13,9 @@ import java.io.File;
  * @since 2020-05-11
  */
 public class LogInfo {
-    public static void initLog() {
+    public static void initLog(ProjectInfo projectInfo) {
         System.out.println("------------------------------日志正在初始化------------------------------");
-        File file = FileUtil.getResourceFile("log4j2-" + ProjectInfo.getInstance().getActive().getMsg() + ".xml");
+        File file = FileUtil.getResourceFile(projectInfo.getModuleDir(),"log4j2-" + projectInfo.getActive().getMsg() + ".xml");
         LoggerContext context = (LoggerContext) LogManager.getContext(false);
         context.setConfigLocation(file.toURI());
         //重新初始化Log4j2的配置上下文

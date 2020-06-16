@@ -1,7 +1,6 @@
 package com.czy.swing.view;
 
 import com.czy.swing.entrance.Dispatch;
-import com.czy.swing.entrance.SwingProject;
 import com.czy.util.json.JsonUtil;
 
 import javax.swing.*;
@@ -14,7 +13,7 @@ import java.awt.*;
  */
 public class Login {
     public static void main(String[] args) {
-        SwingProject.getInstance().init();
+//        SwingProject.getInstance().init();
 
         var frame = new MyFrame("图书管理系统", 500, 400, 300, 200, new GridLayout(3, 2));
         var userField = new JTextField();
