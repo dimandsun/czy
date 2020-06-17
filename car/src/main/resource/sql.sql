@@ -3,8 +3,8 @@ create table user(
 	id int primary key auto_increment
 	,code nvarchar(20) comment '用户code'
 	,name nvarchar(20) comment '用户名称'
-	,ps nvarchar(20) comment '加密后的密码'
-	,original_ps nvarchar(50) comment '原密码'
+	,ps nvarchar(50) comment '加密后的密码'
+	,original_ps nvarchar(20) comment '原密码'
 	,email nvarchar(50) comment '用户邮箱'
 	,mobile nvarchar(20) comment '用户手机'
 	,gender int comment '性别'
@@ -13,8 +13,8 @@ create table user(
 )COMMENT='客户信息';
 
 create table car(
-    id int primary key auto_increment
-    ,car_type_id int '车辆类别'
+  id int primary key auto_increment
+  ,car_type_id int comment '车辆类别'
 	,code nvarchar(20) comment '编号'
 	,plate_number nvarchar(20) comment '车牌号'
 	,brand nvarchar(200) comment '品牌'

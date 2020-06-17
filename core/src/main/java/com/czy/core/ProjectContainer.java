@@ -7,6 +7,7 @@ import com.czy.core.annotation.bean.*;
 import com.czy.core.annotation.mapping.Mapping;
 import com.czy.core.annotation.mapping.MappingAnnotation;
 import com.czy.core.db.config.DataSourceHolder;
+import com.czy.core.db.config.SetDefaultDataSourceKey;
 import com.czy.core.db.model.MybatisInfo;
 import com.czy.core.db.model.TypeAliases;
 import com.czy.core.enums.QuestEnum;
@@ -29,11 +30,13 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 import javax.sql.DataSource;
+import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author chenzy
@@ -77,14 +80,16 @@ public class ProjectContainer {
 
     /*初始化项目*/
     public void initProject() {
+        System.out.println("*******************************容器正在初始化**************************");
         if (!projectInfoMap.containsKey("core")) {
             addProjectInfo(new ProjectInfo("core"));
         }
-
         try {
             projectInfoMap.values().forEach(projectInfo -> {
                 /*注入bean：读取配置文件中的bean*/
                 setProBean(projectInfo);
+                /*mybatis配置多数据源*/
+                setMybatis(projectInfo);
             });
             /*注入bean：把代码中的bean信息放入beanMap和routeMap*/
             setJavaBeanMap();
@@ -92,34 +97,53 @@ public class ProjectContainer {
             setConfigClassInner();
             /*处理等待自动注入的属性*/
             doWaitAutoFieldMap();
-            /*mybatis配置多数据源*/
-            String packageName = null;
-            if (beanMap.get("mybatisInfo") != null) {
-                packageName = ((MybatisInfo) beanMap.get("mybatisInfo").getBean()).getTypeAliases().getPackageName();
-            }
-            for (Map.Entry<String, DataSource> entry : dataSourceMap.entrySet()) {
-                if (DataSourceHolder.getInstance()==null){
-                    DataSourceHolder.createInstance(String.class,entry.getKey());
-                }
-                var configuration = new Configuration(
-                        new Environment("development", new JdbcTransactionFactory(), entry.getValue()));
-                /*是否允许单一语句返回多结果集*/
-                configuration.setMultipleResultSetsEnabled(true);
-
-                /*mybatis设置对象别名*/
-                if (packageName != null) {
-                    getClassList(packageName).forEach(c -> configuration.getTypeAliasRegistry().registerAlias(c));
-                }
-                /*设值mapper*/
-                setMapper(configuration);
-                configuration.addLoadedResource("mybatis-config.xml");
-//                configuration.isResourceLoaded("mybatis-config.xml")
-                dataFactoryMap.put(entry.getKey(), new SqlSessionFactoryBuilder().build(configuration));
-            }
-
+            System.out.println("*******************************容器初始化完成**************************");
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(-1);
+            System.out.println("*******************************容器初始化失败，退出系统**************************");
+        }
+    }
+
+    //设置默认的数据源
+    public void setDefaultDataSourceKey(ProjectInfo projectInfo) {
+        if (projectInfo == null) {
+            return;
+        }
+        /*从dataSourceMap中找到前缀为projectInfo.getModuleDir() + File.separator的key，把第一个作为默认的数据源key*/
+        dataSourceMap.keySet().stream().filter(dataSourceKey -> dataSourceKey.startsWith(projectInfo.getModuleDir() + File.separator))
+                .findFirst().ifPresent(defaultDataSourceKey -> {
+            if (DataSourceHolder.getInstance() == null) {
+                DataSourceHolder.createInstance(String.class, defaultDataSourceKey);
+            } else {
+                DataSourceHolder.getInstance().setDefaultDataSourceKey(defaultDataSourceKey);
+            }
+        });
+
+    }
+
+    private void setMybatis(ProjectInfo projectInfo) {
+        String packageName = null;
+        if (beanMap.get("mybatisInfo") != null) {
+            packageName = ((MybatisInfo) beanMap.get(projectInfo.getModuleDir() + File.separator + "mybatisInfo").getBean()).getTypeAliases().getPackageName();
+        }
+        for (Map.Entry<String, DataSource> entry : dataSourceMap.entrySet()) {
+            if (DataSourceHolder.getInstance() == null) {
+                DataSourceHolder.createInstance(String.class, entry.getKey());
+            }
+            var configuration = new Configuration(
+                    new Environment("development", new JdbcTransactionFactory(), entry.getValue()));
+            configuration.addLoadedResource("mybatis-config.xml");
+//                configuration.isResourceLoaded("mybatis-config.xml")
+            /*是否允许单一语句返回多结果集*/
+            configuration.setMultipleResultSetsEnabled(true);
+            /*mybatis设置对象别名*/
+            if (packageName != null) {
+                getClassList(packageName).forEach(c -> configuration.getTypeAliasRegistry().registerAlias(c));
+            }
+            /*设值mapper*/
+            setMapper(configuration);
+            dataFactoryMap.put(entry.getKey(), new SqlSessionFactoryBuilder().build(configuration));
         }
     }
 
@@ -135,7 +159,7 @@ public class ProjectContainer {
             if (datasourceMap != null) {
                 datasourceMap.entrySet().forEach(entry -> {
                     try {
-                        dataSourceMap.add(entry.getKey(), DruidDataSourceFactory.createDataSource(entry.getValue()));
+                        dataSourceMap.add(projectInfo.getModuleDir() + File.separator + entry.getKey(), DruidDataSourceFactory.createDataSource(entry.getValue()));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -146,7 +170,8 @@ public class ProjectContainer {
                     .map(projectMap -> projectMap.get("typeAliases")).map(projectMap -> projectMap.get("packageName")).orElse("");
             if (packageName != "") {
                 MybatisInfo mybatisInfo = new MybatisInfo(new TypeAliases(packageName));
-                beanMap.add("mybatisInfo", new BeanModel("mybatisInfo", mybatisInfo, MybatisInfo.class));
+                var beanName = projectInfo.getModuleDir() + File.separator + "mybatisInfo";
+                beanMap.add(beanName, new BeanModel(beanName, mybatisInfo, MybatisInfo.class));
             }
             /*2、注入redis*/
             setBeanRedis(proMap);

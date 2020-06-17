@@ -1,42 +1,59 @@
-package com.czy.car.model;
+package com.czy.car.model.table;
 import com.czy.core.annotation.db.Table;
 import com.czy.util.SecretUtil;
 import com.czy.util.StringUtil;
-
+import com.czy.util.json.JsonUtil;
+import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * @author chenzy
- * @since 2020-06-09
+ * @since 2020-06-17
  * @description 客户信息
  */
 @Table("user")
 public class User {
 	/**/
+	@JsonProperty("id")
 	private Integer id;
 	/*用户code*/
+	@JsonProperty("code")
 	private String code;
 	/*用户名称*/
+	@JsonProperty("name")
 	private String name;
 	/*加密后的密码*/
+	@JsonProperty("ps")
 	private String ps;
 	/*原密码*/
-	private String originalPS;
+	@JsonProperty("original_ps")
+	private String originalPs;
 	/*用户邮箱*/
+	@JsonProperty("email")
 	private String email;
 	/*用户手机*/
+	@JsonProperty("mobile")
 	private String mobile;
 	/*性别*/
+	@JsonProperty("gender")
 	private Integer gender;
 	/*身份证*/
+	@JsonProperty("id_card")
 	private String idCard;
 	/*描述*/
+	@JsonProperty("des")
 	private String des;
 	/*原密码加密*/
-	public void setPS() {
-		if (StringUtil.isBlank(originalPS)){
+	public void setPs() {
+		if (StringUtil.isBlank(originalPs)){
 			return;
 		}
-		setPs(SecretUtil.md5(originalPS));
+		setPs(SecretUtil.md5(originalPs));
 	}
+
+	@Override
+	public String toString() {
+		return JsonUtil.model2Str(this);
+	}
+
 	public Integer getId(){
 		return id;
 	}
@@ -61,14 +78,12 @@ public class User {
 	public void setPs(String ps){
 		 this.ps=ps;
 	}
-	public String getOriginalPS() {
-		return originalPS;
+	public String getOriginalPs(){
+		return originalPs;
 	}
-
-	public void setOriginalPS(String originalPS) {
-		this.originalPS = originalPS;
+	public void setOriginalPs(String originalPs){
+		 this.originalPs=originalPs;
 	}
-
 	public String getEmail(){
 		return email;
 	}
@@ -99,6 +114,4 @@ public class User {
 	public void setDes(String des){
 		 this.des=des;
 	}
-
-
 }

@@ -17,8 +17,12 @@ public class DataSourceHolder<DataSourceKey> {
     public static<DataSourceKey> void createInstance(Class<DataSourceKey> dataSourceKeyClass, DataSourceKey defaultDataSourceKey) {
         instance = new DataSourceHolder(dataSourceKeyClass,defaultDataSourceKey);
     }
-    protected DataSourceHolder(Class<DataSourceKey> dataSourceKeyClass, DataSourceKey defaultDataSourceKey) {
+    private DataSourceHolder(Class<DataSourceKey> dataSourceKeyClass, DataSourceKey defaultDataSourceKey) {
         this.dataSourceKeyClass = dataSourceKeyClass;
+        this.defaultDataSourceKey = defaultDataSourceKey;
+    }
+
+    public void setDefaultDataSourceKey(DataSourceKey defaultDataSourceKey) {
         this.defaultDataSourceKey = defaultDataSourceKey;
     }
 

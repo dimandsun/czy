@@ -1,38 +1,53 @@
-package com.czy.car.model;
+package com.czy.car.model.table;
 import com.czy.core.annotation.db.Table;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.math.BigDecimal;
 import java.util.Date;
 /**
  * @author chenzy
- * @since 2020-06-09
+ * @since 2020-06-17
  * @description 车辆信息
  */
 @Table("car")
 public class Car {
 	/**/
+	@JsonProperty("id")
 	private Integer id;
-	/**/
+	/*车辆类别*/
+	@JsonProperty("car_type_id")
 	private Integer carTypeId;
 	/*编号*/
+	@JsonProperty("code")
 	private String code;
 	/*车牌号*/
+	@JsonProperty("plate_number")
 	private String plateNumber;
 	/*品牌*/
+	@JsonProperty("brand")
 	private String brand;
 	/*颜色*/
+	@JsonProperty("color")
 	private String color;
 	/*座位数*/
+	@JsonProperty("sit_count")
 	private Integer sitCount;
 	/*日租价格*/
-	private Object rentalPriceDay;
+	@JsonProperty("rental_price_day")
+	private BigDecimal rentalPriceDay;
 	/*月租价格*/
-	private Object rentalPriceMonth;
+	@JsonProperty("rental_price_month")
+	private BigDecimal rentalPriceMonth;
 	/*日租超公里价格*/
-	private Object rentalPriceMoreKm;
+	@JsonProperty("rental_price_more_km")
+	private BigDecimal rentalPriceMoreKm;
 	/*租赁者*/
+	@JsonProperty("user_id")
 	private Integer userId;
 	/*购入日期*/
+	@JsonProperty("purchase_date")
 	private Date purchaseDate;
 	/*描述*/
+	@JsonProperty("des")
 	private String des;
 
 	public Integer getId(){
@@ -77,22 +92,22 @@ public class Car {
 	public void setSitCount(Integer sitCount){
 		 this.sitCount=sitCount;
 	}
-	public Object getRentalPriceDay(){
+	public BigDecimal getRentalPriceDay(){
 		return rentalPriceDay;
 	}
-	public void setRentalPriceDay(Object rentalPriceDay){
+	public void setRentalPriceDay(BigDecimal rentalPriceDay){
 		 this.rentalPriceDay=rentalPriceDay;
 	}
-	public Object getRentalPriceMonth(){
+	public BigDecimal getRentalPriceMonth(){
 		return rentalPriceMonth;
 	}
-	public void setRentalPriceMonth(Object rentalPriceMonth){
+	public void setRentalPriceMonth(BigDecimal rentalPriceMonth){
 		 this.rentalPriceMonth=rentalPriceMonth;
 	}
-	public Object getRentalPriceMoreKm(){
+	public BigDecimal getRentalPriceMoreKm(){
 		return rentalPriceMoreKm;
 	}
-	public void setRentalPriceMoreKm(Object rentalPriceMoreKm){
+	public void setRentalPriceMoreKm(BigDecimal rentalPriceMoreKm){
 		 this.rentalPriceMoreKm=rentalPriceMoreKm;
 	}
 	public Integer getUserId(){

@@ -1,6 +1,6 @@
 package com.czy.car.service;
 
-import com.czy.car.model.User;
+import com.czy.car.model.table.User;
 import com.czy.util.model.ResultVO;
 
 

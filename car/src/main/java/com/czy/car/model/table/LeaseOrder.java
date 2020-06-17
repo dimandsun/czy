@@ -1,50 +1,71 @@
-package com.czy.car.model;
+package com.czy.car.model.table;
 import com.czy.core.annotation.db.Table;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Date;
+import java.math.BigDecimal;
 /**
  * @author chenzy
- * @since 2020-06-09
+ * @since 2020-06-17
  * @description 租赁订单
  */
 @Table("lease_order")
 public class LeaseOrder {
 	/**/
+	@JsonProperty("id")
 	private Integer id;
 	/*订单编号*/
+	@JsonProperty("code")
 	private String code;
 	/*订单名称*/
+	@JsonProperty("name")
 	private String name;
 	/*汽车id*/
+	@JsonProperty("car_id")
 	private Integer carId;
 	/*订单创建时间*/
+	@JsonProperty("create_date")
 	private Date createDate;
 	/*订单创建者*/
+	@JsonProperty("create_id")
 	private Integer createId;
 	/*订单修改时间*/
+	@JsonProperty("update_date")
 	private Date updateDate;
 	/*订单修改者*/
+	@JsonProperty("update_id")
 	private Integer updateId;
 	/*订单支付时间*/
+	@JsonProperty("pay_date")
 	private Date payDate;
 	/*订单支付者*/
+	@JsonProperty("pay_id")
 	private Integer payId;
 	/*订单取消支付时间*/
+	@JsonProperty("pay_cancel_date")
 	private Date payCancelDate;
 	/*订单取消支付者*/
+	@JsonProperty("pay_cancel_id")
 	private Integer payCancelId;
 	/*租赁开始时间*/
+	@JsonProperty("lease_begin_date")
 	private Date leaseBeginDate;
 	/*租赁开始时间*/
+	@JsonProperty("lease_end_date")
 	private Date leaseEndDate;
 	/*订单金额，不包括逾期金额*/
-	private Object payMoney;
+	@JsonProperty("pay_money")
+	private BigDecimal payMoney;
 	/*逾期金额*/
-	private Object overdueMoney;
+	@JsonProperty("overdue_money")
+	private BigDecimal overdueMoney;
 	/*订单总金额，包括逾期金额*/
-	private Object payTotalMoney;
+	@JsonProperty("pay_total_money")
+	private BigDecimal payTotalMoney;
 	/*创建、租赁中、订单状态-待支付、已支付、取消支付、完成、中止、作废、逾期未归还*/
+	@JsonProperty("order_state")
 	private Integer orderState;
 	/*描述*/
+	@JsonProperty("des")
 	private String des;
 
 	public Integer getId(){
@@ -131,22 +152,22 @@ public class LeaseOrder {
 	public void setLeaseEndDate(Date leaseEndDate){
 		 this.leaseEndDate=leaseEndDate;
 	}
-	public Object getPayMoney(){
+	public BigDecimal getPayMoney(){
 		return payMoney;
 	}
-	public void setPayMoney(Object payMoney){
+	public void setPayMoney(BigDecimal payMoney){
 		 this.payMoney=payMoney;
 	}
-	public Object getOverdueMoney(){
+	public BigDecimal getOverdueMoney(){
 		return overdueMoney;
 	}
-	public void setOverdueMoney(Object overdueMoney){
+	public void setOverdueMoney(BigDecimal overdueMoney){
 		 this.overdueMoney=overdueMoney;
 	}
-	public Object getPayTotalMoney(){
+	public BigDecimal getPayTotalMoney(){
 		return payTotalMoney;
 	}
-	public void setPayTotalMoney(Object payTotalMoney){
+	public void setPayTotalMoney(BigDecimal payTotalMoney){
 		 this.payTotalMoney=payTotalMoney;
 	}
 	public Integer getOrderState(){

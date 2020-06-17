@@ -1,6 +1,6 @@
 package com.czy.car.service.impl;
 
-import com.czy.car.model.User;
+import com.czy.car.model.table.User;
 import com.czy.car.service.IUserService;
 import com.czy.core.annotation.Auto;
 import com.czy.core.annotation.bean.Service;
@@ -12,7 +12,6 @@ import com.czy.util.model.ResultVO;
 
 import static com.czy.util.enums.ResCodeEnum.ArgAnalyExce;
 import static com.czy.util.enums.ResCodeEnum.DBExce;
-import static java.lang.Enum.valueOf;
 
 /**
  * @author chenzy
@@ -32,15 +31,15 @@ public class UserServiceImpl implements IUserService {
             return new ResultVO(ArgAnalyExce, "未接收到任何参数");
         }
         var mobile = user.getMobile();
-        String originalPS=user.getOriginalPS();
+        String originalPs=user.getOriginalPs();
         if (StringUtil.isBlank(mobile)){
             return new ResultVO(DBExce, "未输入帐号！");
         }
-        if (StringUtil.isBlank(originalPS)){
+        if (StringUtil.isBlank(originalPs)){
             return new ResultVO(DBExce, "未输入密码！");
         }
         /*用户密码加密*/
-        user.setPS();
+        user.setPs();
         /*插入数据库*/
         Integer userId = commonService.insert(user);
         if (userId == null || userId.equals(0)) {

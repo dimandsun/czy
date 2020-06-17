@@ -1,6 +1,6 @@
 package com.czy.car.controller;
 
-import com.czy.car.model.User;
+import com.czy.car.model.table.User;
 import com.czy.car.service.IUserService;
 import com.czy.core.annotation.Auto;
 import com.czy.core.annotation.bean.Controller;

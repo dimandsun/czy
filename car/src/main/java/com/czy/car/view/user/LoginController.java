@@ -1,6 +1,5 @@
 package com.czy.car.view.user;
 
-import com.czy.car.model.User;
 import com.czy.car.view.Q;
 import com.czy.util.StringUtil;
 import com.czy.util.model.StringMap;
@@ -37,7 +36,7 @@ public class LoginController {
             msgText.setText("帐号或者密码不能为空！");
             return;
         }
-        Q.post("user", new StringMap<>("mobile", mobile).add("originalPS", pw)).addListener((observable, oldValue, newValue) -> {
+        Q.post("user", new StringMap<>("mobile", mobile).add("original_ps", pw)).addListener((observable, oldValue, newValue) -> {
             var data = newValue.getData();
             System.out.println(data);
         });

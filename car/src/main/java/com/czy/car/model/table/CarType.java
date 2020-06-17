@@ -1,19 +1,24 @@
-package com.czy.car.model;
+package com.czy.car.model.table;
 import com.czy.core.annotation.db.Table;
+import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * @author chenzy
- * @since 2020-06-09
+ * @since 2020-06-17
  * @description 车辆类别信息-分类号，分类名
  */
 @Table("car_type")
 public class CarType {
 	/**/
+	@JsonProperty("id")
 	private Integer id;
 	/*编号*/
+	@JsonProperty("code")
 	private String code;
 	/*名称*/
+	@JsonProperty("name")
 	private String name;
 	/*描述*/
+	@JsonProperty("des")
 	private String des;
 
 	public Integer getId(){

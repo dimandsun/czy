@@ -19,7 +19,7 @@ module car {
     exports com.czy.car.view.user;
     exports com.czy.car.controller;
     exports com.czy.car.service.impl;
-    exports com.czy.car.model;
+    exports com.czy.car.model.table;
     opens com.czy.car.service.impl;
     opens com.czy.car.controller;
     opens com.czy.car.view.user;

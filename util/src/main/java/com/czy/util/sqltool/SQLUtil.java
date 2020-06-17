@@ -7,8 +7,10 @@ import com.czy.util.DateUtil;
 import com.czy.util.FileUtil;
 import com.czy.util.ListUtil;
 import com.czy.util.StringUtil;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -70,9 +72,8 @@ public class SQLUtil {
             }
             TableSqlInfo tableSqlInfo = new TableSqlInfo(tableName, tableDes);
 
-//            sqlContent
             /*循环解析每个字段：以逗号分割，要对类似decimal(10,4)类型作处理*/
-            sqlContent= sqlContent.replaceAll("(decimal\\(([0-9]*),([0-9]*)\\))","");
+            sqlContent= sqlContent.replaceAll("(decimal\\(([0-9]*),([0-9]*)\\))","decimal");
             String[] columnContentA = sqlContent.split(",");
             if (ListUtil.isEmpty(columnContentA)) {
                 continue;
@@ -124,8 +125,15 @@ public class SQLUtil {
                 ColumnTypeEnum columnType = columnSqlInfo.getColumnType();
                 if (columnType.equals(ColumnTypeEnum.Date) && !importContent.contains("import java.util.Date;")) {
                     importContent += "import java.util.Date;\n";
+                }else if (columnType.equals(ColumnTypeEnum.BigDecimal) && !importContent.contains("import java.math.BigDecimal;")) {
+                    importContent += "import java.math.BigDecimal;\n";
                 }
-                columnContent += "\t/*" + (columnDes == null ? "" : columnDes) + "*/\n"
+                //字段加注解，
+                var jsonColumn = className.equals(columnSqlInfo.getColumnName())?"":"\t@JsonProperty(\""+columnSqlInfo.getColumnName()+"\")\n" ;
+                if (jsonColumn.length()>0&&!importContent.contains("import com.fasterxml.jackson.annotation.JsonProperty;")){
+                    importContent += "import com.fasterxml.jackson.annotation.JsonProperty;\n";
+                }
+                columnContent += "\t/*" + (columnDes == null ? "" : columnDes) + "*/\n"+jsonColumn
                         + "\tprivate " + columnType.getValue() + " " + columnName + ";\n";
 
                 columnMethodContent += "\tpublic " + columnType.getValue() + " get" + StringUtil.upFirst(columnName) + "(){\n"

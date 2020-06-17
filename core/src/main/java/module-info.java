@@ -33,4 +33,5 @@
     exports com.czy.core;
     exports com.czy.core.enums;
     exports com.czy.core.dispatch;
+    exports com.czy.core.db.config;
 }
