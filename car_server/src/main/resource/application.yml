@@ -1,0 +1,5 @@
+profiles:
+  active: dev
+  groupId: com.czy.car_server
+  moduleDir: car_server
+  port: 10086

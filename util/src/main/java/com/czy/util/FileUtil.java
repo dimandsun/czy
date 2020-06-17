@@ -36,12 +36,34 @@ public class FileUtil {
     private FileUtil() {
     }
 
+    /**
+     * 一行行读取文件
+     * @param file
+     * @return
+     */
+    public static List<String> readFileLine(File file) {
+        if (file == null) {
+            return null;
+        }
+        var result = new ArrayList<String>();
+        try (var reader = new BufferedReader(new FileReader(file))){
+            String line;
+            while ((line = reader.readLine()) != null) {
+                result.add(line);
+            }
+            return result;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static String readFile(File file) {
         if (file == null) {
             return null;
         }
         BufferedReader reader = null;
-        StringBuffer sbf = new StringBuffer();
+        var sbf = new StringBuffer();
         try {
             reader = new BufferedReader(new FileReader(file));
             String tempStr;
@@ -356,7 +378,7 @@ public class FileUtil {
 
             /*若参数是文件，要先判断文件所在目录是否存在，若不存在，则需要创建*/
             File pathFile = file.getParentFile();
-            if (!pathFile.exists()) {
+            if (pathFile!=null&&!pathFile.exists()) {
                 pathFile.mkdirs();
             }
             try {
@@ -368,7 +390,14 @@ public class FileUtil {
         file.getPath();
     }
 
-
+    /*追加写*/
+    public static void append(File file, String... contents) {
+        write(file,true,false,contents);
+    }
+    /*追加写:换行*/
+    public static void appendLine(File file, String... contents) {
+        write(file,true,true,contents);
+    }
     /**
      * 文件中写入指定内容
      *
@@ -376,28 +405,42 @@ public class FileUtil {
      * @param contents
      */
     public static void write(File file, String... contents) {
+        write(file,false,false,contents);
+    }
+    /**
+     *  文件中写入指定内容
+     * @param file
+     * @param append 是否追加写。否会覆盖原内容。值为null则默认覆盖
+     * @param appendLine 是否换行。值为null则默认不换行
+     * @param contents
+     */
+    public static void write(File file,Boolean append,Boolean appendLine, String... contents) {
         if (file == null || ListUtil.isEmpty(contents)) {
             return;
         }
+        if(append==null){
+            append=false;
+        }
+        if (appendLine==null){
+            appendLine=false;
+        }
         createFile(file);
-        FileWriter writer = null;
-        try {
-            writer = new FileWriter(file);
+        try(var writer = new FileWriter(file,append)) {
             for (String content : contents) {
+                if (StringUtil.isBlank(content)){
+                    continue;
+                }
                 writer.write(content);
+                if (appendLine){
+                    writer.write(File.separator);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
+
+
 
     public static List<MyMap> readConfigFileByXML(String filePath) {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -487,6 +530,7 @@ public class FileUtil {
 //        createFile(getResourceFile("a/b.txt"));
         getClassFile("core", "com.czy");
     }
+
 
 
 }

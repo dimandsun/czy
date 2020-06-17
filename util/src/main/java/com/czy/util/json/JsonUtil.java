@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import javafx.beans.property.SimpleStringProperty;
 import org.apache.commons.lang3.ClassUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,8 @@ public class JsonUtil {
         simpleModule.addSerializer(IEnum.class, new EnumSerializer());
         simpleModule.addSerializer(Date.class, new DateSerializer());
         simpleModule.addSerializer(Boolean.class, new BooleanSerializer());
+        simpleModule.addSerializer(Boolean.class, new BooleanSerializer());
+        simpleModule.addSerializer(SimpleStringProperty.class, new SimpleStringPropertySerializer());
         //忽略null字段
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         /**
@@ -52,6 +55,7 @@ public class JsonUtil {
         simpleModule.addDeserializer(Date.class, new DateDeserializer());
         simpleModule.addDeserializer(Enum.class,new EnumDeserializer());//反序列化枚举，
         simpleModule.addDeserializer(Boolean.class, new BooleanDeserializer());
+        simpleModule.addDeserializer(SimpleStringProperty.class, new SimpleStringPropertyDeserializer());
         objectMapper.registerModule(simpleModule);
     }
 
@@ -137,7 +141,7 @@ public class JsonUtil {
         }
         index = jsonStr.lastIndexOf("}");
         if (index!=-1&&index<(jsonStr.length()-1)){
-            jsonStr =jsonStr.substring(0,index);
+            jsonStr =jsonStr.substring(0,index+1);
         }
 
         Map<String, Object> result = str2Map(jsonStr);

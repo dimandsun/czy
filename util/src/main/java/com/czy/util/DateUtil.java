@@ -69,7 +69,9 @@ public class DateUtil {
         sdf.applyPattern(pattern);
         return sdf.format(date);
     }
-
+    public static String now(){
+        return data2Str(new Date());
+    }
     public static String data2Str(Date date) {
         return data2Str(date, DEFAULT_FORMAT);
     }

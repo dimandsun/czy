@@ -12,6 +12,7 @@
     requires java.desktop;
     requires javafx.swing;
     requires javafx.web;
+    requires com.fasterxml.jackson.annotation;
     exports com.czy.fx.test.test2_login;
     exports com.czy.fx.test.test3_css;
     exports com.czy.fx.test.test4_fxml;
@@ -55,6 +56,9 @@
     exports com.czy.fx.test.test63_TextFont;
     exports com.czy.fx.test.test64_Dialog;
     exports com.czy.fx.test.test65_TableView;
+    exports com.czy.fx.test.test65_TableView.yiNanPing;
+    exports com.czy.fx.test.test65_TableView.yiNanPing.model;
+
     exports com.czy.fx.test.test66_TreeView;
     exports com.czy.fx.test.test67_TreeTableView;
     exports com.czy.fx.test.test68_FXML;
@@ -70,5 +74,6 @@
     opens com.czy.fx.test.test68_FXML2;
     opens com.czy.fx.test.test69_GraspData;
     opens com.czy.fx.test.test71_ResourceBundle;
+    opens com.czy.fx.test.test65_TableView.yiNanPing;
     exports com.czy.fx.util;
 }

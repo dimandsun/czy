@@ -82,7 +82,7 @@ public class ProjectContainer {
     public void initProject() {
         System.out.println("*******************************容器正在初始化**************************");
         if (!projectInfoMap.containsKey("core")) {
-            addProjectInfo(new ProjectInfo("core"));
+            addProjectInfo(new ProjectInfo().init("core"));
         }
         try {
             projectInfoMap.values().forEach(projectInfo -> {
@@ -636,7 +636,7 @@ public class ProjectContainer {
 
     public static void main(String[] args) {
         ProjectContainer instance = ProjectContainer.getInstance();
-        instance.addProjectInfo(new ProjectInfo("core"));
+        instance.addProjectInfo(new ProjectInfo().init("core"));
         instance.initProject();
         System.out.println(123);
     }

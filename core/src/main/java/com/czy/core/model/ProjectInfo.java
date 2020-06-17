@@ -5,6 +5,7 @@ import com.czy.util.FileUtil;
 import com.czy.util.StringUtil;
 
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author chenzy
@@ -12,19 +13,29 @@ import java.util.Map;
  * @since 2020-04-07
  */
 public class ProjectInfo {
-    public ProjectInfo(String moduleDir) {
+    public ProjectInfo() {
+    }
+    protected Map<String, Object> initPro(String moduleDir) {
         Map<String, Map<String, Object>> proMap = FileUtil.readConfigFileByYML(FileUtil.getResourceFile(moduleDir, "application.yml"));
         if (proMap != null) {
-            Map<String, Object> profileMap = proMap.get("profiles");
-            String active = StringUtil.getStr(profileMap.get("active"),"dev");
-            String groupId = StringUtil.getStr(profileMap.get("groupId"),"com.czy.core");
-            moduleDir = StringUtil.getStr(profileMap.get("moduleDir"),moduleDir);
+            var profileMap= proMap.get("profiles");
+            String active = StringUtil.getStr(profileMap.get("active"), "dev");
+            String groupId = StringUtil.getStr(profileMap.get("groupId"), "com.czy.core");
+            moduleDir = StringUtil.getStr(profileMap.get("moduleDir"), moduleDir);
             setActive(ActiveEnum.getEnum(active));
             setGroupId(groupId);
             setModuleDir(moduleDir);
+            return profileMap;
         }
+        return null;
     }
-
+    public ProjectInfo init(String moduleDir){
+        Map<String, Object> profileMap = initPro(moduleDir);
+        if (profileMap==null||profileMap.isEmpty()){
+            return this;
+        }
+        return this;
+    }
     private ActiveEnum active;
     private String groupId;
     private String moduleDir;

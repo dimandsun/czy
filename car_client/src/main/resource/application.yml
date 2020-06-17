@@ -1,0 +1,6 @@
+profiles:
+  active: dev
+  groupId: com.czy.car_client
+  moduleDir: car_client
+  port: 10086
+  host: 127.0.0.1
