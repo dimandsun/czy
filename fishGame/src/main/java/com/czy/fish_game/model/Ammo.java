@@ -17,7 +17,7 @@ public class Ammo extends DrawableAdapter{
 	}
 	
 	public Bitmap getCurrentPic() {
-		// TODO Auto-generated method stub
+		
 		return pic[currentId];
 	}
 	
@@ -36,11 +36,11 @@ public class Ammo extends DrawableAdapter{
 	}
 	
 	public int getPicWidth() {
-		// TODO Auto-generated method stub
+		
 		return pic[currentId].getWidth();
 	}
 	public int getPicHeight() {
-		// TODO Auto-generated method stub
+		
 		return pic[currentId].getHeight();
 	}
 

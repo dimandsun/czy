@@ -132,7 +132,6 @@ public class ShotThread extends Thread {
 						break;
 					}
 				} catch (Exception e) {
-					// TODO: handle exception
 				}
 			}
 			

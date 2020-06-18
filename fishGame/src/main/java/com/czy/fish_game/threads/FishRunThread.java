@@ -319,7 +319,7 @@ public class FishRunThread extends Thread {
 			new Thread(new Runnable(){
 				public void run() {
 					try{
-						// TODO Auto-generated method stub
+						
 						//如果领头鱼有鱼群
 						for(Fish fishFlag:fish.getShoal()){
 							while(GamingInfo.getGamingInfo().isGaming()){

@@ -47,7 +47,7 @@ public class FishInfo {
 	 * @return
 	 */
 	public int getMaxRotate() {
-		// TODO Auto-generated method stub
+		
 		return maxRotate;
 	}
 
@@ -56,7 +56,7 @@ public class FishInfo {
 	 * @return
 	 */
 	public int getFishRunSpeed() {
-		// TODO Auto-generated method stub
+		
 		return fishRunSpeed;
 	}
 
@@ -65,7 +65,7 @@ public class FishInfo {
 	 * @return
 	 */
 	public int getFishShoalMax() {
-		// TODO Auto-generated method stub
+		
 		return fishShoalMax;
 	}
 
@@ -74,13 +74,13 @@ public class FishInfo {
 	 * @return
 	 */
 	public int getFishInLayer() {
-		// TODO Auto-generated method stub
+		
 		return fishInLayer;
 	}
 	
 	
 	public int getPicActSpeed() {
-		// TODO Auto-generated method stub
+		
 		return this.actSpeed;
 	}
 	public int getCatchProbability() {

@@ -20,19 +20,19 @@ public class HighPoint extends DrawableAdapter{
 	}
 	@Override
 	public Bitmap getCurrentPic() {
-		// TODO Auto-generated method stub
+		
 		return imgs[currentPicId];
 	}
 
 	@Override
 	public int getPicWidth() {
-		// TODO Auto-generated method stub
+		
 		return getCurrentPic().getWidth();
 	}
 
 	@Override
 	public int getPicHeight() {
-		// TODO Auto-generated method stub
+		
 		return getCurrentPic().getHeight();
 	}
 

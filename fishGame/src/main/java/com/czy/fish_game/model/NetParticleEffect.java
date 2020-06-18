@@ -165,19 +165,19 @@ public class NetParticleEffect extends DrawableAdapter{
 	
 	@Override
 	public Bitmap getCurrentPic() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public int getPicWidth() {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	@Override
 	public int getPicHeight() {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 	/**

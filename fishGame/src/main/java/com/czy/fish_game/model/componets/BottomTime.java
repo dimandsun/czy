@@ -73,17 +73,17 @@ public class BottomTime extends Componet{
 	}	
 	
 	public Bitmap getCurrentPic() {
-		// TODO Auto-generated method stub
+		
 		return pic;
 	}
 
 	public int getPicWidth() {
-		// TODO Auto-generated method stub
+		
 		return pic.getWidth();
 	}
 
 	public int getPicHeight() {
-		// TODO Auto-generated method stub
+		
 		return pic.getHeight();
 	}
 

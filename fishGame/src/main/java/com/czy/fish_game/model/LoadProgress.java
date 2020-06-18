@@ -52,7 +52,6 @@ public class LoadProgress extends DrawableAdapter{
 			while((this.load = ImageManager.getImageMnagaer().getBitmapByAssets("image/progress/login_jd.png"))==null);
 			while((this.progressBg = ImageManager.getImageMnagaer().sacleImageByWidthAndHeight(ImageManager.getImageMnagaer().getBitmapByAssets("image/progress/progress_bg.jpg"), GamingInfo.getGamingInfo().getScreenWidth(), GamingInfo.getGamingInfo().getScreenHeight()))==null);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -76,7 +75,7 @@ public class LoadProgress extends DrawableAdapter{
 	
 	@Override
 	public void onDraw(Canvas canvas, Paint paint) {
-		// TODO Auto-generated method stub
+		
 		canvas.drawBitmap(progressBg, 0, 0, paint);
 		canvas.drawBitmap(currentLoad,progress_x,progress_y, paint);
 		
@@ -116,19 +115,19 @@ public class LoadProgress extends DrawableAdapter{
 	}
 	@Override
 	public Bitmap getCurrentPic() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public int getPicWidth() {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	@Override
 	public int getPicHeight() {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 	

@@ -20,19 +20,19 @@ public class WaterRipple extends DrawableAdapter{
 
 	@Override
 	public Bitmap getCurrentPic() {
-		// TODO Auto-generated method stub
+		
 		return ripple[currentId];
 	}
 
 	@Override
 	public int getPicWidth() {
-		// TODO Auto-generated method stub
+		
 		return getCurrentPic().getWidth();
 	}
 
 	@Override
 	public int getPicHeight() {
-		// TODO Auto-generated method stub
+		
 		return getCurrentPic().getHeight();
 	}
 

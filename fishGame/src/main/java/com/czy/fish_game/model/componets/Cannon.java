@@ -75,17 +75,17 @@ public class Cannon extends DrawableAdapter{
 	
 	@Override
 	public Bitmap getCurrentPic() {
-		// TODO Auto-generated method stub
+		
 		return cannonImage[currentId];
 	}
 	@Override
 	public int getPicWidth() {
-		// TODO Auto-generated method stub
+		
 		return cannonImage[currentId].getWidth();
 	}
 	@Override
 	public int getPicHeight() {
-		// TODO Auto-generated method stub
+		
 		return cannonImage[currentId].getHeight();
 	}
 }

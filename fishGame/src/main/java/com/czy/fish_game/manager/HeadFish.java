@@ -52,21 +52,21 @@ public class HeadFish {
 	 * 
 	 * */
 	public void setFish_X(float x) {
-		// TODO Auto-generated method stub
+		
 		this.setLastX(this.fish_x);
 		this.fish_x = x;
 	}
 	public void setFish_Y(float y) {
-		// TODO Auto-generated method stub
+		
 		this.setLastY(this.fish_y);
 		this.fish_y = y;
 	}
 	public float getFish_X() {
-		// TODO Auto-generated method stub
+		
 		return this.fish_x;
 	}
 	public float getFish_Y() {
-		// TODO Auto-generated method stub
+		
 		return this.fish_y;
 	}
 	public float getLastX() {

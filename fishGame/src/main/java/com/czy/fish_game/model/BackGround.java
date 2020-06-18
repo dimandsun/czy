@@ -9,19 +9,19 @@ public class BackGround extends DrawableAdapter{
 	}
 	@Override
 	public Bitmap getCurrentPic() {
-		// TODO Auto-generated method stub
+		
 		return background;
 	}
 
 	@Override
 	public int getPicWidth() {
-		// TODO Auto-generated method stub
+		
 		return background.getWidth();
 	}
 
 	@Override
 	public int getPicHeight() {
-		// TODO Auto-generated method stub
+		
 		return background.getHeight();
 	}
 

@@ -10,7 +10,7 @@ public abstract class DrawableAdapter implements Drawable{
 	private Matrix matrix = new JMatrix();
 	
 	public Matrix getPicMatrix() {
-		// TODO Auto-generated method stub
+		
 		return matrix;
 	}
 

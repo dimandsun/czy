@@ -19,19 +19,19 @@ public class FishingNet extends DrawableAdapter{
 	}
 	@Override
 	public Bitmap getCurrentPic() {
-		// TODO Auto-generated method stub
+		
 		return net;
 	}
 
 	@Override
 	public int getPicWidth() {
-		// TODO Auto-generated method stub
+		
 		return net.getWidth();
 	}
 
 	@Override
 	public int getPicHeight() {
-		// TODO Auto-generated method stub
+		
 		return net.getHeight();
 	}
 	/**

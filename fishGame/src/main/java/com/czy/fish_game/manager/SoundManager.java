@@ -100,10 +100,10 @@ public class SoundManager {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (UnsupportedAudioFileException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (LineUnavailableException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}

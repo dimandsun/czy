@@ -23,24 +23,24 @@ public class Gold extends DrawableAdapter{
 		this.currentPicId = currentPicId;
 	}
 	public int getPicLength() {
-		// TODO Auto-generated method stub
+		
 		return gold.length;
 	}
 	@Override
 	public Bitmap getCurrentPic() {
-		// TODO Auto-generated method stub
+		
 		return gold[currentPicId];
 	}
 
 	@Override
 	public int getPicWidth() {
-		// TODO Auto-generated method stub
+		
 		return getCurrentPic().getWidth();
 	}
 
 	@Override
 	public int getPicHeight() {
-		// TODO Auto-generated method stub
+		
 		return getCurrentPic().getHeight();
 	}
 	public Runnable getGoldActThread() {

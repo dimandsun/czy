@@ -199,7 +199,7 @@ public class ScoreManager {
 		new Thread(new Runnable() {			
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
+				
 				HighPoint hp = new HighPoint(highPoint.get(score));
 				hp.getPicMatrix().setTranslate(goldFromX, goldFromY);
 				GamingInfo.getGamingInfo().getSurface().putDrawablePic(Constant.HIGH_POINT_LAYER, hp);
@@ -240,7 +240,7 @@ public class ScoreManager {
 		new Thread(new Runnable() {			
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
+				
 				HundredPoint hp = new HundredPoint(hundredPoint.get(score));
 				hp.getPicMatrix().setTranslate(goldFromX, goldFromY);
 				GamingInfo.getGamingInfo().getSurface().putDrawablePic(Constant.HUNDRED_POINT_LAYER, hp);

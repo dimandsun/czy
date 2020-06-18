@@ -160,7 +160,7 @@ public class ShoalManager{
 				float randomMaxY;
 				float flagFishX,flagFishY;//生成的鱼的坐标
 				Fish startFish = headFish.getFish();
-				// TODO Auto-generated method stub
+				
 				while(GamingInfo.getGamingInfo().isGaming()){
 					while(!GamingInfo.getGamingInfo().isPause()&&sumAtOut>1){
 						fishFlag = headFish.getShoal().get(shoalIndex);

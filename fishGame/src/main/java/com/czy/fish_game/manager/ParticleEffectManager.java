@@ -33,7 +33,6 @@ public class ParticleEffectManager {
 			goldStartParticleImg = ImageManager.getImageMnagaer().getscaleImageByScreenFromAssets("image/cannon/tenstar.png");
 			createColorfulParticleImgs();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			LogTools.doLogForException(e);
 		}
 	}

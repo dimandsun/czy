@@ -12,7 +12,6 @@ public class UpCannonButtonListener implements OnClickListener{
 
 	@Override
 	public void onClick() {
-		// TODO Auto-generated method stub
 		CannonManager.getCannonManager().upCannon();
 	}
 

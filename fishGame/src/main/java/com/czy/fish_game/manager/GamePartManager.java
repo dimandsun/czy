@@ -125,7 +125,6 @@ public class GamePartManager {
 				try {
 					background.setCurrentPic(ImageManager.getImageMnagaer().sacleImageByWidthAndHeight(ImageManager.getImageMnagaer().getBitmapByAssets(this.part.getBackground()), GamingInfo.getGamingInfo().getScreenWidth(), GamingInfo.getGamingInfo().getScreenHeight()));				
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					LogTools.doLogForException(e);
 				}
 				GamingInfo.getGamingInfo().getSurface().putDrawablePic(Constant.BACK_GROUND_LAYER, background);
@@ -133,7 +132,6 @@ public class GamePartManager {
 				try {
 					background.setCurrentPic(Bitmap.createScaledBitmap(ImageManager.getImageMnagaer().getBitmapByAssets(this.part.getBackground()), GamingInfo.getGamingInfo().getScreenWidth(), GamingInfo.getGamingInfo().getScreenHeight(), false));				
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					LogTools.doLogForException(e);
 				}
 			}

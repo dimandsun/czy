@@ -386,7 +386,6 @@ public class CannonManager {
 		new Thread(new Runnable() {		
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				ChangeCannonEffect effect = new ChangeCannonEffect(changeCannonEffect);
 				effect.playEffect();
 			}

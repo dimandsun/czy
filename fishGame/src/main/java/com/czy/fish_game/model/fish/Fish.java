@@ -48,12 +48,12 @@ public class Fish extends DrawableAdapter{
 	
 	//是否处于活动状态（在屏幕中游着）
 	public boolean isAlive() {
-		// TODO Auto-generated method stub
+		
 		return isAlive;
 	}
 	//设置是否处于活动状态
 	public void setAlive(boolean isAlive) {
-		// TODO Auto-generated method stub
+		
 		this.isAlive = isAlive;
 	}
 	
@@ -96,7 +96,7 @@ public class Fish extends DrawableAdapter{
 	 * @return
 	 */
 	public int getFishActs() {
-		// TODO Auto-generated method stub
+		
 		if(isAlive()){
 			return fishActs.length;
 		}else{
@@ -126,7 +126,7 @@ public class Fish extends DrawableAdapter{
 	}
 	
 	public Bitmap getCurrentPic() {
-		// TODO Auto-generated method stub
+		
 		if(isAlive()){
 			return fishActs[currentPicAct];
 		}else{
@@ -136,12 +136,12 @@ public class Fish extends DrawableAdapter{
 	}
 	
 	public int getPicWidth() {
-		// TODO Auto-generated method stub
+		
 		return getCurrentPic().getWidth();
 	}
 
 	public int getPicHeight() {
-		// TODO Auto-generated method stub
+		
 		return getCurrentPic().getHeight();
 	}
 
@@ -150,7 +150,7 @@ public class Fish extends DrawableAdapter{
 	 * @param fishActs
 	 */
 	public void setFishActs(Bitmap[] fishActs) {
-		// TODO Auto-generated method stub
+		
 		this.fishActs = fishActs;
 	}
 	/**
@@ -158,7 +158,7 @@ public class Fish extends DrawableAdapter{
 	 * @param fishCatchActs
 	 */
 	public void setFishCatchActs(Bitmap[] fishCatchActs) {
-		// TODO Auto-generated method stub
+		
 		this.fishCatchActs = fishCatchActs;
 	}
 	

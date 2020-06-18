@@ -19,7 +19,7 @@ public class Bitmap implements Serializable{
 	 * @return
 	 */
 	public int getWidth() {
-		// TODO Auto-generated method stub
+		
 		return image.getWidth(null);
 	}
 
@@ -28,7 +28,7 @@ public class Bitmap implements Serializable{
 	 * @return
 	 */
 	public int getHeight() {
-		// TODO Auto-generated method stub
+		
 		return image.getHeight(null);
 	}
 	

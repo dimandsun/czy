@@ -22,30 +22,30 @@ public class ButtonAdapter extends Componet implements Button{
 	}
 	@Override
 	public Bitmap getCurrentPic() {
-		// TODO Auto-generated method stub
+		
 		return btn_img;
 	}
 
 	@Override
 	public int getPicWidth() {
-		// TODO Auto-generated method stub
+		
 		return btn_img.getWidth();
 	}
 
 	@Override
 	public int getPicHeight() {
-		// TODO Auto-generated method stub
+		
 		return btn_img.getHeight();
 	}
 	
 	@Override
 	public void onClick() {
-		// TODO Auto-generated method stub
+		
 		onClickListener.onClick();
 	}
 	@Override
 	public boolean isEnable() {
-		// TODO Auto-generated method stub
+		
 		return enable;
 	}
 	public void setEnable(boolean enable) {

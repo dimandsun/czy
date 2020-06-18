@@ -28,7 +28,6 @@ public class ChangeCannonEffect extends DrawableAdapter{
 			try {
 				Thread.sleep(100);
 			} catch (Exception e) {
-				// TODO: handle exception
 				Log.e("ChangeCannonEffect", e.toString());
 			}
 		}
@@ -37,17 +36,17 @@ public class ChangeCannonEffect extends DrawableAdapter{
 	
 	@Override
 	public Bitmap getCurrentPic() {
-		// TODO Auto-generated method stub
+		
 		return effect[currentId];
 	}
 	@Override
 	public int getPicWidth() {
-		// TODO Auto-generated method stub
+		
 		return effect[currentId].getWidth();
 	}
 	@Override
 	public int getPicHeight() {
-		// TODO Auto-generated method stub
+		
 		return effect[currentId].getHeight();
 	}
 	

@@ -58,17 +58,17 @@ public class FishGold extends DrawableAdapter{
 	}	
 	
 	public Bitmap getCurrentPic() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	public int getPicWidth() {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	public int getPicHeight() {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
