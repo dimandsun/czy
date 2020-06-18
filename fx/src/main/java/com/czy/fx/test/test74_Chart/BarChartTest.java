@@ -3,14 +3,11 @@ package com.czy.fx.test.test74_Chart;
 import com.czy.fx.test.FXUtil;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Side;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**

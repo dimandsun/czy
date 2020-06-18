@@ -2,9 +2,7 @@ package com.czy.fx.test.test64_Dialog;
 
 import com.czy.fx.test.FXUtil;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;

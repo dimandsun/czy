@@ -8,8 +8,8 @@ import com.czy.util.model.ResultVO;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-import static com.czy.util.socket.SocketUtil.readData;
-import static com.czy.util.socket.SocketUtil.sendData;
+import static com.czy.util.tcp.SocketUtil.readData;
+import static com.czy.util.tcp.SocketUtil.sendData;
 
 /**
  * @author chenzy

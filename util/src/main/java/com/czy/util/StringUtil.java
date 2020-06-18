@@ -1,6 +1,7 @@
 package com.czy.util;
 
 
+import com.czy.util.io.FileUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -759,7 +760,7 @@ public class StringUtil {
 //            System.out.println(result);
             String projectGroupId ="cn.lexiaotongvip.www";
             String classPath = StringUtil.class.getResource("/").getPath() + projectGroupId.replace(".", File.separator);
-            List<Class> classList=FileUtil.getClassList(classPath, projectGroupId);
+            List<Class> classList= FileUtil.getClassList(classPath, projectGroupId);
             System.out.println(classList.size());
         }
 

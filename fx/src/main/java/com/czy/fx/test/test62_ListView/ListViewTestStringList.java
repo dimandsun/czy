@@ -1,11 +1,8 @@
 package com.czy.fx.test.test62_ListView;
 
 import com.czy.fx.test.FXUtil;
-import com.czy.user.model.User;
-import com.czy.util.ObjectUtil;
 import javafx.application.Application;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.scene.control.*;
@@ -14,7 +11,6 @@ import javafx.scene.control.cell.ChoiceBoxListCell;
 import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;

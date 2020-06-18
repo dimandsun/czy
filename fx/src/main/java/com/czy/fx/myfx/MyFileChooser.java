@@ -1,13 +1,11 @@
 package com.czy.fx.myfx;
 
 import com.czy.util.ListUtil;
-import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 /**

@@ -1,8 +1,9 @@
 package com.czy.car_server.model.table;
 import com.czy.core.annotation.db.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.Date;
+
 import java.math.BigDecimal;
+import java.util.Date;
 /**
  * @author chenzy
  * @since 2020-06-17

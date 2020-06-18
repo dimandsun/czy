@@ -1,9 +1,9 @@
 package com.czy.fx.test.test54_FileChooser;
 
 import com.czy.fx.myfx.MyFileChooser;
-import com.czy.fx.test.FXUtil;
 import com.czy.fx.myfx.Mybutton;
-import com.czy.util.FileUtil;
+import com.czy.fx.test.FXUtil;
+import com.czy.util.io.FileUtil;
 import com.czy.util.ListUtil;
 import javafx.application.Application;
 import javafx.scene.control.Label;
@@ -11,11 +11,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.util.List;
 
 /**
  * @author chenzy

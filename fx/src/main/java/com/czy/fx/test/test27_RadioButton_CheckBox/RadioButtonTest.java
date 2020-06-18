@@ -1,6 +1,5 @@
 package com.czy.fx.test.test27_RadioButton_CheckBox;
 
-import com.czy.fx.test.FXUtil;
 import com.czy.util.ObjectUtil;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -10,8 +9,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-
-import java.util.List;
 
 /**
  * @author chenzy

@@ -1,6 +1,5 @@
 package com.czy.fx.test.test21_MenuBar_Menu_MenuItem;
 
-import com.czy.fx.test.FXUtil;
 import com.czy.util.ObjectUtil;
 import javafx.application.Application;
 import javafx.scene.Scene;

@@ -4,9 +4,7 @@ import com.czy.fx.test.FXUtil;
 import javafx.application.Application;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 /**
  * @author chenzy

@@ -4,7 +4,6 @@ import com.czy.fx.test.FXUtil;
 import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.web.HTMLEditor;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 

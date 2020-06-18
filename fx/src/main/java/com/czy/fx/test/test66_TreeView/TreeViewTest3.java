@@ -2,18 +2,11 @@ package com.czy.fx.test.test66_TreeView;
 
 import com.czy.fx.test.FXUtil;
 import javafx.application.Application;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTreeCell;
-import javafx.scene.control.cell.ChoiceBoxTreeCell;
-import javafx.scene.control.cell.ComboBoxTreeCell;
-import javafx.scene.control.cell.TextFieldTreeCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.util.StringConverter;
 
 /**
  * @author chenzy

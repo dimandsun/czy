@@ -2,7 +2,6 @@ package com.czy.fx.test.test38_ProgressIndicator;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;

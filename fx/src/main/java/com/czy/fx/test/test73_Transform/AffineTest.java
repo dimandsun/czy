@@ -5,7 +5,6 @@ import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.transform.Affine;
-import javafx.scene.transform.Shear;
 import javafx.stage.Stage;
 
 /**

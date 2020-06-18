@@ -1,6 +1,5 @@
 package com.czy.fx.test.test16_TextFlow;
 
-import com.czy.fx.test.FXUtil;
 import com.czy.util.ObjectUtil;
 import javafx.application.Application;
 import javafx.scene.Scene;

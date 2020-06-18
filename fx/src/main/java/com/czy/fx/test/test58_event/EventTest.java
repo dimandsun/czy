@@ -5,7 +5,6 @@ import com.czy.fx.myfx.Mybutton;
 import com.czy.fx.test.FXUtil;
 import javafx.application.Application;
 import javafx.event.Event;
-import javafx.event.EventType;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;

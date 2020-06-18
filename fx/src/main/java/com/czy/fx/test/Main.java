@@ -76,7 +76,7 @@ import com.czy.fx.test.test74_Chart.PieChartTest;
 import com.czy.fx.test.test7_screen.ScreenTest;
 import com.czy.fx.test.test8_group.GroupTest;
 import com.czy.fx.test.test9_button.ButtonTest;
-import com.czy.util.FileUtil;
+import com.czy.util.io.FileUtil;
 import javafx.application.Application;
 
 import java.io.File;

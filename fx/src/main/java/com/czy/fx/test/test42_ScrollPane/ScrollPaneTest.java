@@ -2,9 +2,7 @@ package com.czy.fx.test.test42_ScrollPane;
 
 import com.czy.fx.test.FXUtil;
 import javafx.application.Application;
-import javafx.geometry.Orientation;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;

@@ -3,7 +3,6 @@ package com.czy.fx.test.test47_ReadOnlyDoubleWrapper;
 import com.czy.fx.test.FXUtil;
 import javafx.application.Application;
 import javafx.beans.property.ReadOnlyDoubleWrapper;
-import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 

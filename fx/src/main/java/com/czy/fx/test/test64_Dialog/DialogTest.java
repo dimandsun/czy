@@ -11,7 +11,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.util.Optional;
-import java.util.function.Consumer;
 
 /**
  * @author chenzy

@@ -3,8 +3,6 @@ package com.czy.fx.test.test65_TableView.yiNanPing.model;
 import com.czy.fx.test.test65_TableView.yiNanPing.Checkbox;
 import javafx.beans.property.SimpleStringProperty;
 
-import java.io.Serializable;
-
 /**
  * @author chenzy
  * @since 2020-06-17

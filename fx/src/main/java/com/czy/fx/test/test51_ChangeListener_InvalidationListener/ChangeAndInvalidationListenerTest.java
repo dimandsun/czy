@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.WeakInvalidationListener;
-import javafx.beans.WeakListener;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.stage.Stage;
 

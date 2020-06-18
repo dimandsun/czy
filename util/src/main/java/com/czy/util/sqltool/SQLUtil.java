@@ -1,16 +1,14 @@
 package com.czy.util.sqltool;
 
+import com.czy.util.DateUtil;
+import com.czy.util.io.FileUtil;
+import com.czy.util.ListUtil;
+import com.czy.util.StringUtil;
 import com.czy.util.sqltool.enums.ColumnTypeEnum;
 import com.czy.util.sqltool.model.ColumnSqlInfo;
 import com.czy.util.sqltool.model.TableSqlInfo;
-import com.czy.util.DateUtil;
-import com.czy.util.FileUtil;
-import com.czy.util.ListUtil;
-import com.czy.util.StringUtil;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.File;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

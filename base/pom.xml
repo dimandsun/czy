@@ -18,6 +18,7 @@
         <module>../javase_study</module>
         <module>../psychology</module>
         <module>../car_server</module>
+        <module>../car_client</module>
     </modules>
     <properties>
         <encoding>UTF-8</encoding>

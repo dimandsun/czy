@@ -1,7 +1,6 @@
 package com.czy.fx.test.test44_Point2D;
 
 import com.czy.fx.test.FXUtil;
-import com.czy.util.StringUtil;
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;

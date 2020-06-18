@@ -11,8 +11,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
-import java.util.concurrent.atomic.AtomicReference;
-
 /**
  * @author chenzy
  * @description 下拉列表

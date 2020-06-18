@@ -1,7 +1,7 @@
 package com.czy.fx.test;
 
 import com.czy.util.ClassUtil;
-import com.czy.util.FileUtil;
+import com.czy.util.io.FileUtil;
 import com.czy.util.StringUtil;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -11,7 +11,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;

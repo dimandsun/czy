@@ -3,7 +3,6 @@ package com.czy.fx.test.test65_TableView.yiNanPing.model;
 import com.czy.fx.test.test65_TableView.yiNanPing.Checkbox;
 import com.czy.util.json.JsonUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.io.*;
@@ -14,14 +13,10 @@ import java.util.ArrayList;
  * @since 2020-06-17
  */
 public class Person {
-    @JsonIgnore
-    private final SimpleStringProperty name = new SimpleStringProperty();
-    @JsonIgnore
-    private final SimpleStringProperty address= new SimpleStringProperty();
-    @JsonIgnore
-    private final SimpleStringProperty telephoneNumber= new SimpleStringProperty();
-    @JsonIgnore
-    private final SimpleStringProperty email= new SimpleStringProperty();
+    private final SimpleStringProperty nameProperty = new SimpleStringProperty();
+    private final SimpleStringProperty addressProperty= new SimpleStringProperty();
+    private final SimpleStringProperty telephoneNumberProperty= new SimpleStringProperty();
+    private final SimpleStringProperty emailProperty= new SimpleStringProperty();
     @JsonIgnore
     public Checkbox cb = new Checkbox();
 
@@ -35,39 +30,118 @@ public class Person {
     }
 
     public String getName() {
-        return name.get();
+        return nameProperty.get();
     }
-    @JsonProperty
+
     public void setName(String name) {
-        this.name.set(name);
+        this.nameProperty.set(name);
     }
 
     public String getAddress() {
-        return address.get();
+        return addressProperty.get();
     }
-    @JsonProperty
+
     public void setAddress(String address) {
-        this.address.set(address);
+        this.addressProperty.set(address);
         ;
     }
 
     public String getTelephoneNumber() {
-        return telephoneNumber.get();
+        return telephoneNumberProperty.get();
     }
-    @JsonProperty
+
     public void setTelephoneNumber(String telephoneNumber) {
-        this.telephoneNumber.set(telephoneNumber);
+        this.telephoneNumberProperty.set(telephoneNumber);
         ;
     }
+
     public String getEmail() {
-        return email.get();
+        return emailProperty.get();
     }
-    @JsonProperty
+
     public void setEmail(String email) {
-        this.email.set(email);
+        this.emailProperty.set(email);
+    }
+
+    public String getNameProperty() {
+        return nameProperty.get();
+    }
+
+    public SimpleStringProperty namePropertyProperty() {
+        return nameProperty;
+    }
+
+    public void setNameProperty(String nameProperty) {
+        this.nameProperty.set(nameProperty);
+    }
+
+    public String getAddressProperty() {
+        return addressProperty.get();
+    }
+
+    public SimpleStringProperty addressPropertyProperty() {
+        return addressProperty;
+    }
+
+    public void setAddressProperty(String addressProperty) {
+        this.addressProperty.set(addressProperty);
+    }
+
+    public String getTelephoneNumberProperty() {
+        return telephoneNumberProperty.get();
+    }
+
+    public SimpleStringProperty telephoneNumberPropertyProperty() {
+        return telephoneNumberProperty;
+    }
+
+    public void setTelephoneNumberProperty(String telephoneNumberProperty) {
+        this.telephoneNumberProperty.set(telephoneNumberProperty);
+    }
+
+    public String getEmailProperty() {
+        return emailProperty.get();
+    }
+
+    public SimpleStringProperty emailPropertyProperty() {
+        return emailProperty;
+    }
+
+    public void setEmailProperty(String emailProperty) {
+        this.emailProperty.set(emailProperty);
     }
 
     public String toString() {
         return JsonUtil.model2Str(this);
+    }
+
+    public void writeToFile(File f) throws ClassNotFoundException, IOException {
+
+        Person person = new Person(nameProperty.get(), addressProperty.get(), telephoneNumberProperty.get(), emailProperty.get());
+
+        ArrayList<Person> list = new ArrayList<>();// 用来存文件之前的对象
+
+
+        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(f))) {
+            while (true) {
+                list.add((Person) input.readObject());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {// 捕捉到异常时，原有对象已全部存入list中
+
+        } finally {
+            // 序列化
+            try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(f))) {
+                // 将文件中原有的对象重新存入
+                for (Person p : list) {
+                    output.writeObject(p);
+                }
+                output.writeObject(person);// 将新对象存入
+
+            }
+
+        }
+
     }
 }

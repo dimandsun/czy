@@ -3,11 +3,9 @@ package com.czy.fx.test.test52_binding;
 import com.czy.fx.test.FXUtil;
 import com.czy.user.model.User;
 import com.czy.util.ObjectUtil;
-import com.czy.util.model.MyMap;
 import com.czy.util.model.StringMap;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.IntegerBinding;
 import javafx.beans.binding.When;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -19,7 +17,6 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 import java.util.Locale;
-import java.util.Map;
 
 import static com.czy.util.StringUtil.println;
 

@@ -2,16 +2,11 @@ package com.czy.fx.test.test68_FXML2;
 
 import com.czy.fx.test.FXUtil;
 import com.czy.user.model.User;
-import com.czy.util.FileUtil;
+import com.czy.util.io.FileUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.util.Builder;
-import javafx.util.BuilderFactory;
-
-import java.net.URL;
 
 /**
  * @author chenzy

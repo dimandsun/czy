@@ -1,7 +1,7 @@
 package com.czy.fx.test.test70_screenshot;
 
 import com.czy.fx.test.FXUtil;
-import com.czy.util.FileUtil;
+import com.czy.util.io.FileUtil;
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Pos;
@@ -20,7 +20,6 @@ import javafx.stage.StageStyle;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 /**

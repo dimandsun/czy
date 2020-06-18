@@ -1,7 +1,7 @@
 package com.czy.fx.test.test68_FXML;
 
 import com.czy.fx.test.FXUtil;
-import com.czy.util.FileUtil;
+import com.czy.util.io.FileUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;

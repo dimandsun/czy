@@ -2,8 +2,6 @@ package com.czy.fx.test.test46_SimpleIntegerProperty;
 
 import javafx.application.Application;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;

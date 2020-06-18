@@ -1,15 +1,14 @@
 package com.czy.car_client.view;
 
 import com.czy.car_client.CarClientInfo;
-import com.czy.core.dispatch.Dispatch;
 import com.czy.core.dispatch.Quest;
 import com.czy.core.dispatch.Response;
 import com.czy.util.json.JsonUtil;
 import com.czy.util.model.ResultVO;
 import javafx.concurrent.Task;
 
-import static com.czy.util.socket.SocketUtil.readData;
-import static com.czy.util.socket.SocketUtil.sendData;
+import static com.czy.util.tcp.SocketUtil.readData;
+import static com.czy.util.tcp.SocketUtil.sendData;
 
 /**
  * @author chenzy

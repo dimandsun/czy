@@ -1,17 +1,13 @@
 package com.czy.fx.util;
 
-import com.czy.fx.test.test68_FXML2.UserBuilder;
-import com.czy.user.model.User;
-import com.czy.util.FileUtil;
+import com.czy.util.io.FileUtil;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 
 /**
  * @author chenzy

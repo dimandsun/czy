@@ -3,7 +3,7 @@ package com.czy.fx.test.test65_TableView.yiNanPing;
 import com.czy.fx.test.test65_TableView.yiNanPing.model.Employee;
 import com.czy.fx.test.test65_TableView.yiNanPing.model.Faculty;
 import com.czy.fx.test.test65_TableView.yiNanPing.model.Person;
-import com.czy.util.FileUtil;
+import com.czy.util.io.FileUtil;
 import com.czy.util.json.JsonUtil;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
@@ -66,10 +66,10 @@ public class TableViewSample2 extends Application {
             try {
                 ((Group) scene.getRoot()).getChildren().addAll(PersonTable());
             } catch (FileNotFoundException e1) {
-                // TODO Auto-generated catch block
+
                 e1.printStackTrace();
             } catch (IOException e1) {
-                // TODO Auto-generated catch block
+
                 e1.printStackTrace();
             }
             primaryStage.setScene(scene);
@@ -704,7 +704,7 @@ public class TableViewSample2 extends Application {
 //					//output.writeObject(p);
 //					System.out.println("success");
 //					} catch (IOException e1) {
-//					// TODO Auto-generated catch block
+//
 //					e1.printStackTrace();
 //				}
 
@@ -920,7 +920,7 @@ public class TableViewSample2 extends Application {
 //					//output.writeObject(p);
 //					System.out.println("success");
 //					} catch (IOException e1) {
-//					// TODO Auto-generated catch block
+//
 //					e1.printStackTrace();
 //				}
                 addName.clear();
@@ -1144,7 +1144,7 @@ public class TableViewSample2 extends Application {
 //					//output.writeObject(p);
 //					System.out.println("success");
 //					} catch (IOException e1) {
-//					// TODO Auto-generated catch block
+//
 //					e1.printStackTrace();
 //				}
 

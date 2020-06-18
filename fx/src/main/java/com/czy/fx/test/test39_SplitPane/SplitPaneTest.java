@@ -5,13 +5,10 @@ import com.czy.util.ObjectUtil;
 import com.czy.util.model.Par;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
-import java.util.List;
 
 /**
  * @author chenzy

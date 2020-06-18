@@ -2,7 +2,6 @@ package com.czy.fx.test.test43_Separator;
 
 import javafx.application.Application;
 import javafx.geometry.HPos;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;

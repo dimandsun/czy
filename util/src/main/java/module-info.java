@@ -12,10 +12,10 @@
     requires java.xml;
     requires org.yaml.snakeyaml;
     requires jyaml;
-    requires javafx.base;
     exports com.czy.util;
     exports com.czy.util.model;
     exports com.czy.util.enums;
     exports com.czy.util.json;
-    exports com.czy.util.socket;
+    exports com.czy.util.tcp;
+    exports com.czy.util.io;
 }

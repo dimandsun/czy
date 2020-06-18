@@ -1,10 +1,8 @@
 package com.czy.fx.test.test28_TextArea;
 
-import com.czy.fx.test.FXUtil;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 

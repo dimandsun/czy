@@ -1,16 +1,10 @@
 import com.czy.car_server.model.table.User;
-import com.czy.util.DateUtil;
 import com.czy.util.json.JsonUtil;
 import com.czy.util.model.StringMap;
 import com.czy.util.sqltool.SQLUtil;
 import org.junit.Test;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.Date;
 import java.util.Scanner;
 
 /**

@@ -4,7 +4,6 @@ import com.czy.fx.test.FXUtil;
 import javafx.application.Application;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;

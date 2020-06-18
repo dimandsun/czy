@@ -1,22 +1,16 @@
 package com.czy.fx.test.test69_GraspData;
 
-import com.czy.user.model.User;
 import com.czy.util.StringUtil;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
-
-import java.util.List;
 
 import static com.czy.fx.test.test69_GraspData.GraspData.getGraspDataList;
 

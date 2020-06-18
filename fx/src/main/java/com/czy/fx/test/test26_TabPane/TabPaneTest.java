@@ -3,13 +3,11 @@ package com.czy.fx.test.test26_TabPane;
 import com.czy.fx.test.FXUtil;
 import com.czy.util.ObjectUtil;
 import javafx.application.Application;
-import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
