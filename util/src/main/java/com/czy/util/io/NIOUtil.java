@@ -13,7 +13,9 @@ package com.czy.util.io;
  *    获取channel、buffer——》操作buffer——》处理数据
  */
 public class NIOUtil {
-    private NIOUtil(){}
+    private NIOUtil(){
+
+    }
 
 
 }

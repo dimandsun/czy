@@ -100,8 +100,8 @@ public class ProjectContainer {
             System.out.println("*******************************容器初始化完成**************************");
         } catch (Exception e) {
             e.printStackTrace();
-            System.exit(-1);
             System.out.println("*******************************容器初始化失败，退出系统**************************");
+            System.exit(-1);
         }
     }
 
