@@ -94,6 +94,63 @@ Buffer中四个属性
     选择器Selector 是SelectableChannel的多路复用器，用于监控SelectableChannel的IO状况
  */
 public class TestNIO {
+
+    @Test
+    public void testPipe() throws IOException {
+        var pipe = Pipe.open();
+
+        var sinkChannel = pipe.sink();
+        //发送数据
+        var buffer = ByteBuffer.allocate(1024);
+        buffer.put("通过单向管道发送数据".getBytes());
+        buffer.flip();
+        sinkChannel.write(buffer);
+        //接收数据
+        var sourceChannel = pipe.source();
+        buffer.flip();
+        int len = sourceChannel.read(buffer);
+        System.out.println(new String(buffer.array(), 0, len));
+        sourceChannel.close();
+        sinkChannel.close();
+    }
+
+
+    /*DCPSendTest*/
+    @Test
+    public void testDCPSend() throws IOException {
+
+    }
+
+    @Test
+    public void testDCPReceive() throws IOException {
+        var datagramChannel = DatagramChannel.open();
+        datagramChannel.configureBlocking(false);
+        datagramChannel.bind(new InetSocketAddress(10089));
+        var selector = Selector.open();
+        datagramChannel.register(selector, SelectionKey.OP_READ);
+        while (selector.select() > 0) {
+            selector.selectedKeys().forEach(selectionKey -> {
+                if (selectionKey.isReadable()) {
+                    var buffer = ByteBuffer.allocateDirect(1024);
+                    try {
+
+                        datagramChannel.receive(buffer);
+                        buffer.flip();
+                        var bytes = new byte[buffer.limit()];
+                        buffer.get(bytes);
+                        System.out.println(new String(bytes));
+                        buffer.clear();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                selector.selectedKeys().remove(selectionKey);
+            });
+        }
+    }
+
+
     /*非阻塞式客户端:无法在单元测试的控制台输入数据，所以代码放在类SocketClientTest*/
     @Test
     public void testSocketClient3() throws IOException {
@@ -134,8 +191,8 @@ public class TestNIO {
                     SocketChannel socketChannel = (SocketChannel) selectionKey.channel();
                     //接收客户端数据
                     var buffer = ByteBuffer.allocate(1024);
-                    int len=0;
-                    while ((len=socketChannel.read(buffer)) >0) {
+                    int len = 0;
+                    while ((len = socketChannel.read(buffer)) > 0) {
                         buffer.flip();
                         System.out.println(new String(buffer.array(), 0, len));
                         buffer.clear();
@@ -192,8 +249,8 @@ public class TestNIO {
                     //接收客户端数据，并保存
                     var buffer = ByteBuffer.allocate(1024);
                     try {
-                        int len=0;
-                        while ((len=socketChannel.read(buffer)) >0) {
+                        int len = 0;
+                        while ((len = socketChannel.read(buffer)) > 0) {
                             buffer.flip();
                             System.out.println(new String(buffer.array(), 0, len));
                             buffer.clear();
