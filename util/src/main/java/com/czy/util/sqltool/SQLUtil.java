@@ -1,6 +1,6 @@
 package com.czy.util.sqltool;
 
-import com.czy.util.DateUtil;
+import com.czy.util.time.DateUtil;
 import com.czy.util.io.FileUtil;
 import com.czy.util.ListUtil;
 import com.czy.util.StringUtil;

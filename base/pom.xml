@@ -22,7 +22,7 @@
     </modules>
     <properties>
         <encoding>UTF-8</encoding>
-        <java.version>11</java.version>
+        <java.version>14</java.version>
         <maven-plugin.version>3.8.1</maven-plugin.version>
         <dbcp.version>1.4</dbcp.version>
         <junit.version>4.12</junit.version>

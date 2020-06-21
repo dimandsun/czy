@@ -1,6 +1,6 @@
 package com.czy.util.json;
 
-import com.czy.util.DateUtil;
+import com.czy.util.time.DateUtil;
 import com.czy.util.StringUtil;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

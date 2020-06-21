@@ -1,3 +1,4 @@
+java8/java11是长期维护的版本
 0、编程前的准备
     环境准备
         前提：准备一个没有中病毒的正常的window系统。
@@ -21,6 +22,7 @@
 
 1、基本数据类型
     三种注释
+    基本数据类型的自动封装与自动拆箱
     基本数据类型 byte-Byte
     基本数据类型 short-Short
     基本数据类型 int-Integer
@@ -29,6 +31,8 @@
     基本数据类型 double-Double
     基本数据类型 boolean-Boolean
     基本数据类型 char-Chara
+    第九种基本数据类型 void-Void
+    特殊引用类型-String
 2、java中的各种作用域
 
 3、条件控制与循环
@@ -44,7 +48,7 @@
 
 7、java8新特性：lambda表达式、四个常用接口、Option
 
-8、常用内置对象-date、等
+8、常用内置对象-日期、文件、等
 
 9、io、socket、NIO
 

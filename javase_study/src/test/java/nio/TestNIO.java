@@ -82,7 +82,7 @@ Buffer中四个属性
  解码：字节数组——》字符串
 
 网络NIO
-    通道
+    通道-
         SelectableChannel
             |--SocketChannel
             |--ServerSocketChannel

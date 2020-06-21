@@ -1,6 +1,6 @@
 package socket;
 
-import com.czy.util.DateUtil;
+import com.czy.util.time.DateUtil;
 import com.czy.util.io.IOUtil;
 
 import java.io.IOException;

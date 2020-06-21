@@ -1,6 +1,6 @@
 package com.czy.util.json;
 
-import com.czy.util.DateUtil;
+import com.czy.util.time.DateUtil;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;

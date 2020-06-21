@@ -8,12 +8,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 /**
  * 字符串工具
@@ -26,8 +24,26 @@ public class StringUtil {
 
     private StringUtil() {
     }
+
+    public static Character[] getArray(String str) {
+        if (isBlank(str)) {
+            return null;
+        }
+        var chars = str.toCharArray();
+        var result = new Character[chars.length];
+        for (var i = 0; i < chars.length; i++) {
+            result[i] = chars[i];
+        }
+        return result;
+    }
+
+    public <T> Stream<T> getStream() {
+
+        return null;
+    }
+
     /*jdk序列化*/
-    public static<T> byte[] serializeJDK(T object) {
+    public static <T> byte[] serializeJDK(T object) {
         ObjectOutputStream objectOutputStream = null;
         ByteArrayOutputStream byteArrayOutputStream = null;
         try {
@@ -43,7 +59,7 @@ public class StringUtil {
                 if (objectOutputStream != null) {
                     objectOutputStream.close();
                 }
-                if (byteArrayOutputStream!=null){
+                if (byteArrayOutputStream != null) {
                     byteArrayOutputStream.close();
                 }
             } catch (IOException e) {
@@ -52,8 +68,9 @@ public class StringUtil {
         }
         return null;
     }
-    public static<T extends Object> T derializerJDK(byte[] value){
-        if (value==null||value.length<1){
+
+    public static <T extends Object> T derializerJDK(byte[] value) {
+        if (value == null || value.length < 1) {
             return null;
         }
         ObjectInputStream inputStream = null;
@@ -66,9 +83,9 @@ public class StringUtil {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
-                if (inputStream!=null){
+                if (inputStream != null) {
                     inputStream.close();
                 }
             } catch (IOException e) {
@@ -77,17 +94,19 @@ public class StringUtil {
         }
         return null;
     }
+
     public static String println(String msg, Object... pars) {
-        if (msg==null||!msg.contains("{}")||pars==null||pars.length==0){
+        if (msg == null || !msg.contains("{}") || pars == null || pars.length == 0) {
             System.out.println(msg);
             return msg;
         }
-        for (Object par:pars){
-            msg= msg.replaceFirst("\\{}",par==null?"":par.toString());
+        for (Object par : pars) {
+            msg = msg.replaceFirst("\\{}", par == null ? "" : par.toString());
         }
         System.out.println(msg);
         return msg;
     }
+
     public static boolean hasLength(String str) {
         return (str != null && !str.isEmpty());
     }
@@ -136,12 +155,14 @@ public class StringUtil {
 
     /**
      * 十进制数转十六进制数
+     *
      * @param num
      * @return
      */
-    public static Integer decimal2Hex(Integer num){
-       return Integer.parseInt("ff",num);
+    public static Integer decimal2Hex(Integer num) {
+        return Integer.parseInt("ff", num);
     }
+
     /**
      * 十进制数转十六进制数，不够指定位数就在前面补零。超过位数不截取
      *
@@ -308,9 +329,11 @@ public class StringUtil {
     public static boolean isNotBlank(String str) {
         return !isBlank(str);
     }
-    public static<T> boolean isBlank(List<T> objList) {
-        return objList == null||objList.isEmpty();
+
+    public static <T> boolean isBlank(List<T> objList) {
+        return objList == null || objList.isEmpty();
     }
+
     public static boolean isBlank(Object obj) {
         return obj == null ? true : isBlank(obj.toString());
     }
@@ -496,9 +519,11 @@ public class StringUtil {
     public static Integer getInt(Boolean value) {
         return value ? 1 : 0;
     }
+
     public static Integer getInt(Object value) {
-        return getInt(value,null);
+        return getInt(value, null);
     }
+
     /**
      * 对象转Integer,null返回null
      *
@@ -531,9 +556,11 @@ public class StringUtil {
         }
         return Long.valueOf(temp);
     }
+
     public static Long getLong(Object value) {
-        return getLong(value,null);
+        return getLong(value, null);
     }
+
     public static Long getLong(Object value, Long defaultValue) {
         if (value == null) {
             return defaultValue;
@@ -543,6 +570,7 @@ public class StringUtil {
         }
         return Long.valueOf(value.toString());
     }
+
     public static String getStr(Object value, String defaultValue) {
         if (value == null) {
             return defaultValue;
@@ -756,17 +784,16 @@ public class StringUtil {
         }
         {
             String packageName = "cn.lexiaotongvip.www..*model..*dao.*";
-            Boolean result =StringUtil.matcher("cn.lexiaotongvip.www.machine.model.dao.MachinePO",packageName);
+            Boolean result = StringUtil.matcher("cn.lexiaotongvip.www.machine.model.dao.MachinePO", packageName);
 //            System.out.println(result);
-            String projectGroupId ="cn.lexiaotongvip.www";
+            String projectGroupId = "cn.lexiaotongvip.www";
             String classPath = StringUtil.class.getResource("/").getPath() + projectGroupId.replace(".", File.separator);
-            List<Class> classList= FileUtil.getClassList(classPath, projectGroupId);
+            List<Class> classList = FileUtil.getClassList(classPath, projectGroupId);
             System.out.println(classList.size());
         }
 
 
     }
-
 
 
 }

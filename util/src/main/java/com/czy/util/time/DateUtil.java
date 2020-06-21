@@ -1,4 +1,4 @@
-package com.czy.util;
+package com.czy.util.time;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,7 +9,7 @@ import java.util.*;
  * 默认格式为yyyy-MM-dd HH:mm:ss
  * 日期转换为严格，只有是实际存在的日期才能正确转换.默认宽容会把不符合规则的日期格式也转换。sdf.setLenient(false);
  * 时区为中国时区 sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
- *
+ * java8以前的api.存在线程安全问题
  * @author chenzy
  * @date 2019.12.24
  */
