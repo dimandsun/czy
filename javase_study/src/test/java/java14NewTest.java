@@ -8,9 +8,6 @@ import org.junit.Test;
  * @since 2020/6/21
  */
 public class java14NewTest {
-    @Test public void swtichTest(){
-
-    }
 
 
     /*
@@ -28,6 +25,7 @@ public class java14NewTest {
             public static int getA() {
                 return a;
             }
+
             public static void setA(int a) {
                 A.a = a;
             }
