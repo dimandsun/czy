@@ -9,8 +9,8 @@
 <?import com.sun.javafx.scene.control.EmbeddedTextContextMenuContent?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.czy.question.client.view.Main" prefHeight="400.0" prefWidth="600.0" fx:id="root">
-        <MenuBar fx:id="menuBar">
+            fx:controller="com.czy.question.client.view.MainController" prefHeight="400.0" prefWidth="600.0" fx:id="root">
+        <MenuBar fx:id="menuBar" prefHeight="20">
             <Menu text="学校"><MenuItem text="新建"></MenuItem></Menu>
             <Menu text="科目"><MenuItem text="新建"></MenuItem></Menu>
             <Menu text="设置">
