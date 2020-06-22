@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 /**
  * @author chenzy
  * @since 2020/5/10
- * @description  RadioButton和CheckBox 复选框有不确定状态indeterminate
+ *   RadioButton和CheckBox 复选框有不确定状态indeterminate
  */
 public class RadioButtonTest extends Application {
     @Override
@@ -21,7 +21,7 @@ public class RadioButtonTest extends Application {
         var ap= new AnchorPane();
 
         var tg=new ToggleGroup();
-        var radioButtonList= ObjectUtil.getObjectList(RadioButton.class,"a","b","c");
+        var radioButtonList= ObjectUtil.createList(RadioButton.class,"a","b","c");
         tg.getToggles().addAll(radioButtonList);
         tg.selectToggle(radioButtonList.get(0));
         tg.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
@@ -30,7 +30,7 @@ public class RadioButtonTest extends Application {
         var box=new HBox();
         box.getChildren().addAll(radioButtonList);
 
-        var checkBoxList=ObjectUtil.getObjectList(CheckBox.class,"a","b","c");
+        var checkBoxList=ObjectUtil.createList(CheckBox.class,"a","b","c");
         /*不确定状态：*/
         checkBoxList.get(0).setIndeterminate(true);
         checkBoxList.get(1).setAllowIndeterminate(true);

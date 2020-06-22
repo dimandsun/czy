@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 /**
  * @author chenzy
  * @since 2020/5/8
- * @description 流式布局
+ *  流式布局
  */
 public class FlowPaneTest extends Application {
     @Override

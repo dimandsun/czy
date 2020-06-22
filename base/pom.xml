@@ -19,6 +19,7 @@
         <module>../psychology</module>
         <module>../car_server</module>
         <module>../car_client</module>
+        <module>../Question bank</module>
     </modules>
     <properties>
         <encoding>UTF-8</encoding>

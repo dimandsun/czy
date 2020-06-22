@@ -14,10 +14,11 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.util.Optional;
 
 /**
  * @author chenzy
- * @description
+ *
  * @since 2020-05-23
  */
 public class FileChooserTest extends Application {
@@ -33,7 +34,7 @@ public class FileChooserTest extends Application {
             var file = new MyFileChooser("单选文件").fileFilter("图片类型", "*.jpg", "*.png").chooseFile();
             if (file != null) {
                 fileLabel.setText("文件:" + file.getName());
-                textArea.appendText(FileUtil.readFile(file));
+                textArea.appendText(FileUtil.readFile(Optional.of(file)));
             }
         }), new Mybutton("保存文本").onClick(event -> {
             var file = new MyFileChooser(null, defaultDir).defaultFileName("a.text").fileFilter("文本类型", "*.text").saveFile();

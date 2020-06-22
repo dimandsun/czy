@@ -1,15 +1,14 @@
 package com.czy.core.model;
 
 import com.czy.core.enums.ActiveEnum;
-import com.czy.util.FileUtil;
-import com.czy.util.StringUtil;
+import com.czy.util.text.StringUtil;
+import com.czy.util.io.FileUtil;
 
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author chenzy
- * @description 项目信息，在项目启动时实例化
+ *  项目信息，在项目启动时实例化
  * @since 2020-04-07
  */
 public class ProjectInfo {

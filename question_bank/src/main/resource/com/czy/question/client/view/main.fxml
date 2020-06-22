@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import com.sun.javafx.scene.control.EmbeddedTextContextMenuContent?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.czy.question.client.view.Main" prefHeight="400.0" prefWidth="600.0" fx:id="root">
+        <MenuBar fx:id="menuBar">
+            <Menu text="学校"><MenuItem text="新建"></MenuItem></Menu>
+            <Menu text="科目"><MenuItem text="新建"></MenuItem></Menu>
+            <Menu text="设置">
+                <MenuItem text="快捷键设置"></MenuItem>
+                <RadioMenuItem text="是否显示根节点(题库)"/>
+            </Menu>
+        </MenuBar>
+    <BorderPane fx:id="borderPane">
+        <top><AnchorPane></AnchorPane></top>
+        <bottom><AnchorPane></AnchorPane></bottom>
+        <left>
+            <AnchorPane>
+                <TreeView fx:id="leftRoot">
+                    <TreeItem fx:id="questionRoot" value="题库">
+
+                    </TreeItem>
+                </TreeView>
+            </AnchorPane>
+        </left>
+        <center>
+            <Button text="右键" fx:id="testButton">
+                <ContextMenu >
+                    <items>
+                        <MenuItem text="asds">
+                        </MenuItem>
+                    </items>
+                </ContextMenu>
+            </Button>
+        </center>
+        <right><AnchorPane>
+            <MenuBar>
+                <Menu text="新建"/>
+                <Menu text="删除"/>
+                <Menu text="重命名"/>
+            </MenuBar>
+        </AnchorPane></right>
+
+    </BorderPane>
+    <fx:define>
+
+    </fx:define>
+</AnchorPane>
+
+

@@ -7,11 +7,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import static com.czy.fx.test.FXUtil.setDefaultValue;
-import static com.czy.util.StringUtil.println;
+import static com.czy.util.text.StringUtil.println;
 
 /**
  * @author chenzy
- * @description
+ *
  * @since 2020-05-20
  */
 public class SimpleIntegerPropertyTest extends Application {

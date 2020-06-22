@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020-05-09
  */
 public class LoginTest extends Application {

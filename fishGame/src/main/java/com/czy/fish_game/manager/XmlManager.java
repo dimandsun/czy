@@ -46,7 +46,7 @@ public class XmlManager {
 			while (true) {
 				// 读取标签内容状态
 				if (eventType == XmlPullParser.TEXT) {
-					return xml.getText().trim();
+					return xml.getText().strip();
 				}
 				// 文档结束状态
 				else if (eventType == XmlPullParser.END_DOCUMENT) {
@@ -74,7 +74,7 @@ public class XmlManager {
 				// 标签开始状态
 				if (eventType == XmlPullParser.START_TAG) {
 					key = xml.getName();
-					if (key.trim().equals(tagName)) {
+					if (key.strip().equals(tagName)) {
 						return true;
 					}
 				}

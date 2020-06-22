@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * @author chenzy
  * @since 2020-04-09
- * @description
+ *
  */
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)

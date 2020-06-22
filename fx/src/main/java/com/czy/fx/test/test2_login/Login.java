@@ -19,7 +19,7 @@ import javafx.util.Duration;
 
 /**
  * @author chenzy
- * @description
+ *
  * @since 2020-04-25
  */
 public class Login extends Application {

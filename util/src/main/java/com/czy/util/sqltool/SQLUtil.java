@@ -3,7 +3,7 @@ package com.czy.util.sqltool;
 import com.czy.util.time.DateUtil;
 import com.czy.util.io.FileUtil;
 import com.czy.util.ListUtil;
-import com.czy.util.StringUtil;
+import com.czy.util.text.StringUtil;
 import com.czy.util.sqltool.enums.ColumnTypeEnum;
 import com.czy.util.sqltool.model.ColumnSqlInfo;
 import com.czy.util.sqltool.model.TableSqlInfo;
@@ -12,10 +12,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020-05-07
  */
 public class SQLUtil {
@@ -47,7 +48,7 @@ public class SQLUtil {
             modelDir.mkdirs();
         }
         /*获取sql文本*/
-        String sqlContents = FileUtil.readFile(FileUtil.getResourceFile(sqlPath));
+        String sqlContents = FileUtil.readFile(Optional.of(FileUtil.getResourceFile(sqlPath)));
         if (!sqlContents.contains(";")) {
             return;
         }
@@ -57,15 +58,18 @@ public class SQLUtil {
         /*循环解析每个建表语句*/
         List<TableSqlInfo> tableSqlInfoList = new ArrayList<>(sqlContentA.length);
         for (String sqlContent : sqlContentA) {
-            String tableName = sqlContent.substring(sqlStart.length(), sqlContent.indexOf("(")).trim();
+            String tableName = sqlContent.substring(sqlStart.length(), sqlContent.indexOf("(")).strip();
             if (tableName.isBlank()) {
                 continue;
             }
-            sqlContent = sqlContent.substring(sqlContent.indexOf("(") + 1).trim();
+            if (tableName.startsWith("[")&&tableName.endsWith("]")){
+               tableName = tableName.substring(1,tableName.length()-1);
+            }
+            sqlContent = sqlContent.substring(sqlContent.indexOf("(") + 1).strip();
             int tableDesIndex = sqlContent.indexOf(tableDesStart);
             String tableDes = null;
             if (tableDesIndex != -1) {
-                tableDes = sqlContent.substring(tableDesIndex + tableDesStart.length()).replace("'", "").trim();
+                tableDes = sqlContent.substring(tableDesIndex + tableDesStart.length()).replace("'", "").strip();
                 sqlContent = sqlContent.substring(0, tableDesIndex);
             }
             TableSqlInfo tableSqlInfo = new TableSqlInfo(tableName, tableDes);
@@ -85,11 +89,11 @@ public class SQLUtil {
                 if (columnInfoA.length < 2) {
                     continue;
                 }
-                String columnName = columnInfoA[0].trim();
-                String columnType = columnInfoA[1].trim();
+                String columnName = columnInfoA[0].strip();
+                String columnType = columnInfoA[1].strip();
                 String columnDes = null;
                 if (columnInfoA.length >= 4 && columnInfoA[3].contains("'")) {
-                    columnDes = columnInfoA[3].replace("'", "").trim();
+                    columnDes = columnInfoA[3].replace("'", "").strip();
                 }
                 columnSqlInfoList.add(new ColumnSqlInfo(columnName, columnType, columnDes));
             }
@@ -107,7 +111,7 @@ public class SQLUtil {
             /*写文件头信息：包名，导入类，注释信息，类注解，类名*/
             String packageContent = "package " + beanPackage + ";\n";
             String importContent = "import com.czy.core.annotation.db.Table;\n";
-            String classDesContent = "/**\n * @author " + author + "\n * @since " + date + "\n * @description " + (tableDes == null ? "" : tableDes) + "\n */\n";
+            String classDesContent = "/**\n * @author " + author + "\n * @date " + date + "\n *  " + (tableDes == null ? "" : tableDes) + "\n */\n";
             String clssHeadContent = "@Table(\"" + tableName + "\")\npublic class " + className + " {\n";
 
                 /*写字段：字段注释，字段类型，字段名
@@ -127,7 +131,7 @@ public class SQLUtil {
                     importContent += "import java.math.BigDecimal;\n";
                 }
                 //字段加注解，
-                var jsonColumn = className.equals(columnSqlInfo.getColumnName())?"":"\t@JsonProperty(\""+columnSqlInfo.getColumnName()+"\")\n" ;
+                var jsonColumn = columnName.equals(columnSqlInfo.getColumnName())?"":"\t@JsonProperty(\""+columnSqlInfo.getColumnName()+"\")\n" ;
                 if (jsonColumn.length()>0&&!importContent.contains("import com.fasterxml.jackson.annotation.JsonProperty;")){
                     importContent += "import com.fasterxml.jackson.annotation.JsonProperty;\n";
                 }

@@ -6,7 +6,7 @@ import com.czy.util.model.ResultVO;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020-04-27
  */
 public interface IUserService {

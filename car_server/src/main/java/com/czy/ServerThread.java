@@ -27,7 +27,7 @@ public class ServerThread extends Thread {
         try {
             while (true) {
                 String line = in.readLine();
-                if (line == null || "".equals(line.trim())) { //是否终止会话
+                if (line == null || "".equals(line.strip())) { //是否终止会话
                     break;
                 }
                 System.out.println("Received  message: " + line);

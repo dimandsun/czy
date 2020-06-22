@@ -12,7 +12,7 @@ import javafx.util.Duration;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020/5/16
  */
 public class ProgressBarTest extends Application {

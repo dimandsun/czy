@@ -2,7 +2,7 @@ package com.czy.core.db.model;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020-04-14
  */
 public class TypeAliases {

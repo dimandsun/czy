@@ -1,6 +1,6 @@
 package com.czy.fx.test.test6_platform;
 
-import com.czy.util.StringUtil;
+import com.czy.util.text.StringUtil;
 import javafx.application.Application;
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 /**
  * @author chenzy
  * @since 2020/4/27
- * @description
+ * 
  */
 public class PlatformTest extends Application {
     @Override

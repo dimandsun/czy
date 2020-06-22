@@ -7,7 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
-import static com.czy.util.StringUtil.println;
+import static com.czy.util.text.StringUtil.println;
 
 /**
  * @author chenzy

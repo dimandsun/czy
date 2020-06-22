@@ -1,6 +1,6 @@
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020/5/3
  */open module com.czy.core {
     requires cglib;

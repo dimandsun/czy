@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 /**
  * @author chenzy
- * @description java10新特性
+ *  java10新特性
  * @since 2020/6/21
  */
 /*

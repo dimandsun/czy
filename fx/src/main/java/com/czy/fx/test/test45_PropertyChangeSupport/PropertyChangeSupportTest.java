@@ -10,11 +10,11 @@ import javafx.stage.Stage;
 
 import java.beans.PropertyChangeSupport;
 
-import static com.czy.util.StringUtil.println;
+import static com.czy.util.text.StringUtil.println;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020-05-20
  */
 public class PropertyChangeSupportTest extends Application {

@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 /**
  * @author chenzy
  * @since 2020-04-03
- * @description 切面数据的封装
+ *  切面数据的封装
  */
 public class AspectModel implements Comparable {
     private String pointcut;

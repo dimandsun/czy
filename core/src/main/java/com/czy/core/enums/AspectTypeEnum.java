@@ -4,7 +4,7 @@ import com.czy.util.enums.IEnum;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020-04-03
  */
 public enum AspectTypeEnum implements IEnum<Integer> {

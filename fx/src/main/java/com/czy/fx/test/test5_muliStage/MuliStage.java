@@ -7,7 +7,7 @@ import javafx.stage.StageStyle;
 
 /**
  * @author chenzy
- * @description
+ *
  * @since 2020/4/27
  */
 public class MuliStage extends Application {

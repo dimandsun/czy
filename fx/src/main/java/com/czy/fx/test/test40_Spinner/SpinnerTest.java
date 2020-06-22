@@ -3,7 +3,7 @@ package com.czy.fx.test.test40_Spinner;
 import com.czy.user.model.User;
 import com.czy.util.ListUtil;
 import com.czy.util.ObjectUtil;
-import com.czy.util.StringUtil;
+import com.czy.util.text.StringUtil;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.scene.Scene;
@@ -16,7 +16,7 @@ import javafx.util.StringConverter;
 
 /**
  * @author chenzy
- * @description
+ *
  * @since 2020/5/16
  */
 public class SpinnerTest extends Application {
@@ -26,7 +26,7 @@ public class SpinnerTest extends Application {
         primaryStage.setHeight(200);
         var anchorPane = new AnchorPane();
 
-        var userList = ObjectUtil.getObjectList(User.class, "陈晓云", "陈志源", "czy");
+        var userList = ObjectUtil.createList(User.class, "陈晓云", "陈志源", "czy");
         var userObservableList = FXCollections.observableArrayList(userList);
         var userSpinner = new Spinner<>(userObservableList);
         userSpinner.setEditable(true);

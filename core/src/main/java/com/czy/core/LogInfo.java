@@ -1,7 +1,7 @@
 package com.czy.core;
 
 import com.czy.core.model.ProjectInfo;
-import com.czy.util.FileUtil;
+import com.czy.util.io.FileUtil;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.LogManager;
 
@@ -9,7 +9,7 @@ import java.io.File;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020-05-11
  */
 public class LogInfo {

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  * @author chenzy
- * @description 游戏对象
+ *  游戏对象
  * @since 2020-05-08
  */
 public class GameInfo {

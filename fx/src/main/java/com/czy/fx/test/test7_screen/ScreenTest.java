@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 /**
  * @author chenzy
  * @since 2020/4/27
- * @description 屏幕信息
+ *  屏幕信息
  */
 public class ScreenTest extends Application {
     @Override

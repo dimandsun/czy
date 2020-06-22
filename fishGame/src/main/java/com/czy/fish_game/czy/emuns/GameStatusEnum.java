@@ -4,7 +4,7 @@ import com.czy.util.enums.IEnum;
 /**
  * @author chenzy
  * @since 2020-05-08
- * @description 游戏对象状态，
+ *  游戏对象状态，
  * 初始化游戏时：Start
  * 初始化游戏后，玩家未开始游戏：Wait
  * 玩家开始游戏且正常游戏时：Play

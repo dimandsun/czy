@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 /**
  * @author chenzy
  * @since 2020/5/3
- * @description HBox是水平布局，VBox是垂直布局，两者用法一样
+ *  HBox是水平布局，VBox是垂直布局，两者用法一样
  */
 public class HBoxTest extends Application {
     @Override

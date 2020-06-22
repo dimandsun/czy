@@ -32,7 +32,7 @@ public class TableViewTest extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         var anchorPane = new AnchorPane();
-        var userObservableList = FXCollections.observableArrayList(ObjectUtil.getObjectList(User.class, "陈志源", "张月"));
+        var userObservableList = FXCollections.observableArrayList(ObjectUtil.createList(User.class, "陈志源", "张月"));
         var user1 = userObservableList.get(0);
         var user2 = userObservableList.get(1);
         user1.setMobile("18720929479");

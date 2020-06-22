@@ -3,7 +3,7 @@ package com.czy.fx.test.test32_ComboBox;
 import com.czy.fx.test.FXUtil;
 import com.czy.user.model.User;
 import com.czy.util.ObjectUtil;
-import com.czy.util.StringUtil;
+import com.czy.util.text.StringUtil;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.scene.Scene;
@@ -20,14 +20,14 @@ import java.util.function.Predicate;
 
 /**
  * @author chenzy
- * @description
+ *
  * @since 2020-05-12
  */
 public class ComboBoxTest extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         ComboBox comboBox = new ComboBox();
-        var userList = ObjectUtil.getObjectList(User.class, "czy", "陈志源", "张三");
+        var userList = ObjectUtil.createList(User.class, "czy", "陈志源", "张三");
         userList.get(0).setMobile("18720929479");
         var items = FXCollections.observableArrayList(userList);
         comboBox.setItems(items);

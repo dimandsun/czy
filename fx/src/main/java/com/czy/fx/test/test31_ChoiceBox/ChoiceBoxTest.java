@@ -2,7 +2,7 @@ package com.czy.fx.test.test31_ChoiceBox;
 
 import com.czy.user.model.User;
 import com.czy.util.ObjectUtil;
-import com.czy.util.StringUtil;
+import com.czy.util.text.StringUtil;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,7 +13,7 @@ import javafx.util.StringConverter;
 
 /**
  * @author chenzy
- * @description 下拉列表
+ *  下拉列表
  * @since 2020-05-12
  */
 public class ChoiceBoxTest extends Application {
@@ -21,7 +21,7 @@ public class ChoiceBoxTest extends Application {
     public void start(Stage stage) throws Exception {
         var ap = new AnchorPane();
         var cb = new ChoiceBox<User>();
-        var userList = ObjectUtil.getObjectList(User.class, "czy", "张三", "李四");
+        var userList = ObjectUtil.createList(User.class, "czy", "张三", "李四");
         cb.getItems().addAll(userList);
 
         /**/

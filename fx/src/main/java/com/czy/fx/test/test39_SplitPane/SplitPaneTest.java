@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020/5/16
  */
 public class SplitPaneTest extends Application {
@@ -26,7 +26,7 @@ public class SplitPaneTest extends Application {
         splitPane.setPrefHeight(primaryStage.getHeight());
         var btnList = FXUtil.getButtonList("1","2","3","4");
 
-        var stackPaneList=ObjectUtil.getObjectList(StackPane.class,4);
+        var stackPaneList=ObjectUtil.createList(StackPane.class,4);
         var i =new Par<Integer>(0);
         stackPaneList.forEach(stackPane -> {
             stackPane.getChildren().add(btnList.get(i.get()));

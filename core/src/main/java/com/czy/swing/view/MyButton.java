@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020-04-29
  */
 public class MyButton extends Button {

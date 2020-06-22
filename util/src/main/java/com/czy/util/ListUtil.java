@@ -1,12 +1,14 @@
 package com.czy.util;
 
+import com.czy.util.text.StringUtil;
+
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 
 /**
  * @author chenzy
- * @description 集合工具类
+ *  集合工具类
  * @since 2020-05-11
  */
 public class ListUtil {

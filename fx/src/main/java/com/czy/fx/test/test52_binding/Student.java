@@ -4,7 +4,7 @@ import javafx.beans.property.SimpleObjectProperty;
 
 /**
  * @author chenzy
- * @description
+ *
  * @since 2020-05-23
  */
 public class Student {

@@ -10,11 +10,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-import static com.czy.util.StringUtil.println;
+import static com.czy.util.text.StringUtil.println;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020/5/17
  */
 public class Point2DTest extends Application {

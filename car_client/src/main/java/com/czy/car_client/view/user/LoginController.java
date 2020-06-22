@@ -1,7 +1,7 @@
 package com.czy.car_client.view.user;
 
 import com.czy.car_client.view.Q;
-import com.czy.util.StringUtil;
+import com.czy.util.text.StringUtil;
 import com.czy.util.model.StringMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -27,11 +27,10 @@ public class LoginController {
     }
 
 
-
     public void login() {
-        var mobile = mobileField.getText().trim();
-        var pw = pwField.getText().trim();
-        if (!verify(mobile,pw)){
+        var mobile = mobileField.getText().strip();
+        var pw = pwField.getText().strip();
+        if (!verify(mobile, pw)) {
             return;
         }
         Q.get("user", new StringMap<>("mobile", mobile).add("original_ps", pw)).addListener((observable, oldValue, newValue) -> {
@@ -50,9 +49,9 @@ public class LoginController {
     }
 
     public void regist() {
-        var mobile = mobileField.getText().trim();
-        var pw = pwField.getText().trim();
-        if (!verify(mobile,pw)){
+        var mobile = mobileField.getText().strip();
+        var pw = pwField.getText().strip();
+        if (!verify(mobile, pw)) {
             return;
         }
         Q.post("user", new StringMap<>("mobile", mobile).add("original_ps", pw)).addListener((observable, oldValue, newValue) -> {
@@ -68,7 +67,8 @@ public class LoginController {
             System.out.println(data);
         });
     }
-    private Boolean verify(String mobile, String pw){
+
+    private Boolean verify(String mobile, String pw) {
         if (StringUtil.isBlank(mobile) || StringUtil.isBlank(pw)) {
             msgText.setText("帐号或者密码不能为空！");
             return false;

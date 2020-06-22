@@ -14,7 +14,7 @@ import java.util.Map;
 
 /**
  * @author chenzy
- * @description
+ *
  * @since 2020/5/10
  */
 public class Loging extends Application {

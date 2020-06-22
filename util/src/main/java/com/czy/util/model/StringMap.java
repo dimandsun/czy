@@ -2,7 +2,7 @@ package com.czy.util.model;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020-03-09
  */
 public class StringMap<Value extends Object> extends MyMap<String,Value> {

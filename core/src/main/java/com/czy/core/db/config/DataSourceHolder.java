@@ -27,14 +27,14 @@ public class DataSourceHolder<DataSourceKey> {
     }
 
     /**
-     * @description 设置数据源
+     *  设置数据源
      */
     public void set(DataSourceKey dataSourceKey) {
         curDataSource.set(dataSourceKey);
     }
 
     /**
-     * @description 获取数据源
+     *  获取数据源
      */
     public DataSourceKey get() {
         if (curDataSource.get()==null){
@@ -43,7 +43,7 @@ public class DataSourceHolder<DataSourceKey> {
         return curDataSource.get();
     }
     /**
-     * @description 清除数据源
+     *  清除数据源
      */
     public void clear() {
         curDataSource.remove();

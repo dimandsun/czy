@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 /**
  * @author chenzy
- * @description 定位窗格
+ *  定位窗格
  * @since 2020/4/28
  */
 public class AnchorPaneTest extends Application {

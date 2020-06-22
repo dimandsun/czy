@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020/4/28
  */
 public class GroupTest extends Application {

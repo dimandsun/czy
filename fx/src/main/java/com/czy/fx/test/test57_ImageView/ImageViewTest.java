@@ -15,11 +15,11 @@ import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
-import static com.czy.util.StringUtil.println;
+import static com.czy.util.text.StringUtil.println;
 
 /**
  * @author chenzy
- * @description
+ *
  * @since 2020-05-23
  * 像素画
  */

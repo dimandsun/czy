@@ -1,17 +1,18 @@
 package com.czy.util.sqltool.enums;
 
-import com.czy.util.StringUtil;
+import com.czy.util.text.StringUtil;
 import com.czy.util.enums.IEnum;
 
 /**
  * @author chenzy
  * @since 2020-05-07
- * @description
+ *
  */
 public enum ColumnTypeEnum implements IEnum<String> {
     String("String","(char\\((([0-9]*)|(max))\\))|(varchar\\((([0-9]*)|(max))\\))|(nvarchar\\((([0-9]*)|(max))\\))|(text)|(enum)")
-    /*Boolean和Integer不能调整顺序，不然无法将tinyint(1)转成Boolean*/
+    /*Boolean和Byte不能调整顺序，不然无法将tinyint(1)转成Boolean*/
     ,Boolean("Boolean","tinyint\\(1\\)")
+    ,Byte("Byte","tinyint(\\([0-9]*\\)|())")
     ,Integer("Integer","(int(\\([0-9]*\\)|()))|(tinyint(\\([0-9]*\\)|()))")
     ,Long("Long","bigint\\([0-9]*\\)")
     ,Date("Date","(date)|(time)|(datetime)")
@@ -46,5 +47,9 @@ public enum ColumnTypeEnum implements IEnum<String> {
         String sqlContent="decimal(10,4)";
         sqlContent=sqlContent.replaceAll("(\\(([0-9]*),([0-9]*)\\))","\\(([0-9]*)-([0-9]*)\\)");
         System.out.println(sqlContent);
+        {
+            var a= getEnum("tinyint");
+            System.out.println(a);
+        }
     }
 }

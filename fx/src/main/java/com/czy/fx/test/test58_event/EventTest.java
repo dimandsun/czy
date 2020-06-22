@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020-05-25
  */
 public class EventTest extends Application {

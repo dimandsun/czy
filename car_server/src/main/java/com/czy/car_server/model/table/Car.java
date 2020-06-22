@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * @author chenzy
  * @since 2020-06-17
- * @description 车辆信息
+ *  车辆信息
  */
 @Table("car")
 public class Car {

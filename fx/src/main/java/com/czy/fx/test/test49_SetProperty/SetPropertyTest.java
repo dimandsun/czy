@@ -13,18 +13,18 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import static com.czy.util.StringUtil.println;
+import static com.czy.util.text.StringUtil.println;
 
 /**
  * @author chenzy
  * @since 2020-05-20
- * @description
+ *
  */
 public class SetPropertyTest extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         var anchorPane = new AnchorPane();
-        var userList= ObjectUtil.getObjectList(User.class,"a","b","c");
+        var userList= ObjectUtil.createList(User.class,"a","b","c");
         var setProperty= new SimpleSetProperty<>( FXCollections.observableSet(ListUtil.list2Array(userList)));
         setProperty.addListener((observable, oldValue, newValue) -> {
             println("{}->{}",oldValue,newValue);

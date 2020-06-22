@@ -1,6 +1,6 @@
 package com.czy.fx.test.test1_helloWorld;
 
-import com.czy.util.StringUtil;
+import com.czy.util.text.StringUtil;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 /**
  * @author chenzy
  * @since 2020-04-25
- * @description
+ * 
  * 生命周期：init()、start()、stop()
  * 线程：start和stop中才右ui线程
  * Stage

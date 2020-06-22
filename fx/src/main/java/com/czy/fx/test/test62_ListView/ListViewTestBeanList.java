@@ -22,7 +22,7 @@ public class ListViewTestBeanList extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         var anchorPane = new AnchorPane();
-        var userList = ObjectUtil.getObjectList(User.class, "czy", "cc","asf");
+        var userList = ObjectUtil.createList(User.class, "czy", "cc","asf");
         var userObservableList = FXCollections.observableArrayList(userList);
         var userListView = new ListView<>(userObservableList);
         userListView.setPlaceholder(new Label("没有数据"));

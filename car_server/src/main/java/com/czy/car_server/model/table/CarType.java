@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * @author chenzy
  * @since 2020-06-17
- * @description 车辆类别信息-分类号，分类名
+ *  车辆类别信息-分类号，分类名
  */
 @Table("car_type")
 public class CarType {

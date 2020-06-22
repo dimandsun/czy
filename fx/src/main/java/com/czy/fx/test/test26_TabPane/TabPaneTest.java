@@ -13,14 +13,14 @@ import javafx.stage.Stage;
 
 /**
  * @author chenzy
- * @description
+ *
  * @since 2020/5/10
  */
 public class TabPaneTest extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         var tp = new TabPane();
-        tp.getTabs().addAll(ObjectUtil.getObjectList(Tab.class,"1","2","3"));
+        tp.getTabs().addAll(ObjectUtil.createList(Tab.class,"1","2","3"));
         var tab = new Tab("页签");
         var box=new VBox();
         box.getChildren().addAll(FXUtil.getButtonList("a","b","b","b","b","b","b","b"));

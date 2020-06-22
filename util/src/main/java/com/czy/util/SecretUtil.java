@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * @author chenzy
- * @description
+ *
  * @since 2020-04-29
  */
 public class SecretUtil {

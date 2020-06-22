@@ -1,8 +1,7 @@
-import com.czy.util.StringUtil;
+import com.czy.util.text.StringUtil;
 import org.junit.Test;
 
 import java.util.*;
-import java.util.function.*;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;

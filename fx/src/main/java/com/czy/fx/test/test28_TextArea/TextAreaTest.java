@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 /**
  * @author chenzy
- * @description
+ *
  * @since 2020-05-11
  */
 public class TextAreaTest extends Application {

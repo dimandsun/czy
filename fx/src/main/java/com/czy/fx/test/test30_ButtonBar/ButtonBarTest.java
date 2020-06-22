@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 /**
  * @author chenzy
  * @since 2020-05-12
- * @description
+ * 
  */
 public class ButtonBarTest extends Application {
     @Override

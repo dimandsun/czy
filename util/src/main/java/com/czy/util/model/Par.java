@@ -3,7 +3,7 @@ package com.czy.util.model;
 /**
  * @author chenzy
  * @since 2020-04-03
- * @description 存储数据的对象，
+ *  存储数据的对象，
  */
 public class Par<V> {
     private V v;

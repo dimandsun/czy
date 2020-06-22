@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 /**
  * @author chenzy
  * @since 2020-04-01
- * @description 路由，每一个供外部调用的接口对应一个路由实例
+ *  路由，每一个供外部调用的接口对应一个路由实例
  */
 public class RouteModel<Bean> {
     private BeanModel<Bean> beanModel;

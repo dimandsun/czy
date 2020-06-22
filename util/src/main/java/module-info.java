@@ -1,6 +1,6 @@
 /**
  * @author chenzy
- * @description
+ *
  * @since 2020-05-11
  */open module com.czy.util {
     requires slf4j.api;
@@ -18,4 +18,5 @@
     exports com.czy.util.json;
     exports com.czy.util.tcp;
     exports com.czy.util.io;
+    exports com.czy.util.text;
 }

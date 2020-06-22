@@ -43,7 +43,7 @@ public class TreeViewTest extends Application {
         //多选
         treeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println(newValue);
+            System.out.println("a:"+newValue);
         });
         treeView.getFocusModel().focus(0);
         treeView.requestFocus();
@@ -66,11 +66,11 @@ public class TreeViewTest extends Application {
         }));
         //在跟节点监听，事件会传递给子节点，监听节点值改变
         treeRoot.addEventHandler(TreeItem.valueChangedEvent(), (EventHandler<TreeItem.TreeModificationEvent<String>>) event -> {
-            System.out.println(event.getNewValue());
+            System.out.println("a:"+event.getNewValue());
             event.getTreeItem();
         });
         //监听节点图标改变
-        treeRoot.addEventHandler(TreeItem.<String>graphicChangedEvent(), event -> System.out.println(event.getNewValue()));
+        treeRoot.addEventHandler(TreeItem.<String>graphicChangedEvent(), event -> System.out.println("图标改变:"+event.getNewValue()));
         //监听节点收起
         treeRoot.addEventHandler(TreeItem.<String>branchCollapsedEvent(), event -> System.out.println("收起" + event.getNewValue()));
         //监听节点展开

@@ -1,6 +1,6 @@
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020-04-30
  */module com.czy.fx {
     requires javafx.graphics;
@@ -17,7 +17,9 @@
     exports com.czy.fx.test.test3_css;
     exports com.czy.fx.test.test4_fxml;
     exports com.czy.fx.test.test5_muliStage;
+    exports com.czy.fx.test.test12_BorderPane;
     exports com.czy.fx.test.test19_ScheduledService;
+    exports com.czy.fx.test.test21_MenuBar_Menu_MenuItem;
     exports com.czy.fx.test.test27_RadioButton_CheckBox;
     exports com.czy.fx.test.test28_TextArea;
     exports com.czy.fx.test.test29_TextField;

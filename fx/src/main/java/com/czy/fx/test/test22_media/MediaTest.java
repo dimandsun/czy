@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020-05-16
  */
 public class MediaTest extends Application {

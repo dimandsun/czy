@@ -2,7 +2,7 @@ package com.czy.fx.test;
 
 import com.czy.util.ClassUtil;
 import com.czy.util.io.FileUtil;
-import com.czy.util.StringUtil;
+import com.czy.util.text.StringUtil;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  * @author chenzy
- * @description
+ *
  * @since 2020/5/8
  */
 public class FXUtil {

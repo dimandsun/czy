@@ -5,7 +5,7 @@ import javafx.scene.control.Label;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020-05-09
  */
 public class MyLabel extends Label {

@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020/5/10
  */
 public class TitledPaneTest extends Application {

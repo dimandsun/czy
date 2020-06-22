@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 /**
  * @author chenzy
  * @since 2020-05-09
- * @description 网格布局 GridPane
+ *  网格布局 GridPane
  */
 public class GridPaneTest extends Application {
     @Override

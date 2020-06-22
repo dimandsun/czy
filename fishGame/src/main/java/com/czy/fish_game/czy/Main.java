@@ -7,7 +7,7 @@ import javax.swing.*;
 
 /**
  * @author chenzy
- * @description
+ *
  * @since 2020-05-08
  */
 public class Main {

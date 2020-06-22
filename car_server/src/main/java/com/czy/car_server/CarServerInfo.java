@@ -1,7 +1,7 @@
 package com.czy.car_server;
 
 import com.czy.core.model.ProjectInfo;
-import com.czy.util.StringUtil;
+import com.czy.util.text.StringUtil;
 
 import java.util.Map;
 

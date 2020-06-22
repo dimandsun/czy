@@ -12,7 +12,7 @@ import java.io.FileInputStream;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020-05-23
  */
 public class ImageTest extends Application {

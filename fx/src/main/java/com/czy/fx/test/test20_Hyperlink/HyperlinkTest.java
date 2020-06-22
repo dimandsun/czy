@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 /**
  * @author chenzy
  * @since 2020/5/10
- * @description Hyperlink 超链接
+ *  Hyperlink 超链接
  */
 public class HyperlinkTest extends Application {
     @Override

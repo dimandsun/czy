@@ -1,12 +1,12 @@
 package com.czy.core.util;
 
 import com.czy.core.annotation.db.Table;
-import com.czy.util.StringUtil;
+import com.czy.util.text.StringUtil;
 
 /**
  * @author chenzy
  * @since 2020-04-28
- * @description
+ * 
  */
 public class TableUtil {
     private TableUtil(){

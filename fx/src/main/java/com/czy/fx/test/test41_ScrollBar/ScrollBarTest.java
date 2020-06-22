@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 /**
  * @author chenzy
  * @since 2020/5/17
- * @description 滚动条
+ *  滚动条
  */
 public class ScrollBarTest extends Application {
     @Override

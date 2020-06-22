@@ -3,7 +3,7 @@ package com.czy.core.redis.service.impl;
 import com.czy.core.annotation.Auto;
 import com.czy.core.annotation.bean.Service;
 import com.czy.core.redis.service.IRedisService;
-import com.czy.util.StringUtil;
+import com.czy.util.text.StringUtil;
 import com.czy.util.json.JsonUtil;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;

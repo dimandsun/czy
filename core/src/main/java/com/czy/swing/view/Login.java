@@ -9,7 +9,7 @@ import java.awt.*;
 
 /**
  * @author chenzy
- * @description
+ *
  * @since 2020-04-29
  */
 public class Login {

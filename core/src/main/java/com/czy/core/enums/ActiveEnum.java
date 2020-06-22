@@ -1,12 +1,12 @@
 package com.czy.core.enums;
 
-import com.czy.util.StringUtil;
+import com.czy.util.text.StringUtil;
 import com.czy.util.enums.IEnum;
 
 /**
  * @author chenzy
  * @since 2020-05-11
- * @description 项目环境：开发、生产、测试、默认
+ *  项目环境：开发、生产、测试、默认
  */
 public enum ActiveEnum implements IEnum<Integer> {
 

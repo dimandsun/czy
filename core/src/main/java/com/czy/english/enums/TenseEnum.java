@@ -6,7 +6,7 @@ import com.czy.util.enums.IEnum;
 /**
  * @author chenzy
  * @since 2020-04-28
- * @description 动词时态：三种时，四种态: 过去时、现在时、将来时 一般式、进行式、完成式、进行完成式
+ *  动词时态：三种时，四种态: 过去时、现在时、将来时 一般式、进行式、完成式、进行完成式
  十二种时态
 一般现在时（do），一般过去时（did），一般将来时（will do)
 ，现在进行时(is/am/are doing)，过去进行时(was/were doing)，将来进行时(可与一般将来时换用，will be doing)

@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 /**
  * @author chenzy
- * @description 延迟计算：改变发生的时候，值并不是立即重新计算。值被请求后才进行重新计算
+ *  延迟计算：改变发生的时候，值并不是立即重新计算。值被请求后才进行重新计算
  * @since 2020-05-21
  */
 public class ChangeAndInvalidationListenerTest extends Application {

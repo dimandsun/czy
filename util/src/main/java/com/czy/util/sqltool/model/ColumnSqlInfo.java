@@ -5,7 +5,7 @@ import com.czy.util.sqltool.enums.ColumnTypeEnum;
 /**
  * @author chenzy
  * @since 2020-05-07
- * @description 解析建表语句得到信息，然后把信息封装成model.
+ *  解析建表语句得到信息，然后把信息封装成model.
  */
 public class ColumnSqlInfo {
     /**/

@@ -6,11 +6,11 @@ import javafx.beans.property.ReadOnlyDoubleWrapper;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import static com.czy.util.StringUtil.println;
+import static com.czy.util.text.StringUtil.println;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020-05-20
  */
 public class ReadOnlyDoubleWrapperTest extends Application {

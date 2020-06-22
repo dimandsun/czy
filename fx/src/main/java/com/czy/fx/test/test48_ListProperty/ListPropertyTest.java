@@ -12,18 +12,18 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import static com.czy.util.StringUtil.println;
+import static com.czy.util.text.StringUtil.println;
 
 /**
  * @author chenzy
- * @description
+ *
  * @since 2020-05-20
  */
 public class ListPropertyTest extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         var anchorPane = new AnchorPane();
-        var  userList=ObjectUtil.getObjectList(User.class,"a","b","c");
+        var  userList=ObjectUtil.createList(User.class,"a","b","c");
         var userSimpleListProperty= new SimpleListProperty<>(FXCollections.observableArrayList(userList));
         userSimpleListProperty.addListener((observable, oldValue, newValue) -> {
             println("{}->{}",oldValue,newValue);

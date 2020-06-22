@@ -18,11 +18,11 @@ import javafx.util.StringConverter;
 
 import java.util.Locale;
 
-import static com.czy.util.StringUtil.println;
+import static com.czy.util.text.StringUtil.println;
 
 /**
  * @author chenzy
- * @description 单向绑定，双向绑定
+ *  单向绑定，双向绑定
  * @since 2020-05-21
  */
 public class BindingTest extends Application {
@@ -130,11 +130,11 @@ public class BindingTest extends Application {
 
     public static void listBind() {
 
-        var userList = ObjectUtil.getObjectList(User.class, "陈志源", "张三");
+        var userList = ObjectUtil.createList(User.class, "陈志源", "张三");
         var userObservableList = FXCollections.observableArrayList(userList);
         var userListProperty = new SimpleListProperty<>(userObservableList);
 
-        var userList2 = ObjectUtil.getObjectList(User.class, "陈晓云", "李四");
+        var userList2 = ObjectUtil.createList(User.class, "陈晓云", "李四");
         var userObservableList2 = FXCollections.observableArrayList(userList);
         var userListProperty2 = new SimpleListProperty<>(userObservableList);
         /*单向绑定后，两个都是维护userList2，userListProperty将无法对userList做任何操作*/

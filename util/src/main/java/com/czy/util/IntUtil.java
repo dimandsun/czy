@@ -2,7 +2,7 @@ package com.czy.util;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020-05-25
  */
 public class IntUtil {

@@ -1,6 +1,6 @@
 package com.czy.fx.test.test69_GraspData;
 
-import com.czy.util.StringUtil;
+import com.czy.util.text.StringUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.ScheduledService;

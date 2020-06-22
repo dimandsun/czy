@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 /**
  * @author chenzy
- * @description
+ *
  * @since 2020/5/10
  */
 public class MenuButtonTest extends Application {
@@ -18,7 +18,7 @@ public class MenuButtonTest extends Application {
     public void start(Stage primaryStage) throws Exception {
         var ap=new AnchorPane();
         var menuButton=new MenuButton("测试");
-        menuButton.getItems().addAll(ObjectUtil.getObjectList(MenuItem.class,"1","2"));
+        menuButton.getItems().addAll(ObjectUtil.createList(MenuItem.class,"1","2"));
         ap.getChildren().add(menuButton);
 
         primaryStage.setScene(new Scene(ap));

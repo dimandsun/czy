@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 /**
  * @author chenzy
  * @since 2020/5/8
- * @description 方位布局
+ *  方位布局
  */
 public class BorderPaneTest extends Application {
 

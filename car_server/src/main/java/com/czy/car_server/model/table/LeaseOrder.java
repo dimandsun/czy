@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * @author chenzy
  * @since 2020-06-17
- * @description 租赁订单
+ *  租赁订单
  */
 @Table("lease_order")
 public class LeaseOrder {

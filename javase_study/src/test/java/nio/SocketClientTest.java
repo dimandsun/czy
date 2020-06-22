@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020/6/18
  */
 public class SocketClientTest {

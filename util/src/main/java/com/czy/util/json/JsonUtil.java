@@ -1,6 +1,6 @@
 package com.czy.util.json;
 
-import com.czy.util.StringUtil;
+import com.czy.util.text.StringUtil;
 import com.czy.util.enums.IEnum;
 import com.czy.util.model.ResultVO;
 import com.fasterxml.jackson.annotation.JsonInclude;

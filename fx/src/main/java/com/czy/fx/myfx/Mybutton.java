@@ -10,7 +10,7 @@ import javafx.scene.input.MouseEvent;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020-05-23
  */
 public class Mybutton extends Button {

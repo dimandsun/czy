@@ -1,13 +1,13 @@
 package com.czy.car_server.model.table;
 import com.czy.core.annotation.db.Table;
 import com.czy.util.SecretUtil;
-import com.czy.util.StringUtil;
+import com.czy.util.text.StringUtil;
 import com.czy.util.json.JsonUtil;
 import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * @author chenzy
  * @since 2020-06-17
- * @description 客户信息
+ *  客户信息
  */
 @Table("user")
 public class User {

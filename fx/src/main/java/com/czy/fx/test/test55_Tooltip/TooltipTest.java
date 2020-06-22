@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020-05-23
  */
 public class TooltipTest extends Application {

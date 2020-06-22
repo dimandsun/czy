@@ -39,7 +39,8 @@ public class ClientTest {
 
 
     public static void testClient() throws IOException {
-        var socket = new Socket("127.0.0.1", 10089,true);
+//        var socket = new Socket("127.0.0.1", 10089,true);
+        var socket = new Socket("127.0.0.1", 10089);
         //发送请求
         new Thread(() -> {
             try {

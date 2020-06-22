@@ -4,7 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 /**
  * @author chenzy
- * @description
+ * 
  * @since 2020-05-23
  */
 public class Name {

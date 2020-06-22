@@ -14,7 +14,7 @@ import javafx.util.Duration;
 
 /**
  * @author chenzy
- * @description 多任务：
+ *  多任务：
  * Platform是任务队列，ui线程空闲时执行，容易造成堵塞,
  * ScheduledService在call()中执行非UI任务，返回结果
  * 在updateValue()中执行UI任务，接受call的返回值
