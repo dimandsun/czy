@@ -22,23 +22,20 @@
         <top><AnchorPane></AnchorPane></top>
         <bottom><AnchorPane></AnchorPane></bottom>
         <left>
-            <AnchorPane>
+            <AnchorPane prefWidth="40">
                 <TreeView fx:id="leftRoot">
-                    <TreeItem fx:id="questionRoot" value="题库">
+                    <TreeItem fx:id="subjectRoot">
 
                     </TreeItem>
                 </TreeView>
             </AnchorPane>
         </left>
         <center>
-            <Button text="右键" fx:id="testButton">
-                <ContextMenu >
-                    <items>
-                        <MenuItem text="asds">
-                        </MenuItem>
-                    </items>
-                </ContextMenu>
-            </Button>
+            <AnchorPane>
+                <ListView fx:id="questionListView">
+
+                </ListView>
+            </AnchorPane>
         </center>
         <right><AnchorPane>
             <MenuBar>

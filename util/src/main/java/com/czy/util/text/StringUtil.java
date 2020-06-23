@@ -798,10 +798,10 @@ public class StringUtil {
 //        System.out.println(upFirst(a));
         {
 //            System.out.println(getGroupId());
-            String str = "public abstract java.util.Map com.czy.frame.test.dao.ITestDao.get(com.czy.frame.model.MyMap)";
-            String par = "public * com.czy.frame.test.dao..*.*(..)";
-            str = "public abstract java.util.Map com.czy.frame.test.dao.ITestDao.get(com.czy.frame.model.MyMap)";
-            par = "public.* com.czy.frame.test.dao..*.*(..)";
+            String str = "public abstract java.util.Map com.czy.frame.javafx.test.dao.ITestDao.get(com.czy.frame.model.MyMap)";
+            String par = "public * com.czy.frame.javafx.test.dao..*.*(..)";
+            str = "public abstract java.util.Map com.czy.frame.javafx.test.dao.ITestDao.get(com.czy.frame.model.MyMap)";
+            par = "public.* com.czy.frame.javafx.test.dao..*.*(..)";
 //            System.out.println(matcher(str, par));
         }
         {

@@ -277,7 +277,7 @@ public class ProjectContainer {
         Long maxWait = StringUtil.getLongByMS(poolProMap.get("max-wait"), 1000L);
         String configBeanName = StringUtil.getStr(poolProMap.get("config-name"), "jedisPoolConfig");
         String poolBeanName = StringUtil.getStr(poolProMap.get("pool-name"), "jedisPool");
-        Boolean testOnBorrow = StringUtil.getBoolean(poolProMap.get("test-on-borrow"));
+        Boolean testOnBorrow = StringUtil.getBoolean(poolProMap.get("javafx.test-on-borrow"));
         var jedisPoolConfig = new JedisPoolConfig();
         jedisPoolConfig.setMaxIdle(maxIdle);
         jedisPoolConfig.setMinIdle(minIdle);

@@ -19,7 +19,7 @@ Supplier<T> 供给型接口
 Function<T,R> 函数型接口
     R apply(T t)
 Predicate<T>:断言型接口
-    boolean test(T t)
+    boolean javafx.test(T t)
 */
 public class TestLambda {
 

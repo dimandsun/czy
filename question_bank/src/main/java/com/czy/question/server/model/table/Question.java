@@ -26,10 +26,18 @@ public class Question {
 	private QuestionTypeEnum questionType;
 
 	/*答案：作文在另一张表composition*/
-	@JsonProperty("answer_codes")
-	private String answerCodes;
+	@JsonProperty("answer_content")
+	private String answerContent;
 	/*说明*/
 	private String des;
+
+	public String getAnswerContent() {
+		return answerContent;
+	}
+
+	public void setAnswerContent(String answerContent) {
+		this.answerContent = answerContent;
+	}
 
 	public Integer getId(){
 		return id;
@@ -66,12 +74,6 @@ public class Question {
 	}
 	public void setQuestionType(QuestionTypeEnum questionType) {
 		this.questionType = questionType;
-	}
-	public String getAnswerCodes(){
-		return answerCodes;
-	}
-	public void setAnswerCodes(String answerCodes){
-		 this.answerCodes=answerCodes;
 	}
 	public String getDes(){
 		return des;

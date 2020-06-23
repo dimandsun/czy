@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="学习,HTML5,前端,css" />
+    <meta name="description" content="这是从零开始学习html的社区" />
+    <title>css学习</title>
+    <link rel="stylesheet" href="hello.css" />
+    <style>
+      p {
+        color: blue;
+      }
+      #a{
+        color: red;
+      }
+      .abc{
+        color: brown;
+      }
+      p.font20{
+        
+      }
+     div>p{
+       
+     }
+    </style>
+  </head>
+  <body>
+    <!-- 
+     CSS:层叠样式表
+      -网页实际上是一个多层结构，通过css可以分别为网页的每一层设置样式，最终显示最上面一层
+      -使用方式：
+        -内联(行内)样式：html标签内部通过style使用
+        -内部样式：html头部style标签中，通过选择器使用
+        -外部样式：样式写在css文件中，通过link标签引入。可以使用浏览器的缓存机制，加快加载速度
+      -选择器：
+        元素选择器：       标签名
+        id选择器          #id
+        类选择器          .class
+        交集选择器         选择器选择器1选择器n。类似&&。有元素选择器时，必须以元素选择器开头
+        并集选择器         选择器1,选择器2。类似||
+        关系选择器
+          -子元素选择器     父元素选择器>子元素选择器
+          -后代元素选择器   祖先选择器 后代选择器。选择祖先下的所有指定后代，不管层级
+          -兄弟选择器       兄弟选择器1+兄弟选择器2。匹配的是兄弟选择器2。选择下一个选择器
+          
+     -->
+    <header></header>
+    <main>
+      <p style="color: aqua;font-size:30;">少小离家老大回，乡音无改鬓毛衰</p>
+      <p>锄禾汗滴禾下土</p>
+      <p id="a"> adshlkafdlsjk</p>
+      <p class="abc"> adshlkafdlsjk</p>
+      <div>
+        <p class="font20">你在干什么</p>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>

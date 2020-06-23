@@ -32,7 +32,7 @@
         <dependency>
             <groupId>com.czy</groupId>
             <artifactId>core</artifactId>
-            <scope>test</scope>
+            <scope>javafx.test</scope>
         </dependency>
     </dependencies>
 

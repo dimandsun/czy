@@ -1,0 +1,111 @@
+<!-- 文档声明：声明当前网页版本 -->
+<!DOCTYPE html>
+<!-- html是根标签,网页任何内容都必须写在根标签里面 -->
+<html lang="en">
+  <!-- head是网页头部，head中的内容不会直接出现，用来帮助浏览器或搜索引擎解析网页 -->
+  <head>
+    <!--    元标签:用于表示网页中的元数据。
+        meta/base/link/script/style/title
+    -->
+    <!-- meta标签用来设置其他元标签无法表示的元数据
+        charset 指定网页字符集
+        name    指定数据名称 关键字用逗号隔开
+                keywords    表示网页关键字,
+                description 网页描述
+        content 指定数据的内容
+    -->
+    <meta charset="UTF-8" name="keywords" content="学习,HTML5,前端,css" />
+    <meta name="description" content="这是从零开始学习html的社区" />
+    <!-- 三秒后跳转到百度 -->
+    <!-- <meta http-equiv="refresh" content="3;url=https://www.baidu.com"> -->
+
+    <!-- tietle中的内容会显示在浏览器的标题栏，搜索引擎会主要根据title中内容来判断网页的主要内容
+	    作为搜索引擎的超链接显示
+	 -->
+    <title>hello</title>
+  </head>
+  <!-- body是html子元素，表示网页主题，网页中所有可见内容都应该写在body里 -->
+  <!-- 文档：TODO https://zealdocs.org/download.html#windows-->
+  <!--  -->
+  <!-- 
+    转义字符(实体)：&开头，;结尾
+    &nbsp;	空格
+    &gt; 	>
+    &lt;	<
+    &copy;	版权符号
+ -->
+  <body>
+    <!-- 
+    网页三部分 
+      结构：html
+      表现：css
+      行为：JavaScript
+      
+    在网页中HTML专门用来负责网页的结构，所以在使用html标签时，应该关注标签的语义，而不是它的样式
+      
+      标题标签：
+        h1-h6 一共6级标签
+        从h1到h6重要性递减，h1最重要，h6最不重要
+        h1在网页中的重要性仅次于title标签，
+        一般情况下，一个页面只会有一个h1
+        一般情况下，标题标签只会使用到h1-h3，h4-h6很少用
+        hgroup:标题组
+      em          用于表示语音语调的加重
+      strong      表示强调
+      blockquote  表示引用
+      q           表示短引用
+      br          表示换行
+      header      网页头部
+      main        网页主体部分，一个网页只能有一个
+      footer      网页底部 可以表示块的底部
+      nav         网页中的导航
+      aside       主体相关的其他内容
+      article     表示一个独立的文章
+      section     表示一个独立的区块
+      div         区块
+      span        用于网页中选中文字
+      块元素(block element)：在页面中独占一行。在网页中一半用块元素对页面布局
+          一般块元素中放行内元素，但行内元素中一般不放块元素
+          p元素不能放任何块元素
+          浏览器在解析网页时，会自动修正网页中不符合规范的内容
+                如：标签写在根标签外面
+                p标签嵌套块元素
+                根标签出现了除head和body外的标签
+        h1-h6/hgroup/p/blockquote/br
+        /header/main/footer/nav/aside/article/section/div
+        /ul/ol/dl/li/dd/dt
+        
+      行内元素(inline element):
+        em/strong/q/span/a
+      替换元素：介于块状元素和行内元素之间，具有两种元素的特点
+        img
+
+
+   -->
+   <header></header>
+   <main>
+     <nav></nav>
+     <aside></aside>
+     <article></article>
+     <section></section>
+     <div></div>
+     <span></span>
+     
+     <hgroup>
+       <h1>回乡偶书</h1>
+       <h2>其一</h2>
+     </hgroup>
+     
+     <p>今天天气<em>真</em>不错</p>
+     <p>你今天必须要<strong>完成作业</strong></p>
+     <p>
+       鲁迅说:<blockquote>这句话我是从来没有说过的</blockquote>
+     </p>
+     <p>子曰<q>学而时习之，不亦乐乎</p>
+     <br/>
+     
+   </main>
+   <footer></footer>
+    
+  </body>
+</html>

@@ -42,7 +42,7 @@ create table question(
 	,question_group_stem int comment '题干的题干，如阅读理解关联的是阅读理解的文章'
 	,content nvarchar(20) comment '题干'
 	,question_type_id int comment '题型'
-	,answer_codes nvarchar(500) comment '答案：作文在另一张表composition'
+	,answer_content nvarchar(500) comment '答案：作文在另一张表composition'
 	,des nvarchar(20) comment '说明'
 )COMMENT='题目，题目有多个选项(除判断对错)时关联表option';
 

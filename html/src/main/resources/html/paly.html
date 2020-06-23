@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="学习,HTML5,前端,css" />
+    <meta name="description" content="这是从零开始学习html的社区" />
+    <title>音视频学习</title>
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <!-- 
+      audio：          引入一个音频文件.默认不允许用户自己控制播放停止 
+        controls：     不需写值，有这个属性表示用户可以控制
+        autoplay:      打开页面，自动播放。目前大部分浏览器不会自动播放
+        loop：         循环播放
+        src：          指定文件路径，也可通过子元素source来指定文件目录
+      source：         可以写多个source，默认读取第一个，老浏览器支持音频格式不一样，可以写多个用来解决这个问题
+      embed：          过时标签，以前用于播放音频
+      video:           播放视频,和audio一样使用
+      -->
+      <!-- autoplay -->
+      音频:
+      <audio src="../music/茶理理%20-%20Tik%20Tok.mp3" controls loop>tikTok</audio>
+      音频2:
+      <audio controls>
+        对不起，您的浏览器不支持播放音频，请升级您的浏览器
+        <source src="../music/茶理理%20-%20Tik%20Tok.mp3" />
+        <source src="../music/茶理理%20-%20Tik%20Tok.mp3" />
+        <source src="../music/茶理理%20-%20Tik%20Tok.mp3" />
+        <embed src="../music/茶理理%20-%20Tik%20Tok.mp3"></embed>
+      </audio>
+      <br />
+      视频：
+      <video controls>
+        <source src="//player.bilibili.com/player.html?aid=77217003&bvid=BV1XJ411X7Ud&cid=132017557&page=26"></source>
+        <embed src="../music/茶理理%20-%20Tik%20Tok.mp3"></embed>
+      </video>
+      <iframe src="//player.bilibili.com/player.html?aid=77217003&bvid=BV1XJ411X7Ud&cid=132017557&page=26" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+    </main>
+    <footer></footer>
+  </body>
+</html>
