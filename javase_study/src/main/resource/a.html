@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<style>
+    p[title]{
+    }
+    p[title=测试]{
+    }
+    p[title^=测试]{
+    }
+    p[title$=测试]{
+    }
+    p[title*=测试]{
+    }
+    ul>li:first-child{
+
+    }
+    p::first-letter{}
+p::before{
+    content:'开始'
+}
+</style>
+</head>
+<body>
+<!--属性选择器
+        标签名[属性名] 匹配指定元素且有指定属性的元素
+        标签名[属性名=属性值] 匹配指定元素且指定属性的值为指定值 的元素
+        标签名[属性名^=属性值] 匹配 属性值以指定值开始的元素
+        标签名[属性名$=属性值] 匹配 属性值以指定值结尾的元素
+        标签名[属性名*=属性值] 匹配 属性值包含指定值的元素
+
+    伪类选择器
+        伪类：不存在的类、特殊的类
+        伪类描述元素的特殊状态(第一个、被点击、鼠标移入...)
+        伪类以冒号:开始。例：（:first-child、:last-child、:nth-child(n)、）
+            :nth-child(n)   括号内填>=整数。n为特殊值，表示0到正无穷。2n或even表示偶数位，2n+1或odd表示奇数位
+            first-child、:last-child、:nth-child(n)这三个伪类是以所有子元素进行排序，匹配的是第一个且为指定选择器的子元素
+            first-of-type、last-of-type、nth-of-type(n)以上面三个伪类类似，不过匹配的是相同类型的子元素，
+            :not(选择器)剔除括号中的选择器
+
+            :link 没有访问过的链接，此伪类只适用a标签
+            :visited 访问过的链接，此伪类只适用a标签 。由于隐私原因，visited这个伪类只能修改链接的颜色
+            :hover 鼠标移入
+            :active 鼠标点击
+     伪元素选择器
+        伪元素：特殊的并不存在的元素(特殊的位置)
+            ::first-letter 首字符
+            ::first-line    首行
+            ::selection     选中的内容
+            ::before        元素的开始 必须结合content使用
+            ::after         元素的最后 必须结合content使用
+-->
+<p title="测试按时"> asdhkj1</p>
+<ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+</ul>
+</body>
+</html>
