@@ -11,6 +11,7 @@ import java.lang.reflect.Method;
  * @author chenzy
  *
  * @since 2020-04-08
+ * netty
  */
 public class DaoUtil {
     private DaoUtil() {
@@ -34,6 +35,9 @@ public class DaoUtil {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
             throw e.getTargetException().getCause();
+        }finally {
+            //防止内存泄漏
+            DataSourceHolder.getInstance().clear();
         }
         return null;
     }
