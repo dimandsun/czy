@@ -28,13 +28,10 @@ public class Employee {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Employee) {
-            var employee = (Employee) obj;
-            boolean isEqual = true;
+        if (obj instanceof Employee employee) {
             if (!name.equals(employee.name)) {
                 return false;
             }
-
             if (employee.age==null)return age==null;
             else return employee.age.equals(age);
         }

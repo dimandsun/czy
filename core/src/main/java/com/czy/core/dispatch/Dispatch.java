@@ -84,7 +84,9 @@ public class Dispatch {
             } else {
                 /*基础数据类型则根据注解值取数据*/
                 for (Annotation annotation : parameters[i].getAnnotations()) {
-                    resultPar[i] = annotation instanceof Par?dataJson.get(((Par) annotation).value()):null;
+                    if (annotation instanceof Par par){
+                        resultPar[i]= dataJson.get(par.value());
+                    }
                 }
             }
         }

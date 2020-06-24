@@ -29,7 +29,9 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 import javax.sql.DataSource;
+import java.io.Closeable;
 import java.io.File;
+import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -41,7 +43,7 @@ import java.util.*;
  *  应用容器，维护应用下的属性和bean对象
  * @since 2020-03-31
  */
-public class ProjectContainer {
+public class ProjectContainer implements Closeable{
     private static Logger logger = LoggerFactory.getLogger(ProjectContainer.class);
     private static ProjectContainer instance = new ProjectContainer();
     private StringMap<ProjectInfo> projectInfoMap = new StringMap();
@@ -618,6 +620,21 @@ public class ProjectContainer {
             e.printStackTrace();
         }
     }
+    @Override
+    public void close(){
+        beanMap.values().forEach(beanModel -> {
+            Optional.ofNullable(beanModel).map(temp -> temp.getBean()).ifPresent(bean->{
+                if (bean instanceof Closeable closeable){
+                    try {
+                        closeable.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        });
+    }
+
     /**
      * 判断参数1是否是参数2或者参数3的类型。是返回true
      * 参数3可为空
@@ -630,12 +647,12 @@ public class ProjectContainer {
     private Boolean notClassType(Class c, Class c1, Class c2) {
         return c != c1 && (c2 == null || c != c2);
     }
-
     public static void main(String[] args) {
         ProjectContainer instance = ProjectContainer.getInstance();
         instance.addProjectInfo(new ProjectInfo().init("core"));
         instance.initProject();
         System.out.println(123);
     }
+
 
 }

@@ -556,8 +556,8 @@ public class StringUtil {
         if (value == null) {
             return defaultValue;
         }
-        if (value instanceof Integer) {
-            return (Integer) value;
+        if (value instanceof Integer integer) {
+            return integer;
         }
         return Integer.valueOf(value.toString());
     }
@@ -587,8 +587,8 @@ public class StringUtil {
         if (value == null) {
             return defaultValue;
         }
-        if (value instanceof Long) {
-            return (Long) value;
+        if (value instanceof Long l) {
+            return l;
         }
         return Long.valueOf(value.toString());
     }
@@ -604,8 +604,8 @@ public class StringUtil {
         if (value == null) {
             return defaultValue;
         }
-        if (value instanceof String) {
-            return new String[]{value.toString()};
+        if (value instanceof String s) {
+            return new String[]{s};
         }
         return (String[]) value;
     }

@@ -41,10 +41,9 @@ public class AspectModel implements Comparable {
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof AspectModel){
-            AspectModel o = (AspectModel) obj;
-            return this.pointcut.equals(o.pointcut)&&this.order.equals(o.order)
-                    &&this.method.toString().equals(o.method.toString());
+        if (obj instanceof AspectModel aspectModel){
+            return this.pointcut.equals(aspectModel.pointcut)&&this.order.equals(aspectModel.order)
+                    &&this.method.toString().equals(aspectModel.method.toString());
         }
         return super.equals(obj);
     }
@@ -91,8 +90,8 @@ public class AspectModel implements Comparable {
 
     @Override
     public int compareTo(Object o) {
-        if (o instanceof AspectModel){
-            return this.getOrder()-((AspectModel)o).getOrder();
+        if (o instanceof AspectModel aspectModel){
+            return this.getOrder()-aspectModel.getOrder();
         }
         return 0;
     }
