@@ -20,6 +20,7 @@
         <module>../car_server</module>
         <module>../car_client</module>
         <module>../question_bank</module>
+        <module>../httpcontainer</module>
     </modules>
     <properties>
         <encoding>UTF-8</encoding>
