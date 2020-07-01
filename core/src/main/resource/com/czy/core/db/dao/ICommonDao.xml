@@ -4,7 +4,7 @@
     <sql id="whereSQL">
         <where>
             <foreach collection="wherePar.entrySet()" item="value" index="key">
-                <if javafx.test='value!=null'>
+                <if test='value!=null'>
                     and ${key}='${value}'
                 </if>
             </foreach>
@@ -15,14 +15,14 @@
         insert into ${tableName}
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <foreach collection="parMap.entrySet()" item="value" index="key">
-                <if javafx.test='value!=null'>
+                <if test='value!=null'>
                     ${key},
                 </if>
             </foreach>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <foreach collection="parMap.entrySet()" item="value" index="key">
-                <if javafx.test='value!=null'>
+                <if test='value!=null'>
                     '${value}',
                 </if>
             </foreach>
@@ -33,14 +33,14 @@
         insert into ${tableName}
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <foreach collection="parMap.entrySet()" item="value" index="key">
-                <if javafx.test='value!=null'>
+                <if test='value!=null'>
                     ${key},
                 </if>
             </foreach>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <foreach collection="parMap.entrySet()" item="value" index="key">
-                <if javafx.test='value!=null'>
+                <if test='value!=null'>
                     '${value}',
                 </if>
             </foreach>
@@ -52,7 +52,7 @@
         <set>
             <trim suffixOverrides=",">
                 <foreach collection="setPar.entrySet()" item="value" index="key">
-                    <if javafx.test='value!=null'>
+                    <if test='value!=null'>
                         ${key}='${value}',
                     </if>
                 </foreach>
