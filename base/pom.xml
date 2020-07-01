@@ -20,7 +20,7 @@
         <module>../car_server</module>
         <module>../car_client</module>
         <module>../question_bank</module>
-        <module>../httpcontainer</module>
+        <module>../server_container</module>
     </modules>
     <properties>
         <encoding>UTF-8</encoding>
@@ -35,7 +35,6 @@
         <commons-collections.version>3.2.2</commons-collections.version>
         <log4j.version>2.4.1</log4j.version>
         <slf4j.version>1.7.13</slf4j.version>
-        <servlet-api.version>4.0.1</servlet-api.version>
         <ws.rs-api.version>2.1</ws.rs-api.version>
         <org.cxf-version>3.3.2</org.cxf-version>
         <jackson.version>2.10.3</jackson.version>
@@ -49,11 +48,17 @@
         <javafx.version>11.0.2</javafx.version>
         <junit.version>4.12</junit.version>
         <rabbitmq.version>5.9.0</rabbitmq.version>
+        <servlet.version>4.0.1</servlet.version>
         <czy.version>1.0-SNAPSHOT</czy.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${servlet.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.czy</groupId>
                 <artifactId>car_client</artifactId>
