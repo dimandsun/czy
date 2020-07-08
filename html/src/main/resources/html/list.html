@@ -5,6 +5,62 @@
     <meta charset="UTF-8" name="keywords" content="学习,HTML5,前端,css" />
     <meta name="description" content="这是从零开始学习html的社区" />
     <title>list标签学习</title>
+    <style>
+      body {
+        background-color: antiquewhite;
+      }
+
+      ul {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      a {
+        text-decoration: none;
+        font-size: 15px;
+        color: #333;
+      }
+
+      .imgList {
+        height: 40rem;
+        overflow: hidden;
+        width: 10rem;
+      }
+
+      .imgList li:not(:last-child) {
+        margin-bottom: 1rem;
+      }
+
+      .imgList img {
+        width: 100%;
+      }
+
+
+      .news-wrapper {
+        width: 30rem;
+        height: 50rem;
+        background-color: #F0F8FF;
+        border-top: 1px solid #aaaaff;
+      }
+
+
+      .new-title {
+        display: inline-block;
+        height: 2rem;
+        border-top: 1px solid #dd2d16;
+        margin-top: -1px;
+      }
+
+      .new-title a {
+        font-size: 19px;
+        font-weight: bold;
+      }
+
+      .news-head h3 {
+        margin-top: -2rem;
+        color: #fff;
+      }
+    </style>
   </head>
   <body>
     <header>
@@ -24,11 +80,34 @@
     </header>
 
     无序列表
-    <ul>
-      <li>a</li>
-      <li>b</li>
-      <li>c</li>
+    <ul class="imgList">
+      <li><a href="javascript:;"><img src="../img/girl1.png" /></a></li>
+      <li><a href="javascript:;"><img src="../img/girl1.png" /></a></li>
+      <li><a href="javascript:;"><img src="../img/girl1.png" /></a></li>
     </ul>
+
+    <div class="news-wrapper">
+      <h2 class="new-title"><a href="#">体育</a></h2>
+      <div class="news-head">
+        <a href="#"><img src="../img/girl1.png" /></a>
+        <h3>还有24天就八月了，七月也要好好加油</h3>
+      </div>
+      <ul class="news-list">
+        <li>
+          <a href="javascript:;">能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？ </a>
+        </li>
+        <li>
+          <a href="javascript:;">能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？ </a>
+        </li>
+        <li>
+          <a href="javascript:;">能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？ </a>
+        </li>
+
+      </ul>
+    </div>
+
+
+
     有序列表
     <ol>
       <li>a</li>
