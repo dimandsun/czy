@@ -21,6 +21,8 @@
         <module>../car_client</module>
         <module>../question_bank</module>
         <module>../server_container</module>
+        <module>../task</module>
+        <module>../user</module>
     </modules>
     <properties>
         <encoding>UTF-8</encoding>
