@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="学习,HTML5,前端,css" />
+    <meta name="description" content="这是从零开始学习html的社区" />
+    <title>nav</title>
+    <style>
+      .left-nav {
+        background-color: aliceblue;
+        height: 30rem;
+        width: 15rem;
+      }
+      .item{
+        padding-left: .7rem;
+        height: 1.1rem;
+        line-height: 1.1rem;/* 子元素垂直居中 */
+        font-size: 12px;
+      }
+      .item:hover{
+        background-color: #FAEBD7;
+      }
+      .item a{
+        font-size: 15px;
+        color: #333;
+        text-decoration: none;/*去除下划线*/
+      }
+      .item a:hover{
+        color: #A52A2A;
+      }
+    </style>
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <nav class="left-nav">
+        <div class="item">
+          <a href="#">家用电器</a>
+        </div>
+        <div class="item">
+          <a href="#">手机</a> /
+          <a href="#">运营商</a> /
+          <a href="#">数码</a>
+        </div>
+        <div class="item">
+          <a href="#">电脑</a> /
+          <a href="#">办公</a> /
+        </div>
+        <div class="item">
+          <a href="#">家居</a> /
+          <a href="#">家具</a> /
+          <a href="#">家装</a> /
+          <a href="#">厨具</a>
+        </div>
+      </nav>
+    </main>
+    <footer></footer>
+  </body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="学习,HTML5,前端,css" />
+    <meta name="description" content="这是从零开始学习html的社区" />
+    <title>盒子模型</title>
+    <style>
+      .box{
+        color: #0000FF;/* 前景色 */
+        
+        width: 20rem;
+        height: 20rem;
+        background-color: #FF0;
+        
+        /* border-width: 0.3rem 0.8rem;
+        border-color: #00007f #00FFFF;
+        border-style: solid; */
+        border: 0.3rem #00007f solid;
+        /* border-bottom: 0.5rem #00007f solid; */
+        /* border-bottom:none; */
+        
+        /* 背景色会延伸到内边距 */
+        padding-top: 1rem;
+        
+        /* 外边距:可以设置负值  */
+        margin: 1rem;
+        
+        /* overflow处理子元素溢出.overflow-y和overflow-x分别处理水平垂直方向
+          visible：默认值
+          hidden：隐藏
+          scroll:生成垂直水平滚动条
+          auto：根据需要生成滚动条
+          
+          */
+        overflow: auto;
+      }
+      .inner{
+        /* width默认auto */
+        width: 110%;
+        height: 100%;
+        background-color: #00FFFF;
+      }
+      span{
+        
+      }
+    </style>
+  </head>
+  <!-- 
+  盒子模型：每一个元素都是一个矩形盒子
+    content：内容区 width/height设置的是内容区宽高
+    padding：内边距
+    border：边框
+    margin：外边距
+    盒子可见框大小，有内容区、内边距、边框决定。计算盒子大小，需要把这三个区域加到一起计算
+  水平布局：
+    父元素的width=子元素的 margin-left+border-left+padding-left+width+padding-right+border-right+margin-right
+      若公式不成立(过度约束)，等式自动调整：属性没有auto的，则会调整margin-right值使等式成立。
+          width、margin-left、margin-right可以设值为auto，过度约束时，调整值为auto的属性
+          当width和其他属性为auto时，width设置为最大，其他为auto的属性值为0
+          当margin-left、margin-right设置为auto，则auto属性值为剩余值平分。
+              可以利用这个特点使子元素水平居中：
+                示例：width: 20rem;margin: 0 auto;
+  垂直布局：
+    子元素在父元素的内容区排列，若高度超出父元素，会从父元素溢出。父元素中使用overflow处理溢出
+    相邻元素垂直方向外边距的折叠：
+      兄弟元素：两者正值取两者中的大值，一正一负，取两者和，都是负值，取绝对值较大的
+      父子元素：上外边距，子元素传给父元素
+  
+ 行内元素的盒子模型：
+    不支持设置宽高，可以设置padding、border，但是垂直方向padding/border不会影响布局
+   display: block;
+   display: inline-block;行内块元素，可以设置宽高又不独占一行
+   display: inline; 
+   display: none;隐藏元素，不占据位置
+   visibility: visible;//默认值
+   visibility: hidden;//隐藏元素，占据页面的位置
+   -->
+  <body>
+    <header></header>
+    <main>
+      <div class="box">
+        <div class="inner"></div>
+        afds1
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>
