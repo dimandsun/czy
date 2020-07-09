@@ -34,6 +34,31 @@
           
           */
         overflow: auto;
+        /*box-sizing:
+          content-box表示width、height是内容区的宽高
+          border-box 表示width、height是盒子可见框的宽高，(内容区+内边距+边框)的宽高
+          */
+        box-sizing: border-box;
+        
+        /* 轮廓，和border用法一样，但是不会影响布局 */
+        outline: 0.3rem #00007f solid;
+        /* 阴影 
+        第一个值 水平偏移量
+        第二个值 垂直偏移量
+        第三个值 阴影模糊半径
+        第四个值 阴影颜色
+         */
+        box-shadow: 30px 40px 20px rgba(0,0,0,0.3);
+        
+        /* 圆角 
+          两个值设四个角 左上/右下 右上/左下
+          三个值设四个角 左上 右上/左下 右下
+          四个值设四个角 左上 右上 右下 左下
+          值1/值         左上 右下
+          50%            圆形
+        */
+        border-radius: 40px 10px;
+        /* border-top-left-radius: ; */
       }
       .inner{
         /* width默认auto */

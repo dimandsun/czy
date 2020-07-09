@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="学习,HTML5,前端,css" />
+    <meta name="description" content="这是从零开始学习html的社区" />
+    <title>文档流</title>
+    <style>
+      header,
+      main,
+      footer {
+        width: 100rem;
+      }
+
+      a {
+        color: #333;
+        text-decoration: none;
+      }
+
+      ul {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      header {
+        height: 2rem;
+        background-color: #74767F;
+      }
+
+      .head-nav {
+        height: 2rem;
+        background-color: #d4d1ce;
+        margin-bottom: 1rem;
+      }
+
+      .head-nav li {
+        float: left;
+        line-height: 2rem;
+        /*文字垂直居中*/
+      }
+
+      .head-nav a {
+        display: block;
+        padding: 0 20px;
+      }
+
+      .head-nav a:hover {
+        background-color: #86a58f;
+      }
+
+      main {
+        /* height: 70rem; */
+        background-color: #dedcd9;
+        margin: 0.4rem auto;
+        overflow: hidden;
+      }
+
+      .left-nav,
+      article,
+      aside {
+        height: 70rem;
+        float: left;
+      }
+
+      .left-nav {
+        width: 10%;
+        background-color: #76d479;
+      }
+
+      article {
+        width: 80%;
+        background-color: #74767F;
+        margin: 0 0.2rem;
+      }
+
+      aside {
+        width: 9%;
+        background-color: #A4D0FF;
+      }
+
+      footer {
+        height: 5rem;
+        background-color: #4e64de;
+      }
+    </style>
+  </head>
+  <!-- 文档流：
+   html网页是一个多层结构，一层叠一层，只能看到最上面一层
+   最底下一层为文档流，文档流是网页基础。创建的元素默认在文档流中进行排列
+   元素两个状态：
+    在文档流
+      块元素:
+        页面中独占一行,垂直排列
+        默认宽度是父元素的宽度
+        默认高度是内容的高度
+      行内元素
+        不独占一行，只占自身大小,水平排列
+        宽高默认都是内容的宽高
+    脱离文档流
+   -->
+
+  <body>
+    <header>
+      <nav class="head-nav">
+        <ul>
+          <li><a href="#">HTML/CSS</a></li>
+          <li><a href="#">Browser Side</a></li>
+          <li><a href="#">Server Side</a></li>
+          <li><a href="#">Programmaing</a></li>
+          <li><a href="#">XML</a></li>
+          <li><a href="#">Web Building</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <!-- 左侧导航 -->
+      <nav class="left-nav">
+
+      </nav>
+      <!-- 中间内容 -->
+      <article></article>
+      <!-- 右边 -->
+      <aside></aside>
+    </main>
+    <footer></footer>
+  </body>
+</html>

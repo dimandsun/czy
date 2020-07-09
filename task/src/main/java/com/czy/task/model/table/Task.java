@@ -1,5 +1,7 @@
 package com.czy.task.model.table;
 import com.czy.core.annotation.db.Table;
+import com.czy.task.model.enums.FrequencyEnum;
+import com.czy.task.model.enums.TaskTypeEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Date;
 /**
@@ -15,24 +17,24 @@ public class Task {
 	private String code;
 	/**/
 	private String name;
-	/*任务类型：1紧急重要*/
+	/*任务类型：1紧急重要/2紧急不重要/3不紧急重要/4不紧急不重要*/
 	@JsonProperty("task_type")
-	private Byte taskType;
-	/*任务循环频率:*/
-	private Byte frequency;
-	/*提醒年*/
+	private TaskTypeEnum taskType;
+	/*任务循环频率:1每日/2每周/3每月/4每年/5工作日/6节假日/7非循环单次任务/8非循环任意任务/9其他*/
+	private FrequencyEnum frequency;
+	/*提醒年.非循环任务时使用*/
 	@JsonProperty("remind_year")
 	private String remindYear;
-	/*提醒月*/
+	/*提醒月.从1开始，年度任务时使用*/
 	@JsonProperty("remind_month")
 	private String remindMonth;
-	/*提醒日*/
+	/*提醒日，每月的几号*/
 	@JsonProperty("remind_day")
 	private String remindDay;
-	/*1-周一*/
+	/*1-周一/2-周二/3-周三/4-周四/5-周五/6-周六/7-周日*/
 	@JsonProperty("remind_week_day")
 	private String remindWeekDay;
-	/*提醒时间*/
+	/*提醒时间/只包含时间/时分/所有任务都使用*/
 	@JsonProperty("remind_time")
 	private String remindTime;
 	/*任务创建时间*/
@@ -65,16 +67,16 @@ public class Task {
 	public void setName(String name){
 		 this.name=name;
 	}
-	public Byte getTaskType(){
+	public TaskTypeEnum getTaskType(){
 		return taskType;
 	}
-	public void setTaskType(Byte taskType){
+	public void setTaskType(TaskTypeEnum taskType){
 		 this.taskType=taskType;
 	}
-	public Byte getFrequency(){
+	public FrequencyEnum getFrequency(){
 		return frequency;
 	}
-	public void setFrequency(Byte frequency){
+	public void setFrequency(FrequencyEnum frequency){
 		 this.frequency=frequency;
 	}
 	public String getRemindYear(){

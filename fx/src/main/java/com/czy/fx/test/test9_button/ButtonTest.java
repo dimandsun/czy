@@ -28,7 +28,6 @@ public class ButtonTest extends Application {
         btn.setBackground(new Background(new BackgroundFill(Paint.valueOf("#004455"), new CornerRadii(20), new Insets(10))));
         btn.setBorder(new Border(new BorderStroke(Paint.valueOf("#8fbc8f"), BorderStrokeStyle.DASHED, new CornerRadii(20), new BorderWidths(5))));
 //       btn.setStyle(""); css设置样式
-
         btn.addEventHandler(MouseEvent.ANY, mouseEvent -> {
 //            MouseButton.
             System.out.println(mouseEvent);

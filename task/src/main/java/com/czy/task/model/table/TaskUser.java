@@ -21,15 +21,13 @@ public class TaskUser {
 	/*用户id*/
 	@JsonProperty("user_id")
 	private Integer userId;
-	/*1*/
+	/*1任务待完成/2任务已完成*/
 	private Byte status;
 	/*任务下次开启时间，开启后status改为待完成*/
 	@JsonProperty("next_datetime")
 	private Date nextDatetime;
 	/*说明)create*/
 	private String des;
-	/**/
-	private String name;
 	/*task_user主键*/
 	@JsonProperty("task_user_id")
 	private Integer taskUserId;
@@ -39,20 +37,12 @@ public class TaskUser {
 	/*任务结束时间*/
 	@JsonProperty("end_time")
 	private Date endTime;
-	/*说明)*/
-	private String des;
 
 	public Integer getId(){
 		return id;
 	}
 	public void setId(Integer id){
 		 this.id=id;
-	}
-	public String getName(){
-		return name;
-	}
-	public void setName(String name){
-		 this.name=name;
 	}
 	public Integer getNum(){
 		return num;
@@ -113,11 +103,5 @@ public class TaskUser {
 	}
 	public void setEndTime(Date endTime){
 		 this.endTime=endTime;
-	}
-	public String getDes(){
-		return des;
-	}
-	public void setDes(String des){
-		 this.des=des;
 	}
 }

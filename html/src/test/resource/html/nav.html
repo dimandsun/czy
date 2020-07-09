@@ -6,6 +6,14 @@
     <meta name="description" content="这是从零开始学习html的社区" />
     <title>nav</title>
     <style>
+      a{
+        color: #333;
+        text-decoration: none;/*去除下划线*/
+      }
+      ul{
+        list-style: none;
+        padding-left: 0;
+      }
       .left-nav {
         background-color: aliceblue;
         height: 30rem;
@@ -22,17 +30,46 @@
       }
       .item a{
         font-size: 15px;
-        color: #333;
-        text-decoration: none;/*去除下划线*/
       }
       .item a:hover{
         color: #A52A2A;
+      }
+      
+      
+      .head-nav{
+        width: 100rem;
+        height: 2rem;
+        background-color: #d4d1ce;
+        margin-bottom: 1rem;
+      }
+      .head-nav li{
+        float: left;
+        line-height: 2rem; /*文字垂直居中*/
+      }
+      .head-nav a{
+        display: block;
+        padding: 0 20px;
+      }
+      .head-nav a:hover{
+        background-color: #86a58f;
       }
     </style>
   </head>
   <body>
     <header></header>
     <main>
+      <nav class="head-nav">
+        <ul>
+          <li><a href="#">HTML/CSS</a></li>
+          <li><a href="#">Browser Side</a></li>
+          <li><a href="#">Server Side</a></li>
+          <li><a href="#">Programmaing</a></li>
+          <li><a href="#">XML</a></li>
+          <li><a href="#">Web Building</a></li>
+        </ul>
+        
+      </nav>
+      
       <nav class="left-nav">
         <div class="item">
           <a href="#">家用电器</a>
