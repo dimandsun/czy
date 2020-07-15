@@ -23,6 +23,7 @@
         <module>../server_container</module>
         <module>../task</module>
         <module>../user</module>
+        <module>../jdbc</module>
     </modules>
     <properties>
         <encoding>UTF-8</encoding>
@@ -268,6 +269,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>

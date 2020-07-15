@@ -3,8 +3,6 @@ package com.czy.util.text;
 
 import com.czy.util.io.FileUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.math.BigInteger;
@@ -19,8 +17,6 @@ import java.util.regex.Pattern;
  * @date 2019.12.19
  */
 public class StringUtil {
-    private final static Logger logger = LoggerFactory.getLogger(StringUtil.class);
-
     private StringUtil() {
     }
 
@@ -400,7 +396,80 @@ public class StringUtil {
         }
         return true;
     }
+    /**
+     * 判断参数是否都为空
+     */
+    public static boolean isBlankAnd(String... strs) {
+        if (strs == null || strs.length < 1) {
+            return true;
+        }
+        for (String str : strs) {
+            if (isNotBlank(str)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    /**
+     * 判断字符是否是字母(a-z或者A-Z)
+     * @return
+     */
+    public static Boolean isLetter(Character c){
+        return Character.isLowerCase(c)||Character.isUpperCase(c);
+    }
+    /**
+     * 判断字符是否都是字母(a-z或者A-Z)
+     * @return
+     */
+    public static Boolean isLetterAnd(Character... cs){
+        if (cs==null){
+            return false;
+        }
+        for (Character c:cs) {
+            if (!isLetter(c)){
+                return false;
+            }
+        }
+        return true;
+    }
+    /**
+     * 判断参数是否存在空
+     */
+    public static boolean isBlankOr(String... strs) {
+        if (strs == null || strs.length < 1) {
+            return true;
+        }
+        for (String str : strs) {
+            if (isBlank(str)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    public static boolean isBlankAnd(Object... objs) {
+        if (objs == null || objs.length < 1) {
+            return true;
+        }
+        for (Object obj : objs) {
+            if (isNotBlank(obj)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isBlankOr(Object... objs) {
+        if (objs == null || objs.length < 1) {
+            return true;
+        }
+        for (Object obj : objs) {
+            if (isBlank(obj)) {
+                return true;
+            }
+        }
+        return false;
+    }
     /**
      * 用于处理将字符集改换成map 例:
      *

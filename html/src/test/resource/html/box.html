@@ -86,7 +86,11 @@
           当margin-left、margin-right设置为auto，则auto属性值为剩余值平分。
               可以利用这个特点使子元素水平居中：
                 示例：width: 20rem;margin: 0 auto;
-  垂直布局：
+      开启绝对定位后，公式要加上left和right，过度约束时，等式自动调整：属性没有auto的，则会调整right值使等式成立。
+          width、margin-left、margin-right left right可以设值为auto。left right默认为auto
+          垂直方向也要满足公式：top+margin-top/bottom+padding-top/bottom+border-top/bottom+height=包含块的高度
+           居中：margin设为auto，top bottom left right都设为0，则元素在包含块中居中
+          
     子元素在父元素的内容区排列，若高度超出父元素，会从父元素溢出。父元素中使用overflow处理溢出
     相邻元素垂直方向外边距的折叠：
       兄弟元素：两者正值取两者中的大值，一正一负，取两者和，都是负值，取绝对值较大的

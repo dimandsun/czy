@@ -1,13 +1,62 @@
 <!DOCTYPE html>
 <html>
-	<head>
+  <head>
     <meta charset="UTF-8" name="keywords" content="学习,HTML5,前端,css" />
     <meta name="description" content="这是从零开始学习html的社区" />
     <title>img标签学习</title>
-	</head>
-	<body>
+    <style>
+      ul {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      a {
+        text-decoration: none;
+        font-size: 15px;
+        color: #333;
+      }
+
+      .imgList {
+        width: 20rem;
+        height: 20rem;
+        margin: 0 auto;
+        position: relative;
+      }
+
+      .imgList li {
+        position: absolute;
+      }
+
+      /* 通过修改元素层级来显示指定图片 */
+      .imgList li:nth-child(1) {
+        z-index: 1;
+      }
+
+      .pointList {
+        position: absolute;
+        z-index: 999;
+        bottom: 2rem;
+      }
+
+      .pointList a {
+        width: 0.5rem;
+        height: 0.5rem;
+        float: left;
+        margin-left: 0.5rem;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255,0.3);
+        background-clip: content-box;/*裁剪背景色*/
+        border: 2px solid transparent;
+      }
+      .pointList a.active{
+        background-color: #fff;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+      }
+    </style>
+  </head>
+  <body>
     <header></header>
-<!--
+    <!--
  属性
     alt 图片描述，默认不显示，有些浏览器在图片无法加载时显示
         不写alt属性则不会被搜索引擎所搜索
@@ -29,9 +78,18 @@
           网页和图片一起加载时使用
  -->
     <main>
-      <img src="../girl1.png" alt="女孩"  height="300"/>
-      
+      <ul class="imgList">
+        <li><a href="javascript:;"><img src="../img/girl1.png" alt="女孩" height="300" /></a></li>
+        <li><a href="javascript:;"><img src="../img/girl2.jpg" alt="女孩" height="300" /></a></li>
+        <li><a href="javascript:;"><img src="../img/gril3.jpg" alt="女孩" height="300" /></a></li>
+        <div class="pointList">
+          <a class="active" href="javascript:;"></a>
+          <a href="javascript:;"></a>
+          <a href="javascript:;"></a>
+        </div>
+      </ul>
+
     </main>
     <footer></footer>
-	</body>
+  </body>
 </html>

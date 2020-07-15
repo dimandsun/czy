@@ -7,8 +7,22 @@
     <title>css学习</title>
     <link rel="stylesheet" href="hello.css" />
     <style>
+      /* @font-face 可以把服务器中的字体下载到客户端 供用户使用 */
+      @font-face {
+        font-family:'我的字体';
+        src: url('./xx.ttf');
+      }
       p {
         color: blue;
+        /*font-family:
+            serif 衬线字体
+            sans-serif 非衬线字体
+            monospace 等宽字体
+            cursive   草书字体
+            fantasy   虚幻字体
+           可以设置多个字体 优先使用第一个
+         */
+        font-family: 'Courier New', Courier, monospace;
       }
 
       #a {
