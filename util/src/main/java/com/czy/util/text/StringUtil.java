@@ -5,6 +5,7 @@ import com.czy.util.io.FileUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.math.BigInteger;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -887,4 +888,14 @@ public class StringUtil {
     }
 
 
+    public static String concat(String... msgs) {
+        if (msgs==null){
+            return "";
+        }
+        String result="";
+        for (int i = 0; i < msgs.length; i++) {
+            result= result.concat(msgs[i]);
+        }
+        return result;
+    }
 }

@@ -24,6 +24,7 @@
         <module>../task</module>
         <module>../user</module>
         <module>../jdbc</module>
+        <module>../log</module>
     </modules>
     <properties>
         <encoding>UTF-8</encoding>
