@@ -12,8 +12,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang3.ClassUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -27,7 +25,6 @@ import java.util.Map;
  * @date 2019.12.19
  */
 public class JsonUtil {
-    private final static Logger logger = LoggerFactory.getLogger(JsonUtil.class);
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -111,7 +108,7 @@ public class JsonUtil {
         try {
             return objectMapper.writeValueAsString(model);
         } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }
@@ -183,7 +180,6 @@ public class JsonUtil {
             return objectMapper.readValue(jsonStr, modelClass);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-            logger.error(e.getMessage());
             return null;
         }
     }

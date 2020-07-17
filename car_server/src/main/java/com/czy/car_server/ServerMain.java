@@ -1,6 +1,5 @@
 package com.czy.car_server;
 
-import com.czy.core.LogInfo;
 import com.czy.core.ProjectContainer;
 import com.czy.util.json.JsonUtil;
 import com.czy.util.model.ResultVO;
@@ -34,9 +33,7 @@ public class ServerMain {
         }
     }
     public static void main(String[] args) {
-        //加载日志框架
         var projectInfo = new CarServerInfo().init("car_server");
-        LogInfo.initLog(projectInfo);
         //初始化框架
         var projectContainer = ProjectContainer.getInstance();
         projectContainer.addProjectInfo(projectInfo).initProject();

@@ -1,0 +1,5 @@
+logs:
+- logName: test
+  datePattern: yyyyMMddHHmmssSSS
+  filePath: /czy/logs/test.log
+  level: info #all/debug/info/warn/error

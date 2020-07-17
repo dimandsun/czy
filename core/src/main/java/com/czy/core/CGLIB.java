@@ -2,13 +2,13 @@ package com.czy.core;
 
 import com.czy.core.model.AspectModel;
 import com.czy.core.enums.AspectTypeEnum;
+import com.czy.log.Log;
+import com.czy.log.LogFactory;
 import com.czy.util.enums.ResCodeEnum;
 import com.czy.util.model.ResultVO;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -20,7 +20,7 @@ import java.util.List;
  * controller、service、dao接口实现此代理，其他bean，包括config注解、通过配置文件生成的bean不应该实现此代理。
  */
 public class CGLIB implements MethodInterceptor {
-    private static Logger logger = LoggerFactory.getLogger(CGLIB.class);
+    Log log = LogFactory.getLog();
     private Object target;
 
     public CGLIB() {
@@ -83,7 +83,7 @@ public class CGLIB implements MethodInterceptor {
                     aspectArgs= new Object[]{methodProxy, targetProxy, result, args};
                     aspectMethod.invoke(aspectObject, aspectArgs);
                 } else {
-                    logger.error("切面异常,未知切面类型");
+                    log.error("切面异常,未知切面类型");
                 }
             }
             /*后置切面时result不为空*/
@@ -92,7 +92,7 @@ public class CGLIB implements MethodInterceptor {
             }
             return methodProxy.invokeSuper(target, args);
         }catch (IllegalAccessException e) {
-            logger.error("切面异常!", e);
+            log.error("切面异常!", e);
             return new ResultVO<>(ResCodeEnum.BusInExce,"切面异常");
         } catch (InvocationTargetException e) {
             throw e.getTargetException();

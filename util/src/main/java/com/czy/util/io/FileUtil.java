@@ -5,8 +5,6 @@ import com.czy.util.ListUtil;
 import com.czy.util.text.StringUtil;
 import com.czy.util.model.MyMap;
 import com.czy.util.model.StringMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -28,7 +26,6 @@ import java.util.Properties;
  * Created by com.czy on 2019/5/15.
  */
 public class FileUtil {
-    private static Logger logger = LoggerFactory.getLogger(FileUtil.class);
     private static FileUtil fileUtil = new FileUtil();
 
     public static FileUtil getInstance() {
@@ -213,7 +210,8 @@ public class FileUtil {
                 }
             }
         } catch (Exception e) {
-            logger.error("加载类{}错误", filePath);
+            //加载类 filePath
+            e.printStackTrace();
         }
         return classList;
     }
@@ -270,7 +268,8 @@ public class FileUtil {
                 }
             }
         } catch (Exception e) {
-            logger.error("重命名{}错误", oldName);
+            //重命名错误 oldName
+            e.printStackTrace();
         }
     }
 
@@ -465,15 +464,15 @@ public class FileUtil {
             return list;
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
-            logger.error("加载配置文件{}失败。", filePath);
+            // 加载配置文件 filePath
             return null;
         } catch (SAXException e) {
             e.printStackTrace();
-            logger.error("加载配置文件{}失败。", filePath);
+            // 加载配置文件 filePath
             return null;
         } catch (IOException e) {
             e.printStackTrace();
-            logger.error("加载配置文件{}失败。", filePath);
+            // 加载配置文件 filePath
             return null;
         }
 
@@ -516,25 +515,27 @@ public class FileUtil {
             in.close();
             return proMap;
         } catch (IOException e) {
-            logger.error("加载配置文件{}失败。", filePath);
+            //加载配置文件失败 filePath
+            e.printStackTrace();
             return null;
         }
     }
 
-    public static <T> StringMap<T> readConfigFileByYML(File file) {
+    public static <T> Optional<StringMap<T>> readConfigFileByYML(File file) {
         if (file == null) {
-            return null;
+            return Optional.empty();
         }
         if (!file.exists()) {
-            logger.error("文件{}未找到", file.getPath());
-            return null;
+            //文件未找到
+            return Optional.empty();
         }
         try (InputStream in = new FileInputStream(file)) {
             StringMap<T> proMap = new Yaml().loadAs(in, StringMap.class);
-            return proMap;
+            return Optional.ofNullable(proMap);
         } catch (IOException e) {
-            logger.error("加载配置文件{}失败。", file.getPath());
-            return null;
+            //加载配置文件失败 file.getPath()
+            e.printStackTrace();
+            return Optional.empty();
         }
     }
 
@@ -544,4 +545,16 @@ public class FileUtil {
     }
 
 
+    /**
+     * 返回当前所在盘符，两个字符。例 A:
+     * @return
+     */
+    public static Optional<String> getRoot() {
+        try {
+            return Optional.of(new File("").getCanonicalPath().substring(0,2));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
+    }
 }

@@ -1,10 +1,13 @@
 package com.czy.core.model;
 
 import com.czy.core.enums.ActiveEnum;
+import com.czy.util.model.Par;
+import com.czy.util.model.StringMap;
 import com.czy.util.text.StringUtil;
 import com.czy.util.io.FileUtil;
 
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author chenzy
@@ -14,25 +17,23 @@ import java.util.Map;
 public class ProjectInfo {
     public ProjectInfo() {
     }
-    protected Map<String, Object> initPro(String moduleDir) {
-        Map<String, Map<String, Object>> proMap = FileUtil.readConfigFileByYML(FileUtil.getResourceFile(moduleDir, "application.yml"));
-        if (proMap != null) {
+    protected Optional<Map<String, Object>> initPro(String moduleDir) {
+        Optional<StringMap<Map<String, Object>>> optional =FileUtil.readConfigFileByYML(FileUtil.getResourceFile(moduleDir, "application.yml"));
+        Par<Map<String, Object>> result = new Par<>();
+        optional.ifPresent(proMap->{
             var profileMap= proMap.get("profiles");
             String active = StringUtil.getStr(profileMap.get("active"), "dev");
             String groupId = StringUtil.getStr(profileMap.get("groupId"), "com.czy.core");
-            moduleDir = StringUtil.getStr(profileMap.get("moduleDir"), moduleDir);
+            ProjectInfo.this.moduleDir = StringUtil.getStr(profileMap.get("moduleDir"), moduleDir);
             setActive(ActiveEnum.getEnum(active));
             setGroupId(groupId);
             setModuleDir(moduleDir);
-            return profileMap;
-        }
-        return null;
+            result.set(profileMap);
+        });
+        return Optional.ofNullable(result.get());
     }
     public ProjectInfo init(String moduleDir){
-        Map<String, Object> profileMap = initPro(moduleDir);
-        if (profileMap==null||profileMap.isEmpty()){
-            return this;
-        }
+        initPro(moduleDir);
         return this;
     }
     private ActiveEnum active;

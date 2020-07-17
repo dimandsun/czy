@@ -4,7 +4,6 @@
  * @since 2020/5/3
  */open module com.czy.core {
     requires cglib;
-    requires slf4j.api;
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
     requires org.apache.commons.lang3;
@@ -17,9 +16,8 @@
     requires java.naming;
     requires org.objectweb.asm;
     requires jyaml;
-    requires log4j.core;
-    requires log4j.api;
     requires com.czy.util;
+    requires com.czy.log;
     exports com.czy.core.util;
     exports com.czy.user.model;
     exports com.czy.swing.view;

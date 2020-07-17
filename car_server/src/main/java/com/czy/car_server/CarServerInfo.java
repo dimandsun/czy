@@ -15,12 +15,11 @@ public class CarServerInfo extends ProjectInfo {
 
     @Override
     public CarServerInfo init(String moduleDir) {
-        Map<String, Object> profileMap = initPro(moduleDir);
-        if (profileMap==null||profileMap.isEmpty()){
-            return this;
-        }
-        Integer port = StringUtil.getInt(profileMap.get("port"),80);
-        setPort(port);
+        initPro(moduleDir).ifPresent(map->{
+            Integer port = StringUtil.getInt(map.get("port"),80);
+            setPort(port);
+        });
+
         return this;
     }
 

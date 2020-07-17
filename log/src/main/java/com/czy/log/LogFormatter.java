@@ -18,11 +18,7 @@ public class LogFormatter extends Formatter {
     //日期格式
     private String datePattern;
 
-    public String getDatePattern() {
-        return datePattern;
-    }
-
-    public void setDatePattern(String datePattern) {
+    public LogFormatter(String datePattern) {
         this.datePattern = datePattern;
     }
 

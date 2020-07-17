@@ -22,14 +22,12 @@ public class CarClientInfo extends ProjectInfo {
 
     @Override
     public CarClientInfo init(String moduleDir) {
-        Map<String, Object> profileMap = initPro(moduleDir);
-        if (profileMap==null||profileMap.isEmpty()){
-            return this;
-        }
-        Integer port = StringUtil.getInt(profileMap.get("port"),80);
-        String host = StringUtil.getStr(profileMap.get("host"),"127.0.0.1");
-        setPort(port);
-        setHost(host);
+        initPro(moduleDir).ifPresent(map->{
+            Integer port = StringUtil.getInt(map.get("port"),80);
+            String host = StringUtil.getStr(map.get("host"),"127.0.0.1");
+            setPort(port);
+            setHost(host);
+        });
         return this;
     }
 

@@ -13,6 +13,8 @@ import com.czy.core.enums.QuestEnum;
 import com.czy.core.model.BeanModel;
 import com.czy.core.model.ProjectInfo;
 import com.czy.core.model.RouteModel;
+import com.czy.log.Log;
+import com.czy.log.LogFactory;
 import com.czy.util.ListUtil;
 import com.czy.util.text.StringUtil;
 import com.czy.util.io.FileUtil;
@@ -23,8 +25,6 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -40,11 +40,11 @@ import java.util.*;
 
 /**
  * @author chenzy
- *  应用容器，维护应用下的属性和bean对象
+ * 应用容器，维护应用下的属性和bean对象
  * @since 2020-03-31
  */
-public class ProjectContainer implements Closeable{
-    private static Logger logger = LoggerFactory.getLogger(ProjectContainer.class);
+public class ProjectContainer implements Closeable {
+    private static Log logger = LogFactory.getLog(ProjectContainer.class);
     private static ProjectContainer instance = new ProjectContainer();
     private StringMap<ProjectInfo> projectInfoMap = new StringMap();
 
@@ -150,10 +150,11 @@ public class ProjectContainer implements Closeable{
     public void setProBean(ProjectInfo projectInfo) {
         try {
             String proFileName = "application-" + projectInfo.getActive().getMsg() + ".yml";
-            var proMap = FileUtil.readConfigFileByYML(FileUtil.getResourceFile(projectInfo.getModuleDir(), proFileName));
-            if (proMap == null) {
+            Optional<StringMap<Object>> optional = FileUtil.readConfigFileByYML(FileUtil.getResourceFile(projectInfo.getModuleDir(), proFileName));
+            if (optional.isPresent()){
                 return;
             }
+            var proMap=optional.get();
             /*1、注入数据源*/
             var datasourceMap = (Map<String, Map<String, Object>>) proMap.get("datasource");
             if (datasourceMap != null) {
@@ -620,11 +621,12 @@ public class ProjectContainer implements Closeable{
             e.printStackTrace();
         }
     }
+
     @Override
-    public void close(){
+    public void close() {
         beanMap.values().forEach(beanModel -> {
-            Optional.ofNullable(beanModel).map(temp -> temp.getBean()).ifPresent(bean->{
-                if (bean instanceof Closeable closeable){
+            Optional.ofNullable(beanModel).map(temp -> temp.getBean()).ifPresent(bean -> {
+                if (bean instanceof Closeable closeable) {
                     try {
                         closeable.close();
                     } catch (IOException e) {
@@ -647,6 +649,7 @@ public class ProjectContainer implements Closeable{
     private Boolean notClassType(Class c, Class c1, Class c2) {
         return c != c1 && (c2 == null || c != c2);
     }
+
     public static void main(String[] args) {
         ProjectContainer instance = ProjectContainer.getInstance();
         instance.addProjectInfo(new ProjectInfo().init("core"));
