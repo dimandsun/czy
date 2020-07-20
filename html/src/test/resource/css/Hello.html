@@ -9,9 +9,10 @@
     <style>
       /* @font-face 可以把服务器中的字体下载到客户端 供用户使用 */
       @font-face {
-        font-family:'我的字体';
+        font-family: '我的字体';
         src: url('./xx.ttf');
       }
+
       p {
         color: blue;
         /*font-family:
@@ -57,6 +58,21 @@
     </style>
   </head>
   <body>
+    <script>
+      // const newNums = nums.filter((n, index) => index !== i)).
+
+      var permutate = function(nums, set = [], answers = []) {
+        if (!nums.length) answers.push([...set]);
+        for (let i = 0; i < nums.length; i++) {
+          // especially how to transfer next line from js to java.
+          const newNums = nums.filter((n, index) => index !== i);
+          set.push(nus[i]);
+          permute(newNums, set, answers);
+          set.pop();
+        }
+        return answers;
+      };
+    </script>
     <!-- 
      CSS:层叠样式表
       -网页实际上是一个多层结构，通过css可以分别为网页的每一层设置样式，最终显示最上面一层

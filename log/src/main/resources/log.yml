@@ -3,3 +3,5 @@ logs:
   datePattern: yyyyMMddHHmmssSSS
   filePath: /czy/logs/test.log
   level: info #all/debug/info/warn/error
+  fileSize: 1024
+  fileCount: 30

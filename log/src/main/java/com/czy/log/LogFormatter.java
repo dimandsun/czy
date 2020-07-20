@@ -1,13 +1,9 @@
 package com.czy.log;
 
-import com.czy.util.text.StringUtil;
 import com.czy.util.time.TimeUtil;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.*;
 
 /**

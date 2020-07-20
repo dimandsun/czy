@@ -24,8 +24,8 @@ public class LogFactory {
         if (logMap.containsKey(logName)){
             return logMap.get(logName);
         }
-        var filePath=FileUtil.getRoot().get()+File.separator+"logs"+File.separator+"log.log";
-        var log = createLog(logName,filePath,LogLevel.ALL,TimeUtil.yyyyMMddHHmmssSSS);
+        var filePath=FileUtil.getRoot().get()+File.separator+"logs"+File.separator+"log％g.log";
+        var log = createLog(new FileSetting(filePath,1024,30),logName,LogLevel.ALL,TimeUtil.yyyyMMddHHmmssSSS);
         logMap.put(logName,log);
         return logMap.get(logName);
     }
@@ -46,11 +46,11 @@ public class LogFactory {
     public static Log getLog(Class c) {
         return getLog(c.getSimpleName());
     }
-    private static Log createLog(String logName, String filePath, LogLevel level, String datePattern) {
+    private static Log createLog(FileSetting fileSetting,String logName, LogLevel level, String datePattern) {
         var logger=Logger.getLogger(logName);
         FileHandler fileHandler = null;
         try {
-            fileHandler = new FileHandler(filePath,true);
+            fileHandler = new FileHandler(fileSetting.filePath(),fileSetting.fileSize(),fileSetting.fileCount(),true);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -71,9 +71,12 @@ public class LogFactory {
             if ('/'!=filePath.charAt(0)){
                 filePath = FileUtil.getRoot().get()+filePath;
             }
+            Integer fileSize= StringUtil.getInt(map.get("fileSize"), 1024);
+            Integer fileCount= StringUtil.getInt(map.get("fileCount"), 30);
+            var fileSetting=new FileSetting(filePath,fileSize,fileCount);
             String datePattern= StringUtil.getStr(map.get("datePattern"), TimeUtil.yyyyMMddHHmmssSSS);
             LogLevel level= LogLevel.getLevel(StringUtil.getStr(map.get("level"), "all"));
-            var log =createLog(logName,filePath,level,datePattern);
+            var log =createLog(fileSetting,logName,level,datePattern);
             logMap.put(logName,log);
         });
     }

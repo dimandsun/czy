@@ -13,55 +13,64 @@ import java.util.function.BiConsumer;
  * @date 2020-07-17
  */
 public class SQLBuilder {
+    private SQLBuilder(){}
     //预处理sql，即用?代替参数值
-    private StringBuffer preSql = new StringBuffer();
-    private List<String> columns;
-    private List<Object> values;
+    private String preSql = null;
+    private List<Object> values=null;
+    private WhereSQL whereSQL=null;
+    private static SQLBuilder create(SQLEnum sqlEnum, String tableName) {
+        var sqlBuilder=new SQLBuilder();
+        var sql = sqlEnum.getMsg();
+        sql = sql.replace("{tableName}", tableName);
+        sqlBuilder.preSql = sql;
+        return sqlBuilder;
+    }
+    public static SQLBuilder insert(String tableName,StringMap columnMap){
+        var sqlBuilder= create(SQLEnum.Insert, tableName);
+        if (columnMap == null || columnMap.isEmpty()) {
+            return sqlBuilder;
+        }
+        var keys = columnMap.keySet().toString();
+        sqlBuilder.preSql=sqlBuilder.preSql.replace("[columns]",keys.substring(1,keys.length()-1));
+        if (sqlBuilder.values==null){
+            sqlBuilder.values=new ArrayList<>();
+        }
+        columnMap.values().forEach(value->{
+            sqlBuilder.values.add(value);
+        });
+        return sqlBuilder;
+    }
+    public static WhereSQL delete(String tableName){
+        return create(SQLEnum.Insert, tableName).getWhereSQL();
+    }
+    private WhereSQL getWhereSQL(){
+        if (whereSQL==null){
 
-    private SQLBuilder begin(SQLEnum sqlEnum, String tableName) {
-        String sql = switch (sqlEnum) {
-            case Insert -> "insert into " + tableName;
-            case Delete -> "delete from " + tableName;
-            case Update -> "update " + tableName;
-            case Select -> "select " + tableName;
-            case Truncate -> "truncate table " + tableName + ";";
-            case Create -> "create table " + tableName;
-            case Drop -> "drop table " + tableName;
-            case Alter -> "alter ";
-            default -> "";
-        };
-        sql=sqlEnum.getMsg();
-        sql=sql.replace("{tableName}",tableName);
-        preSql.append(sql);
-        return this;
+        }
+        return whereSQL = new WhereSQL();
     }
-    public SQLBuilder insert(String tableName) {
-        begin(SQLEnum.Insert, tableName);
-        return this;
-    }
-    public SQLBuilder column(StringMap columnMap) {
-        if (columnMap==null||columnMap.isEmpty()){
+    class WhereSQL{
+        private String whereSql;
+        private WhereSQL(){
+            whereSql="where ";
+        }
+        public WhereSQL and(){
+            whereSql+="and ";
             return this;
         }
-        if (columns==null){
-            columns=new ArrayList<>(columnMap.size());
+        public WhereSQL or(){
+            whereSql+="or ";
+            return this;
         }
-        if (values==null){
-            values = new ArrayList<>(columnMap.size());
+        public <T>WhereSQL equal(String columnName,T value){
+            whereSql+=columnName+"=? ";
+            SQLBuilder.this.values.add(value);
+            return this;
         }
-        columnMap.forEach((BiConsumer<String, Object>) (key,value)->{
-            columns.add(key);
-            values.add(value);
-        });
-        return this;
-    }
-    public String preSql() {
-
-//        insert into {tableName}([columns])values([values]);
-
-        return preSql.toString();
-    }
-    public List preValues() {
-        return null;
+        public <T>WhereSQL notEqual(String columnName,T value){
+            whereSql+=columnName+"!=? ";
+            SQLBuilder.this.values.add(value);
+            return this;
+        }
     }
 }

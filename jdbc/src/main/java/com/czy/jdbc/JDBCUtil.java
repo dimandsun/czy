@@ -22,8 +22,7 @@ public class JDBCUtil {
      * @return
      */
     Boolean insertOne(String tableName, StringMap columnMap) {
-        var sqlBuilder=new SQLBuilder();
-        sqlBuilder.insert(tableName).column(columnMap);
+        var sqlBuilder=SQLBuilder.insert(tableName).column(columnMap);
         String sql = sqlBuilder.preSql();
         return executeOne(sql, sqlBuilder.preValues());
     }
