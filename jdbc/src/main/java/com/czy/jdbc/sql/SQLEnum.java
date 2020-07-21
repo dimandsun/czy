@@ -1,4 +1,4 @@
-package com.czy.jdbc;
+package com.czy.jdbc.sql;
 
 import com.czy.util.enums.IEnum;
 
@@ -13,11 +13,11 @@ import com.czy.util.enums.IEnum;
 public enum SQLEnum implements IEnum<String> {
     Insert("insert","insert into {tableName}([columns])values([values]);"),
     Delete("delete","delete from {tableName}"),
-    Update("update","update {} set {} where {};"),
-    Select("select","select {} from {} where {};"),
-    Truncate("truncate","truncate table {};"),
-    Create("create","create table {};"),
-    Drop("drop","drop table {};"),
+    Update("update","update {tableName} set {setContent}"),
+    Select("select","select {} from {tableName}"),
+    Truncate("truncate","truncate table {tableName};"),
+    Create("create","{createContent}"),
+    Drop("drop","drop table {tableName};"),
     Alter("alter","alter {};"),
 
     ;

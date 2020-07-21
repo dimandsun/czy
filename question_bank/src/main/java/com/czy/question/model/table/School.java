@@ -1,12 +1,12 @@
-package com.czy.question.server.model.table;
+package com.czy.question.model.table;
 import com.czy.core.annotation.db.Table;
 /**
  * @author chenzy
  * @date 2020-06-22
- *  科目
+ *  学校
  */
-@Table("subject")
-public class Subject {
+@Table("school")
+public class School {
 	/**/
 	private Integer id;
 	/**/
@@ -15,13 +15,6 @@ public class Subject {
 	private String name;
 	/*说明*/
 	private String des;
-
-	public Subject() {
-	}
-
-	public Subject(String name) {
-		this.name = name;
-	}
 
 	public Integer getId(){
 		return id;

@@ -1,12 +1,12 @@
-package com.czy.question.server.model.table;
+package com.czy.question.model.table;
 import com.czy.core.annotation.db.Table;
 /**
  * @author chenzy
  * @date 2020-06-22
- *  题型-填空、判断、单选、多选、不定项选择、阅读理解、完型填空、翻译、名词解释
+ *  科目
  */
-@Table("question_type")
-public class QuestionType {
+@Table("subject")
+public class Subject {
 	/**/
 	private Integer id;
 	/**/
@@ -15,6 +15,13 @@ public class QuestionType {
 	private String name;
 	/*说明*/
 	private String des;
+
+	public Subject() {
+	}
+
+	public Subject(String name) {
+		this.name = name;
+	}
 
 	public Integer getId(){
 		return id;

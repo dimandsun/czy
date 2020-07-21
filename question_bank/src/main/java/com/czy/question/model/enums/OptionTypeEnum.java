@@ -1,4 +1,4 @@
-package com.czy.question.server.model.enums;
+package com.czy.question.model.enums;
 
 import com.czy.util.enums.IEnum;
 

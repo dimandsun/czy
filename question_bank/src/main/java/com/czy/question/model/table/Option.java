@@ -1,4 +1,4 @@
-package com.czy.question.server.model.table;
+package com.czy.question.model.table;
 import com.czy.core.annotation.db.Table;
 import com.czy.question.server.model.enums.OptionTypeEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,20 +1,18 @@
-package com.czy.question.server.model.table;
+package com.czy.question.model.table;
 import com.czy.core.annotation.db.Table;
 /**
  * @author chenzy
  * @date 2020-06-22
- *  多个题目的共同题干，如英语的阅读理解
+ *  题型-填空、判断、单选、多选、不定项选择、阅读理解、完型填空、翻译、名词解释
  */
-@Table("question_group_stem")
-public class QuestionGroupStem {
+@Table("question_type")
+public class QuestionType {
 	/**/
 	private Integer id;
 	/**/
 	private String code;
 	/**/
 	private String name;
-	/*题干*/
-	private String content;
 	/*说明*/
 	private String des;
 
@@ -35,12 +33,6 @@ public class QuestionGroupStem {
 	}
 	public void setName(String name){
 		 this.name=name;
-	}
-	public String getContent(){
-		return content;
-	}
-	public void setContent(String content){
-		 this.content=content;
 	}
 	public String getDes(){
 		return des;
