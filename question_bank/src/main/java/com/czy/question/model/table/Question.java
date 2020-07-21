@@ -25,7 +25,7 @@ public class Question {
 	@JsonProperty("question_type_id")
 	private QuestionTypeEnum questionType;
 
-	/*答案：作文在另一张表composition*/
+	/*答案：作文在另一张表composition，此字段无值*/
 	@JsonProperty("answer_content")
 	private String answerContent;
 	/*说明*/

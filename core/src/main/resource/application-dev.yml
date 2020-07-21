@@ -1,7 +1,5 @@
-mybatis:
-  typeAliases:
-    packageName: com.czy.frame..*model..*dao.*
-datasource:
+
+dataSources:
   mysql-czy-test:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver

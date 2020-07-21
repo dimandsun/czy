@@ -1,8 +1,7 @@
 package com.czy.jdbc.sql;
 
+import com.czy.jdbc.sql.enums.RelationEnum;
 import com.czy.util.text.StringUtil;
-
-import java.util.List;
 
 /**
  * @author chenzy

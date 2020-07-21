@@ -1,6 +1,7 @@
 package com.czy.jdbc.sql;
 
 
+import com.czy.jdbc.sql.enums.SQLTypeEnum;
 import com.czy.util.model.StringMap;
 
 import java.lang.reflect.InvocationTargetException;
@@ -16,8 +17,8 @@ public class SQLFactory {
     private SQLFactory() {
     }
 
-    private static <T extends SQL> T createSQL(SQLEnum sqlEnum, String tableName, Class<T> sqlClass) {
-        var sql = sqlEnum.getMsg();
+    private static <T extends SQL> T createSQL(SQLTypeEnum sqlTypeEnum, String tableName, Class<T> sqlClass) {
+        var sql = sqlTypeEnum.getMsg();
         sql = sql.replace("{tableName}", tableName);
         T result = null;
         try {
@@ -35,32 +36,32 @@ public class SQLFactory {
     }
 
     public static InsertSQL insert(String tableName, StringMap columnMap) {
-        var sql = createSQL(SQLEnum.Insert, tableName, InsertSQL.class);
+        var sql = createSQL(SQLTypeEnum.Insert, tableName, InsertSQL.class);
         return sql.setColumnValues(columnMap);
     }
     public static DeleteSQL delete(String tableName) {
-        return createSQL(SQLEnum.Delete, tableName, DeleteSQL.class);
+        return createSQL(SQLTypeEnum.Delete, tableName, DeleteSQL.class);
     }
     public static DeleteSQL delete(String tableName,StringMap whereMap) {
-        var sql= createSQL(SQLEnum.Delete, tableName, DeleteSQL.class);
+        var sql= createSQL(SQLTypeEnum.Delete, tableName, DeleteSQL.class);
         whereMap.forEach((BiConsumer<String,Object>)(key, value)-> sql.equal(key,value));
         return sql;
     }
     public static UpdateSQL update(String tableName, StringMap columnMap) {
-        var sql = createSQL(SQLEnum.Delete, tableName, UpdateSQL.class);
+        var sql = createSQL(SQLTypeEnum.Delete, tableName, UpdateSQL.class);
         return sql.setColumnValues(columnMap);
     }
     public static UpdateSQL update(String tableName, StringMap columnMap,StringMap whereMap) {
-        var sql = createSQL(SQLEnum.Delete, tableName, UpdateSQL.class);
+        var sql = createSQL(SQLTypeEnum.Delete, tableName, UpdateSQL.class);
         sql.setColumnValues(columnMap);
         whereMap.forEach((BiConsumer<String,Object>)(key, value)-> sql.equal(key,value));
         return sql;
     }
     public static SelectSQL select(String tableName) {
-        return createSQL(SQLEnum.Select, tableName, SelectSQL.class);
+        return createSQL(SQLTypeEnum.Select, tableName, SelectSQL.class);
     }
     public static SelectSQL select(String tableName,StringMap whereMap) {
-        var sql= createSQL(SQLEnum.Select, tableName, SelectSQL.class);
+        var sql= createSQL(SQLTypeEnum.Select, tableName, SelectSQL.class);
         whereMap.forEach((BiConsumer<String,Object>)(key, value)-> sql.equal(key,value));
         return sql;
     }
@@ -71,7 +72,7 @@ public class SQLFactory {
      * @return
      */
     public static String truncateTable(String tableName){
-      return  createSQL(SQLEnum.Truncate, tableName, TruncateSQL.class).getEndPreSql();
+      return  createSQL(SQLTypeEnum.Truncate, tableName, TruncateSQL.class).getEndPreSql();
     }
     /**
      * 删除表
@@ -79,7 +80,7 @@ public class SQLFactory {
      * @return
      */
     public static String dropTable(String tableName){
-        return  createSQL(SQLEnum.Truncate, tableName, DropSQL.class).getEndPreSql();
+        return  createSQL(SQLTypeEnum.Truncate, tableName, DropSQL.class).getEndPreSql();
     }
     /**
      * 创建表

@@ -4,13 +4,11 @@ import com.czy.jdbc.exception.DataSourceException;
 import com.czy.util.io.FileUtil;
 import com.czy.util.json.JsonUtil;
 import com.czy.util.model.SettingFile;
+import com.czy.util.model.StringMap;
 import com.czy.util.text.StringUtil;
 
 import java.sql.SQLException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author chenzy
@@ -48,7 +46,21 @@ public class DataSourceFactory {
             settingFile = new SettingFile("", "jdbc.yml");
         }
         var file = FileUtil.getResourceFile(settingFile.moduleDir(), settingFile.fileName());
-        FileUtil.readConfigFileByYML(file).map(map -> (List<Map<String, Object>>) map.get("jdbc")).get().forEach(map -> {
+        init(FileUtil.readConfigFileByYML(file));
+    }
+    public static void reloadSetting(String moduleDir, String fileName) {
+        settingFile = new SettingFile(moduleDir, fileName);
+        reloadSetting();
+    }
+
+    public static void clear() {
+        if (dataSourceMap.isEmpty()) {
+            return;
+        }
+        dataSourceMap.values().forEach(dataSource -> dataSource.clear());
+    }
+    public static void init(Optional<StringMap<Object>> optional) {
+        optional.map(map -> (List<Map<String, Object>>) map.get("dataSources")).get().forEach(map -> {
             var sourceSetting = JsonUtil.map2Model(map, DataSourceSetting.class);
             if (StringUtil.isBlank(sourceSetting.driverClassName())) {
                 return;
@@ -63,16 +75,5 @@ public class DataSourceFactory {
                 e.printStackTrace();
             }
         });
-    }
-    public static void reloadSetting(String moduleDir, String fileName) {
-        settingFile = new SettingFile(moduleDir, fileName);
-        reloadSetting();
-    }
-
-    public static void clear() {
-        if (dataSourceMap.isEmpty()) {
-            return;
-        }
-        dataSourceMap.values().forEach(dataSource -> dataSource.clear());
     }
 }

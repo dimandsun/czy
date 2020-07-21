@@ -1,18 +1,15 @@
 package com.czy.core;
 
-import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.czy.core.annotation.Aspect;
 import com.czy.core.annotation.Auto;
 import com.czy.core.annotation.bean.*;
 import com.czy.core.annotation.mapping.Mapping;
 import com.czy.core.annotation.mapping.MappingAnnotation;
-import com.czy.core.db.config.DataSourceHolder;
-import com.czy.core.db.model.MybatisInfo;
-import com.czy.core.db.model.TypeAliases;
 import com.czy.core.enums.QuestEnum;
 import com.czy.core.model.BeanModel;
 import com.czy.core.model.ProjectInfo;
 import com.czy.core.model.RouteModel;
+import com.czy.jdbc.pool.DataSourceFactory;
 import com.czy.log.Log;
 import com.czy.log.LogFactory;
 import com.czy.util.ListUtil;
@@ -20,15 +17,9 @@ import com.czy.util.text.StringUtil;
 import com.czy.util.io.FileUtil;
 import com.czy.util.model.OutPar;
 import com.czy.util.model.StringMap;
-import org.apache.ibatis.mapping.Environment;
-import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
-import javax.sql.DataSource;
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
@@ -62,14 +53,6 @@ public class ProjectContainer implements Closeable {
     }
 
 
-    /*数据源集合*/
-    private StringMap<DataSource> dataSourceMap = new StringMap();
-    private StringMap<SqlSessionFactory> dataFactoryMap = new StringMap();
-
-    public StringMap<SqlSessionFactory> getDataFactoryMap() {
-        return dataFactoryMap;
-    }
-
     protected ProjectContainer() {
     }
 
@@ -88,8 +71,6 @@ public class ProjectContainer implements Closeable {
             projectInfoMap.values().forEach(projectInfo -> {
                 /*注入bean：读取配置文件中的bean*/
                 setProBean(projectInfo);
-                /*mybatis配置多数据源*/
-                setMybatis(projectInfo);
             });
             /*注入bean：把代码中的bean信息放入beanMap和routeMap*/
             setJavaBeanMap();
@@ -105,48 +86,6 @@ public class ProjectContainer implements Closeable {
         }
     }
 
-    //设置默认的数据源
-    public void setDefaultDataSourceKey(ProjectInfo projectInfo) {
-        if (projectInfo == null) {
-            return;
-        }
-        /*从dataSourceMap中找到前缀为projectInfo.getModuleDir() + File.separator的key，把第一个作为默认的数据源key*/
-        dataSourceMap.keySet().stream().filter(dataSourceKey -> dataSourceKey.startsWith(projectInfo.getModuleDir() + File.separator))
-                .findFirst().ifPresent(defaultDataSourceKey -> {
-            if (DataSourceHolder.getInstance() == null) {
-                DataSourceHolder.createInstance(String.class, defaultDataSourceKey);
-            } else {
-                DataSourceHolder.getInstance().setDefaultDataSourceKey(defaultDataSourceKey);
-            }
-        });
-
-    }
-
-    private void setMybatis(ProjectInfo projectInfo) {
-        String packageName = null;
-        if (beanMap.get("mybatisInfo") != null) {
-            packageName = ((MybatisInfo) beanMap.get(projectInfo.getModuleDir() + File.separator + "mybatisInfo").getBean()).getTypeAliases().getPackageName();
-        }
-        for (Map.Entry<String, DataSource> entry : dataSourceMap.entrySet()) {
-            if (DataSourceHolder.getInstance() == null) {
-                DataSourceHolder.createInstance(String.class, entry.getKey());
-            }
-            var configuration = new Configuration(
-                    new Environment("development", new JdbcTransactionFactory(), entry.getValue()));
-            configuration.addLoadedResource("mybatis-config.xml");
-//                configuration.isResourceLoaded("mybatis-config.xml")
-            /*是否允许单一语句返回多结果集*/
-            configuration.setMultipleResultSetsEnabled(true);
-            /*mybatis设置对象别名*/
-            if (packageName != null) {
-                getClassList(packageName).forEach(c -> configuration.getTypeAliasRegistry().registerAlias(c));
-            }
-            /*设值mapper*/
-            setMapper(configuration);
-            dataFactoryMap.put(entry.getKey(), new SqlSessionFactoryBuilder().build(configuration));
-        }
-    }
-
     public void setProBean(ProjectInfo projectInfo) {
         try {
             String proFileName = "application-" + projectInfo.getActive().getMsg() + ".yml";
@@ -156,24 +95,7 @@ public class ProjectContainer implements Closeable {
             }
             var proMap=optional.get();
             /*1、注入数据源*/
-            var datasourceMap = (Map<String, Map<String, Object>>) proMap.get("datasource");
-            if (datasourceMap != null) {
-                datasourceMap.entrySet().forEach(entry -> {
-                    try {
-                        dataSourceMap.add(projectInfo.getModuleDir() + File.separator + entry.getKey(), DruidDataSourceFactory.createDataSource(entry.getValue()));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-            }
-            /*写入mybatis配置信息*/
-            String packageName = Optional.ofNullable((Map<String, Map<String, String>>) proMap.get("mybatis"))
-                    .map(projectMap -> projectMap.get("typeAliases")).map(projectMap -> projectMap.get("packageName")).orElse("");
-            if (packageName != "") {
-                MybatisInfo mybatisInfo = new MybatisInfo(new TypeAliases(packageName));
-                var beanName = projectInfo.getModuleDir() + File.separator + "mybatisInfo";
-                beanMap.add(beanName, new BeanModel(beanName, mybatisInfo, MybatisInfo.class));
-            }
+            DataSourceFactory.init(optional);
             /*2、注入redis*/
             setBeanRedis(proMap);
             /*3-注入memcache*/
@@ -260,13 +182,6 @@ public class ProjectContainer implements Closeable {
         initProject();
     }
 
-    private void setMapper(Configuration configuration) {
-        getClassList(Dao.class).forEach(c -> {
-            if (!configuration.hasMapper(c)) {
-                configuration.addMapper(c);
-            }
-        });
-    }
 
 
     private void setBeanRedis(Map<String, Object> proMap) {

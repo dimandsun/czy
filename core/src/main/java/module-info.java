@@ -9,15 +9,14 @@
     requires org.apache.commons.lang3;
     requires java.sql;
     requires java.desktop;
-    requires druid;
     requires jedis;
-    requires org.mybatis;
     requires org.yaml.snakeyaml;
     requires java.naming;
     requires org.objectweb.asm;
     requires jyaml;
     requires com.czy.util;
     requires com.czy.log;
+    requires com.czy.jdbc;
     exports com.czy.core.util;
     exports com.czy.user.model;
     exports com.czy.swing.view;

@@ -1,4 +1,4 @@
-package com.czy.jdbc.sql;
+package com.czy.jdbc.sql.enums;
 
 import com.czy.util.enums.IEnum;
 
@@ -10,7 +10,7 @@ import com.czy.util.enums.IEnum;
  * 数据定义语言（DDL）：用来建立数据库、数据库对象和定义列的命令。包括：create、alter、drop。
  * 数据控制语言（DCL）：用来控制数据库组件的存取许可、权限等的命令。包括：grant、deny、revoke。
  */
-public enum SQLEnum implements IEnum<String> {
+public enum SQLTypeEnum implements IEnum<String> {
     Insert("insert","insert into {tableName}([columns])values([values]);"),
     Delete("delete","delete from {tableName}"),
     Update("update","update {tableName} set {setContent}"),
@@ -19,12 +19,13 @@ public enum SQLEnum implements IEnum<String> {
     Create("create","{createContent}"),
     Drop("drop","drop table {tableName};"),
     Alter("alter","alter {};"),
+    Other("other","alter {};"),
 
     ;
     private String code;
     private String msg;
 
-    SQLEnum(String code, String msg) {
+    SQLTypeEnum(String code, String msg) {
         this.code = code;
         this.msg = msg;
     }

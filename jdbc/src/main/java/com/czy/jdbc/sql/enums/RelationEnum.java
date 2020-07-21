@@ -1,4 +1,4 @@
-package com.czy.jdbc.sql;
+package com.czy.jdbc.sql.enums;
 
 import com.czy.util.enums.IEnum;
 

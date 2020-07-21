@@ -1,6 +1,6 @@
 package com.czy.question.model.table;
 import com.czy.core.annotation.db.Table;
-import com.czy.question.server.model.enums.OptionTypeEnum;
+import com.czy.question.model.enums.OptionTypeEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * @author chenzy
@@ -24,7 +24,7 @@ public class Option {
 	private String content;
 	/**/
 	@JsonProperty("question_id")
-	private String questionId;
+	private Integer questionId;
 	/*不是答案/是答案/有可能是答案*/
 	@JsonProperty("answer_status")
 	private Byte answerStatus;
@@ -63,10 +63,10 @@ public class Option {
 	public void setContent(String content){
 		 this.content=content;
 	}
-	public String getQuestionId(){
+	public Integer getQuestionId(){
 		return questionId;
 	}
-	public void setQuestionId(String questionId){
+	public void setQuestionId(Integer questionId){
 		 this.questionId=questionId;
 	}
 	public Byte getAnswerStatus(){

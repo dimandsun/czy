@@ -30,7 +30,7 @@ create table [option](
 	,name nvarchar(20) comment ''
 	,option_type tinyint comment '选项类型-英文字母、阿拉伯数字、判断对错、文本、其他'
 	,content nvarchar(200) comment ''
-	,question_id nvarchar(50) comment ''
+	,question_id int comment ''
 	,answer_status tinyint comment '不是答案/是答案/有可能是答案'
 	,des nvarchar(20) comment '说明'
 )COMMENT='题目选项';
