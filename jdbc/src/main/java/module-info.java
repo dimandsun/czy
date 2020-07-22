@@ -7,4 +7,7 @@
     requires com.czy.log;
     exports com.czy.jdbc.pool;
     exports com.czy.jdbc;
+    exports com.czy.jdbc.sql.annotation;
+    exports com.czy.jdbc.sql.enums;
+    exports com.czy.jdbc.sql;
 }

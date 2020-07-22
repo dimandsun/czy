@@ -24,6 +24,7 @@ public class java13NewTest {
                 case Dev -> "b";
                 case Pro, Test -> "a";
                 default -> {
+                    String abc="";
                     yield 12;
                 }
             };

@@ -1,5 +1,6 @@
 package com.czy.jdbc.sql;
 
+import com.czy.jdbc.sql.enums.ReturnTypeEnum;
 import com.czy.util.model.StringMap;
 import com.czy.util.text.StringUtil;
 
@@ -9,16 +10,18 @@ import java.util.List;
  * @author chenzy
  * @date 2020-07-21
  */
-public class UpdateSQL extends WhereSQL implements SQL {
+public class UpdateSQLBuilder extends WhereSQL implements SQLBuilder {
     private String preSql;
     private List<Object> values;
     private String setSql;
-    public UpdateSQL(String preSql, List<Object> values) {
-        setSql(this);
+    private ReturnTypeEnum returnType;
+
+    public UpdateSQLBuilder(String preSql, List<Object> values) {
+        setSqlBuilder(this);
         this.preSql = preSql;
         this.values = values;
     }
-    public UpdateSQL setColumnValues(StringMap columnMap) {
+    public UpdateSQLBuilder setColumnValues(StringMap columnMap) {
         if (columnMap == null || columnMap.isEmpty()) {
             return this;
         }
@@ -54,6 +57,16 @@ public class UpdateSQL extends WhereSQL implements SQL {
     @Override
     public void setPreSql(String preSql) {
         this.preSql=preSql;
+    }
+
+    @Override
+    public void setReturnType(ReturnTypeEnum returnType) {
+        this.returnType=returnType;
+    }
+
+    @Override
+    public ReturnTypeEnum getReturnType() {
+        return null;
     }
 
     @Override

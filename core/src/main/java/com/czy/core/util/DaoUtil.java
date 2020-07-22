@@ -1,13 +1,14 @@
 package com.czy.core.util;
 
-import com.czy.core.ProjectContainer;
 import com.czy.core.annotation.bean.Dao;
 import com.czy.jdbc.DataSourceHolder;
-import com.czy.jdbc.pool.DataSourceFactory;
+import com.czy.jdbc.JDBCUtil;
+import com.czy.jdbc.sql.SQLBuilder;
+import com.czy.jdbc.sql.SQLFactory;
 import net.sf.cglib.proxy.MethodProxy;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.SQLException;
 
 /**
  * @author chenzy
@@ -24,24 +25,18 @@ public class DaoUtil {
             return null;
         }
         try {
-            var dataSource = DataSourceHolder.getInstance().get();
-
-            Object mapper = sqlSession.getMapper(targetClass);
-            Method mapperMethod = mapper.getClass().getMethod(method.getName(), method.getParameterTypes());
-            Object result = mapperMethod.invoke(mapper, args);
-            sqlSession.commit();
+            SQLBuilder sqlBuilder = SQLFactory.createSQL(method, args);
+            if (sqlBuilder == null) {
+                throw new SQLException("没有获取到sql信息!");
+            }
+            Object result = sqlBuilder.exec();
             return result;
-        } catch (NoSuchMethodException e) {
+        } catch (Throwable e) {
             e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-            throw e.getTargetException().getCause();
+            throw e;
         } finally {
             //防止内存泄漏
             DataSourceHolder.getInstance().clear();
         }
-        return null;
     }
 }

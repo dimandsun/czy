@@ -8,15 +8,15 @@ import com.czy.util.enums.IEnum;
  * 小于 小于等于 等于 不等于 大于 大于等于 likeAll likeLeft likeRight
  */
 public enum RelationEnum implements IEnum<String> {
-    LT("<? ", "{value} "),
-    LE("<=?","{value} "),
-    Equal("=?","{value} "),
-    NotEqual("<=?","{value} "),
-    GT(">?","{value} "),
-    GE(">=?","{value} "),
+    LT("<? ", "{value}"),
+    LE("<=? ","{value}"),
+    Equal("=? ","{value}"),
+    NotEqual("<=? ","{value}"),
+    GT(">? ","{value}"),
+    GE(">=? ","{value}"),
     Like(" like ? ","%{value}% "),
-    LikeLeft(" like ?","%{value} "),
-    LikeRight(" like ?","{value}% "),
+    LikeLeft(" like ? ","%{value}"),
+    LikeRight(" like ? ","{value}% "),
 
     ;
     private String code;
