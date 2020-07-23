@@ -31,7 +31,7 @@ public class DaoUtil {
             }
             Object result = sqlBuilder.exec();
             return result;
-        } catch (Throwable e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw e;
         } finally {

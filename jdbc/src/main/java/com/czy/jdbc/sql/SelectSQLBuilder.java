@@ -57,10 +57,13 @@ public class SelectSQLBuilder extends SQLBuilder {
     @Override
     public PreSql getEndSql() {
         var preSql=getBasicPreSql();
-        if (whereSQL!=null){
-            preSql.append(whereSQL.getEndSql());
+        if (!preSql.isEnd()){
+            if (whereSQL!=null){
+                preSql.append(whereSQL.getEndSql());
+            }
+            preSql.append(Optional.ofNullable(orderPreSql));
+            preSql.isEnd(true);
         }
-        preSql.append(Optional.ofNullable(orderPreSql));
         return preSql;
     }
 }

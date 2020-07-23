@@ -2,7 +2,7 @@ package com.czy.util.sqltool;
 
 import com.czy.util.time.DateUtil;
 import com.czy.util.io.FileUtil;
-import com.czy.util.ListUtil;
+import com.czy.util.set.ListUtil;
 import com.czy.util.text.StringUtil;
 import com.czy.util.sqltool.enums.ColumnTypeEnum;
 import com.czy.util.sqltool.model.ColumnSqlInfo;

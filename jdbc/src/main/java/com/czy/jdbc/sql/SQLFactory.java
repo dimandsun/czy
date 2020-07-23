@@ -9,6 +9,7 @@ import com.czy.util.ClassUtil;
 import com.czy.util.annotation.Par;
 import com.czy.util.json.JsonUtil;
 import com.czy.util.model.StringMap;
+import com.czy.util.set.MapUtil;
 import com.czy.util.text.StringUtil;
 
 import java.lang.reflect.InvocationTargetException;
@@ -27,30 +28,7 @@ public class SQLFactory {
     private SQLFactory() {
     }
 
-    public static SQLBuilder createSQL(SQLTypeEnum sqlTypeEnum, String sqlValue, ResultTypeEnum sqlReturnType, Object[] args) {
-        var sql = StringUtil.isBlank(sqlValue) ? sqlTypeEnum.getMsg() : sqlValue;
-        Class<SQLBuilder> sqlClass = sqlTypeEnum.getSqlClass();
-        if (sqlClass == null) {
-            return null;
-        }
-        SQLBuilder result = null;
-        try {
-            result = sqlClass.getDeclaredConstructor(String.class, List.class).newInstance(sql, new ArrayList<>());
-            result.setResultType(sqlReturnType);
-            Arrays.stream(args).forEach(arg -> {
-            });
 
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
 
     public static <T extends SQLBuilder> T createSQL(Method method, Object[] args) throws DaoException {
         try {
@@ -86,7 +64,9 @@ public class SQLFactory {
                 if (parameters.length != args.length) {
                     throw new DaoException("方法参数长度错误！");
                 }
-                //sql拼接：把参数放到一个map中，
+                /*sql拼接：把参数以键值对形式放到一个valueMap中，
+                    key为参数名或者参数的par注解值，
+                    value:当实际值不是基本数据类型,转成map*/
                 var valueMap = new StringMap();
                 for (var i = 0; i < parameters.length; i++) {
                     var par = parameters[i];
@@ -104,35 +84,18 @@ public class SQLFactory {
                 if (valueMap.isEmpty()) {
                     return result;
                 }
-                //对sql中的占位标记一一用?代替，并记住顺序
+                /*对sql中的占位标记一一用?代替，并记住顺序*/
                 int i = -1,j=-1;
                 var orderMarking = new ArrayList<String>();
                 while ((i = sqlValue.indexOf("#{"))!=-1 && (j=sqlValue.indexOf("}"))!=-1) {
                     orderMarking.add(sqlValue.substring(i,j));
                     sqlValue=sqlValue.substring(0,i)+"?"+sqlValue.substring(j);
                 }
-                //对这些顺序标记给上真正的值
+                /*对这些顺序标记给上真正的值*/
                 var values=new ArrayList<>();
-                orderMarking.forEach(marking ->{
-                    if (marking.contains(".")){
-                        //说明是map嵌套map
-                        var keys =marking.split(".");
-                        for (int k = 0; k < keys.length; k++) {
-                            valueMap.get(keys[k]);
-                        }
-                        MapUtil.getValue(keys);
-                    }else {
-                        values.add(valueMap.get(marking));
-                    }
-                });
-
-                valueMap.forEach((key, value) -> {
-
-
-                });
-                Arrays.stream(args).forEach(arg -> {
-
-                });
+                orderMarking.forEach(marking -> values.add(MapUtil.getValue(valueMap,marking.split("."))));
+                result.getEndSql().setValues(values);
+                result.getEndSql().isEnd(true);
                 return result;
             }
         } catch (NoSuchMethodException e) {
@@ -209,7 +172,7 @@ public class SQLFactory {
      * @return
      */
     public static String truncateTable(String tableName) {
-        return createSQL(SQLTypeEnum.Truncate, tableName, TruncateSQLBuilder.class).getEndSql();
+        return createSQL(SQLTypeEnum.Truncate, tableName, TruncateSQLBuilder.class).getEndSql().getSql();
     }
 
     /**
@@ -219,7 +182,7 @@ public class SQLFactory {
      * @return
      */
     public static String dropTable(String tableName) {
-        return createSQL(SQLTypeEnum.Truncate, tableName, DropSQLBuilder.class).getEndSql();
+        return createSQL(SQLTypeEnum.Truncate, tableName, DropSQLBuilder.class).getEndSql().getSql();
     }
 
     /**

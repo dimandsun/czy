@@ -6,6 +6,7 @@ import com.czy.util.text.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 
 /**
@@ -25,7 +26,7 @@ public class UpdateSQLBuilder extends SQLBuilder {
         if (setPreSql==null){
             setPreSql=new PreSql(" set "+key+"=?",List.of(value));
         }else {
-            setPreSql.appendSql(","+key+"=?");
+            setPreSql.append(","+key+"=?");
             setPreSql.getValues().add(value);
         }
         return this;
@@ -38,45 +39,20 @@ public class UpdateSQLBuilder extends SQLBuilder {
         return this;
     }
     @Override
-    public String getEndSql() {
-        var sql=getBasicPreSql().getSql();
-        if (StringUtil.isBlank(sql)){
-            return "";
+    public PreSql getEndSql() {
+        var preSql=getBasicPreSql();
+        if (!preSql.isEnd()){
+            preSql.isEnd(true);
+            if (setPreSql==null){
+                return preSql;
+            }
+            preSql.replace("#{setContent}",Optional.of(setPreSql));
+            if (whereSQL!=null){
+                preSql.append(whereSQL.getEndSql());
+            }
         }
-        if (setPreSql==null){
-            return "";
-        }
-        var setSql=setPreSql.getSql();
-        if (StringUtil.isBlank(sql)){
-            return "";
-        }
-        if (sql.contains("#{setContent}")){
-            sql=sql.replace("#{setContent}",setSql);
-        }else {
-            sql += setSql;
-        }
-        if (whereSQL!=null){
-            sql+=whereSQL.getEndSql();
-        }
-        return  sql;
+        return preSql;
     }
-
-    @Override
-    public List<Object> getEndValues() {
-        var values = getBasicPreSql().getValues();
-        if (setPreSql==null){
-            return values;
-        }
-        values.addAll(setPreSql.getValues());
-        if (whereSQL!=null){
-            values.addAll(whereSQL.getEndValues());
-        }
-        return values;
-    }
-    public PreSql getSetPreSql() {
-        return setPreSql;
-    }
-
     public void setSetPreSql(PreSql setPreSql) {
         this.setPreSql = setPreSql;
     }

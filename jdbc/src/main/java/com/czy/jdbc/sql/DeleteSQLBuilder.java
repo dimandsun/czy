@@ -23,9 +23,14 @@ public class DeleteSQLBuilder extends SQLBuilder {
 
     @Override
     public PreSql getEndSql() {
-        if (whereSQL != null) {
-            return getBasicPreSql().append(whereSQL.getEndSql());
+        var preSql=getBasicPreSql();
+        if (!preSql.isEnd()){
+            if (whereSQL != null) {
+                preSql.append(whereSQL.getEndSql());
+            }
+            preSql.isEnd(true);
         }
-        return getBasicPreSql();
+
+        return preSql;
     }
 }

@@ -11,6 +11,15 @@ import java.util.Optional;
 public class PreSql {
     private String sql;
     private List<Object> values;
+    /*sql拼接到末尾了*/
+    private Boolean isEnd=false;
+
+    public Boolean isEnd() {
+        return isEnd;
+    }
+    public void isEnd(Boolean isEnd) {
+        this.isEnd = isEnd;
+    }
 
     public String getSql() {
         return sql;
@@ -31,7 +40,13 @@ public class PreSql {
         });
         return this;
     }
-
+    public PreSql replace(String marking, Optional<PreSql> preSql) {
+        preSql.ifPresent(sql -> {
+            this.sql = this.sql.replace(marking,sql.getSql());
+            this.values.addAll(sql.getValues());
+        });
+        return this;
+    }
     public List<Object> getValues() {
         return values;
     }
@@ -40,10 +55,10 @@ public class PreSql {
         this.values = values;
     }
 
+
     public PreSql(String sql, List<Object> values) {
         this.sql = sql;
         this.values = values;
     }
-
 
 }
