@@ -1,7 +1,10 @@
+import com.czy.util.ClassUtil;
 import com.czy.util.model.StringMap;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -18,7 +21,21 @@ public class Te {
         person.addCat(new Cat(person));
         person.addCat(new Cat(person));
     }
+    @Test
+    public void abc(){
+//        StringMap.class == Map.class;
 
+        System.out.println(123);
+
+    }
+
+    @Test
+    public void b() throws NoSuchMethodException {
+        var method=Te.class.getMethod("a");
+        var type =method.getAnnotatedReturnType().getType();
+        type.equals(Void.TYPE);
+        System.out.println(1);
+    }
     @Test
     public void a() {
         /*方案1：硬编码*/
@@ -75,5 +92,54 @@ public class Te {
             var temp=map.values().toString();
             System.out.println(temp.substring(1,temp.length()-1));
         }
+    }
+    @Test
+    public void test() {
+        List<Integer> lastNums = new ArrayList<>();
+        lastNums.add(1);
+        for (int i = 0; i < 10; i ++) {
+            showNums(lastNums);
+            lastNums = calcNewNums(lastNums);
+        }
+    }
+    /**
+     * 打印输出队列
+     * @duparam nums
+     */
+    private void showNums(List<Integer> nums) {
+        for (Integer num : nums) {
+            System.out.print(num + " ");
+        }
+        System.out.println("");
+    }
+    /**
+     * 统计当前队列生成新的队列
+     * @param lastNums
+     * @return
+     */
+    private List<Integer> calcNewNums(List<Integer> lastNums) {
+        List<Integer> newNums = new ArrayList<>();
+        int lastNum = 0;
+        int equalNums = 0;
+        for (Integer num : lastNums) {
+            if (equalNums == 0) { //第一个数
+                lastNum = num.intValue();
+                equalNums = 1;
+            } else if (num.intValue() != lastNum) { //当前数不等于之前的数
+//保存前面的统计
+                newNums.add(equalNums);
+                newNums.add(lastNum);
+//更新当前的统计
+                lastNum = num.intValue();
+                equalNums = 1;
+            } else { //当前数等于之前的数，计数 +1
+                equalNums ++;
+            }
+        }
+        if (equalNums != 0) { //保存最后一个统计
+            newNums.add(equalNums);
+            newNums.add(lastNum);
+        }
+        return newNums;
     }
 }

@@ -1,10 +1,10 @@
 package com.czy.jdbc.sql;
 
-import com.czy.jdbc.sql.enums.ReturnTypeEnum;
-import com.czy.util.text.StringUtil;
+import com.czy.jdbc.sql.enums.ResultTypeEnum;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author chenzy
@@ -13,26 +13,19 @@ import java.util.List;
 public class DeleteSQLBuilder extends SQLBuilder {
     private WhereSQL whereSQL;
 
-    public DeleteSQLBuilder(PreSql preSql, ReturnTypeEnum returnType) {
+    public DeleteSQLBuilder(PreSql preSql, ResultTypeEnum returnType) {
         super(preSql, returnType);
     }
+
     public WhereSQL where() {
-        return whereSQL==null?whereSQL=new WhereSQL(new PreSql(" where ",new ArrayList<>())):whereSQL;
+        return whereSQL == null ? whereSQL = new WhereSQL(new PreSql(" where ", new ArrayList<>())) : whereSQL;
     }
+
     @Override
-    public String getEndSql() {
-        var sql=getBasicPreSql().getSql();
-        if (whereSQL!=null){
-            sql+=whereSQL.getEndSql();
+    public PreSql getEndSql() {
+        if (whereSQL != null) {
+            return getBasicPreSql().append(whereSQL.getEndSql());
         }
-        return sql;
-    }
-    @Override
-    public List<String> getEndValues() {
-        var values=getBasicPreSql().getValues();
-        if (whereSQL!=null){
-            values.addAll(whereSQL.getEndValues());
-        }
-        return values;
+        return getBasicPreSql();
     }
 }

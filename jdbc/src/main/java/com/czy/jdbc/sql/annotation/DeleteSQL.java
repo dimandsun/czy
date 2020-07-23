@@ -1,6 +1,6 @@
 package com.czy.jdbc.sql.annotation;
 
-import com.czy.jdbc.sql.enums.ReturnTypeEnum;
+import com.czy.jdbc.sql.enums.ResultTypeEnum;
 import com.czy.jdbc.sql.enums.SQLTypeEnum;
 
 import java.lang.annotation.*;
@@ -15,5 +15,5 @@ import java.lang.annotation.*;
 @SQLAnnotation(SQLTypeEnum.Delete)
 public @interface DeleteSQL {
     String value();
-    ReturnTypeEnum returnType() default ReturnTypeEnum.AffectedLines;
+    ResultTypeEnum returnType() default ResultTypeEnum.AffectedLines;
 }

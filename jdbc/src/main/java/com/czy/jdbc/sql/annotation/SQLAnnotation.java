@@ -1,6 +1,5 @@
 package com.czy.jdbc.sql.annotation;
 
-import com.czy.jdbc.sql.enums.ReturnTypeEnum;
 import com.czy.jdbc.sql.enums.SQLTypeEnum;
 
 import java.lang.annotation.*;

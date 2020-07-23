@@ -1,9 +1,8 @@
 package com.czy.jdbc.sql;
 
-import com.czy.jdbc.sql.enums.ReturnTypeEnum;
-import com.czy.util.model.Par;
-import com.czy.util.text.StringUtil;
+import com.czy.jdbc.sql.enums.ResultTypeEnum;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -12,18 +11,24 @@ import java.util.List;
  * preSql 预处理sql，即用?代替参数值
  * values 参数值
  */
-public class SQLBuilder {
+public class SQLBuilder<T> {
     private PreSql preSql;
-    private ReturnTypeEnum returnType;
-    public SQLBuilder(PreSql preSql, ReturnTypeEnum returnType) {
+    private ResultTypeEnum resultType;
+    private Class returnJavaType;
+    public SQLBuilder(PreSql preSql, ResultTypeEnum resultType) {
         setPreSql(preSql);
-        setReturnType(returnType);
+        setResultType(resultType);
     }
-    public List<String> getEndValues() {
-        return getBasicPreSql().getValues();
+
+    public Class getReturnJavaType() {
+        return returnJavaType;
     }
-    public String getEndSql() {
-        return getBasicPreSql().getSql();
+
+    public void setReturnJavaType(Class returnJavaType) {
+        this.returnJavaType = returnJavaType;
+    }
+    public PreSql getEndSql(){
+        return getBasicPreSql();
     }
     public PreSql getBasicPreSql(){
         return preSql;
@@ -31,12 +36,12 @@ public class SQLBuilder {
     public void setPreSql(PreSql preSql){
         this.preSql=preSql;
     }
-    public void setReturnType(ReturnTypeEnum returnType){
-        this.returnType=returnType;
+    public void setResultType(ResultTypeEnum resultType){
+        this.resultType = resultType;
     }
 
-    public ReturnTypeEnum getReturnType() {
-        return returnType;
+    public ResultTypeEnum getResultType() {
+        return resultType;
     }
     public Object exec() {
         return null;

@@ -37,8 +37,6 @@ public class ServerMain {
         //初始化框架
         var projectContainer = ProjectContainer.getInstance();
         projectContainer.addProjectInfo(projectInfo).initProject();
-        //设置默认的数据源
-        projectContainer.setDefaultDataSourceKey(projectInfo);
         //开始监听请求
         startServer(projectInfo);
     }

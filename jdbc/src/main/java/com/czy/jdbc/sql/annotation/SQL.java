@@ -1,6 +1,6 @@
 package com.czy.jdbc.sql.annotation;
 
-import com.czy.jdbc.sql.enums.ReturnTypeEnum;
+import com.czy.jdbc.sql.enums.ResultTypeEnum;
 import com.czy.jdbc.sql.enums.SQLTypeEnum;
 
 import java.lang.annotation.*;
@@ -16,5 +16,5 @@ import java.lang.annotation.*;
 public @interface SQL {
     String value();
     SQLTypeEnum sqlType();
-    ReturnTypeEnum returnType() default ReturnTypeEnum.AffectedLines;
+    ResultTypeEnum returnType() default ResultTypeEnum.AffectedLines;
 }

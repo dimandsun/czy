@@ -1,76 +1,83 @@
 package com.czy.jdbc.sql;
 
-import com.czy.jdbc.sql.enums.ReturnTypeEnum;
+import com.czy.jdbc.sql.enums.ResultTypeEnum;
 import com.czy.util.model.StringMap;
 import com.czy.util.text.StringUtil;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 /**
  * @author chenzy
  * @date 2020-07-21
  */
-public class UpdateSQLBuilder extends WhereSQL implements SQLBuilder {
-    private String preSql;
-    private List<Object> values;
-    private String setSql;
-    private ReturnTypeEnum returnType;
-
-    public UpdateSQLBuilder(String preSql, List<Object> values) {
-        setSqlBuilder(this);
-        this.preSql = preSql;
-        this.values = values;
+public class UpdateSQLBuilder extends SQLBuilder {
+    private WhereSQL whereSQL;
+    private PreSql setPreSql;
+    public WhereSQL where() {
+        return whereSQL==null?whereSQL=new WhereSQL(new PreSql(" where ",new ArrayList<>())):whereSQL;
+    }
+    public UpdateSQLBuilder(PreSql preSql, ResultTypeEnum returnType) {
+        super(preSql, returnType);
+    }
+    public UpdateSQLBuilder setColumn(String key,Object value){
+        if (setPreSql==null){
+            setPreSql=new PreSql(" set "+key+"=?",List.of(value));
+        }else {
+            setPreSql.appendSql(","+key+"=?");
+            setPreSql.getValues().add(value);
+        }
+        return this;
     }
     public UpdateSQLBuilder setColumnValues(StringMap columnMap) {
         if (columnMap == null || columnMap.isEmpty()) {
             return this;
         }
-        if (setSql==null){
-            setSql="";
-        }
-        columnMap.keySet().forEach(column->{
-            setSql+=","+column+"=?";
-        });
-        if (setSql.startsWith(",")){
-            setSql=setSql.substring(1);
-        }
-        columnMap.values().forEach(value -> {
-            values.add(value);
-        });
+        columnMap.forEach((BiConsumer<String,Object>)(key, value)->setColumn(key,value));
         return this;
     }
     @Override
-    public String getEndPreSql() {
-        if (StringUtil.isBlank(setSql)){
+    public String getEndSql() {
+        var sql=getBasicPreSql().getSql();
+        if (StringUtil.isBlank(sql)){
             return "";
         }
-        preSql=preSql.replace("{setContent}",setSql);
-        if (StringUtil.isBlank(getWhereSql())){
-            return preSql;
+        if (setPreSql==null){
+            return "";
         }
-        return preSql+" where "+getWhereSql();
-    }
-    @Override
-    public String getBasicPreSql() {
-        return preSql;
-    }
-    @Override
-    public void setPreSql(String preSql) {
-        this.preSql=preSql;
-    }
-
-    @Override
-    public void setReturnType(ReturnTypeEnum returnType) {
-        this.returnType=returnType;
-    }
-
-    @Override
-    public ReturnTypeEnum getReturnType() {
-        return null;
+        var setSql=setPreSql.getSql();
+        if (StringUtil.isBlank(sql)){
+            return "";
+        }
+        if (sql.contains("#{setContent}")){
+            sql=sql.replace("#{setContent}",setSql);
+        }else {
+            sql += setSql;
+        }
+        if (whereSQL!=null){
+            sql+=whereSQL.getEndSql();
+        }
+        return  sql;
     }
 
     @Override
-    public List<Object> getValues() {
+    public List<Object> getEndValues() {
+        var values = getBasicPreSql().getValues();
+        if (setPreSql==null){
+            return values;
+        }
+        values.addAll(setPreSql.getValues());
+        if (whereSQL!=null){
+            values.addAll(whereSQL.getEndValues());
+        }
         return values;
+    }
+    public PreSql getSetPreSql() {
+        return setPreSql;
+    }
+
+    public void setSetPreSql(PreSql setPreSql) {
+        this.setPreSql = setPreSql;
     }
 }

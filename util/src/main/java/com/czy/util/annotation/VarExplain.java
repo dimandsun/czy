@@ -1,4 +1,4 @@
-package com.czy.core.annotation;
+package com.czy.util.annotation;
 
 import java.lang.annotation.*;
 

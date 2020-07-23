@@ -1,6 +1,5 @@
 package com.czy.core.db.dao;
 
-import com.czy.core.annotation.Par;
 import com.czy.core.annotation.bean.Dao;
 import java.util.List;
 import java.util.Map;
@@ -12,18 +11,18 @@ import java.util.Map;
  */
 @Dao
 public interface ICommonDao {
-    Integer insertFQ(@Par("parMap") Map<String, Object> parMap, @Par("tableName") String tableName);
-    Integer insert(@Par("parMap") Map<String, Object> parMap, @Par("tableName")String tableName);
+    Integer insertFQ(Map<String, Object> parMap, String tableName);
+    Integer insert(Map<String, Object> parMap, String tableName);
 
-    Integer update(@Par("setPar")Map<String, Object> setPar, @Par("wherePar")Map<String, Object> wherePar,@Par("tableName") String tableName);
+    Integer update(Map<String, Object> setPar, Map<String, Object> wherePar, String tableName);
 
-    Map<String, Object> getOnePart(@Par("columns")String[] columns,@Par("wherePar")Map<String, Object> wherePar,@Par("tableName") String tableName);
+    Map<String, Object> getOnePart(String[] columns, Map<String, Object> wherePar, String tableName);
 
-    Map<String, Object> getOne(@Par("wherePar")Map<String, Object> wherePar,@Par("tableName") String tableName);
+    Map<String, Object> getOne(Map<String, Object> wherePar, String tableName);
 
-    List<Map<String, Object>> getListPart(@Par("columns")String[] columns, @Par("wherePar")Map<String, Object> wherePar, String tableName);
+    List<Map<String, Object>> getListPart(String[] columns, Map<String, Object> wherePar, String tableName);
 
-    List<Map<String, Object>> getList(@Par("wherePar")Map<String, Object> wherePar,@Par("tableName") String tableName);
+    List<Map<String, Object>> getList(Map<String, Object> wherePar, String tableName);
 
-    Integer delete(@Par("wherePar") Map<String, Object> wherePar,@Par("tableName") String tableName);
+    Integer delete(Map<String, Object> wherePar, String tableName);
 }

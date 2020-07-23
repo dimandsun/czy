@@ -1,15 +1,13 @@
 package com.czy.jdbc.sql;
 
-import com.czy.jdbc.sql.enums.ReturnTypeEnum;
-
-import java.util.List;
+import com.czy.jdbc.sql.enums.ResultTypeEnum;
 
 /**
  * @author chenzy
  * @date 2020-07-21
  */
 public class DropSQLBuilder extends SQLBuilder {
-    public DropSQLBuilder(PreSql preSql, ReturnTypeEnum returnType) {
+    public DropSQLBuilder(PreSql preSql, ResultTypeEnum returnType) {
         super(preSql, returnType);
     }
 }

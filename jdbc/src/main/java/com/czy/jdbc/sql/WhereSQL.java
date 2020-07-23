@@ -5,6 +5,7 @@ import com.czy.util.text.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author chenzy
@@ -15,27 +16,21 @@ public class WhereSQL {
     public WhereSQL(PreSql preSql) {
         this.preSql = preSql;
     }
-    public String getEndSql() {
+    public Optional<PreSql> getEndSql() {
         if (preSql==null){
-            return "";
+            return Optional.empty();
         }
         if (preSql.getSql().endsWith("where ")){
-            return "";
+            return Optional.empty();
         }
-        return preSql.getSql();
-    }
-    public List<String> getEndValues() {
-        if (preSql==null){
-            return List.of();
-        }
-        return preSql.getValues();
+        return Optional.of(preSql);
     }
     public WhereSQL and(){
-        preSql.appendSql("and ");
+        preSql.append("and ");
         return this;
     }
     public WhereSQL or(){
-        preSql.appendSql("or ");
+        preSql.append("or ");
         return this;
     }
     /**
@@ -83,8 +78,8 @@ public class WhereSQL {
         if (StringUtil.isBlankOr(columnName,value)){
             return this;
         }
-        preSql.appendSql(columnName+relationEnum.getValue());
-        var temp=relationEnum.getValue().replace("{value}",value.toString());
+        preSql.append(columnName+relationEnum.getValue());
+        var temp=relationEnum.getValue().replace("#{value}",value.toString());
         preSql.getValues().add(temp);
         return this;
     }

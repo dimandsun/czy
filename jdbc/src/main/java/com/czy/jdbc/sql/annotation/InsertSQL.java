@@ -1,6 +1,6 @@
 package com.czy.jdbc.sql.annotation;
 
-import com.czy.jdbc.sql.enums.ReturnTypeEnum;
+import com.czy.jdbc.sql.enums.ResultTypeEnum;
 import com.czy.jdbc.sql.enums.SQLTypeEnum;
 
 import java.lang.annotation.*;
@@ -15,5 +15,5 @@ import java.lang.annotation.*;
 @SQLAnnotation(SQLTypeEnum.Insert)
 public @interface InsertSQL {
     String value() default "";
-    ReturnTypeEnum returnType() default ReturnTypeEnum.PrimaryKey;
+    ResultTypeEnum returnType() default ResultTypeEnum.PrimaryKey;
 }

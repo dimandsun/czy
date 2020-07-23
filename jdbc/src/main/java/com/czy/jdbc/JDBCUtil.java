@@ -66,13 +66,13 @@ public class JDBCUtil {
     }
 
     public static Object exec(DataSource dataSource, SQLBuilder sqlBuilder) {
-        var values = sqlBuilder.getValues();
+        var values = sqlBuilder.getEndValues();
         PreparedStatement ps = null;
         try (var con = dataSource.getConnection()) {
-            ps = switch (sqlBuilder.getReturnType()) {
-                case AffectedLines -> con.prepareStatement(sqlBuilder.getEndPreSql());
-                case PrimaryKey -> con.prepareStatement(sqlBuilder.getEndPreSql(), RETURN_GENERATED_KEYS);
-                case Cell, RecordOne, RecordList -> con.prepareCall(sqlBuilder.getEndPreSql());
+            ps = switch (sqlBuilder.getResultType()) {
+                case AffectedLines -> con.prepareStatement(sqlBuilder.getEndSql());
+                case PrimaryKey -> con.prepareStatement(sqlBuilder.getEndSql(), RETURN_GENERATED_KEYS);
+                case Cell, RecordOne, RecordList -> con.prepareCall(sqlBuilder.getEndSql());
                 default -> null;
             };
             if (ps == null) {
@@ -82,7 +82,7 @@ public class JDBCUtil {
                 ps.setObject(i, values.get(i));
             }
             log.debug(ps.toString());
-            Object result = switch (sqlBuilder.getReturnType()) {
+            Object result = switch (sqlBuilder.getResultType()) {
                 case AffectedLines:
                     yield ps.executeUpdate();
                 case PrimaryKey: {
@@ -112,7 +112,7 @@ public class JDBCUtil {
                                 var columnName = metaData.getColumnName(i);
                                 map.add(columnName, resultSet.getObject(i));
                             }
-                            Class returnClass = selectSQL.getReturnClass();
+                            Class returnClass = selectSQL.getReturnJavaType();
                             if (returnClass == null) {
                                 yield map;
                             }
@@ -138,7 +138,7 @@ public class JDBCUtil {
                             }
                             mapList.add(map);
                         }
-                        Class returnClass = selectSQL.getReturnClass();
+                        Class returnClass = selectSQL.getReturnJavaType();
                         if (returnClass == null) {
                             yield mapList;
                         }

@@ -19,4 +19,5 @@
     exports com.czy.util.io;
     exports com.czy.util.text;
     exports com.czy.util.time;
+    exports com.czy.util.annotation;
 }

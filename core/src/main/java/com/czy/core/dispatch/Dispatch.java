@@ -1,12 +1,12 @@
 package com.czy.core.dispatch;
 
 import com.czy.core.ProjectContainer;
-import com.czy.core.annotation.Par;
 import com.czy.core.enums.QuestEnum;
 import com.czy.core.model.RouteModel;
 import com.czy.log.Log;
 import com.czy.log.LogFactory;
 import com.czy.util.ClassUtil;
+import com.czy.util.annotation.Par;
 import com.czy.util.json.JsonUtil;
 import com.czy.util.model.StringMap;
 import java.lang.annotation.Annotation;

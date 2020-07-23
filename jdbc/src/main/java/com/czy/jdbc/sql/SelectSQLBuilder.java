@@ -1,62 +1,53 @@
 package com.czy.jdbc.sql;
 
-import com.czy.jdbc.sql.enums.ReturnTypeEnum;
+import com.czy.jdbc.sql.enums.ResultTypeEnum;
 import com.czy.util.text.StringUtil;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author chenzy
  * @date 2020-07-21
  */
-public class SelectSQLBuilder<T> extends WhereSQL implements SQLBuilder {
-    private String orderBySql = null;
-    private String preSql;
-    private List<Object> values;
-    private ReturnTypeEnum returnType;
+public class SelectSQLBuilder extends SQLBuilder {
 
-    /*查询返回类型，注意当返回List<Bean>，returnClass为Bean,而不是List
-        暂时只支持Bean和List<Bean>
-    */
-    private Class<T> returnClass;
 
-    public SelectSQLBuilder(String preSql, List<Object> values) {
-        setSqlBuilder(this);
-        this.preSql = preSql;
-        this.values = values;
+    private WhereSQL whereSQL;
+    private PreSql orderPreSql;
+    public SelectSQLBuilder(PreSql preSql, ResultTypeEnum returnType) {
+        super(preSql, returnType);
+    }
+    public WhereSQL where() {
+        return whereSQL==null?whereSQL=new WhereSQL(new PreSql(" where ",new ArrayList<>())):whereSQL;
     }
     /**
      * 升序 ASC
      */
-    public SelectSQLBuilder<T> asc(String columnName) {
+    public SelectSQLBuilder asc(String columnName) {
         return order(columnName, OrderBy.ASC);
     }
 
     /**
      * 降序 desc
      */
-    public SelectSQLBuilder<T> desc(String columnName) {
+    public SelectSQLBuilder desc(String columnName) {
         return order(columnName, OrderBy.Desc);
     }
 
-    private SelectSQLBuilder<T> order(String columnName, String orderBy) {
+    private SelectSQLBuilder order(String columnName, String orderBy) {
         if (StringUtil.isBlank(columnName)) {
             return this;
         }
-        if (orderBySql == null) {
-            orderBySql = "order by " + columnName + " " + orderBy;
-            return this;
+        if (orderPreSql == null) {
+            orderPreSql = new PreSql("order by ? ?",new ArrayList<>());
+        }else {
+            orderPreSql.append(",? ?");
         }
-        orderBySql += "," + columnName + " " + orderBy;
+        orderPreSql.getValues().add(columnName);
+        orderPreSql.getValues().add(orderBy);
         return this;
-    }
-
-    public Class<T> getReturnClass() {
-        return returnClass;
-    }
-
-    public void setReturnClass(Class<T> returnClass) {
-        this.returnClass = returnClass;
     }
 
     private interface OrderBy {
@@ -64,35 +55,12 @@ public class SelectSQLBuilder<T> extends WhereSQL implements SQLBuilder {
         String Desc = "desc";
     }
     @Override
-    public String getEndPreSql() {
-        if (StringUtil.isBlank(getWhereSql())){
-            return preSql;
+    public PreSql getEndSql() {
+        var preSql=getBasicPreSql();
+        if (whereSQL!=null){
+            preSql.append(whereSQL.getEndSql());
         }
-        var sql = preSql+" where "+getWhereSql();
-        return orderBySql==null ? sql : sql+orderBySql;
-    }
-    @Override
-    public String getBasicPreSql() {
+        preSql.append(Optional.ofNullable(orderPreSql));
         return preSql;
-    }
-
-    @Override
-    public void setPreSql(String preSql) {
-        this.preSql = preSql;
-    }
-
-    @Override
-    public void setReturnType(ReturnTypeEnum returnType) {
-        this.returnType=returnType;
-    }
-
-    @Override
-    public ReturnTypeEnum getReturnType() {
-        return returnType;
-    }
-
-    @Override
-    public List<Object> getValues() {
-        return values;
     }
 }
