@@ -1,5 +1,7 @@
 package com.czy.util.model;
 
+import java.util.Map;
+
 /**
  * @author chenzy
  * 
@@ -23,6 +25,11 @@ public class StringMap<Value extends Object> extends MyMap<String,Value> {
         super(s, value);
     }
 
+    public static StringMap translate(Map<String, Object> proMap) {
+        var map=new StringMap<>();
+        map.putAll(proMap);
+        return map;
+    }
     @Override
     public StringMap add(String s, Value value) {
          super.add(s, value);

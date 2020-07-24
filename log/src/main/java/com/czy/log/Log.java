@@ -41,7 +41,6 @@ public class Log{
     public void error(String msg,Object... parms){
         log(LogLevel.ERROR,msg,parms);
     }
-
     private void log(LogLevel level,String msg,Throwable throwable){
         logger.log(level.getLevel(),msg,throwable);
     }

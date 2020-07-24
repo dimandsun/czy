@@ -13,7 +13,7 @@ public class CarServerInfo extends ProjectInfo {
     public CarServerInfo() {
     }
 
-    @Override
+   /* @Override
     public CarServerInfo init(String moduleDir) {
         initPro(moduleDir).ifPresent(map->{
             Integer port = StringUtil.getInt(map.get("port"),80);
@@ -21,7 +21,7 @@ public class CarServerInfo extends ProjectInfo {
         });
 
         return this;
-    }
+    }*/
 
     //服务端口
     private Integer port;

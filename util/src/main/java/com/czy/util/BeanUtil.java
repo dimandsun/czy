@@ -1,16 +1,16 @@
 package com.czy.util;
 
 import com.czy.util.json.JsonUtil;
-import com.czy.util.model.MyMap;
 import net.sf.cglib.beans.BeanMap;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author chenzy
- * 
  * @since 2020-03-21
  */
 public class BeanUtil {
@@ -34,13 +34,19 @@ public class BeanUtil {
      * @param model
      * @return
      */
-    public static <T> MyMap model2Map(T model) {
+    public static <T> Map model2Map(T model) {
         BeanMap beanMap = BeanMap.create(model);
-        MyMap map = new MyMap(beanMap.size());
+        var map = new HashMap<>(beanMap.size());
         for (Object key : beanMap.keySet()) {
             map.put(key + "", beanMap.get(key));
         }
         return map;
+    }
+
+    public static <T> T map2Model(Map map, T model) {
+        BeanMap beanMap = BeanMap.create(model);
+        beanMap.putAll(map);
+        return model;
     }
 
     /**
@@ -50,19 +56,16 @@ public class BeanUtil {
      * @param modelClass
      * @return
      */
-    public static <T> T map2Model(MyMap map, Class<T> modelClass) {
+    public static <T> T map2Model(Map map, Class<T> modelClass) {
         try {
-            T model = modelClass.getDeclaredConstructor().newInstance();
-            BeanMap beanMap = BeanMap.create(model);
-            beanMap.putAll(map);
-            return model;
+            return map2Model(map,modelClass.getDeclaredConstructor().newInstance());
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
         } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
         return null;
@@ -70,15 +73,16 @@ public class BeanUtil {
 
     /**
      * modelList=》mapList
+     *
      * @param modelList
      * @param <T>
      * @return
      */
-    public static <T> List<MyMap> modelToMap(List<T> modelList) {
+    public static <T> List<Map> modelToMap(List<T> modelList) {
         if (modelList == null || modelList.size() < 1) {
             return null;
         }
-        List<MyMap> result = new ArrayList<>(modelList.size());
+        List<Map> result = new ArrayList<>(modelList.size());
         for (T model : modelList) {
             result.add(model2Map(model));
         }
@@ -87,18 +91,19 @@ public class BeanUtil {
 
     /**
      * mapList=>modelList
+     *
      * @param mapList
      * @param modelClass
      * @param <T>
      * @return
      */
-    public static <T> List<T> map2Model(List<MyMap> mapList, Class<T> modelClass) {
+    public static <T> List<T> map2Model(List<Map> mapList, Class<T> modelClass) {
         if (mapList == null || mapList.size() < 1) {
             return null;
         }
         List<T> result = new ArrayList<>(mapList.size());
-        for (MyMap myMap : mapList) {
-            result.add(map2Model(myMap, modelClass));
+        for (Map map : mapList) {
+            result.add(map2Model(map, modelClass));
         }
         return result;
     }

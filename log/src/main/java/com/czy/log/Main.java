@@ -17,7 +17,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         var logger=Logger.getLogger("czy");
         var errorLog=Logger.getLogger("czy123");
-        var fileHandler = new FileHandler("/logs/log.log",true);
+        var fileHandler = new FileHandler("E:/logs/log.log",true);
         var formatter = new LogFormatter(TimeUtil.DEFAULT_FORMAT);
         logger.setLevel(Level.INFO);
         errorLog.setLevel(WARNING);

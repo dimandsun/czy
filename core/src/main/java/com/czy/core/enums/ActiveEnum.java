@@ -10,7 +10,7 @@ import com.czy.util.enums.IEnum;
  */
 public enum ActiveEnum implements IEnum<Integer> {
 
-    Dev(1,"dev"),Pro(2,"pro"),Test(3,"javafx.test"),Default(4,"");
+    Dev(1,"dev"),Pro(2,"pro"),Test(3,"test"),Default(4,"other");
 
     ActiveEnum(Integer id, String msg) {
         this.id = id;

@@ -1,3 +1,4 @@
+import com.czy.util.BeanUtil;
 import com.czy.util.json.JsonUtil;
 import com.czy.util.model.StringMap;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -19,9 +20,8 @@ public class java14NewTest {
     }
     //只能声明静态属性。不能为abstract。不能显式继承类
     @Test public void recordTest(){
-        record A(@JsonProperty("name_a") String name, Integer age){
+        record A(@JsonProperty("name_a") String name,@JsonProperty Integer age){
             private static int a=0;
-
             public static int getA() {
                 return a;
             }
@@ -31,7 +31,14 @@ public class java14NewTest {
             }
         }
         var a=new A("a",12);
-        System.out.println(JsonUtil.model2Str(a));
+        var map=JsonUtil.model2Map(a);
+        map.put("age",13);
+        var reuslt=JsonUtil.map2Model(map,A.class);
+
+        String s= """
+                {"name_a":"a"}
+                """;
+        System.out.println(reuslt);
     }
 
     @Test public void instanceofTest(){

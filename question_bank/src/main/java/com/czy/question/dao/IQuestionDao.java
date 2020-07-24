@@ -3,6 +3,7 @@ package com.czy.question.dao;
 import com.czy.core.annotation.bean.Dao;
 import com.czy.jdbc.sql.annotation.InsertSQL;
 import com.czy.question.model.table.Question;
+import com.czy.util.annotation.Par;
 
 /**
  * @author chenzy
@@ -11,5 +12,5 @@ import com.czy.question.model.table.Question;
 @Dao
 public interface IQuestionDao {
     @InsertSQL
-    Integer insert(Question question);
+    Integer insert(@Par("tableName")String tableName, Question question);
 }

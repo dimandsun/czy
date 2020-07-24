@@ -395,7 +395,6 @@ public class FileUtil {
                 e.printStackTrace();
             }
         }
-        file.getPath();
     }
 
     /*追加写*/
@@ -520,7 +519,33 @@ public class FileUtil {
             return null;
         }
     }
-
+    public static <T> StringMap<T> readConfigFileByYML(String filePath) {
+        try(InputStream in = FileUtil.class.getClassLoader().getResourceAsStream(filePath)) {
+            StringMap<T> proMap = new Yaml().loadAs(in, StringMap.class);
+            return proMap;
+        } catch (IOException e) {
+            //加载配置文件失败 file.getPath()
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public static <T> StringMap<T> readConfigFileByYML(String filePath,String... keys) {
+        if (keys==null||keys.length==0){
+            return readConfigFileByYML(filePath);
+        }
+        try(InputStream in = FileUtil.class.getClassLoader().getResourceAsStream(filePath)){
+            StringMap<T> proMap = new Yaml().loadAs(in, StringMap.class);
+            StringMap<T> reesult = new StringMap<>(keys.length);
+            for (String key:keys){
+                reesult.add(key,proMap.get(key));
+            }
+            return reesult;
+        } catch (IOException e) {
+            //加载配置文件失败 file.getPath()
+            e.printStackTrace();
+            return null;
+        }
+    }
     public static <T> Optional<StringMap<T>> readConfigFileByYML(File file) {
         if (file == null) {
             return Optional.empty();

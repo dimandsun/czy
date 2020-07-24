@@ -33,11 +33,11 @@ public class ServerMain {
         }
     }
     public static void main(String[] args) {
-        var projectInfo = new CarServerInfo().init("car_server");
-        //初始化框架
-        var projectContainer = ProjectContainer.getInstance();
-        projectContainer.addProjectInfo(projectInfo).initProject();
-        //开始监听请求
-        startServer(projectInfo);
+//        var projectInfo = new CarServerInfo().init("car_server");
+//        初始化框架
+//        var projectContainer = ProjectContainer.getInstance();
+//        projectContainer.addProjectInfo(projectInfo).initProject();
+//        开始监听请求
+//        startServer(projectInfo);
     }
 }

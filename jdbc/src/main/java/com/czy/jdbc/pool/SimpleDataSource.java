@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -31,7 +32,7 @@ public class SimpleDataSource implements DataSource {
     private int curConnectNum;//当前连接数 包括空闲连接和在使用连接
 
     //连接池
-    private LinkedList<MyConnection> pool = (LinkedList<MyConnection>) Collections.synchronizedList(new LinkedList<MyConnection>());
+    private List<MyConnection> pool =  Collections.synchronizedList(new LinkedList<>());
 
     public SimpleDataSource(DataSourceSetting sourceSetting) throws SQLException {
         this.url = sourceSetting.url();
@@ -50,7 +51,7 @@ public class SimpleDataSource implements DataSource {
         }else if (freeConnectNum==0) {
             addConnection();
         }
-        var con = pool.pollLast();
+        var con = pool.remove(0);
         if (con == null) {
             throw new ConnectionNullException("连接池获取连接失败");
         }
@@ -71,7 +72,7 @@ public class SimpleDataSource implements DataSource {
             throw new DataSourceException("连接池异常：连接数已经到达最大值："+curConnectNum);
         }
         var con = DriverManager.getConnection(url, userName, password);
-        pool.addLast(new MyConnection(con, this));
+        pool.add(new MyConnection(con, this));
         freeConnectNum++;
         curConnectNum++;
     }
@@ -87,7 +88,7 @@ public class SimpleDataSource implements DataSource {
             freeConnectNum--;
             curConnectNum--;
         }else {
-            pool.addLast(conn);
+            pool.add(conn);
             freeConnectNum++;
         }
 

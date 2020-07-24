@@ -28,8 +28,23 @@ public class SQLFactory {
     private SQLFactory() {
     }
 
-
-
+    private static <T extends SQLBuilder> T createSQL(SQLTypeEnum sqlTypeEnum, String tableName, Class<T> sqlClass) {
+        var sql = sqlTypeEnum.getMsg();
+        sql = sql.replace("#{tableName}", tableName);
+        T result = null;
+        try {
+            result = sqlClass.getDeclaredConstructor(String.class, List.class).newInstance(sql, new ArrayList<>());
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
     public static <T extends SQLBuilder> T createSQL(Method method, Object[] args) throws DaoException {
         try {
             for (var annotation : method.getAnnotations()) {
@@ -110,24 +125,6 @@ public class SQLFactory {
         return null;
     }
 
-    private static <T extends SQLBuilder> T createSQL(SQLTypeEnum sqlTypeEnum, String tableName, Class<T> sqlClass) {
-        var sql = sqlTypeEnum.getMsg();
-        sql = sql.replace("#{tableName}", tableName);
-        T result = null;
-        try {
-            result = sqlClass.getDeclaredConstructor(String.class, List.class).newInstance(sql, new ArrayList<>());
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
     public static InsertSQLBuilder insert(String tableName, StringMap columnMap) {
         var sql = createSQL(SQLTypeEnum.Insert, tableName, InsertSQLBuilder.class);
         return sql.setColumnValues(columnMap);
@@ -167,32 +164,25 @@ public class SQLFactory {
 
     /**
      * 清空表
-     *
      * @param tableName
      * @return
      */
     public static String truncateTable(String tableName) {
         return createSQL(SQLTypeEnum.Truncate, tableName, TruncateSQLBuilder.class).getEndSql().getSql();
     }
-
     /**
      * 删除表
-     *
      * @param tableName
      * @return
      */
     public static String dropTable(String tableName) {
         return createSQL(SQLTypeEnum.Truncate, tableName, DropSQLBuilder.class).getEndSql().getSql();
     }
-
     /**
      * 创建表
-     *
      * @return
      */
     public static String createTable(String sql) {
         return sql;
     }
-
-
 }

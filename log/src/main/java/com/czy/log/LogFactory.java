@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  * @date 2020-07-16
  */
 public class LogFactory {
-    private static HashMap<String, Log> logMap = (HashMap<String, Log>) Collections.synchronizedMap(new HashMap<String, Log>());
+    private static Map<String,Log> logMap = Collections.synchronizedMap(new HashMap<>());
     private static SettingFile settingFile;
     /**
      * 默认获取名叫log的日志，日志信息写到当前磁盘/logs/log.log下
@@ -57,6 +57,7 @@ public class LogFactory {
         var logger = Logger.getLogger(logName);
         FileHandler fileHandler = null;
         try {
+            FileUtil.createFile(new File(fileSetting.filePath()));
             fileHandler = new FileHandler(fileSetting.filePath(), fileSetting.fileSize(), fileSetting.fileCount(), true);
         } catch (IOException e) {
             e.printStackTrace();
@@ -78,7 +79,7 @@ public class LogFactory {
                 return;
             }
             String filePath = map.get("filePath").toString();
-            if ('/' != filePath.charAt(0)) {
+            if ('/' == filePath.charAt(0)) {
                 filePath = FileUtil.getRoot().get() + filePath;
             }
             Integer fileSize = StringUtil.getInt(map.get("fileSize"), 1024);

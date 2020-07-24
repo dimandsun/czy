@@ -20,7 +20,7 @@ public class CarClientInfo extends ProjectInfo {
         return instance;
     }
 
-    @Override
+/*    @Override
     public CarClientInfo init(String moduleDir) {
         initPro(moduleDir).ifPresent(map->{
             Integer port = StringUtil.getInt(map.get("port"),80);
@@ -29,7 +29,7 @@ public class CarClientInfo extends ProjectInfo {
             setHost(host);
         });
         return this;
-    }
+    }*/
 
     //服务器端口
     private Integer port;

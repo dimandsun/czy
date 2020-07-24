@@ -1,4 +1,5 @@
 profiles:
   active: dev
-  groupId: com.czy.core
+  projectGroupId: com.czy.core
   moduleDir: core
+  projectName: core

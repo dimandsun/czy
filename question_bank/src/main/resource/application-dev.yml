@@ -1,3 +1,11 @@
+dataSources:
+  - dataSourceKey: mysql_czy_test
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://106.54.230.187:3306/czy?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT&allowPublicKeyRetrievalx=true
+    userName: root
+    password: chen
+    maxConnectNum: 20
+    maxFreeConnectNum: 5
 redis:
   config-name: jedisPoolConfig
   pool-name: jedisPool

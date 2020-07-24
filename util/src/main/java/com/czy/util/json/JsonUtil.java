@@ -1,5 +1,6 @@
 package com.czy.util.json;
 
+import com.czy.util.ClassUtil;
 import com.czy.util.text.StringUtil;
 import com.czy.util.enums.IEnum;
 import com.czy.util.model.ResultVO;
@@ -204,56 +205,20 @@ public class JsonUtil {
     }
     public static void main(String[] ars) throws JsonProcessingException {
         {
-            String json = "{\"ble\":[{\"mac\":\"00:0E:0B:0E:C1:D2\",\"uptime\":0}],\"id\":1576122585098,\"investor\":140000000000000001,\"mdata\":[{\"index\":\"\",\"machinedata\":\"\"}],\"mtype\":0,\"nb\":[{\"cmd\":\"\",\"imei\":\"868221049310231\",\"nb_random\":\"\",\"nbdeviceid\":\"b02c5e40-de12-4d5a-8368-d69851d55844\",\"nbflag\":0,\"status\":1,\"uptime\":0}],\"pminfo\":null,\"schoolid\":1,\"serverid\":1,\"serviceinfo\":null,\"softver\":\"V1.02\",\"stateinfo\":[{\"info\":\"00\",\"uptime\":\"1576634734985\"}],\"uptime\":1576634734985,\"use\":1,\"ver\":\"\",\"zfbiot\":[]}";
-            json = "{\"Code\":-301,\"Serial\":\"1576662296966\",\"Data\":\"\",\"Message\":\"加密中心校验数据不通过:URLDataPassBlue\"}";
-            json = "{\"Code\":\"0\"}";
-//        Mapping map = objectMapper.readValue(json, HashMap.class);
-//        MachineCashBO machineInfo = objectMapper.readValue(json, MachineCashBO.class);
-//        ResultVO result = objectMapper.readValue(json, ResultVO.class);
-         /*   json = "{\"Code\":\"-301\"}";
-            ClientSourceEnum reqTypeEnum = str2Model(json, ClientSourceEnum.class);
-            ResCodeEnum resCodeEnum = str2Model(json, ResCodeEnum.class);
-            String s = model2Str(reqTypeEnum);
-            s = model2Str(resCodeEnum);*/
+            String s= """
+                    {"dataSourceKey":"mysql_czy_test","driverClassName":"com.mysql.cj.jdbc.Driver","url":"jdbc:mysql://106.54.230.187:3306/czy?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT&allowPublicKeyRetrievalx=true","userName":"root","password":"chen","maxConnectNum":20,"maxFreeConnectNum":5}
+                    """;
+            s= """
+                   {"dataSourceKey":"mysql_czy_test"} 
+              """;
+            var bean=JsonUtil.str2Model(s,DataSourceSetting.class);
+            System.out.println(bean);
         }
-        {
-            /** 获取当前系统时间*/
-            long startTime = System.currentTimeMillis();
-            String json = "{\"Code\":-301,\"Serial\":\"1576662296966\",\"Data\":\"\",\"Message\":\"加密中心校验数据不通过:URLDataPassBlue\"}";
-            System.out.println(json);
-            ResultVO result222 = null;//str2ModelByBean(json, ResultVO.class);
-            System.out.println(result222);
-            /** 获取当前的系统时间，与初始时间相减就是程序运行的毫秒数，除以1000就是秒数*/
-            long endTime = System.currentTimeMillis();
-            long usedTime = (endTime - startTime);
-            System.out.println("用时：:" + usedTime);
-        }
-        {
-            /** 获取当前系统时间*/
-            long startTime = System.currentTimeMillis();
-            String json = "{\"Code\":-301,\"Serial\":\"1576662296966\",\"Data\":\"\",\"Message\":\"加密中心校验数据不通过:URLDataPassBlue\"}";
-            System.out.println(json);
-            ResultVO result222 = str2Model(json, ResultVO.class);
-            System.out.println(result222);
-            /** 获取当前的系统时间，与初始时间相减就是程序运行的毫秒数，除以1000就是秒数*/
-            long endTime = System.currentTimeMillis();
-            long usedTime = (endTime - startTime);
-            System.out.println("用时：:" + usedTime);
-        }
-        {
-//            String json="{\"Code\":0,\"Serial\":\"1576806443048\",\"Data\":\"{\\\"typeid\\\":\\\"6\\\",\\\"pos_studentid\\\":\\\"0005F185\\\",\\\"pos_systemtime\\\":\\\"571B5A2F665E\\\",\\\"pos_money\\\":3,\\\"pos_serial\\\":11,\\\"pos_time\\\":\\\"208727904710294\\\",\\\"machineid\\\":\\\"9912120600000339\\\",\\\"app_key\\\":\\\"1BB71CEF\\\",\\\"next_open_pos_money\\\":\\\"0003\\\",\\\"next_open_pos_serial\\\":\\\"000B\\\",\\\"machineid_random\\\":\\\"557EA8BD\\\"}\",\"Message\":\"\"}";
-        }
-
-
-/*        {
-            String json ="{\"ble\":[{\"mac\":\"00:0E:0B:0E:C1:D2\",\"uptime\":0}],\"id\":1576122585098,\"investor\":140000000000000001,\"mdata\":[{\"index\":\"\",\"machinedata\":\"\"}],\"mtype\":0,\"nb\":[{\"cmd\":\"\",\"imei\":\"868221049310231\",\"nb_random\":\"\",\"nbdeviceid\":\"b02c5e40-de12-4d5a-8368-d69851d55844\",\"nbflag\":0,\"status\":1,\"uptime\":0}],\"pminfo\":null,\"schoolid\":1,\"serverid\":1,\"serviceinfo\":null,\"softver\":\"V1.02\",\"stateinfo\":[{\"info\":\"00\",\"uptime\":\"1576661605052\"}],\"uptime\":1576661605052,\"use\":1,\"ver\":\"\",\"zfbiot\":[]}";
-            System.out.println(json);
-//            MachineCashBO machineInfo = str2Model(json, MachineCashBO.class);
-            Mapping result = str2Map(json);
-            System.out.println(result);
-        }*/
 
     }
+    record DataSourceSetting(String dataSourceKey/*,String driverClassName, String url, String userName, String password,int maxConnectNum,int maxFreeConnectNum*/) {
 
+
+    }
 
 }

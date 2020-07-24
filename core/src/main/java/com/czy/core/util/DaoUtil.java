@@ -1,8 +1,7 @@
 package com.czy.core.util;
 
 import com.czy.core.annotation.bean.Dao;
-import com.czy.jdbc.DataSourceHolder;
-import com.czy.jdbc.JDBCUtil;
+import com.czy.jdbc.pool.DataSourceHolder;
 import com.czy.jdbc.sql.SQLBuilder;
 import com.czy.jdbc.sql.SQLFactory;
 import net.sf.cglib.proxy.MethodProxy;

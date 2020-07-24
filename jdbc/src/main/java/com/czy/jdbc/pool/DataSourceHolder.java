@@ -1,12 +1,11 @@
-package com.czy.jdbc;
-
-import com.czy.jdbc.pool.DataSourceFactory;
+package com.czy.jdbc.pool;
 
 import javax.sql.DataSource;
 
 /**
  * @author chenzy
  * @date 2020-07-16
+ * 初始化时应设置默认数据源
  */
 public class DataSourceHolder {
     private final ThreadLocal<String> curDataSource = new ThreadLocal<>();
@@ -17,6 +16,10 @@ public class DataSourceHolder {
     private DataSourceHolder() {
     }
     private String defaultKey;
+    public String getDefaultKey() {
+        return defaultKey;
+    }
+
     public void setDefaultKey(String defaultKey) {
         this.defaultKey = defaultKey;
     }

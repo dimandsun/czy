@@ -34,8 +34,8 @@ public class ClientMain extends Application {
 
     public static void main(String[] args) {
         //创建服务端通信管道
-        CarClientInfo.getInstance().init("car_client").createSocket();
+//        CarClientInfo.getInstance().init("car_client").createSocket();
         //渲染页面
-        ClientMain.launch(args);
+//        ClientMain.launch(args);
     }
 }

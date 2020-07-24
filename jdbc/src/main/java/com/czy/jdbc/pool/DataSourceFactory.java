@@ -37,8 +37,10 @@ public class DataSourceFactory {
         if (StringUtil.isBlankOr(sourceSetting.dataSourceKey(), sourceSetting.url(), sourceSetting.userName())) {
             throw new DataSourceException("数据源创建失败");
         }
-
         dataSourceMap.put(sourceSetting.dataSourceKey(), new SimpleDataSource(sourceSetting));
+        if (DataSourceHolder.getInstance().getDefaultKey()==null){
+            DataSourceHolder.getInstance().setDefaultKey(sourceSetting.dataSourceKey());
+        }
     }
 
     private static void reloadSetting() {
@@ -60,7 +62,7 @@ public class DataSourceFactory {
         dataSourceMap.values().forEach(dataSource -> dataSource.clear());
     }
     public static void init(Optional<StringMap<Object>> optional) {
-        optional.map(map -> (List<Map<String, Object>>) map.get("dataSources")).get().forEach(map -> {
+        optional.ifPresent(dataSourcesMap-> ((List<Map<String, Object>>) dataSourcesMap.get("dataSources")).forEach(map->{
             var sourceSetting = JsonUtil.map2Model(map, DataSourceSetting.class);
             if (StringUtil.isBlank(sourceSetting.driverClassName())) {
                 return;
@@ -74,6 +76,6 @@ public class DataSourceFactory {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        });
+        }));
     }
 }

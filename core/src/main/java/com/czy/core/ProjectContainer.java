@@ -5,6 +5,7 @@ import com.czy.core.annotation.Auto;
 import com.czy.core.annotation.bean.*;
 import com.czy.core.annotation.mapping.Mapping;
 import com.czy.core.annotation.mapping.MappingAnnotation;
+import com.czy.core.enums.ActiveEnum;
 import com.czy.core.enums.QuestEnum;
 import com.czy.core.model.BeanModel;
 import com.czy.core.model.ProjectInfo;
@@ -12,6 +13,8 @@ import com.czy.core.model.RouteModel;
 import com.czy.jdbc.pool.DataSourceFactory;
 import com.czy.log.Log;
 import com.czy.log.LogFactory;
+import com.czy.util.BeanUtil;
+import com.czy.util.json.JsonUtil;
 import com.czy.util.set.ListUtil;
 import com.czy.util.text.StringUtil;
 import com.czy.util.io.FileUtil;
@@ -21,6 +24,7 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 import java.io.Closeable;
+import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -36,8 +40,6 @@ import java.util.*;
 public class ProjectContainer implements Closeable {
     private static Log logger = LogFactory.getLog(ProjectContainer.class);
     private static ProjectContainer instance = new ProjectContainer();
-    private StringMap<ProjectInfo> projectInfoMap = new StringMap();
-
     /*key是 请求方法+url,value是RouteModel*/
     private StringMap<BeanModel> beanMap = new StringMap();
     private StringMap<RouteModel> routeMap = new StringMap();
@@ -54,29 +56,19 @@ public class ProjectContainer implements Closeable {
 
     protected ProjectContainer() {
     }
-
-    public <T extends ProjectInfo> ProjectContainer addProjectInfo(T projectInfo) {
-        projectInfoMap.add(projectInfo.getModuleDir(), projectInfo);
-        return this;
-    }
-
     /*初始化项目*/
     public void initProject() {
         System.out.println("*******************************容器正在初始化**************************");
-        if (!projectInfoMap.containsKey("core")) {
-            addProjectInfo(new ProjectInfo().init("core"));
-        }
         try {
-            projectInfoMap.values().forEach(projectInfo -> {
-                /*注入bean：读取配置文件中的bean*/
-                setProBean(projectInfo);
-            });
+            /*读取并设置配置文件application-xx.xml中的数据*/
+            reloadBasicCofig();
             /*注入bean：把代码中的bean信息放入beanMap和routeMap*/
             setJavaBeanMap();
             /*注入bean:把代码中的config注解类中的注解在方法上的bean和切面放入容器*/
             setConfigClassInner();
             /*处理等待自动注入的属性*/
             doWaitAutoFieldMap();
+            classList = null;
             System.out.println("*******************************容器初始化完成**************************");
         } catch (Exception e) {
             e.printStackTrace();
@@ -84,26 +76,55 @@ public class ProjectContainer implements Closeable {
             System.exit(-1);
         }
     }
-
-    public void setProBean(ProjectInfo projectInfo) {
+    /**
+     * 获取主配置文件application-xx.yml信息
+     */
+    public Map<String, Object> getBasicConfigMap() {
+        String proFileName = "application.yml";
+        Map<String, Map<String, Object>> proMap = FileUtil.readConfigFileByYML(proFileName);
+        var profiles=proMap.get("profiles");
+        profiles.put("active", ActiveEnum.getEnum(profiles.get("active").toString()));
+        BeanUtil.map2Model(profiles,ProjectInfo.getInstance());
+        proFileName = "application-" + ProjectInfo.getInstance().getActive().getMsg() + ".yml";
+        Map<String, Object> resultMap = FileUtil.readConfigFileByYML(proFileName);
+        return resultMap;
+    }
+    public void setProjectInfo(Map<String, Object> projectMap) {
+        if (projectMap != null) {
+            Object projectName = projectMap.get("name");
+            Object projectGroupId = projectMap.get("projectGroupId");
+            if (projectName != null) {
+                ProjectInfo.getInstance().setProjectName(projectName.toString());
+            }
+            if (projectGroupId != null) {
+                ProjectInfo.getInstance().setProjectGroupId(projectGroupId.toString());
+            }
+        }
+    }
+    public void reloadBasicCofig() {
+        /*读取配置文件application-xx.xml中的数据*/
+        Map<String, Object> basicConfigMap = getBasicConfigMap();
+        /*初始化项目信息*/
+        setProjectInfo((Map<String, Object>) basicConfigMap.get("project"));
+        // 注入bean: 配置文件中bean
+        setProBean(basicConfigMap);
+    }
+    public void setProBean(Map<String, Object> proMap) {
         try {
-            String proFileName = "application-" + projectInfo.getActive().getMsg() + ".yml";
-            Optional<StringMap<Object>> optional = FileUtil.readConfigFileByYML(FileUtil.getResourceFile(projectInfo.getModuleDir(), proFileName));
-            if (optional.isPresent()){
+            if (proMap==null){
                 return;
             }
-            var proMap=optional.get();
             /*1、注入数据源*/
-            DataSourceFactory.init(optional);
+            DataSourceFactory.init(Optional.ofNullable(StringMap.translate(proMap)));
             /*2、注入redis*/
             setBeanRedis(proMap);
             /*3-注入memcache*/
             setBeanMemcah(proMap);
         } catch (Exception e) {
+            logger.error("启动异常：加载配置文件失败");
             e.printStackTrace();
         }
     }
-
     /**
      * 启动的时候使用，启动完毕清除
      */
@@ -113,7 +134,9 @@ public class ProjectContainer implements Closeable {
         if (classList == null) {
             classList = new ArrayList<>();
         }
-        projectInfoMap.values().forEach(projectInfo -> classList.addAll(FileUtil.getClassList(projectInfo.getModuleDir(), projectInfo.getGroupId())));
+        String projectGroupId = ProjectInfo.getInstance().getProjectGroupId();
+        String classPath = this.getClass().getResource("/").getPath() + projectGroupId.replace(".", File.separator);
+        classList.addAll(FileUtil.getClassList(classPath, projectGroupId));
     }
 
     private List<Class> getClassList() {
@@ -489,18 +512,19 @@ public class ProjectContainer implements Closeable {
     }
 
     private String getBeanNameByInterface(Class interfaceClass) {
-        String inteSimpleName = interfaceClass.getSimpleName();
-        if (inteSimpleName.startsWith("I")) {
-            inteSimpleName = inteSimpleName.substring(1);
-        }
-        for (ProjectInfo projectInfo : projectInfoMap.values()) {
-            if (interfaceClass.getName().contains(projectInfo.getGroupId())) {
-                return StringUtil.lowFirst(inteSimpleName.replace(".class", ""));
+        if (isServiceInterface(interfaceClass)) {
+            String temp = interfaceClass.getSimpleName();
+            if (temp.startsWith("I")) {
+                temp = temp.substring(1);
             }
+            return StringUtil.lowFirst(temp.replace(".class", ""));
         }
         return null;
     }
-
+    private Boolean isServiceInterface(Class interfaceClass){
+        String projectGroupId = ProjectInfo.getInstance().getProjectGroupId();
+        return(interfaceClass.getName().contains(projectGroupId));
+    }
     /**
      * bean已经在beanMap中时，直接赋值
      * bean没有在beanMap中时，暂时放到noAutoFieldMap中
@@ -566,7 +590,6 @@ public class ProjectContainer implements Closeable {
 
     public static void main(String[] args) {
         ProjectContainer instance = ProjectContainer.getInstance();
-        instance.addProjectInfo(new ProjectInfo().init("core"));
         instance.initProject();
         System.out.println(123);
     }

@@ -1,4 +1,5 @@
 import com.czy.jdbc.JDBCUtil;
+import com.czy.jdbc.pool.DataSourceFactory;
 import com.czy.util.model.StringMap;
 import org.junit.Test;
 
@@ -24,6 +25,7 @@ public class TestJDBC2 {
     }
     @Test
     public void jdbcSelect() {
+
     }
 
 }

@@ -15,38 +15,18 @@ import java.util.Optional;
  * @since 2020-04-07
  */
 public class ProjectInfo {
-    public ProjectInfo() {
+    private static ProjectInfo instance=new ProjectInfo();
+    public static ProjectInfo getInstance(){
+        return instance;
     }
-    protected Optional<Map<String, Object>> initPro(String moduleDir) {
-        Optional<StringMap<Map<String, Object>>> optional =FileUtil.readConfigFileByYML(FileUtil.getResourceFile(moduleDir, "application.yml"));
-        Par<Map<String, Object>> result = new Par<>();
-        optional.ifPresent(proMap->{
-            var profileMap= proMap.get("profiles");
-            String active = StringUtil.getStr(profileMap.get("active"), "dev");
-            String groupId = StringUtil.getStr(profileMap.get("groupId"), "com.czy.core");
-            ProjectInfo.this.moduleDir = StringUtil.getStr(profileMap.get("moduleDir"), moduleDir);
-            setActive(ActiveEnum.getEnum(active));
-            setGroupId(groupId);
-            setModuleDir(moduleDir);
-            result.set(profileMap);
-        });
-        return Optional.ofNullable(result.get());
+    protected ProjectInfo(){
+
     }
-    public ProjectInfo init(String moduleDir){
-        initPro(moduleDir);
-        return this;
-    }
-    private ActiveEnum active;
-    private String groupId;
+    private String projectName;
+    private String projectGroupId;
     private String moduleDir;
-
-    public String getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
-    }
+    /**/
+    private ActiveEnum active;
 
     public String getModuleDir() {
         return moduleDir;
@@ -57,11 +37,27 @@ public class ProjectInfo {
     }
 
     public ActiveEnum getActive() {
-        return active;
+        return active==null?ActiveEnum.Default:active;
+    }
+
+    public String getProjectGroupId() {
+        return projectGroupId;
+    }
+
+    public void setProjectGroupId(String projectGroupId) {
+        this.projectGroupId = projectGroupId;
     }
 
     public void setActive(ActiveEnum active) {
         this.active = active;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
 }

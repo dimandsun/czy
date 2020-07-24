@@ -1,10 +1,9 @@
+import com.czy.jdbc.pool.MyConnection;
 import com.czy.util.ClassUtil;
 import com.czy.util.model.StringMap;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -24,7 +23,7 @@ public class Te {
     @Test
     public void abc(){
 //        StringMap.class == Map.class;
-
+        List<MyConnection> pool = Collections.synchronizedList(new LinkedList<MyConnection>());
         System.out.println(123);
 
     }
