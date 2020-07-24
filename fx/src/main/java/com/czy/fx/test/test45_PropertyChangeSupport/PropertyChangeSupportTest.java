@@ -1,6 +1,6 @@
 package com.czy.fx.test.test45_PropertyChangeSupport;
 
-import com.czy.user.model.User;
+import com.czy.fx.User;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

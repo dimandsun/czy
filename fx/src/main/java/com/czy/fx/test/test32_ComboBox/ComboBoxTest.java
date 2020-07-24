@@ -1,7 +1,7 @@
 package com.czy.fx.test.test32_ComboBox;
 
+import com.czy.fx.User;
 import com.czy.fx.test.FXUtil;
-import com.czy.user.model.User;
 import com.czy.util.ObjectUtil;
 import com.czy.util.text.StringUtil;
 import javafx.application.Application;

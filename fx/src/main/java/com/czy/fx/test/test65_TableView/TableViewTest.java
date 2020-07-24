@@ -1,7 +1,7 @@
 package com.czy.fx.test.test65_TableView;
 
 import com.czy.fx.test.FXUtil;
-import com.czy.user.model.User;
+import com.czy.fx.User;
 import com.czy.util.ObjectUtil;
 import javafx.application.Application;
 import javafx.beans.InvalidationListener;

@@ -1,6 +1,6 @@
 package com.czy.fx.test.test31_ChoiceBox;
 
-import com.czy.user.model.User;
+import com.czy.fx.User;
 import com.czy.util.ObjectUtil;
 import com.czy.util.text.StringUtil;
 import javafx.application.Application;

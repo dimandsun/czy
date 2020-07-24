@@ -9,6 +9,6 @@ public class T {
 
     @Test
     public void ge(){
-        SQLUtil.generateBeanFile("com.czy.user.model.table", "sql.sql", "user");
+        SQLUtil.generateBeanFile("user.model.table", "sql.sql", "user");
     }
 }

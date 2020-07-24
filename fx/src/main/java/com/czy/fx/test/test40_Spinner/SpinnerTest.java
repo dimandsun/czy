@@ -1,6 +1,6 @@
 package com.czy.fx.test.test40_Spinner;
 
-import com.czy.user.model.User;
+import com.czy.fx.User;
 import com.czy.util.set.ListUtil;
 import com.czy.util.ObjectUtil;
 import com.czy.util.text.StringUtil;

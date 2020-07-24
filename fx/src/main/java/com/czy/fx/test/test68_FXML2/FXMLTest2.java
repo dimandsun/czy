@@ -1,7 +1,7 @@
 package com.czy.fx.test.test68_FXML2;
 
 import com.czy.fx.test.FXUtil;
-import com.czy.user.model.User;
+import com.czy.fx.User;
 import com.czy.util.io.FileUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

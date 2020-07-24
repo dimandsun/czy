@@ -1,7 +1,7 @@
 package com.czy.fx.test.test67_TreeTableView;
 
 import com.czy.fx.test.FXUtil;
-import com.czy.user.model.User;
+import com.czy.fx.User;
 import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.control.TreeItem;

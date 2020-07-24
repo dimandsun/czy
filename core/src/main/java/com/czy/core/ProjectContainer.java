@@ -80,32 +80,15 @@ public class ProjectContainer implements Closeable {
      * 获取主配置文件application-xx.yml信息
      */
     public Map<String, Object> getBasicConfigMap() {
-        String proFileName = "application.yml";
-        Map<String, Map<String, Object>> proMap = FileUtil.readConfigFileByYML(proFileName);
-        var profiles=proMap.get("profiles");
-        profiles.put("active", ActiveEnum.getEnum(profiles.get("active").toString()));
-        BeanUtil.map2Model(profiles,ProjectInfo.getInstance());
-        proFileName = "application-" + ProjectInfo.getInstance().getActive().getMsg() + ".yml";
-        Map<String, Object> resultMap = FileUtil.readConfigFileByYML(proFileName);
-        return resultMap;
-    }
-    public void setProjectInfo(Map<String, Object> projectMap) {
-        if (projectMap != null) {
-            Object projectName = projectMap.get("name");
-            Object projectGroupId = projectMap.get("projectGroupId");
-            if (projectName != null) {
-                ProjectInfo.getInstance().setProjectName(projectName.toString());
-            }
-            if (projectGroupId != null) {
-                ProjectInfo.getInstance().setProjectGroupId(projectGroupId.toString());
-            }
+        var projectInfo=ProjectInfo.getInstance();
+        if (projectInfo.getSettingFile()==null){
+            ProjectInfo.init(FileUtil.getResourceFile("application.yml"));
         }
+        return FileUtil.readConfigFileByYML(projectInfo.getSettingFile()).get();
     }
     public void reloadBasicCofig() {
         /*读取配置文件application-xx.xml中的数据*/
         Map<String, Object> basicConfigMap = getBasicConfigMap();
-        /*初始化项目信息*/
-        setProjectInfo((Map<String, Object>) basicConfigMap.get("project"));
         // 注入bean: 配置文件中bean
         setProBean(basicConfigMap);
     }
@@ -135,8 +118,8 @@ public class ProjectContainer implements Closeable {
             classList = new ArrayList<>();
         }
         String projectGroupId = ProjectInfo.getInstance().getProjectGroupId();
-        String classPath = this.getClass().getResource("/").getPath() + projectGroupId.replace(".", File.separator);
-        classList.addAll(FileUtil.getClassList(classPath, projectGroupId));
+//        String classPath = this.getClass().getResource("/").getPath() + projectGroupId.replace(".", File.separator);
+        classList.addAll(FileUtil.getClassList(ProjectInfo.getInstance().getModuleDir(), projectGroupId));
     }
 
     private List<Class> getClassList() {

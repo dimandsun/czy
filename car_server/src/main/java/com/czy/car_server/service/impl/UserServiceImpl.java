@@ -2,10 +2,7 @@ package com.czy.car_server.service.impl;
 
 import com.czy.car_server.model.table.User;
 import com.czy.car_server.service.IUserService;
-import com.czy.core.annotation.Auto;
 import com.czy.core.annotation.bean.Service;
-import com.czy.core.redis.service.IRedisService;
-import com.czy.core.service.ICommonService;
 import com.czy.util.text.StringUtil;
 import com.czy.util.model.ResultVO;
 
@@ -19,10 +16,6 @@ import static com.czy.util.enums.ResCodeEnum.DBExce;
  */
 @Service
 public class UserServiceImpl implements IUserService {
-    @Auto
-    private ICommonService commonService;
-    @Auto
-    private IRedisService redisService;
 
     @Override
     public ResultVO regist(User user) {
@@ -40,7 +33,7 @@ public class UserServiceImpl implements IUserService {
         /*用户密码加密*/
         user.setPs();
         /*插入数据库*/
-        Integer userId = commonService.insert(user);
+        Integer userId =null;// commonService.insert(user);
         if (userId == null || userId.equals(0)) {
             return new ResultVO(DBExce, "注册用户失败：插入数据库异常");
         }
@@ -55,9 +48,9 @@ public class UserServiceImpl implements IUserService {
         if (user==null|| StringUtil.isBlank(user.getCode())){
             return false;
         }
-        return redisService.set("car:user_"+user.getCode(), user);
+        return null;//redisService.set("car:user_"+user.getCode(), user);
     }
     public User getByRedis(String userCode){
-        return redisService.get("car:user_"+userCode,User.class);
+        return null;//redisService.get("car:user_"+userCode,User.class);
     }
 }

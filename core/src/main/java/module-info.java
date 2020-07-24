@@ -18,17 +18,12 @@
     requires com.czy.log;
     requires com.czy.jdbc;
     exports com.czy.core.util;
-    exports com.czy.user.model;
-    exports com.czy.swing.view;
     exports com.czy.core.annotation.db;
     exports com.czy.core.annotation.bean;
     exports com.czy.core.annotation;
-    exports com.czy.core.redis.service;
-    exports com.czy.core.service;
     exports com.czy.core.annotation.mapping;
     exports com.czy.core.model;
     exports com.czy.core;
     exports com.czy.core.enums;
     exports com.czy.core.dispatch;
-    exports com.czy.core.db.config;
 }

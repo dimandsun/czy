@@ -10,6 +10,7 @@ car_client {
     requires com.czy.util;
     requires javafx.controls;
     requires cglib;
+    requires com.fasterxml.jackson.annotation;
     exports com.czy.car_client.view;
     exports com.czy.car_client.view.user;
     opens com.czy.car_client.view.user;

@@ -1,4 +1,5 @@
 profiles:
   active: dev
-  groupId: com.czy.core
-  moduleDir: core
+  projectGroupId: com.czy.question
+  moduleDir: question_bank
+  projectName: questiont

@@ -24,13 +24,5 @@ public class T {
 
     @Test public void testJDBC(){
 //        DataSourceFactory.reloadSetting("jdbc","jdbc.yml");
-        var projectContainer=ProjectContainer.getInstance();
-        projectContainer.initProject();
-        IQuestionDao questionDao= (IQuestionDao) projectContainer.getBeanMap().get("questionDao").getBean();
-        var question=new Question();
-        question.setName("adsfasd");
-        var tableName=TableUtil.getTableName(question.getClass());
-        var id=questionDao.insert(tableName,question);
-        System.out.println(id);
     }
 }

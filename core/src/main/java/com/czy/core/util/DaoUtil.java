@@ -17,7 +17,6 @@ import java.sql.SQLException;
 public class DaoUtil {
     private DaoUtil() {
     }
-
     public static Object exeSql(Object target, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
         Class targetClass = method.getDeclaringClass();
         if (!targetClass.isAnnotationPresent(Dao.class)) {
