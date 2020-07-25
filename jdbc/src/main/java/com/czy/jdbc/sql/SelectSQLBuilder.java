@@ -16,7 +16,7 @@ import java.util.Optional;
  * @author chenzy
  * @date 2020-07-21
  */
-public class SelectSQLBuilder<T> extends SQLBuilder<T> {
+public class SelectSQLBuilder<T> extends SQLBuilder<T> implements WhereColumnValues {
 
 
     private WhereSQL whereSQL;
@@ -53,9 +53,13 @@ public class SelectSQLBuilder<T> extends SQLBuilder<T> {
         } else {
             orderPreSql.append(",? ?");
         }
-        orderPreSql.getValues().add(columnName);
-        orderPreSql.getValues().add(orderBy);
+        orderPreSql.add(columnName);
+        orderPreSql.add(orderBy);
         return this;
+    }
+    @Override
+    public WhereSQL whereColumnValues(Map columnMap) {
+        return where().equal(columnMap);
     }
 
     private interface OrderBy {

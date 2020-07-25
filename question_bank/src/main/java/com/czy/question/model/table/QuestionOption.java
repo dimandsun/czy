@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @date 2020-06-22
  *  题目选项
  */
-@Table("option")
-public class Option {
+@Table("question_option")
+public class QuestionOption {
 	/**/
 	private Integer id;
 	/**/

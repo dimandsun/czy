@@ -22,8 +22,8 @@ public class QuestionAspect {
      * @param args
      * @return
      */
-    @Aspect(pointcuts = "public.* dao..*.*(..)", order = 1, type = AspectTypeEnum.Around)
-    public Object daoAspect$(Object target, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
+    @Aspect(pointcuts = "public.* com.czy\\.[(a-zA-Z_)]*\\.dao\\..*.*(..)", order = 1, type = AspectTypeEnum.Around)
+    public Object daoAspect(Object target, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
        return DaoUtil.exeSql(target,method,args,methodProxy);
     }
 }

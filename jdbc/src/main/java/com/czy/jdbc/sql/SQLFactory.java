@@ -30,7 +30,7 @@ public class SQLFactory {
 
     private static <T extends SQLBuilder> T createSQL(SQLTypeEnum sqlTypeEnum, String tableName, Class<T> sqlClass) {
         var sql = sqlTypeEnum.getMsg();
-        sql = sql.replace("#{tableName}", tableName);
+        sql = sql.replace("${tableName}", tableName);
         T result = null;
         try {
             result = sqlClass.getDeclaredConstructor(String.class, List.class).newInstance(sql, new ArrayList<>());
@@ -45,6 +45,7 @@ public class SQLFactory {
         }
         return result;
     }
+
     public static <T extends SQLBuilder> T createSQL(Method method, Object[] args) throws DaoException {
         try {
             for (var annotation : method.getAnnotations()) {
@@ -67,8 +68,8 @@ public class SQLFactory {
                 ResultTypeEnum resultSetType = (ResultTypeEnum) sqlReturnTypeMethod.invoke(annotation);
                 //sql类型
                 Class<T> sqlClass = sqlTypeEnum.getSqlClass();
-                //创建sql对象
-                T result = sqlClass.getDeclaredConstructor(String.class, List.class).newInstance(sqlValue, new ArrayList<>());
+                //创建sql对象 PreSql preSql, ResultTypeEnum returnType
+                T result = sqlClass.getDeclaredConstructor(PreSql.class, ResultTypeEnum.class).newInstance(new PreSql(sqlValue, new ArrayList<>()), resultSetType);
                 result.setResultType(resultSetType);
                 result.setReturnJavaType(method.getReturnType());
                 var parameters = method.getParameters();
@@ -83,33 +84,68 @@ public class SQLFactory {
                     key为参数名或者参数的par注解值，
                     value:当实际值不是基本数据类型,转成map*/
                 var valueMap = new StringMap();
+                String setParKey = null;//表对应的实体对象在valueMap中的key
+                String whereParKey = null;//表对应的实体对象在valueMap中的key
                 for (var i = 0; i < parameters.length; i++) {
                     var par = parameters[i];
                     var parType = par.getType();
-                    Par parAnnotation = parType.getAnnotation(Par.class);
+                    Par parAnnotation = par.getAnnotation(Par.class);
                     //参数是基础数据类型且没有注解，则直接过滤
                     if (ClassUtil.isBasicDataType(parType) && parAnnotation == null) {
                         continue;
                     }
-                    String key = parAnnotation == null ? parType.getSimpleName() : parAnnotation.value();
+                    String key = parAnnotation == null ? par.getName() : parAnnotation.value();
                     Object value = ClassUtil.isBasicDataType(parType) || Map.class.isAssignableFrom(parType) ?
                             args[i] : JsonUtil.model2Map(args[i]);
                     valueMap.add(key, value);
+                    if (!ClassUtil.isBasicDataType(parType) && !Map.class.isAssignableFrom(parType)) {
+                        if (key.contains("set")) {
+                            setParKey = key;
+                        } else if (key.contains("where")) {
+                            whereParKey = key;
+                        }
+                    }
                 }
                 if (valueMap.isEmpty()) {
                     return result;
                 }
-                /*对sql中的占位标记一一用?代替，并记住顺序*/
-                int i = -1,j=-1;
+                /*对sql中的占位标记${}用实际值代替*/
+                {
+                    int i = -1, j = -1;
+                    while ((i = sqlValue.indexOf("${")) != -1 && (j = sqlValue.indexOf("}")) != -1) {
+                        var temp=sqlValue.substring(i + 2, j);
+                        var value = MapUtil.getValue(valueMap,temp.contains(".")?temp.split("."):temp).get();
+                        sqlValue = sqlValue.substring(0, i) + value + sqlValue.substring(j + 1);
+                    }
+                }
+                result.getBasicPreSql().setSql(sqlValue);
+                /*
+                对sql中的占位标记#[]用#{}代替
+                    $[]用${}代替
+                这些占位标记表示接受的是setBean或者whereBean
+                */
+                if (setParKey != null && result instanceof SetColumnValues setColumnValues) {
+                    setColumnValues.setColumnValues((Map) valueMap.get(setParKey));
+                }
+                if (whereParKey != null && result instanceof WhereColumnValues whereColumnValues) {
+                    whereColumnValues.whereColumnValues((Map) valueMap.get(setParKey));
+                }
+
+                /*对sql中的占位标记#{}一一用?代替，并记住顺序
+                 注意：当存在setParKey或者whereParKey，且还有#{}标记，sql拼接很有可能有问题，
+                */
                 var orderMarking = new ArrayList<String>();
-                while ((i = sqlValue.indexOf("#{"))!=-1 && (j=sqlValue.indexOf("}"))!=-1) {
-                    orderMarking.add(sqlValue.substring(i,j));
-                    sqlValue=sqlValue.substring(0,i)+"?"+sqlValue.substring(j);
+                {
+                    sqlValue=result.getEndSql().getSql();
+                    int i = -1, j = -1;
+                    while ((i = sqlValue.indexOf("#{")) != -1 && (j = sqlValue.indexOf("}")) != -1) {
+                        orderMarking.add(sqlValue.substring(i + 2, j));
+                        sqlValue = sqlValue.substring(0, i) + "?" + sqlValue.substring(j + 1);
+                    }
                 }
                 /*对这些顺序标记给上真正的值*/
-                var values=new ArrayList<>();
-                orderMarking.forEach(marking -> values.add(MapUtil.getValue(valueMap,marking.split("."))));
-                result.getEndSql().setValues(values);
+                orderMarking.forEach(marking -> result.getEndSql().add(MapUtil.getValue(valueMap, marking.split(".")).get()));
+                result.getEndSql().setSql(sqlValue);
                 result.getEndSql().isEnd(true);
                 return result;
             }
@@ -127,7 +163,8 @@ public class SQLFactory {
 
     public static InsertSQLBuilder insert(String tableName, StringMap columnMap) {
         var sql = createSQL(SQLTypeEnum.Insert, tableName, InsertSQLBuilder.class);
-        return sql.setColumnValues(columnMap);
+        sql.setColumnValues(columnMap);
+        return sql;
     }
 
     public static DeleteSQLBuilder delete(String tableName) {
@@ -164,22 +201,27 @@ public class SQLFactory {
 
     /**
      * 清空表
+     *
      * @param tableName
      * @return
      */
     public static String truncateTable(String tableName) {
         return createSQL(SQLTypeEnum.Truncate, tableName, TruncateSQLBuilder.class).getEndSql().getSql();
     }
+
     /**
      * 删除表
+     *
      * @param tableName
      * @return
      */
     public static String dropTable(String tableName) {
         return createSQL(SQLTypeEnum.Truncate, tableName, DropSQLBuilder.class).getEndSql().getSql();
     }
+
     /**
      * 创建表
+     *
      * @return
      */
     public static String createTable(String sql) {

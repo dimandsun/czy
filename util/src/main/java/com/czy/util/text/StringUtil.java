@@ -628,6 +628,8 @@ public class StringUtil {
         }
         if (value instanceof Integer integer) {
             return integer;
+        }else if (value instanceof Long l){
+            return l.intValue();
         }
         return Integer.valueOf(value.toString());
     }
@@ -895,6 +897,26 @@ public class StringUtil {
         String result="";
         for (int i = 0; i < msgs.length; i++) {
             result= result.concat(msgs[i]);
+        }
+        return result;
+    }
+
+    /**
+     * 字符串多倍复制，以参数三为分隔符
+     * @param multiples
+     * @param separator
+     * @return
+     */
+    public static String getMultipleText(String str, int multiples, String separator) {
+        if (StringUtil.isBlank(str)||multiples==0){
+            return "";
+        }
+        if (StringUtil.isBlank(separator)){
+            separator=",";
+        }
+        var result = str;
+        for (int i = 1; i < multiples; i++) {
+            result+=separator+str;
         }
         return result;
     }

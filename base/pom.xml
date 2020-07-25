@@ -53,11 +53,19 @@
         <junit.version>4.12</junit.version>
         <rabbitmq.version>5.9.0</rabbitmq.version>
         <servlet.version>4.0.1</servlet.version>
+        <tomcat-plugin.version>2.2</tomcat-plugin.version>
         <czy.version>1.0-SNAPSHOT</czy.version>
+
     </properties>
 
     <dependencyManagement>
         <dependencies>
+<!--            嵌入式tomcat-->
+            <dependency>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>${tomcat-plugin.version}</version>
+            </dependency>
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
@@ -206,7 +214,6 @@
                 <version>${javafx.version}</version>
             </dependency>
         </dependencies>
-
     </dependencyManagement>
     <dependencies>
         <dependency>
@@ -230,7 +237,10 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <release>${java.version}</release>
-                    <compilerArgs>--enable-preview</compilerArgs>
+                    <compilerArgs>
+                        <arg>--enable-preview</arg> <!--使用新版本的预览特性-->
+                        <arg>-parameters</arg><!--记录形参真实名-->
+                    </compilerArgs>
                 </configuration>
             </plugin>
         </plugins>

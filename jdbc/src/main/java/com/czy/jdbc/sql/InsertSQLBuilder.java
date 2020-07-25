@@ -3,31 +3,34 @@ package com.czy.jdbc.sql;
 import com.czy.jdbc.sql.enums.ResultTypeEnum;
 import com.czy.util.json.JsonUtil;
 import com.czy.util.model.StringMap;
+import com.czy.util.text.StringUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Map;
 
 
 /**
  * @author chenzy
  * @date 2020-07-21
  */
-public class InsertSQLBuilder<T> extends SQLBuilder<T> {
+public class InsertSQLBuilder<T> extends SQLBuilder<T> implements SetColumnValues {
     public InsertSQLBuilder(PreSql preSql, ResultTypeEnum returnType) {
         super(preSql, returnType);
     }
-
-    public InsertSQLBuilder setColumnValues(StringMap columnMap) {
+    @Override
+    public InsertSQLBuilder setColumnValues(Map columnMap) {
         if (columnMap == null || columnMap.isEmpty()) {
             return this;
         }
         var preSql = getBasicPreSql();
         var keys = columnMap.keySet().toString();
-        var sql = preSql.getSql().replace("#[columns]", keys.substring(1, keys.length() - 1));
+        var sql = preSql.getSql().replace("$[columns]", keys.substring(1, keys.length() - 1))
+                .replace("#[values]", StringUtil.getMultipleText("?",columnMap.size(),","));
         preSql.setSql(sql);
-        preSql.getValues().addAll(columnMap.values());
+        preSql.addAll(columnMap.values());
         return this;
     }
 
@@ -40,15 +43,24 @@ public class InsertSQLBuilder<T> extends SQLBuilder<T> {
 
     @Override
     protected Object getResult(PreparedStatement ps) throws SQLException {
+        var returnJavaType=getReturnJavaType();
         return switch (getResultType()) {
             case AffectedLines: yield ps.executeUpdate();
             case PrimaryKey: {
                 ps.executeUpdate();
                 var resultSet = ps.getGeneratedKeys();
                 if (resultSet.next()) {
-                    yield resultSet.getObject(1);
+                    var temp =resultSet.getObject(1);
+                    if (returnJavaType==Integer.class){
+                        yield StringUtil.getInt(temp);
+                    }
+                    yield temp;
                 }
-                yield -1;
+                if (returnJavaType==Integer.TYPE||returnJavaType==Long.TYPE){
+                    yield -1;
+                }else {
+                    yield "-1";
+                }
             }
             default: throw new SQLException("sql类型异常！");
         };

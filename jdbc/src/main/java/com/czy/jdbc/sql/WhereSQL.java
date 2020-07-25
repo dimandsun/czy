@@ -5,6 +5,7 @@ import com.czy.util.text.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -45,6 +46,13 @@ public class WhereSQL {
     public <T> WhereSQL le(String columnName, T value){
         return setWhereSql(RelationEnum.LE,columnName,value);
     }
+    public <T> WhereSQL equal(Map<String,Object> columnMap){
+        if (columnMap == null || columnMap.isEmpty()) {
+            return this;
+        }
+        columnMap.forEach((key,value)->equal(key,value));
+        return this;
+    }
     public <T> WhereSQL equal(String columnName, T value){
         return setWhereSql(RelationEnum.Equal,columnName,value);
     }
@@ -80,7 +88,7 @@ public class WhereSQL {
         }
         preSql.append(columnName+relationEnum.getValue());
         var temp=relationEnum.getValue().replace("#{value}",value.toString());
-        preSql.getValues().add(temp);
+        preSql.add(temp);
         return this;
     }
 }

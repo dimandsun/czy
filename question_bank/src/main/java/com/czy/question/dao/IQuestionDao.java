@@ -12,5 +12,5 @@ import com.czy.util.annotation.Par;
 @Dao
 public interface IQuestionDao {
     @InsertSQL
-    Integer insert(@Par("tableName")String tableName, Question question);
+    Integer insert(@Par("tableName")String tableName,@Par("setPar") Question question);
 }

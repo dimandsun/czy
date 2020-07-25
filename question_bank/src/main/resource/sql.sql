@@ -24,7 +24,7 @@ create table question_group_stem(
 	,content nvarchar(2000) comment '题干'
 	,des nvarchar(20) comment '说明'
 )COMMENT='多个题目的共同题干，如英语的阅读理解';
-create table [option](
+create table question_option(
 	id int primary key auto_increment
 	,code nvarchar(20) comment ''
 	,name nvarchar(20) comment ''

@@ -12,13 +12,13 @@ import com.czy.util.enums.IEnum;
  * 数据控制语言（DCL）：用来控制数据库组件的存取许可、权限等的命令。包括：grant、deny、revoke。
  */
 public enum SQLTypeEnum implements IEnum<String> {
-    Insert("insert", InsertSQLBuilder.class,"insert into #{tableName}(#[columns])values(#[values]);"),
-    Delete("delete", DeleteSQLBuilder.class,"delete from #{tableName}"),
-    Update("update", UpdateSQLBuilder.class,"update #{tableName} {setContent}"),
-    Select("select", SelectSQLBuilder.class,"select #[columns] from {tableName}"),
-    Truncate("truncate", TruncateSQLBuilder.class,"truncate table #{tableName};"),
-    Create("create",null,"{createContent}"),
-    Drop("drop",null,"drop table {tableName};"),
+    Insert("insert", InsertSQLBuilder.class,"insert into ${tableName}($[columns])values(#[values]);"),
+    Delete("delete", DeleteSQLBuilder.class,"delete from ${tableName}"),
+    Update("update", UpdateSQLBuilder.class,"update ${tableName} #{setContent}"),
+    Select("select", SelectSQLBuilder.class,"select $[columns] from {tableName}"),
+    Truncate("truncate", TruncateSQLBuilder.class,"truncate table ${tableName};"),
+    Create("create",null,"${createContent}"),
+    Drop("drop",null,"drop table ${tableName};"),
     Alter("alter",null,"alter {};"),
     Other("exec",null,"alter {};"),
 

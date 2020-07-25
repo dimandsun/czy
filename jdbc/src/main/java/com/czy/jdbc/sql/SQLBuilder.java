@@ -85,18 +85,20 @@ public class SQLBuilder<T> {
         var dataSource = DataSourceHolder.getInstance().get();
         var values = preSql.getValues();
         PreparedStatement ps = null;
+        String sqlMsg = null;
         try (var con = dataSource.getConnection()) {
             ps = getPreparedStatement(con);
             if (ps == null) {
                 throw new SQLException("sql语句错误，未明确的返回类型！");
             }
             for (int i = 1; i <= values.size(); i++) {
-                ps.setObject(i, values.get(i));
+                ps.setObject(i, values.get(i-1));
             }
+            sqlMsg=ps.toString();
             log.debug(ps.toString());
             return getResult(ps);
         } catch (SQLException e) {
-            log.error(ps.toString());
+            log.error(sqlMsg==null?ps.toString():sqlMsg);
             e.printStackTrace();
             return null;
         } finally {

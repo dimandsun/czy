@@ -14,12 +14,7 @@ import com.czy.util.text.StringUtil;
  */
 public class Main {
     public static void main(String[] args) {
-        String s1="public abstract java.lang.Integer com.czy.question.dao.IQuestionDao.insert(java.lang.String,com.czy.question.model.table.Question)";
-        String s2 = "public.* dao.*.*(..)";
-        System.out.println(StringUtil.matcher(s1,s2));
-
-
-       /* ProjectInfo.init(FileUtil.getResourceFile("question_bank","application.yml"));
+        ProjectInfo.init(FileUtil.getResourceFile("question_bank","application.yml"));
         var projectContainer= ProjectContainer.getInstance();
         projectContainer.initProject();
         IQuestionDao questionDao= (IQuestionDao) projectContainer.getBeanMap().get("questionDao").getBean();
@@ -27,6 +22,6 @@ public class Main {
         question.setName("adsfasd");
         var tableName= TableUtil.getTableName(question.getClass());
         var id=questionDao.insert(tableName,question);
-        System.out.println(id);*/
+        System.out.println(id);
     }
 }

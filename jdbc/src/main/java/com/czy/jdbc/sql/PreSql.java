@@ -1,5 +1,8 @@
 package com.czy.jdbc.sql;
 
+import com.czy.util.text.StringUtil;
+
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,7 +51,7 @@ public class PreSql {
         return this;
     }
     public List<Object> getValues() {
-        return values;
+        return List.copyOf(values);
     }
 
     public void setValues(List<Object> values) {
@@ -61,4 +64,18 @@ public class PreSql {
         this.values = values;
     }
 
+    public PreSql addAll(Collection values) {
+        if (values==null||values.isEmpty()){
+            return this;
+        }
+        this.values.addAll(values);
+        return this;
+    }
+    public PreSql add(Object value) {
+        if (StringUtil.isBlank(value)){
+            return this;
+        }
+        values.add(values);
+        return this;
+    }
 }
