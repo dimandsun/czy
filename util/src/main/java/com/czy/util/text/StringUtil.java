@@ -113,17 +113,19 @@ public class StringUtil {
         }
         return null;
     }
-
-    public static String println(String msg, Object... pars) {
+    public static String join(String msg, Object... pars) {
         if (msg == null || !msg.contains("{}") || pars == null || pars.length == 0) {
-            System.out.println(msg);
             return msg;
         }
         for (Object par : pars) {
             msg = msg.replaceFirst("\\{}", par == null ? "" : par.toString());
         }
-        System.out.println(msg);
         return msg;
+    }
+    public static String println(String msg, Object... pars) {
+        var result =join(msg,pars);
+        System.out.println(result);
+        return result;
     }
 
     public static boolean hasLength(String str) {

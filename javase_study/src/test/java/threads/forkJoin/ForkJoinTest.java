@@ -1,4 +1,4 @@
-package forkJoin;
+package threads.forkJoin;
 
 import org.junit.After;
 import org.junit.Before;
