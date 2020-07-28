@@ -27,19 +27,18 @@ import java.util.stream.LongStream;
 public class ForkJoinTest {
     @Before
     public void befor(){
-        System.out.println(Instant.now());
+        System.out.println("开始："+Instant.now());
     }
     @After
     public void after(){
 
-        System.out.println(Instant.now());
+        System.out.println("结束："+Instant.now());
     }
     @Test
     public void a() {
         var start=Instant.now();
-
         var pool = new ForkJoinPool();
-        var task = new ForkJoinCalculate(0L, 10000000L);
+        var task = new ForkJoinCalculate(0L, 100L);
         var sum=pool.invoke(task);
         System.out.println(sum);
 

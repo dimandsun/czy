@@ -11,7 +11,7 @@ public class ForkJoinCalculate extends RecursiveTask<Long> {
 
     private Long start;
     private Long end;
-    private static final Long threshoold = 1000000l;
+    private static final Long threshoold = 25L;
 
     public ForkJoinCalculate(Long start, Long end) {
         this.start = start;
@@ -21,9 +21,9 @@ public class ForkJoinCalculate extends RecursiveTask<Long> {
     @Override
     protected Long compute() {
         var length = end - start;
-        if (length < threshoold) {
+        if (length <= threshoold) {
             Long sum = 0l;
-            for (int i = 0; i < end; i++){
+            for (Long i = start; i <= end; i++){
                 sum += i;
             }
             return sum;
@@ -31,9 +31,8 @@ public class ForkJoinCalculate extends RecursiveTask<Long> {
             Long middle = (start + end) / 2;
             //拆分子任务，压入线程队列
             var left = new ForkJoinCalculate(start, middle);
+            var right = new ForkJoinCalculate(middle+1, end);
             left.fork();
-
-            var right = new ForkJoinCalculate(middle + 1, end);
             right.fork();
             return left.join() + right.join();
         }

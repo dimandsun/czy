@@ -10,7 +10,7 @@ import org.apache.catalina.startup.Tomcat;
  * @author chenzy
  * @date 2020-07-25
  */
-public class MyTomcat {
+public class TomcatTest {
     public static void main(String[] args) throws LifecycleException {
         //1.把目录的绝对路径获取到
         String classPath = System.getProperty("user.dir");

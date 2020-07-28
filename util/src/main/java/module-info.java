@@ -20,5 +20,5 @@
     exports com.czy.util.text;
     exports com.czy.util.time;
     exports com.czy.util.annotation;
-    exports com.czy.util.set;
+    exports com.czy.util.list;
 }

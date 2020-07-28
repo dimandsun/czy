@@ -2,7 +2,7 @@ package com.czy.fx.test.test49_SetProperty;
 
 import com.czy.fx.test.FXUtil;
 import com.czy.fx.User;
-import com.czy.util.set.ListUtil;
+import com.czy.util.list.ListUtil;
 import com.czy.util.ObjectUtil;
 import javafx.application.Application;
 import javafx.beans.property.SimpleSetProperty;

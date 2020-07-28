@@ -1,4 +1,4 @@
-package com.czy.util.set;
+package com.czy.util.list;
 
 import com.czy.util.text.StringUtil;
 
