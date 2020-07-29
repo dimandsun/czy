@@ -14,7 +14,7 @@ import static com.czy.util.tcp.SocketUtil.sendData;
  */
 public class ServerHTTP {
     public static void main(String[] args) throws IOException {
-        int port = 8080;
+        int port = 9090;
         var serverSocket = new ServerSocket(port);
         while (true) {
             //监听连接

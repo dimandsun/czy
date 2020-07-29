@@ -13,9 +13,9 @@ public class HelloServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
+        req.getHeaders("123");
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
-
         out.println("<!DOCTYPE html><html>");
         out.println("<head>");
         out.println("<meta charset=\"UTF-8\" />");

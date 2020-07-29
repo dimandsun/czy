@@ -1,12 +1,12 @@
 package com.czy.core.dispatch;
 
 import com.czy.core.ProjectContainer;
-import com.czy.core.enums.QuestEnum;
 import com.czy.core.model.RouteModel;
 import com.czy.log.Log;
 import com.czy.log.LogFactory;
 import com.czy.util.ClassUtil;
 import com.czy.util.annotation.Par;
+import com.czy.util.enums.QuestMethodEnum;
 import com.czy.util.json.JsonUtil;
 import com.czy.util.model.StringMap;
 import java.lang.annotation.Annotation;
@@ -33,10 +33,10 @@ public class Dispatch {
     }
 
     public <T> T post(String url, StringMap dataJson){
-        return exec(new Quest(QuestEnum.Post,url,dataJson));
+        return exec(new Quest(QuestMethodEnum.Post,url,dataJson));
     }
     public <T> T get(String url,StringMap dataJson){
-        return exec(new Quest(QuestEnum.Get,url,dataJson));
+        return exec(new Quest(QuestMethodEnum.Get,url,dataJson));
     }
     public <T> T exec(Quest quest){
         var url=quest.getUrl();
@@ -44,7 +44,7 @@ public class Dispatch {
             url="/"+url;
         }
         var dataJson=quest.getData();
-        RouteModel routeModel= routeModelMap.get(quest.getQuestEnum().getMsg()+url);
+        RouteModel routeModel= routeModelMap.get(quest.getQuestMethodEnum().getMsg()+url);
         if (routeModel == null) {
             //再看看是否有可以接受任意请求方式的接口
             routeModel=routeModelMap.get("all"+url);

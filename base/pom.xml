@@ -223,11 +223,11 @@
         </dependency>
     </dependencies>
     <build>
-        <!--  <resources>
+        <!--  <resource>
               <resource>
                   <directory>${basedir}/src/main/resource</directory>
               </resource>
-          </resources>-->
+          </resource>-->
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

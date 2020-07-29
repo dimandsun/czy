@@ -31,7 +31,7 @@ public class FXUtil {
     private FXUtil() {
     }
     /**
-     * fileName:"com.czy.fx.test.test69_GraspData.GraspData.fxml"
+     * fileName:"test69_GraspData.GraspData.fxml"
      */
     public static <T extends Node> T getNodeByFXML(String fileName){
         var fxmlLoader=new FXMLLoader();

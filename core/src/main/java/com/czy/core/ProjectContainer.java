@@ -5,13 +5,13 @@ import com.czy.core.annotation.Auto;
 import com.czy.core.annotation.bean.*;
 import com.czy.core.annotation.mapping.Mapping;
 import com.czy.core.annotation.mapping.MappingAnnotation;
-import com.czy.core.enums.QuestEnum;
 import com.czy.core.model.BeanModel;
 import com.czy.core.model.ProjectInfo;
 import com.czy.core.model.RouteModel;
 import com.czy.jdbc.pool.DataSourceFactory;
 import com.czy.log.Log;
 import com.czy.log.LogFactory;
+import com.czy.util.enums.QuestMethodEnum;
 import com.czy.util.list.ListUtil;
 import com.czy.util.text.StringUtil;
 import com.czy.util.io.FileUtil;
@@ -343,14 +343,14 @@ public class ProjectContainer implements Closeable {
             /*urlSuffix:路由后缀，在方法的Mapping注解上
               questEnumOutPar:请求类型
             */
-            var questEnumOutPar = new OutPar<QuestEnum>();
+            var questEnumOutPar = new OutPar<QuestMethodEnum>();
             String urlSuffix = getMapping(method, questEnumOutPar);
             if (questEnumOutPar.get() == null) {
                 continue;
             }
             RouteModel routeModel = new RouteModel();
             routeModel.setUrl(getUrl(urlPrefix, urlSuffix));
-            routeModel.setQuestEnum(questEnumOutPar.get());
+            routeModel.setQuestMethodEnum(questEnumOutPar.get());
             routeModel.setBeanModel(controllerBeanModel);
             routeModel.setMethod(method);
             routeMap.add(routeModel.getRouteKey(), routeModel);
@@ -376,7 +376,7 @@ public class ProjectContainer implements Closeable {
         return url;
     }
 
-    private String getMapping(Method method, OutPar<QuestEnum> questEnumOutPar) {
+    private String getMapping(Method method, OutPar<QuestMethodEnum> questEnumOutPar) {
         Annotation[] annotations = method.getAnnotations();
         if (ListUtil.isEmpty(annotations)) {
             return null;

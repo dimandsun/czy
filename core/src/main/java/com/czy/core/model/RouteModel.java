@@ -1,7 +1,7 @@
 package com.czy.core.model;
 
 
-import com.czy.core.enums.QuestEnum;
+import com.czy.util.enums.QuestMethodEnum;
 
 import java.lang.reflect.Method;
 
@@ -13,7 +13,7 @@ import java.lang.reflect.Method;
 public class RouteModel<Bean> {
     private BeanModel<Bean> beanModel;
     private Method method;
-    private QuestEnum questEnum;
+    private QuestMethodEnum questMethodEnum;
     private String url;
 
     public BeanModel<Bean> getBeanModel() {
@@ -32,12 +32,12 @@ public class RouteModel<Bean> {
         this.method = method;
     }
 
-    public QuestEnum getQuestEnum() {
-        return questEnum;
+    public QuestMethodEnum getQuestMethodEnum() {
+        return questMethodEnum;
     }
 
-    public void setQuestEnum(QuestEnum questEnum) {
-        this.questEnum = questEnum;
+    public void setQuestMethodEnum(QuestMethodEnum questMethodEnum) {
+        this.questMethodEnum = questMethodEnum;
     }
 
     public String getUrl() {
@@ -49,6 +49,6 @@ public class RouteModel<Bean> {
     }
 
     public String getRouteKey() {
-        return questEnum.getMsg()+url;
+        return questMethodEnum.getMsg()+url;
     }
 }

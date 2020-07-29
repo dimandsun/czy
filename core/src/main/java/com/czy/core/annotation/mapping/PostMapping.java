@@ -1,6 +1,6 @@
 package com.czy.core.annotation.mapping;
 
-import com.czy.core.enums.QuestEnum;
+import com.czy.util.enums.QuestMethodEnum;
 
 import java.lang.annotation.*;
 
@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@MappingAnnotation(QuestEnum.Post)
+@MappingAnnotation(QuestMethodEnum.Post)
 public @interface PostMapping {
     String value() default "";
 }

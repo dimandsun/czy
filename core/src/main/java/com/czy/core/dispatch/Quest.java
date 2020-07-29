@@ -1,6 +1,6 @@
 package com.czy.core.dispatch;
 
-import com.czy.core.enums.QuestEnum;
+import com.czy.util.enums.QuestMethodEnum;
 import com.czy.util.model.StringMap;
 
 /**
@@ -9,20 +9,20 @@ import com.czy.util.model.StringMap;
  */
 public class Quest {
     private String url;
-    private QuestEnum questEnum;
+    private QuestMethodEnum questMethodEnum;
     private StringMap data;
     public Quest(String url) {
-        this.questEnum = QuestEnum.All;
+        this.questMethodEnum = QuestMethodEnum.All;
         this.url = url;
         this.data = null;
     }
     public Quest(String url, StringMap data) {
-        this.questEnum = QuestEnum.All;
+        this.questMethodEnum = QuestMethodEnum.All;
         this.url = url;
         this.data = data;
     }
-    public Quest(QuestEnum questEnum,String url, StringMap data) {
-        this.questEnum = questEnum;
+    public Quest(QuestMethodEnum questMethodEnum, String url, StringMap data) {
+        this.questMethodEnum = questMethodEnum;
         this.url = url;
         this.data = data;
     }
@@ -35,12 +35,12 @@ public class Quest {
         this.url = url;
     }
 
-    public QuestEnum getQuestEnum() {
-        return questEnum;
+    public QuestMethodEnum getQuestMethodEnum() {
+        return questMethodEnum;
     }
 
-    public void setQuestEnum(QuestEnum questEnum) {
-        this.questEnum = questEnum;
+    public void setQuestMethodEnum(QuestMethodEnum questMethodEnum) {
+        this.questMethodEnum = questMethodEnum;
     }
 
     public StringMap getData() {
