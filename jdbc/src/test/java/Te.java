@@ -20,8 +20,9 @@ public class Te {
         person.addCat(new Cat(person));
         person.addCat(new Cat(person));
     }
+
     @Test
-    public void abc(){
+    public void abc() {
 //        StringMap.class == Map.class;
         List<MyConnection> pool = Collections.synchronizedList(new LinkedList<MyConnection>());
         System.out.println(123);
@@ -29,12 +30,34 @@ public class Te {
     }
 
     @Test
+    public void ab1c() {
+        var s1 = "abcd";//1362
+        var s2 = new String("ab") + new String("cd");//1374
+        var s3=s2.intern();//1362
+        System.out.println(s2 == s3);
+    }
+
+    @Test
+    public void ab2c() {
+        var s2 = new String("ab") + new String("cd");//1372
+        var s3=s2.intern();//1372
+        System.out.println(s2 == s3);
+        var s1 = "abcd";//1372
+        System.out.println(123);
+    }
+    @Test
+    public void ab3c() {
+        System.out.println("abcd" == (new String("ab") + new String("cd")));
+        System.out.println(123);
+    }
+    @Test
     public void b() throws NoSuchMethodException {
-        var method=Te.class.getMethod("a");
-        var type =method.getAnnotatedReturnType().getType();
+        var method = Te.class.getMethod("a");
+        var type = method.getAnnotatedReturnType().getType();
         type.equals(Void.TYPE);
         System.out.println(1);
     }
+
     @Test
     public void a() {
         /*方案1：硬编码*/
@@ -82,27 +105,30 @@ public class Te {
 
     @Test
     public void list() {
-        var map = new StringMap<>(3,"a","值1").add("b","值2").add("c","值3");
+        var map = new StringMap<>(3, "a", "值1").add("b", "值2").add("c", "值3");
         {
-            var temp=map.keySet().toString();
-            System.out.println(temp.substring(1,temp.length()-1));
+            var temp = map.keySet().toString();
+            System.out.println(temp.substring(1, temp.length() - 1));
         }
         {
-            var temp=map.values().toString();
-            System.out.println(temp.substring(1,temp.length()-1));
+            var temp = map.values().toString();
+            System.out.println(temp.substring(1, temp.length() - 1));
         }
     }
+
     @Test
     public void test() {
         List<Integer> lastNums = new ArrayList<>();
         lastNums.add(1);
-        for (int i = 0; i < 10; i ++) {
+        for (int i = 0; i < 10; i++) {
             showNums(lastNums);
             lastNums = calcNewNums(lastNums);
         }
     }
+
     /**
      * 打印输出队列
+     *
      * @duparam nums
      */
     private void showNums(List<Integer> nums) {
@@ -111,8 +137,10 @@ public class Te {
         }
         System.out.println("");
     }
+
     /**
      * 统计当前队列生成新的队列
+     *
      * @param lastNums
      * @return
      */
@@ -132,7 +160,7 @@ public class Te {
                 lastNum = num.intValue();
                 equalNums = 1;
             } else { //当前数等于之前的数，计数 +1
-                equalNums ++;
+                equalNums++;
             }
         }
         if (equalNums != 0) { //保存最后一个统计

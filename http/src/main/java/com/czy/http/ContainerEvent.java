@@ -1,4 +1,4 @@
-package com.czy.httpcontainer;
+package com.czy.http;
 import java.util.EventObject;
 public final class ContainerEvent<T> extends EventObject {
     private T data = null;

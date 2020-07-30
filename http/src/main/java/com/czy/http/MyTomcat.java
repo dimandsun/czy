@@ -1,14 +1,14 @@
-package com.czy.httpcontainer;
+package com.czy.http;
 
+import com.czy.http.model.ServerInfo;
 import com.czy.log.Log;
 import com.czy.log.LogFactory;
 import com.czy.util.common.LifeCycle;
+import com.czy.util.model.Par;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
-import java.net.Socket;
 
 /**
  * @author chenzy
@@ -24,7 +24,7 @@ public class MyTomcat implements LifeCycle {
     }
     public MyTomcat() {
         //延时十秒,默认编码UTF-8
-        this(new ServerInfo(8080,"localhost",10000,"UTF-8"));
+        this(new ServerInfo(8080,"localhost",10000,new Par<>("UTF-8")));
     }
 
     public MyTomcat(ServerInfo serverInfo) {
@@ -74,7 +74,7 @@ public class MyTomcat implements LifeCycle {
                 int len;
                 var result = new StringBuilder();
                 while ((len = reader.read(buf)) != -1) {
-                    var temp = new String(buf, 0, len, serverInfo.charSet());
+                    var temp = new String(buf, 0, len, serverInfo.charSet().get());
                     result.append(temp);
                 }
             } catch (IOException e) {
@@ -83,7 +83,6 @@ public class MyTomcat implements LifeCycle {
                 status=Status.Destroy;
                 break;
             }
-
         }
         return null;
     }

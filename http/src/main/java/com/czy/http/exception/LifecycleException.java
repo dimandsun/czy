@@ -1,4 +1,4 @@
-package com.czy.httpcontainer.exception;
+package com.czy.http.exception;
 
 
 /**
