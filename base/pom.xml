@@ -20,7 +20,7 @@
         <module>../car_server</module>
         <module>../car_client</module>
         <module>../question_bank</module>
-        <module>../server_container</module>
+        <module>../http</module>
         <module>../task</module>
         <module>../user</module>
         <module>../jdbc</module>
