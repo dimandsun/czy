@@ -3,6 +3,8 @@ package com.czy.http.factory;
 import com.czy.http.model.Request;
 import com.czy.http.model.Response;
 
+import java.io.OutputStream;
+
 /**
  * @author chenzy
  * @date 2020-07-30

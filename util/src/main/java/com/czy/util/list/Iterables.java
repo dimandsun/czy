@@ -11,6 +11,12 @@ import java.util.function.BiConsumer;
 public class Iterables {
     private Iterables(){}
 
+    /**
+     * 带索引的遍历
+     * @param elements
+     * @param action
+     * @param <E>
+     */
     public static <E> void forEach(Iterable<? extends E> elements, BiConsumer<Integer, ? super E> action) {
         Objects.requireNonNull(elements);
         Objects.requireNonNull(action);

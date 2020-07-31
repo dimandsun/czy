@@ -1,19 +1,12 @@
 package com.czy.http.model;
 
+import com.czy.http.ApplicationContext;
 import com.czy.http.enums.MIMEEnum;
-import com.czy.http.model.MIME;
-import com.czy.http.model.QuestScheme;
-import com.czy.http.model.ServerInfo;
 import com.czy.util.enums.QuestMethodEnum;
 import com.czy.util.model.StringMap;
+import com.czy.util.text.Line;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Collection;
-import java.util.Locale;
+import java.io.File;
 import java.util.Map;
 
 /**
@@ -21,10 +14,11 @@ import java.util.Map;
  * @date 2020-07-29
  */
 public class Response{
-    public Response(ServerInfo serverInfo) {
-        this.serverInfo = serverInfo;
-    }
 
+
+    public Response(ServletInfo servletInfo) {
+        this.servletInfo = servletInfo;
+    }
     /**********************************第一行*******************************************************/
     //GET
     private QuestMethodEnum questMethodEnum;
@@ -37,7 +31,7 @@ public class Response{
     /**********************************请求头信息列表，每一行都是key: value*******************************************************/
     private StringMap<String> headerMap;
 
-    private ServerInfo serverInfo;
+
     /*Accept：浏览器可接受的MIME类型。*/
 //    Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
     private Map<MIMEEnum, MIME> mimeMap;
@@ -46,6 +40,34 @@ public class Response{
 
 
     /**********************************请求体*******************************************************/
-    private String body;
+    private StringBuilder body=new StringBuilder();
+    /********************************************其他信息**************************************************/
+    private ServletInfo servletInfo;
+    private ApplicationContext applicationContext;
+    private File file;//返回的文件
 
+    public ApplicationContext getApplicationContext() {
+        return applicationContext;
+    }
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
+
+
+    public StringBuilder append(Object data){
+        return body.append(data);
+    }
+    public StringBuilder appendLine(Object data){
+        return body.append(data+ Line.separator);
+    }
+    public String getBody() {
+        return body.toString();
+    }
+
+    public File getFile() {
+        return file;
+    }
+    public void setFile(File file) {
+        this.file = file;
+    }
 }

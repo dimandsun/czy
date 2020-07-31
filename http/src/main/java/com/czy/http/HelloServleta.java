@@ -3,6 +3,7 @@ package com.czy.http;
 import com.czy.http.model.Servlet;
 import com.czy.http.model.ServletInfo;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -12,12 +13,8 @@ import java.io.PrintWriter;
  * @author chenzy
  * @since 2020/6/26
  */
-public class HelloServlet extends Servlet {
+public class HelloServleta extends HttpServlet {
     @Override
-    public void init(ServletInfo servletInfo) {
-        super.init(servletInfo);
-    }
-//    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         req.getHeaders("123");

@@ -19,5 +19,4 @@ public interface Container {
     List<Container> findChildren();
 
     void start();
-    Loader getLoader();
 }

@@ -1,5 +1,6 @@
 package com.czy.http.model;
 
+import com.czy.http.ApplicationContext;
 import com.czy.http.enums.MIMEEnum;
 import com.czy.http.model.MIME;
 import com.czy.http.model.ServerInfo;
@@ -44,8 +45,6 @@ public class Request{
     private QuestScheme questScheme;
     /**********************************请求头信息列表，每一行都是key: value*******************************************************/
     private StringMap<String> headerMap;
-
-    private ServerInfo serverInfo;
     /*Accept：浏览器可接受的MIME类型。*/
 //    Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
     private Map<MIMEEnum, MIME> mimeMap;
@@ -58,6 +57,15 @@ public class Request{
 
 
     /**********************************其他信息*****************************************************/
+    private ServletInfo servletInfo;
+    private ApplicationContext applicationContext;
+    public ApplicationContext getApplicationContext() {
+        return applicationContext;
+    }
+
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
 
     public String getRoute() {
         return route;
@@ -72,6 +80,13 @@ public class Request{
         return headerMap.get(name);
     }
 
+    public ServletInfo getServletInfo() {
+        return servletInfo;
+    }
+
+    public void setServletInfo(ServletInfo servletInfo) {
+        this.servletInfo = servletInfo;
+    }
 
     /**
      * 以形式返回指定请求标头的值int。
@@ -88,8 +103,8 @@ public class Request{
      *
      * @return
      */
-    public String getMethod() {
-        return questMethodEnum.getMsg();
+    public QuestMethodEnum getMethod() {
+        return questMethodEnum;
     }
 
     /**

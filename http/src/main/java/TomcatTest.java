@@ -1,4 +1,5 @@
 import com.czy.http.HelloServlet;
+import com.czy.http.HelloServleta;
 import org.apache.catalina.Context;
 import org.apache.catalina.Host;
 import org.apache.catalina.LifecycleException;
@@ -42,7 +43,7 @@ public class TomcatTest {
             //要给一个默认的web.xml文件
             standardContext.setDefaultContextXml("D:\\soft\\tomcat\\apache-tomcat-8.0.30-windows-x64\\apache-tomcat-8.0.30\\conf\\web.xml");
             //把server设置进去
-            Wrapper wrapper = tomcat.addServlet("/","com.czy.http.HelloServlet",new HelloServlet());
+            Wrapper wrapper = tomcat.addServlet(standardContext.getPath(),"hello",new HelloServleta());
             wrapper.addMapping("/nelson");
         }
         tomcat.start();

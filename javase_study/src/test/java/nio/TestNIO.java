@@ -404,7 +404,6 @@ public class TestNIO {
     public void te() {
         //分配指定大小缓冲区
         ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
-
         //存入数据
         byteBuffer.put("abcd爱的".getBytes());
 

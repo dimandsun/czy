@@ -24,7 +24,6 @@ public abstract class ContainerBase implements Container{
     private BGThread bgThread;
     private PropertyChangeSupport support;
     private List<ContainerListener> listeners = new CopyOnWriteArrayList<>();
-    protected Loader loader = null;
     private void addChild(Container child) {
         log.debug("Add child " + child + " " + this);
         synchronized(children) {
@@ -110,16 +109,6 @@ public abstract class ContainerBase implements Container{
         }
 
 
-    }
-    @Override
-    public Loader getLoader() {
-        if (loader != null){
-            return loader;
-        }
-        if (parent != null){
-            return parent.getLoader();
-        }
-        return null;
     }
     @Override
     public List<Container> findChildren() {

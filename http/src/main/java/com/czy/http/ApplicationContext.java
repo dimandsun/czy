@@ -1,5 +1,6 @@
 package com.czy.http;
 
+import com.czy.http.model.ServerInfo;
 import com.czy.http.model.Servlet;
 import com.czy.http.model.ServletInfo;
 import com.czy.util.model.StringMap;
@@ -18,15 +19,21 @@ public class ApplicationContext {
         servletMap = new StringMap<>();
     }
 
-    public static ApplicationContext getInstance() {
+    public static ApplicationContext getInstance(ServerInfo serverInfo) {
+        instance.serverInfo=serverInfo;
         return instance;
     }
+    private ServerInfo serverInfo;
+
     private StringMap<ServletInfo> servletMap;
     public void initServlet() {
         //排序后初始化
         servletMap.values().stream().sorted(Comparator.comparingInt(ServletInfo::getLoadOrder)).forEach(servletInfo -> {
             servletInfo.getServlet().init(servletInfo);
         });
+    }
+    public ServerInfo getServerInfo() {
+        return serverInfo;
     }
     public ServletInfo addServlet(String mapping, String servletName, Class<? extends Servlet> servletClass) {
         Objects.requireNonNull(mapping);
