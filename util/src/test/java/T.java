@@ -1,3 +1,4 @@
+import com.czy.util.text.StringUtil;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -35,4 +36,10 @@ public class T {
         });*/
 
     }
+    @Test public void testMac(){
+        String s= "/.*";
+        var result =StringUtil.matcher("/start",s);
+        System.out.println(result);
+    }
+
 }

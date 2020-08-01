@@ -47,7 +47,6 @@ public class ServletInfo {
     }
 
 
-
     public StringMap getInitPar() {
         return initPar;
     }

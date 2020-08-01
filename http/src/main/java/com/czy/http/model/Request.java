@@ -8,6 +8,7 @@ import com.czy.util.enums.QuestMethodEnum;
 import com.czy.http.model.QuestScheme;
 import com.czy.util.list.EnumerationFactory;
 import com.czy.util.model.StringMap;
+import com.czy.util.text.StringUtil;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -40,14 +41,14 @@ public class Request{
     //nelson
     private String route;
     //get请求取url的?号后值a=123
-    private StringMap<String[]> parMap;
-    //HTTP/1.1 new QuestScheme(QuestScheme.HTTP,1.1);
+    private StringMap<String[]> parMap=new StringMap<>();
+    //HTTP/1.1
     private QuestScheme questScheme;
     /**********************************请求头信息列表，每一行都是key: value*******************************************************/
-    private StringMap<String> headerMap;
+    private StringMap<String> headerMap=new StringMap<>();
     /*Accept：浏览器可接受的MIME类型。*/
 //    Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
-    private Map<MIMEEnum, MIME> mimeMap;
+    private Map<MIMEEnum, MIME> mimeMap=new HashMap<>();
 
     /**********************************空行，用于与请求体分开*******************************************************/
 
@@ -63,7 +64,20 @@ public class Request{
         return applicationContext;
     }
 
-    public void setApplicationContext(ApplicationContext applicationContext) {
+
+    public Request() {
+        setApplicationContext(ApplicationContext.getInstance());
+    }
+
+    public QuestScheme getQuestScheme() {
+        return questScheme;
+    }
+
+    public void setQuestScheme(QuestScheme questScheme) {
+        this.questScheme = questScheme;
+    }
+
+    private void setApplicationContext(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
@@ -106,7 +120,23 @@ public class Request{
     public QuestMethodEnum getMethod() {
         return questMethodEnum;
     }
-
+    public void setMethod(QuestMethodEnum methodEnum) {
+        this.questMethodEnum=methodEnum;
+    }
+    public void setParameter(String content) {
+        if (StringUtil.isBlank(content)){
+            return;
+        }
+        if (content.contains("=")){
+            Arrays.stream(content.split("&")).forEach(keyValue->{
+                var entry=keyValue.split("=");
+                if (entry.length!=2){
+                    return;
+                }
+                parMap.add(entry[0],new String[]{entry[1]});
+            });
+        }
+    }
     /**
      * 以字符串的形式返回请求参数的值，如果该参数不存在，则返回null。
      * @param name
@@ -133,5 +163,10 @@ public class Request{
 
     public BufferedReader getReader() throws IOException {
         return null;
+    }
+
+
+    public String getBody() {
+        return body;
     }
 }

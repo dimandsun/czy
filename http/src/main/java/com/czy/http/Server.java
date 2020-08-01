@@ -10,19 +10,25 @@ import com.czy.util.model.Par;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.net.http.HttpResponse;
 import java.nio.channels.*;
+import java.util.Date;
 
 /**
  * @author chenzy
  * @date 2020-07-29
  */
-public class Test {
+public class Server {
+    public static final String CRLF = "\r\n";
+    public static final String BANK = " ";
     public static void main(String[] args) {
         var serverInfo=new ServerInfo(9090,"localhost",100000,new Par<>("UTF-8"));
-        var applicationContext= ApplicationContext.getInstance(serverInfo);
-        applicationContext.addServlet("/","hello", HelloServlet.class);
+        var applicationContext= ApplicationContext.getInstance();
+        applicationContext.setServerInfo(serverInfo);
+        applicationContext.addServlet("/hello","hello", HelloServlet.class);
+        applicationContext.addServlet("/default","default", DefaultServlet.class);
         applicationContext.initServlet();
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> System.out.println("程序结束")));
         try(var server = ServerSocketChannel.open()) {
             //置为非阻塞
             server.configureBlocking(false);
@@ -30,14 +36,9 @@ public class Test {
             server.bind(new InetSocketAddress(InetAddress.getByName(serverInfo.address()),serverInfo.port()));
             //设置延时
             server.socket().setSoTimeout(serverInfo.timeout());
-//            Selector selector = Selector.open();
-            //注册OP_ACCEPT事件：如果有客户端发来连接请求，则该键在select()后被选中）
-//            server.register(selector, SelectionKey.OP_ACCEPT);
             System.out.println("服务端开启了");
             System.out.println("=========================================================");
             while (true) {
-                //选择准备好的事件
-//                selector.select();
                 //获取客户端连接的通道
                 SocketChannel connectChannel = server.accept();
                 if(connectChannel == null){
@@ -45,13 +46,14 @@ public class Test {
                 }
                 //创建request、response对象
                 var request = RequestFactory.createRequest(applicationContext,connectChannel);
-                if (1==1)continue;
                 var response= ResponseFactory.createResponse(request);
                 //servlet执行业务方法
                 var servlet=applicationContext.getServlet(request.getRoute());
                 servlet.service(request,response);
+
                 //返回数据给客户端
-                var result= response.getBody();
+                response.beforeReturn();
+                var result=response.getResult();
                 NIOUtil.write(result,response.getFile(),connectChannel);
                 //请求结束
                 connectChannel.close();

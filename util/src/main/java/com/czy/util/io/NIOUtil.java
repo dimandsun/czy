@@ -1,6 +1,7 @@
 package com.czy.util.io;
 
 import com.czy.util.text.Line;
+import com.czy.util.text.StringUtil;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -24,15 +25,17 @@ public class NIOUtil {
 
     //按行读取数据
     public static List<String> readByLine(String charSet, SocketChannel socketChannel) {
-        var separatorBytes = Line.separator.getBytes();
         try {
-            var buffer = ByteBuffer.allocate(1024 * 4);
-            ByteBuffer lineBuffer = ByteBuffer.allocate(20);
+            int bufferLength =100;// 1024 * 4;
+            int lineLength = 64;
+            var buffer = ByteBuffer.allocate(bufferLength);
+            ByteBuffer lineBuffer = ByteBuffer.allocate(lineLength);
             List<String> data = new ArrayList<>();
             InputStream is = socketChannel.socket().getInputStream();
             ReadableByteChannel readCh = Channels.newChannel(is);
+            int length = -1;
             end:
-            while (readCh.read(buffer) != -1) {
+            while ((length = readCh.read(buffer)) != -1) {
                 buffer.flip();
                 while (buffer.hasRemaining()) {
                     //空间不够扩容
@@ -40,34 +43,19 @@ public class NIOUtil {
                         lineBuffer = reAllocate(lineBuffer);
                     }
                     byte b = buffer.get();
-                    /*一行一行读取*/
-                    if (separatorBytes.length == 2) {
-                        /*windows下的文本文件换行符：\r\n*/
-                        if (b == 13 && buffer.hasRemaining() && buffer.get() == 10) {
-                            if (addLine(charSet, lineBuffer, data)) {
-                                break;
-                            }
-                        }
-                    } else if (separatorBytes[0] == 13) {
-                        /*linux/unix下的文本文件换行符：\r*/
-                        if (b == 13) {
-                            if (addLine(charSet, lineBuffer, data)) {
-                                break end;
-                            }
-                        }
-                    } else if (separatorBytes[0] == 10) {
-                        /*Mac下的文本文件换行符：\n*/
-                        if (b == 10) {
-                            if (addLine(charSet, lineBuffer, data)) {
-                                break end;
-                            }
-                            continue;
-                        }
+                    if (b == 13 && buffer.hasRemaining() && buffer.get() == 10) {
+                        addLine(charSet, lineBuffer, data);
+                    } else {
+                        lineBuffer.put(b);
                     }
-                    lineBuffer.put(b);
-
                 }
                 buffer.clear();
+                /*数据没有把buffer放满，说明数据已经读到尾了，直接跳出循环。如果不跳出的话，会阻塞
+                存在问题，当数据刚好把buffer装满，则此请求会阻塞。
+                * */
+                if (length < bufferLength) {
+                    break end;
+                }
             }
             return data;
         } catch (IOException e) {
@@ -84,12 +72,11 @@ public class NIOUtil {
      * @param data
      * @return
      */
-    private static Boolean addLine(String charSet, ByteBuffer lineBuffer, List<String> data) {
+    private static void addLine(String charSet, ByteBuffer lineBuffer, List<String> data) {
         lineBuffer.flip();
         var line = Charset.forName(charSet).decode(lineBuffer).toString();
         data.add(line);
         lineBuffer.clear();
-        return line.length() == 0;
     }
 
     /**
@@ -99,6 +86,9 @@ public class NIOUtil {
      * @param out
      */
     public static void write(String data, ByteChannel out) {
+        if (StringUtil.isBlank(data)) {
+            return;
+        }
         try {
             var buffer = putByte(data.getBytes(), ByteBuffer.allocate(1024 * 4));
             buffer.flip();
@@ -117,15 +107,16 @@ public class NIOUtil {
      * @param out
      */
     public static void write(String data, File file, ByteChannel out) {
+        write(data, out);
+        write(file, out);
+    }
+
+    public static void write(File file, ByteChannel out) {
         if (file == null || !file.exists()) {
-            write(data, out);
             return;
         }
         try {
-            var buffer = putByte(data.getBytes(), ByteBuffer.allocate(1024 * 4));
-            buffer.flip();
-            out.write(buffer);
-            buffer.clear();
+            var buffer = ByteBuffer.allocate(1024 * 4);
             if (file != null) {
                 var fileChannel = FileChannel.open(file.toPath(), StandardOpenOption.READ);
                 while (fileChannel.read(buffer) != -1) {

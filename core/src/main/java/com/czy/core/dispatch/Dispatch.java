@@ -33,10 +33,10 @@ public class Dispatch {
     }
 
     public <T> T post(String url, StringMap dataJson){
-        return exec(new Quest(QuestMethodEnum.Post,url,dataJson));
+        return exec(new Quest(QuestMethodEnum.POST,url,dataJson));
     }
     public <T> T get(String url,StringMap dataJson){
-        return exec(new Quest(QuestMethodEnum.Get,url,dataJson));
+        return exec(new Quest(QuestMethodEnum.GET,url,dataJson));
     }
     public <T> T exec(Quest quest){
         var url=quest.getUrl();

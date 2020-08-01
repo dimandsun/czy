@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD,ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@MappingAnnotation(QuestMethodEnum.All)
+@MappingAnnotation(QuestMethodEnum.ALL)
 public @interface Mapping {
     String value() default "";
 }

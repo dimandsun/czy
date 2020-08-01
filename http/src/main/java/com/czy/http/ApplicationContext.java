@@ -3,7 +3,9 @@ package com.czy.http;
 import com.czy.http.model.ServerInfo;
 import com.czy.http.model.Servlet;
 import com.czy.http.model.ServletInfo;
+import com.czy.util.model.Par;
 import com.czy.util.model.StringMap;
+import com.czy.util.text.StringUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -19,11 +21,13 @@ public class ApplicationContext {
         servletMap = new StringMap<>();
     }
 
-    public static ApplicationContext getInstance(ServerInfo serverInfo) {
-        instance.serverInfo=serverInfo;
+    public static ApplicationContext getInstance() {
         return instance;
     }
     private ServerInfo serverInfo;
+    public void setServerInfo(ServerInfo serverInfo) {
+        this.serverInfo = serverInfo;
+    }
 
     private StringMap<ServletInfo> servletMap;
     public void initServlet() {
@@ -37,7 +41,6 @@ public class ApplicationContext {
     }
     public ServletInfo addServlet(String mapping, String servletName, Class<? extends Servlet> servletClass) {
         Objects.requireNonNull(mapping);
-
         var servletInfo = servletMap.get(mapping);
         if (servletInfo == null) {
             servletInfo = new ServletInfo();
@@ -59,9 +62,26 @@ public class ApplicationContext {
         return servletInfo;
 
     }
-    public Servlet getServlet(String mapping){
+    public ServletInfo getServletInfo(String mapping){
         var servletInfo=servletMap.get(mapping);
-        Objects.requireNonNull(servletInfo,"未找到指定servlet");
+        if (servletInfo==null){
+            //mapping可能是正则表达式
+            Par<ServletInfo> par=new Par();
+            servletMap.forEach((key,value)->{
+                if (StringUtil.matcher(mapping,key)){
+                    par.set(value);
+                    return;
+                }
+            });
+            servletInfo=par.get();
+        }
+        if (servletInfo==null){
+            servletInfo=servletMap.get("/default");
+        }
+        return servletInfo;
+    }
+    public Servlet getServlet(String mapping){
+        var servletInfo=getServletInfo(mapping);
         return servletInfo.getServlet();
     }
 

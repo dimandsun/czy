@@ -6,7 +6,7 @@ package com.czy.util.enums;
  *  请求类型 Put 更新 Get 查询 Post 新增 Delete 删除
  */
 public enum QuestMethodEnum implements IEnum<Integer> {
-    Post(1,"post"),Get(2,"get"),Delete(3,"delete"),Put(4,"put"),Default(5,"post"),All(6,"all");
+    POST(1,"post"), GET(2,"get"), DELETE(3,"delete"), PUT(4,"put"), DEFAULT(5,"post"), ALL(6,"all");
 
     private Integer id;
     private String msg;

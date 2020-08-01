@@ -13,18 +13,18 @@ import javafx.beans.property.ReadOnlyObjectProperty;
  */
 public class Q {
     public static ReadOnlyObjectProperty<Response<ResultVO>> delete(String url, StringMap data) {
-        return exec(QuestMethodEnum.Delete,url,data);
+        return exec(QuestMethodEnum.DELETE,url,data);
     }
     public static ReadOnlyObjectProperty<Response<ResultVO>> put(String url, StringMap data) {
-        return exec(QuestMethodEnum.Put,url,data);
+        return exec(QuestMethodEnum.PUT,url,data);
     }
 
     public static ReadOnlyObjectProperty<Response<ResultVO>> post(String url, StringMap data) {
-        return exec(QuestMethodEnum.Post,url,data);
+        return exec(QuestMethodEnum.POST,url,data);
     }
 
     public static ReadOnlyObjectProperty<Response<ResultVO>> get(String url, StringMap data) {
-        return exec(QuestMethodEnum.Get,url,data);
+        return exec(QuestMethodEnum.GET,url,data);
     }
 
     public static ReadOnlyObjectProperty<Response<ResultVO>> exec(QuestMethodEnum questMethodEnum, String url, StringMap data) {

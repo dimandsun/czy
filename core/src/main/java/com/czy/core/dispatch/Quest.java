@@ -12,12 +12,12 @@ public class Quest {
     private QuestMethodEnum questMethodEnum;
     private StringMap data;
     public Quest(String url) {
-        this.questMethodEnum = QuestMethodEnum.All;
+        this.questMethodEnum = QuestMethodEnum.ALL;
         this.url = url;
         this.data = null;
     }
     public Quest(String url, StringMap data) {
-        this.questMethodEnum = QuestMethodEnum.All;
+        this.questMethodEnum = QuestMethodEnum.ALL;
         this.url = url;
         this.data = data;
     }

@@ -1,9 +1,5 @@
 package com.czy.http.model;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
 /**
  * @author chenzy
  * @date 2020-07-30
@@ -29,9 +25,9 @@ public abstract class Servlet {
     }
     public void service(Request request, Response response){
         switch (request.getMethod()){
-            case Post -> doPost(request,response);
-            case Put -> doPut(request,response);
-            case Delete -> doDelete(request,response);
+            case POST -> doPost(request,response);
+            case PUT -> doPut(request,response);
+            case DELETE -> doDelete(request,response);
             default -> doGet(request,response);
         }
     }
