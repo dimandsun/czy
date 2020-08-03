@@ -29,6 +29,7 @@ public class Server {
         applicationContext.initServlet();
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> System.out.println("程序结束")));
+
         try(var server = ServerSocketChannel.open()) {
             //置为非阻塞
             server.configureBlocking(false);
@@ -36,8 +37,29 @@ public class Server {
             server.bind(new InetSocketAddress(InetAddress.getByName(serverInfo.address()),serverInfo.port()));
             //设置延时
             server.socket().setSoTimeout(serverInfo.timeout());
+
+            //获取选择器
+            var selector = Selector.open();
+            //服务注册到选择器,指定监听事件
+            server.register(selector, SelectionKey.OP_ACCEPT);
             System.out.println("服务端开启了");
             System.out.println("=========================================================");
+            //轮询获取选择器上已经准备就绪的事件
+            while (selector.select() > 0){
+                var iterator = selector.selectedKeys().iterator();
+                while (iterator.hasNext()) {
+                    //获取准备就绪的事件
+                    var selectionKey = iterator.next();
+                    if (selectionKey.isAcceptable()) {
+                        //接收就绪
+                        var socketChannel = server.accept();
+                        //切换非阻塞模式
+                        socketChannel.configureBlocking(false);
+                        //将该通道注册到选择器上
+                        socketChannel.register(selector, SelectionKey.OP_READ);
+                    }
+                }
+            }
             while (true) {
                 //获取客户端连接的通道
                 SocketChannel connectChannel = server.accept();

@@ -1,4 +1,5 @@
 import com.czy.util.text.StringUtil;
+import com.czy.util.time.TimeUtil;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -41,5 +42,10 @@ public class T {
         var result =StringUtil.matcher("/start",s);
         System.out.println(result);
     }
-
+    @Test
+    public void time(){
+        Long s=1596281053967L;
+        var result=TimeUtil.long2Str(s,TimeUtil.yyyyMMddHHmmssSSS);
+        System.out.println(result);
+    }
 }

@@ -1,64 +1,41 @@
 package com.czy.util;
 
-import com.czy.util.json.JsonUtil;
-import net.sf.cglib.beans.BeanMap;
+import net.sf.cglib.beans.BeanCopier;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author chenzy
- * @since 2020-03-21
+ * @since 2020-07-10
  */
 public class BeanUtil {
+    /**
+     * BeanCopier的缓存
+     */
+    static final ConcurrentHashMap<String, BeanCopier> COPIER_CACHE = new ConcurrentHashMap<>();
+
     private BeanUtil() {
     }
-
-    /**
-     * bean=>json字符串
-     * 但是把变量都设置为驼峰形式 doc_id转成docId
-     *
-     * @param model
-     * @return
-     */
-    public static String model2Str(Object model) {
-        return JsonUtil.model2Str(model2Map(model));
+    public static void  clear(){
+        COPIER_CACHE.clear();
     }
-
-    /**
-     * bean=》map
-     *
-     * @param model
-     * @return
-     */
-    public static <T> Map model2Map(T model) {
-        BeanMap beanMap = BeanMap.create(model);
-        var map = new HashMap<>(beanMap.size());
-        for (Object key : beanMap.keySet()) {
-            map.put(key + "", beanMap.get(key));
+    public static <From, To> To bean2Bean(From bean1,Class<To> toClass) {
+        if (bean1==null||toClass==null){
+            return null;
         }
-        return map;
-    }
-
-    public static <T> T map2Model(Map map, T model) {
-        BeanMap beanMap = BeanMap.create(model);
-        beanMap.putAll(map);
-        return model;
-    }
-
-    /**
-     * 将map装换为javabean对象
-     *
-     * @param map
-     * @param modelClass
-     * @return
-     */
-    public static <T> T map2Model(Map map, Class<T> modelClass) {
+        Class<From> fromClass= (Class<From>) bean1.getClass();
+        String key = getKey(fromClass,toClass);
+        BeanCopier beanCopier;
+        if (COPIER_CACHE.containsKey(key)) {
+            beanCopier = COPIER_CACHE.get(key);
+        }else {
+            beanCopier=BeanCopier.create(bean1.getClass(), toClass, false);
+            COPIER_CACHE.put(key,beanCopier);
+        }
+        To result = null;
         try {
-            return map2Model(map,modelClass.getDeclaredConstructor().newInstance());
+            result = toClass.getDeclaredConstructor().newInstance();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -68,43 +45,14 @@ public class BeanUtil {
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
-        return null;
-    }
-
-    /**
-     * modelList=》mapList
-     *
-     * @param modelList
-     * @param <T>
-     * @return
-     */
-    public static <T> List<Map> modelToMap(List<T> modelList) {
-        if (modelList == null || modelList.size() < 1) {
-            return null;
-        }
-        List<Map> result = new ArrayList<>(modelList.size());
-        for (T model : modelList) {
-            result.add(model2Map(model));
-        }
+        beanCopier.copy(bean1,result,null);
         return result;
     }
-
     /**
-     * mapList=>modelList
-     *
-     * @param mapList
-     * @param modelClass
-     * @param <T>
-     * @return
+     * 生成key
+     * @return string
      */
-    public static <T> List<T> map2Model(List<Map> mapList, Class<T> modelClass) {
-        if (mapList == null || mapList.size() < 1) {
-            return null;
-        }
-        List<T> result = new ArrayList<>(mapList.size());
-        for (Map map : mapList) {
-            result.add(map2Model(map, modelClass));
-        }
-        return result;
+    private static<From, To> String getKey(Class<From> srcClazz, Class<To> tgtClazz) {
+        return srcClazz.getName() + tgtClazz.getName();
     }
 }

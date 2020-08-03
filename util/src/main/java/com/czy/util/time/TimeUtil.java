@@ -56,6 +56,10 @@ public class TimeUtil {
         }
         return DateTimeFormatter.ofPattern(pattern).format(now());
     }
+    public static String long2Str(Long time,String pattern) {
+        LocalDateTime dateTime =LocalDateTime.ofEpochSecond(time/1000,0,ZoneOffset.ofHours(8));
+        return DateTimeFormatter.ofPattern(pattern).format(dateTime);
+    }
     public static boolean isInTime(LocalDateTime beginTime, LocalDateTime endTime) {
         LocalDateTime time = now();
         return time.isAfter(beginTime)&&time.isBefore(endTime);
@@ -63,6 +67,7 @@ public class TimeUtil {
     public static boolean isInTime(LocalDateTime beginTime, LocalDateTime endTime, LocalDateTime time) {
         return time.isAfter(beginTime)&&time.isBefore(endTime);
     }
+
 
 
 }
