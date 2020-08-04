@@ -1,5 +1,6 @@
 package nio;
 
+import com.czy.util.text.StringUtil;
 import org.junit.Test;
 
 import java.nio.*;
@@ -28,13 +29,19 @@ Buffer中四个属性
  */
 public class BufferTest {
     @Test public void bufferTest(){
-        var byteBuffer=ByteBuffer.wrap(new byte[]{1,2,3,4});
+        var byteBuffer=ByteBuffer.wrap(new byte[]{1,2,'a'});
         var shortBuffer= ShortBuffer.wrap(new short[]{1,2,3,4});
         var intBuffer= IntBuffer.wrap(new int[]{1,2,3,4});
         var longBuffer= LongBuffer.wrap(new long[]{1,2,3,4});
         var floatBuffer= FloatBuffer.wrap(new float[]{1,2,3,4});
         var doubleBuffer= DoubleBuffer.wrap(new double[]{1,2,3,4});
         var charBuffer= CharBuffer.wrap(new char[]{1,2,3,4});
+
+        System.out.println(byteBuffer);
+        System.out.println(byteBuffer.get());
+        byteBuffer.put((byte) 3);
+        System.out.println(byteBuffer.get(1));
+        System.out.println(byteBuffer);
     }
 
 }

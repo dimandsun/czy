@@ -6,7 +6,6 @@ import com.czy.core.util.TableUtil;
 import com.czy.question.dao.IQuestionDao;
 import com.czy.question.model.table.Question;
 import com.czy.util.io.FileUtil;
-import com.czy.util.text.StringUtil;
 
 /**
  * @author chenzy
