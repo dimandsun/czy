@@ -1,5 +1,4 @@
 import com.czy.jdbc.pool.MyConnection;
-import com.czy.util.ClassUtil;
 import com.czy.util.model.StringMap;
 import org.junit.Test;
 
@@ -168,5 +167,33 @@ public class Te {
             newNums.add(lastNum);
         }
         return newNums;
+    }
+
+    @Test public void abcc() {
+        var str = "A2B3c2";
+        if (str == null || str.length() % 2 != 0) {
+            System.out.println("字符串长度不是偶数！");
+            return;
+        }
+        var chars = str.toCharArray();
+        String result = "";
+        for (int i = 0; i < chars.length - 1; i += 2) {
+            var content = chars[i];/*char需先转成String，再转数字，*/
+            var size = Integer.valueOf(String.valueOf(chars[i + 1]));
+            if (!Character.isLowerCase(content) && !Character.isUpperCase(content)) {
+                System.out.println("第" + (i + 1) + "个字符不是大小写字母");
+                return;
+            }
+            if (size < 0 || size > 9) {
+                System.out.println("第" + (i + 2) + "个字符不是数字");
+                return;
+            }
+            if (size == 0) {
+                System.out.println("第" + (i + 1) + "个字符重复次数不能为0");
+                return;
+            }/*对content复制size次*/
+            result += String.valueOf(content).repeat(size);
+        }
+        System.out.println("结果：" + result);
     }
 }
