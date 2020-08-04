@@ -29,21 +29,7 @@ NIO：    面向缓冲区：通道Channel不带数据，缓冲区Buffer装载数
             非阻塞
             选择器
             获取channel、buffer——》操作buffer——》处理数据
-缓冲区：buffer 在NIO中负责数据的存取。
-        数组，用于存储不同数据类型的数据。除boolean外的基本数据类型都有对应的Buffer
-    ByteBuffer
-    CharBuffer
-    ShortBuffer
-    IntBuffer
-    LongBuffer
-    FloatBuffer
-    DoubleBuffer
-Buffer中四个属性
-  capacity：容量，最大存储容量，声明后不能改变
-  limit：   界限，可读写数据大小，limit后的数据不能读写
-  position  正在读写数据的位置
-  mark      记录当前position，通过reset恢复position到mark记录值
-  position<=limit<=capacity
+
 非直接缓冲区：通过allocate()分配缓冲区，将缓冲区建立在JVM内存中
 直接缓冲区: 通过allocateDirect()分配缓冲区，将缓冲区建立在物理内存中。可以提高效率。
   进行分配和取消分配所需成本通常高于非直接缓冲区。
