@@ -3,7 +3,7 @@ package test54_FileChooser;
 import com.czy.fx.myfx.MyFileChooser;
 import com.czy.fx.myfx.Mybutton;
 import com.czy.fx.test.FXUtil;
-import com.czy.util.io.FileUtil;
+import com.czy.util.io.FileUtilOld;
 import com.czy.util.list.ListUtil;
 import javafx.application.Application;
 import javafx.scene.control.Label;
@@ -34,11 +34,11 @@ public class FileChooserTest extends Application {
             var file = new MyFileChooser("单选文件").fileFilter("图片类型", "*.jpg", "*.png").chooseFile();
             if (file != null) {
                 fileLabel.setText("文件:" + file.getName());
-                textArea.appendText(FileUtil.readFile(Optional.of(file)));
+                textArea.appendText(FileUtilOld.readFile(Optional.of(file)));
             }
         }), new Mybutton("保存文本").onClick(event -> {
             var file = new MyFileChooser(null, defaultDir).defaultFileName("a.text").fileFilter("文本类型", "*.text").saveFile();
-            FileUtil.write(file, textArea.getText());
+            FileUtilOld.write(file, textArea.getText());
         }), new Mybutton("选择文件夹").onClick(event -> {
             var directoryChooser = new DirectoryChooser();
             File dirFile = directoryChooser.showDialog(new Stage());

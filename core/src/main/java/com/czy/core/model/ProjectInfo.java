@@ -2,15 +2,11 @@ package com.czy.core.model;
 
 import com.czy.core.enums.ActiveEnum;
 import com.czy.util.BeanUtil;
-import com.czy.util.model.Par;
-import com.czy.util.model.StringMap;
-import com.czy.util.text.StringUtil;
-import com.czy.util.io.FileUtil;
+import com.czy.util.io.FileUtilOld;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author chenzy
@@ -34,7 +30,7 @@ public class ProjectInfo {
     private ActiveEnum active;
 
     public static void init(File resourceFile) {
-        FileUtil.readConfigFileByYML(resourceFile).ifPresent(proMap->{
+        FileUtilOld.readConfigFileByYML(resourceFile).ifPresent(proMap->{
             Map profiles= (Map) proMap.get("profiles");
             var active=ActiveEnum.getEnum(profiles.get("active").toString());
             profiles.put("active",active);

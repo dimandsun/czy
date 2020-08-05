@@ -1,7 +1,7 @@
 package test70_screenshot;
 
 import com.czy.fx.test.FXUtil;
-import com.czy.util.io.FileUtil;
+import com.czy.util.io.FileUtilOld;
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Pos;
@@ -14,7 +14,6 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -121,7 +120,7 @@ public class ScreenshotTest extends Application {
         });
         btn2.setOnAction(event -> {
             try {
-                var file=FileUtil.getResourceFile("fx","abc.png");
+                var file= FileUtilOld.getResourceFile("fx","abc.png");
                 ImageIO.write(bufferedImage,"png",file);
             } catch (IOException e) {
                 e.printStackTrace();

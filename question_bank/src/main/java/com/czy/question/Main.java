@@ -2,10 +2,9 @@ package com.czy.question;
 
 import com.czy.core.ProjectContainer;
 import com.czy.core.model.ProjectInfo;
-import com.czy.core.util.TableUtil;
-import com.czy.question.dao.IQuestionDao;
+import com.czy.question.controller.QuestionController;
 import com.czy.question.model.table.Question;
-import com.czy.util.io.FileUtil;
+import com.czy.util.io.FileUtilOld;
 
 /**
  * @author chenzy
@@ -13,14 +12,13 @@ import com.czy.util.io.FileUtil;
  */
 public class Main {
     public static void main(String[] args) {
-        ProjectInfo.init(FileUtil.getResourceFile("question_bank","application.yml"));
+        ProjectInfo.init(FileUtilOld.getResourceFile("question_bank","application.yml"));
         var projectContainer= ProjectContainer.getInstance();
         projectContainer.initProject();
-        IQuestionDao questionDao= (IQuestionDao) projectContainer.getBeanMap().get("questionDao").getBean();
+        var questionController=(QuestionController)projectContainer.getBeanMap().get("questionController").getBean();
         var question=new Question();
         question.setName("adsfasd");
-        var tableName= TableUtil.getTableName(question.getClass());
-        var id=questionDao.insert(tableName,question);
-        System.out.println(id);
+        var resultVO=questionController.insert(question);
+        System.out.println(resultVO);
     }
 }

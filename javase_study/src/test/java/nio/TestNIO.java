@@ -1,11 +1,10 @@
 package nio;
 
-import com.czy.util.io.FileUtil;
+import com.czy.util.io.FileUtilOld;
 import org.junit.Test;
 
 import java.io.*;
 import java.net.InetSocketAddress;
-import java.net.ServerSocket;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.channels.*;
@@ -13,8 +12,6 @@ import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.Date;
-import java.util.Scanner;
 
 /**
  * @author chenzy
@@ -427,8 +424,8 @@ public class TestNIO {
     @Test
     public void testChannel() throws IOException {
 //        var fileInputStream=new FileInputStream("girl.png");
-        var fileInputStream = new FileInputStream(FileUtil.getResourceFile("girl.png"));
-        var file = FileUtil.getResourceFile("2.png");
+        var fileInputStream = new FileInputStream(FileUtilOld.getResourceFile("girl.png"));
+        var file = FileUtilOld.getResourceFile("2.png");
         var fileOutputStream = new FileOutputStream(file);
         var inChannel = fileInputStream.getChannel();
         var outChannel = fileOutputStream.getChannel();
