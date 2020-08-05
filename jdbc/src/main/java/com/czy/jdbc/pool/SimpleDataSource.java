@@ -61,7 +61,9 @@ public class SimpleDataSource implements DataSource {
         }
         var connection = con.get();
         if (connection.isClosed()) {
-            throw new ConnectionClosedException("连接已关闭");
+            realClose(con);
+            return getConnection();
+//            throw new ConnectionClosedException("连接已关闭");
         }
         return connection;
     }
@@ -84,14 +86,16 @@ public class SimpleDataSource implements DataSource {
         if (freeConnectNum>maxFreeConnectNum){
             throw new DataSourceException("连接池异常：当前空闲连接数freeConnectNum-"+freeConnectNum+"大于最大空闲连接数maxFreeConnectNum-"+maxFreeConnectNum);
         }else if (freeConnectNum==maxFreeConnectNum){
-            conn.realClose();
-            freeConnectNum--;
-            curConnectNum--;
+            realClose(conn);
         }else {
             pool.add(conn);
             freeConnectNum++;
         }
-
+    }
+    private void realClose(MyConnection conn){
+        conn.realClose();
+        freeConnectNum--;
+        curConnectNum--;
     }
     /**
      * 释放资源
