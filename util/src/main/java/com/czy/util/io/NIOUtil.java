@@ -40,7 +40,7 @@ public class NIOUtil {
                 while (buffer.hasRemaining()) {
                     //空间不够扩容
                     if (!lineBuffer.hasRemaining()) {
-                        lineBuffer = reAllocate(lineBuffer);
+                        lineBuffer = extend(lineBuffer);
                     }
                     byte b = buffer.get();
                     if (b == 13 && buffer.hasRemaining() && buffer.get() == 10) {
@@ -150,21 +150,25 @@ public class NIOUtil {
         }
         var data1 = Arrays.copyOfRange(data, 0, capacity);
         byteBuffer.put(data1);
-        return putByte(Arrays.copyOfRange(data, 0, data.length - capacity), reAllocate(byteBuffer));
+        return putByte(Arrays.copyOfRange(data, 0, data.length - capacity), extend(byteBuffer));
     }
+
 
     /**
      * 扩容
-     *
-     * @param stringBuffer
+     * @param buffer
      * @return
      */
-    public static ByteBuffer reAllocate(ByteBuffer stringBuffer) {
-        final int capacity = stringBuffer.capacity();
-        byte[] newBuffer = new byte[capacity * 2];
-        System.arraycopy(stringBuffer.array(), 0, newBuffer, 0, capacity);
-        return ByteBuffer.wrap(newBuffer).position(capacity);
+    public static ByteBuffer extend(ByteBuffer buffer){
+        return ByteBuffer.allocate(buffer.capacity()*2).put(buffer);
     }
-
+    /**
+     * 扩容
+     * @param buffer
+     * @return
+     */
+    public static ByteBuffer extend(ByteBuffer buffer,int extendSize){
+        return ByteBuffer.allocate(buffer.capacity()+extendSize).put(buffer);
+    }
 
 }

@@ -1,7 +1,7 @@
 package test68_FXML;
 
 import com.czy.fx.test.FXUtil;
-import com.czy.util.io.FileUtil;
+import com.czy.util.io.FileUtilOld;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -18,7 +18,7 @@ public class FXMLTest extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         var fxmlLoader=new FXMLLoader();
-        var file = FileUtil.getCodeFile("fx","test68_FXML.fxml.fxml");
+        var file = FileUtilOld.getCodeFile("fx","test68_FXML.fxml.fxml");
        AnchorPane anchorPane=fxmlLoader.load(new FileInputStream(file));
         Button btn= (Button) anchorPane.lookup("#buttonId");
         MyController controller=fxmlLoader.getController();

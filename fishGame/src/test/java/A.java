@@ -1,4 +1,4 @@
-import com.czy.util.io.FileUtil;
+import com.czy.util.io.FileUtilOld;
 import com.czy.util.model.MyMap;
 import org.junit.Test;
 
@@ -16,7 +16,7 @@ public class A {
 
     @Test
     public void a() {
-        List<MyMap> p = FileUtil.readConfigFileByXML("image/score/hundred.plist");
+        List<MyMap> p = FileUtilOld.readConfigFileByXML("image/score/hundred.plist");
 //        FileUtil.writeConfigFileByXML2YML("cannon/bulletandnet.plist","fishGame.yaml");
         printList(p);
         System.out.println(p);

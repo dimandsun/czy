@@ -1,11 +1,10 @@
 package com.czy.util.text;
 
 
-import com.czy.util.io.FileUtil;
+import com.czy.util.io.FileUtilOld;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.math.BigInteger;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -884,7 +883,7 @@ public class StringUtil {
 //            System.out.println(result);
             String projectGroupId = "cn.lexiaotongvip.www";
             String classPath = StringUtil.class.getResource("/").getPath() + projectGroupId.replace(".", File.separator);
-            List<Class> classList = FileUtil.getClassList(classPath, projectGroupId);
+            List<Class> classList = FileUtilOld.getClassList(classPath, projectGroupId);
             System.out.println(classList.size());
         }
 

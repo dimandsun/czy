@@ -1,7 +1,7 @@
 package test69_GraspData;
 
 import com.czy.fx.test.FXUtil;
-import com.czy.util.io.FileUtil;
+import com.czy.util.io.FileUtilOld;
 import com.czy.util.json.JsonUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -66,7 +66,7 @@ public class GraspData  extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         var fxmlLoader=new FXMLLoader();
-        var file = FileUtil.getCodeFile("fx","test69_GraspData.GraspData.fxml");
+        var file = FileUtilOld.getCodeFile("fx","test69_GraspData.GraspData.fxml");
         AnchorPane anchorPane=fxmlLoader.load(new FileInputStream(file));
         primaryStage.setTitle("抓取弹幕");
         primaryStage.setAlwaysOnTop(true);

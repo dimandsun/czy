@@ -5,13 +5,7 @@ import com.czy.http.model.Request;
 import com.czy.http.model.Response;
 import com.czy.http.model.Servlet;
 import com.czy.http.model.ServletInfo;
-import com.czy.util.io.FileUtil;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import com.czy.util.io.FileUtilOld;
 
 /**
  * @author chenzy
@@ -23,7 +17,7 @@ public class ResourceServlet extends Servlet {
         super.init(servletInfo);
     }
     protected void exec(Request request, Response response){
-        var file=FileUtil.getResourceFile(request.getRoute());
+        var file= FileUtilOld.getResourceFile(request.getRoute());
         if (file==null||!file.exists()){
             response.setResponseCode(ResponseCode.NotFound);
         }
