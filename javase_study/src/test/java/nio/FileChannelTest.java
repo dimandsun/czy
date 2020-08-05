@@ -94,9 +94,11 @@ public class FileChannelTest {
         }
     }
 
+    //文件不存在则创建
     @Test
-    public void open() {
-        try (var f=FileChannel.open(Paths.get("a.text"), StandardOpenOption.READ)){
+    public void createFile() {
+        //只有CREATE权限，在创建文件时会报错
+        try (var f=FileChannel.open(Paths.get("a.text"), StandardOpenOption.CREATE,StandardOpenOption.WRITE)){
 
         } catch (IOException e) {
             e.printStackTrace();
