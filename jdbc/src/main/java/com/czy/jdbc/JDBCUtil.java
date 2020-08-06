@@ -1,21 +1,12 @@
 package com.czy.jdbc;
 
 import com.czy.jdbc.exception.SQLParseException;
-import com.czy.jdbc.sql.SQLBuilder;
 import com.czy.jdbc.sql.SQLFactory;
-import com.czy.jdbc.sql.SelectSQLBuilder;
-import com.czy.log.LogFactory;
-import com.czy.util.json.JsonUtil;
+import com.czy.log00.LogFactory;
 import com.czy.util.model.StringMap;
-import com.czy.log.Log;
+import com.czy.log00.Log;
 
-import javax.sql.DataSource;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-
-import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 /**
  * @author chenzy

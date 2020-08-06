@@ -1,4 +1,4 @@
-package com.czy.log;
+package com.czy.log00;
 
 import com.czy.util.time.TimeUtil;
 

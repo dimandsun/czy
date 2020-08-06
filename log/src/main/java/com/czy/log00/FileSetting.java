@@ -1,4 +1,4 @@
-package com.czy.log;
+package com.czy.log00;
 
 /**
  * @author chenzy
