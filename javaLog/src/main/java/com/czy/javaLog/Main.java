@@ -1,4 +1,4 @@
-package com.czy.log00;
+package com.czy.javaLog;
 
 import com.czy.util.time.TimeUtil;
 

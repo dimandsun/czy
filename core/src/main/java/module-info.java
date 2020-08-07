@@ -17,6 +17,7 @@
     requires com.czy.util;
     requires com.czy.log;
     requires com.czy.jdbc;
+    requires javaLog;
     exports com.czy.core.util;
     exports com.czy.core.annotation.db;
     exports com.czy.core.annotation.bean;

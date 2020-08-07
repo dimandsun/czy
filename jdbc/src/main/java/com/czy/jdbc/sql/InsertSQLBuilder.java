@@ -1,8 +1,6 @@
 package com.czy.jdbc.sql;
 
 import com.czy.jdbc.sql.enums.ResultTypeEnum;
-import com.czy.util.json.JsonUtil;
-import com.czy.util.model.StringMap;
 import com.czy.util.text.StringUtil;
 
 import java.sql.Connection;
@@ -28,7 +26,7 @@ public class InsertSQLBuilder<T> extends SQLBuilder<T> implements SetColumnValue
         var preSql = getBasicPreSql();
         var keys = columnMap.keySet().toString();
         var sql = preSql.getSql().replace("$[columns]", keys.substring(1, keys.length() - 1))
-                .replace("#[values]", StringUtil.getMultipleText("?",columnMap.size(),","));
+                .replace("#[values]", StringUtil.copy("?",columnMap.size(),","));
         preSql.setSql(sql);
         preSql.addAll(columnMap.values());
         return this;

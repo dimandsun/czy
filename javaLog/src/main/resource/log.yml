@@ -1,0 +1,7 @@
+logs:
+- logName: test
+  datePattern: "%d{mmssSSS} [%thread] [%level]: %msg%n"
+  filePath: /czy/logs/%d{yyyyMMddHH}/test.log
+  level: info #all/debug/info/warn/error
+  fileSize: 1024
+  fileCount: 10

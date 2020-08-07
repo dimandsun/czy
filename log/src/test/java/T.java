@@ -1,4 +1,4 @@
-import com.czy.log00.LogFactory;
+import com.czy.javaLog.LogFactory;
 import org.junit.Test;
 
 /**

@@ -1,8 +1,6 @@
-package com.czy.log00;
+package com.czy.javaLog;
 
-import com.czy.log.LogLevel;
 
-import java.io.RandomAccessFile;
 import java.util.logging.Logger;
 
 /**
@@ -11,8 +9,6 @@ import java.util.logging.Logger;
  */
 public class Log{
     private Logger logger;
-    RandomAccessFile file = new RandomAccessFile(file, "rws");
-
     public Log(Logger logger) {
         this.logger = logger;
     }

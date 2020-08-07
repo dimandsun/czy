@@ -6,6 +6,7 @@
     requires com.czy.util;
     requires com.czy.log;
     requires com.fasterxml.jackson.annotation;
+    requires javaLog;
     exports com.czy.jdbc.pool;
     exports com.czy.jdbc;
     exports com.czy.jdbc.sql.annotation;

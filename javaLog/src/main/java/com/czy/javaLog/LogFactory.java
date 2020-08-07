@@ -1,6 +1,5 @@
-package com.czy.log00;
+package com.czy.javaLog;
 
-import com.czy.log.LogLevel;
 import com.czy.util.io.FileUtilOld;
 import com.czy.util.model.SettingFile;
 import com.czy.util.text.StringUtil;

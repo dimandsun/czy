@@ -25,6 +25,7 @@
         <module>../user</module>
         <module>../jdbc</module>
         <module>../log</module>
+        <module>../javaLog</module>
     </modules>
     <properties>
         <encoding>UTF-8</encoding>

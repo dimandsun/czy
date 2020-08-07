@@ -908,7 +908,7 @@ public class StringUtil {
      * @param separator
      * @return
      */
-    public static String getMultipleText(String str, int multiples, String separator) {
+    public static String copy(String str, int multiples, String separator) {
         if (StringUtil.isBlank(str)||multiples==0){
             return "";
         }
