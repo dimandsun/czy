@@ -211,7 +211,7 @@ public class FileUtilOld {
                     }
                 }
             }
-        } catch (Exception e) {
+        } catch (Throwable e) {
             //加载类 filePath
             e.printStackTrace();
         }
