@@ -1,5 +1,7 @@
 package com.czy.core.annotation.bean;
 
+import com.czy.core.enums.BeanTypeEnum;
+
 import java.lang.annotation.*;
 
 /**
@@ -9,7 +11,7 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@BeanAnnotation
+@BeanAnnotation(BeanTypeEnum.Dao)
 public @interface Dao {
     String value() default "";
 }

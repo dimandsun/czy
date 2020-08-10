@@ -5,6 +5,7 @@ import com.czy.core.annotation.Auto;
 import com.czy.core.annotation.bean.*;
 import com.czy.core.annotation.mapping.Mapping;
 import com.czy.core.annotation.mapping.MappingAnnotation;
+import com.czy.core.enums.BeanTypeEnum;
 import com.czy.core.model.BeanModel;
 import com.czy.core.model.ProjectInfo;
 import com.czy.core.model.RouteModel;
@@ -27,6 +28,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * @author chenzy
@@ -52,6 +54,7 @@ public class ProjectContainer implements Closeable {
 
     protected ProjectContainer() {
     }
+
     /*初始化项目*/
     public void initProject() {
         System.out.println("*******************************容器正在初始化**************************");
@@ -72,25 +75,28 @@ public class ProjectContainer implements Closeable {
             System.exit(-1);
         }
     }
+
     /**
      * 获取主配置文件application-xx.yml信息
      */
     public Map<String, Object> getBasicConfigMap() {
-        var projectInfo=ProjectInfo.getInstance();
-        if (projectInfo.getSettingFile()==null){
+        var projectInfo = ProjectInfo.getInstance();
+        if (projectInfo.getSettingFile() == null) {
             ProjectInfo.init(FileUtilOld.getResourceFile("application.yml"));
         }
         return FileUtilOld.readConfigFileByYML(projectInfo.getSettingFile()).get();
     }
+
     public void reloadBasicCofig() {
         /*读取配置文件application-xx.xml中的数据*/
         Map<String, Object> basicConfigMap = getBasicConfigMap();
         // 注入bean: 配置文件中bean
         setProBean(basicConfigMap);
     }
+
     public void setProBean(Map<String, Object> proMap) {
         try {
-            if (proMap==null){
+            if (proMap == null) {
                 return;
             }
             /*1、注入数据源*/
@@ -104,6 +110,7 @@ public class ProjectContainer implements Closeable {
             e.printStackTrace();
         }
     }
+
     /**
      * 启动的时候使用，启动完毕清除
      */
@@ -151,27 +158,34 @@ public class ProjectContainer implements Closeable {
      * 注意config注解的类也是个bean，在setBeanMap()中注入了
      */
     public void setConfigClassInner() {
-        getClassList().forEach(c -> {
-            if (!c.isAnnotationPresent(Config.class)) {
-                return;//跳过本次循环，继续下一个。
+        beanMap.values().forEach(beanModel -> {
+            if (!beanModel.getBeanType().equals(Config.class)) {
+                return;
             }
-            try {
-                String configBeanName = StringUtil.lowFirst(c.getSimpleName().replace(".class", ""));
-                Object o = beanMap.get(configBeanName).getBean();
-                for (Method method : c.getMethods()) {
-                    if (method.isAnnotationPresent(Bean.class)) {
-                        BeanModel beanModel = new BeanModel(method.getName(), method.invoke(o), method.getReturnType());
-                        beanMap.add(method.getName(), beanModel);
-                    } else if (method.isAnnotationPresent(Aspect.class)) {
-                        AspectContainer.getInstance().add(o, method);
-                    }
+            Object bean = beanModel.getBean();
+            for (Method method : bean.getClass().getMethods()) {
+                if (method.isAnnotationPresent(Aspect.class)) {
+                    AspectContainer.getInstance().add(bean, method);
+                    continue;
                 }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
+                var annotations = method.getAnnotations();
+                if (annotations == null || annotations.length < 1) {
+                    continue;
+                }
+                Arrays.stream(method.getAnnotations()).forEach(annotation -> {
+                    var annotationClass = annotation.annotationType();
+                    if (!annotationClass.isAnnotationPresent(BeanAnnotation.class)) {
+                        return;
+                    }
+                    var beanAnnotation = (BeanAnnotation) annotationClass.getAnnotation(BeanAnnotation.class);
+                    try {
+                        beanMap.add(method.getName(), new BeanModel(method.getName(), method.invoke(bean), method.getReturnType(), beanAnnotation.value()));
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                });
             }
         });
     }
@@ -182,7 +196,6 @@ public class ProjectContainer implements Closeable {
         /*初始化框架*/
         initProject();
     }
-
 
 
     private void setBeanRedis(Map<String, Object> proMap) {
@@ -203,7 +216,7 @@ public class ProjectContainer implements Closeable {
         jedisPoolConfig.setMaxTotal(maxActive);
         jedisPoolConfig.setMaxWaitMillis(maxWait);
         jedisPoolConfig.setTestOnBorrow(testOnBorrow);
-        beanMap.add(configBeanName, new BeanModel(configBeanName, jedisPoolConfig, JedisPoolConfig.class));
+        beanMap.add(configBeanName, new BeanModel(configBeanName, jedisPoolConfig, JedisPoolConfig.class, BeanTypeEnum.File));
         /*2.2-注入JedisPool*/
         String host = StringUtil.getStr(redisProMap.get("host"), "127.0.0.1");
         Integer port = StringUtil.getInt(redisProMap.get("port"), 6379);
@@ -211,7 +224,7 @@ public class ProjectContainer implements Closeable {
         Integer database = StringUtil.getInt(redisProMap.get("database"), 0);
         Integer timeout = StringUtil.getLongByMS(redisProMap.get("timeout"), 60L).intValue();
         JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout, password, database);
-        beanMap.add(poolBeanName, new BeanModel(poolBeanName, jedisPool, JedisPool.class));
+        beanMap.add(poolBeanName, new BeanModel(poolBeanName, jedisPool, JedisPool.class, BeanTypeEnum.File));
     }
 
     private void setBeanMemcah(Map<String, Object> proMap) {
@@ -256,15 +269,22 @@ public class ProjectContainer implements Closeable {
      */
     public void setJavaBeanMap() {
         getClassList().forEach(c -> {
-            /*1、获取beanName*/
-            OutPar<Class> primaryInterfaceClassPar = new OutPar();
-            String beanName = getBeanName(c, primaryInterfaceClassPar);
+            /*1、获取beanName和beanType*/
+            OutPar<BeanTypeEnum> beanTypeOutPar = new OutPar<>();
+            String beanName = getBeanName(c, beanTypeOutPar);
             if (StringUtil.isBlank(beanName)) {
                 return;//等价于普通for循环的continue
             }
+            if (beanMap.containsKey(beanName)) {
+                logger.error("bean名称重复：{}", beanName);
+                return;
+            }
             BeanModel beanModel = new BeanModel(beanName);
-            if (primaryInterfaceClassPar.get() != null) {
-                beanModel.setPrimaryInterfaceClass(primaryInterfaceClassPar.get());
+            beanModel.setBeanType(beanTypeOutPar.get());
+            /*获取bean的接口*/
+            Class beanInterface = getBeanInterface(c);
+            if (beanInterface != null) {
+                beanModel.setBeanInterface(beanInterface);
             }
             /*2、获取bean对象*/
             Object bean = null;
@@ -280,7 +300,7 @@ public class ProjectContainer implements Closeable {
             }
             beanModel.setBean(bean);
             /*3、bean的class*/
-            beanModel.setPrimaryBeanClass(c);
+            beanModel.setBeanClass(c);
             /*4、添加自动注入字段信息*/
             addWaitAutoFieldMap(beanModel);
             /*5、bean放入beanMap*/
@@ -311,28 +331,26 @@ public class ProjectContainer implements Closeable {
      * 处理等待自动注入的属性
      */
     private void doWaitAutoFieldMap() {
-        try {
-            for (BeanModel beanModel : beanMap.values()) {
-                if (beanModel.hasWaitAutoField()) {
-                    Map<Field, Object> waitAutoFieldMap = beanModel.getWaitAutoFieldMap();
-                    for (Field field : waitAutoFieldMap.keySet()) {
-                        BeanModel fieldBeanModel = beanMap.get(field.getName());
-                        if (fieldBeanModel == null) {
-                            logger.error("auto自动注入失败，类：{},属性：{}", beanModel.getPrimaryBeanClass(), field.getType());
-                        } else {
-                            field.setAccessible(true);
-                            field.set(beanModel.getBean(), fieldBeanModel.getBean());
-                        }
+        beanMap.values().forEach(beanModel -> {
+            beanModel.getWaitAutoFieldList().forEach((Consumer<Field>)field -> {
+                var fieldBeanModel = beanMap.get(field.getName());
+                if (fieldBeanModel == null) {
+                    logger.error("auto自动注入失败，类：{},属性：{}", beanModel.getBeanClass(), field.getType());
+                } else {
+                    field.setAccessible(true);
+                    try {
+                        field.set(beanModel.getBean(), fieldBeanModel.getBean());
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
                     }
                 }
-            }
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+            });
+            beanModel.clear();
+        });
     }
 
     private void setRouteMap(BeanModel controllerBeanModel) {
-        Class c = controllerBeanModel.getPrimaryBeanClass();
+        Class c = controllerBeanModel.getBeanClass();
         //路由前缀，在Controller类上
         String urlPrefix = null;
         if (c.isAnnotationPresent(Mapping.class)) {
@@ -420,7 +438,7 @@ public class ProjectContainer implements Closeable {
     }
 
     /**
-     * 获取beanName及primaryInterfaceClass
+     * 获取beanName
      * 注意objectClass本身是接口时，不返还class实现的接口。
      * <p>
      * 从注解值中获取beanName
@@ -430,12 +448,11 @@ public class ProjectContainer implements Closeable {
      * @param objectClass
      * @return
      */
-    public String getBeanName(Class objectClass, OutPar<Class> primaryInterfaceClassPar) {
+    public String getBeanName(Class objectClass, OutPar<BeanTypeEnum> beanTypeEnumOutPar) {
         Annotation[] annotations = objectClass.getAnnotations();
         if (annotations == null || annotations.length < 1) {
             return null;
         }
-        String beanName = null;
         /*1、从注解值中获取beanName*/
         Boolean isBean = false;
         for (Annotation annotation : annotations) {
@@ -445,10 +462,12 @@ public class ProjectContainer implements Closeable {
             }
             isBean = true;
             try {
+                BeanAnnotation beanAnnotation = (BeanAnnotation) annotationClass.getAnnotation(BeanAnnotation.class);
+                beanTypeEnumOutPar.set(beanAnnotation.value());
                 Method method = annotationClass.getMethod("value");
                 Object temp = method.invoke(annotation);
-                if (temp != null) {
-                    beanName = temp.toString();
+                if (StringUtil.isNotBlank(temp)) {
+                    return temp.toString();
                 }
             } catch (NoSuchMethodException e) {
                 return null;
@@ -461,49 +480,41 @@ public class ProjectContainer implements Closeable {
         if (!isBean) {
             return null;
         }
-        if (StringUtil.isNotBlank(beanName)) {
-            return beanName;
-        }
         if (objectClass.isInterface()) {
             return getBeanNameByInterface(objectClass);
         }
         /*2、从接口中获取beanName*/
-        Class primaryInterfaceClass = null;
         for (Class interfaceClass : objectClass.getInterfaces()) {
-            beanName = getBeanNameByInterface(interfaceClass);
-            if (beanName != null) {
-                primaryInterfaceClass = interfaceClass;
-                break;
+            if (isServiceInterface(interfaceClass)) {
+                return getBeanNameByInterface(interfaceClass);
             }
         }
         /*3、从类中获取beanName*/
-        if (StringUtil.isBlank(beanName)) {
-            beanName = StringUtil.lowFirst(objectClass.getSimpleName().replace(".class", ""));
-        }
-        if (beanMap.containsKey(beanName)) {
-            logger.error("bean名称重复：{}", beanName);
-            return null;
-        }
-        if (primaryInterfaceClass != null) {
-            primaryInterfaceClassPar.set(primaryInterfaceClass);
-        }
-        return beanName;
+        return StringUtil.lowFirst(objectClass.getSimpleName().replace(".class", ""));
     }
 
-    private String getBeanNameByInterface(Class interfaceClass) {
-        if (isServiceInterface(interfaceClass)) {
-            String temp = interfaceClass.getSimpleName();
-            if (temp.startsWith("I")) {
-                temp = temp.substring(1);
+    public Class getBeanInterface(Class c) {
+        for (Class interfaceClass : c.getInterfaces()) {
+            if (isServiceInterface(interfaceClass)) {
+                return interfaceClass;
             }
-            return StringUtil.lowFirst(temp.replace(".class", ""));
         }
         return null;
     }
-    private Boolean isServiceInterface(Class interfaceClass){
-        String projectGroupId = ProjectInfo.getInstance().getProjectGroupId();
-        return(interfaceClass.getName().contains(projectGroupId));
+
+    private String getBeanNameByInterface(Class interfaceClass) {
+        String temp = interfaceClass.getSimpleName();
+        if (temp.startsWith("I")) {
+            temp = temp.substring(1);
+        }
+        return StringUtil.lowFirst(temp.replace(".class", ""));
     }
+
+    private Boolean isServiceInterface(Class interfaceClass) {
+        String projectGroupId = ProjectInfo.getInstance().getProjectGroupId();
+        return (interfaceClass.getName().contains(projectGroupId));
+    }
+
     /**
      * bean已经在beanMap中时，直接赋值
      * bean没有在beanMap中时，暂时放到noAutoFieldMap中
@@ -511,18 +522,18 @@ public class ProjectContainer implements Closeable {
      * @param beanModel
      */
     private void addWaitAutoFieldMap(BeanModel beanModel) {
-        Class primaryBeanClass = beanModel.getPrimaryBeanClass();
-        if (primaryBeanClass == null) {
+        Class beanClass = beanModel.getBeanClass();
+        if (beanClass == null) {
             return;
         }
         try {
-            for (Field field : primaryBeanClass.getDeclaredFields()) {
+            for (Field field : beanClass.getDeclaredFields()) {
                 /*字段存在自动注入的注解，需要给字段赋值*/
                 if (field.isAnnotationPresent(Auto.class)) {
                     BeanModel fieldBeanModel = beanMap.get(field.getName());
                     if (fieldBeanModel != null) {
-                        if (notClassType(field.getType(), fieldBeanModel.getPrimaryBeanClass(), fieldBeanModel.getPrimaryInterfaceClass())) {
-                            logger.error("要注入的bean类型错误，请检查：{}.{}", primaryBeanClass.getName(), field.getName());
+                        if (notClassType(field.getType(), fieldBeanModel.getBeanClass(), fieldBeanModel.getBeanInterface())) {
+                            logger.error("要注入的bean类型错误，请检查：{}.{}", beanClass.getName(), field.getName());
                             continue;
                         }
                         /*bean已经在beanMap中时，直接赋值*/

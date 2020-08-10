@@ -1,5 +1,7 @@
 package com.czy.core.annotation.bean;
 
+import com.czy.core.enums.BeanTypeEnum;
+
 import java.lang.annotation.*;
 
 /**
@@ -11,5 +13,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.ANNOTATION_TYPE)
 public @interface BeanAnnotation {
-    String value() default "";
+    BeanTypeEnum value();
 }

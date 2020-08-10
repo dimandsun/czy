@@ -29,7 +29,16 @@ public class SelectSQLBuilder<T> extends SQLBuilder<T> implements WhereColumnVal
     public WhereSQL where() {
         return whereSQL == null ? whereSQL = new WhereSQL(new PreSql(" where ", new ArrayList<>())) : whereSQL;
     }
-
+    public SelectSQLBuilder limit(int size) {
+        if (size<1){
+            return this;
+        }else if (size==1){
+            setResultType(ResultTypeEnum.RecordOne);
+        }else{
+            setResultType(ResultTypeEnum.RecordList);
+        }
+        return this;
+    }
     /**
      * 升序 ASC
      */

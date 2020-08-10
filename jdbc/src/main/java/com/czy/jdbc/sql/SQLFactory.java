@@ -187,7 +187,11 @@ public class SQLFactory {
         whereMap.forEach((BiConsumer<String, Object>) (key, value) -> sql.where().equal(key, value));
         return sql;
     }
-
+    public static <T>SelectSQLBuilder<T> select(String tableName,Class<T> returnType) {
+        var sqlBuilder= createSQL(SQLTypeEnum.Select, tableName, SelectSQLBuilder.class);
+        sqlBuilder.setReturnJavaType(returnType);
+        return sqlBuilder;
+    }
     public static SelectSQLBuilder select(String tableName) {
         return createSQL(SQLTypeEnum.Select, tableName, SelectSQLBuilder.class);
     }

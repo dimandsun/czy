@@ -1,7 +1,12 @@
 package com.czy.core.model;
 
+import com.czy.core.enums.BeanTypeEnum;
+import redis.clients.jedis.JedisPoolConfig;
+
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -9,40 +14,49 @@ import java.util.Map;
  * @author 陈志源 on 2019-01-03.
  */
 public class BeanModel<Bean> {
-    /*bean的原类，没有代理时bean.getClass()==primaryBeanClass才成立*/
-    private Class<Bean> primaryBeanClass;
+    /*bean的原类，没有代理时bean.getClass()==beanClass才成立*/
+    private Class<Bean> beanClass;
     /*bean的原类的接口*/
-    private Class<?> primaryInterfaceClass;
+    private Class<?> beanInterface;
     /*bean对象或者bean的代理对象。*/
     private Bean bean;
     private String beanName;
+    private BeanTypeEnum beanType;
     /*等待自动注入的属性*/
-    private Map<Field,Object> waitAutoFieldMap;
+    private List<Field> waitAutoFieldList=new ArrayList<>();
 
     public BeanModel(String beanName) {
-        this.beanName = beanName;
+        setBeanName(beanName);
+    }
+    public BeanModel(String beanName, Bean bean, Class beanClass,BeanTypeEnum beanType) {
+       setBeanName(beanName);
+       setBean(bean);
+       setBeanClass(beanClass);
+       setBeanType(beanType);
     }
 
-    public BeanModel(String beanName, Bean bean, Class primaryBeanClass) {
-        this.beanName=beanName;
-        this.bean = bean;
-        this.primaryBeanClass =primaryBeanClass;
+    public BeanTypeEnum getBeanType() {
+        return beanType;
     }
 
-    public Class<Bean> getPrimaryBeanClass() {
-        return primaryBeanClass;
+    public void setBeanType(BeanTypeEnum beanType) {
+        this.beanType = beanType;
     }
 
-    public Class<?> getPrimaryInterfaceClass() {
-        return primaryInterfaceClass;
+    public Class<Bean> getBeanClass() {
+        return beanClass;
     }
 
-    public void setPrimaryInterfaceClass(Class<?> primaryInterfaceClass) {
-        this.primaryInterfaceClass = primaryInterfaceClass;
+    public Class<?> getBeanInterface() {
+        return beanInterface;
     }
 
-    public void setPrimaryBeanClass(Class<Bean> primaryBeanClass) {
-        this.primaryBeanClass = primaryBeanClass;
+    public void setBeanInterface(Class<?> beanInterface) {
+        this.beanInterface = beanInterface;
+    }
+
+    public void setBeanClass(Class<Bean> beanClass) {
+        this.beanClass = beanClass;
     }
 
     public Bean getBean() {
@@ -61,26 +75,17 @@ public class BeanModel<Bean> {
         this.beanName = beanName;
     }
 
-    public Map<Field, Object> getWaitAutoFieldMap() {
-        return waitAutoFieldMap;
+    public List<Field> getWaitAutoFieldList() {
+        return waitAutoFieldList;
     }
-
-    public void setWaitAutoFieldMap(Map<Field, Object> waitAutoFieldMap) {
-        this.waitAutoFieldMap = waitAutoFieldMap;
-    }
-
     public void addWaiteAutoField(Field field) {
-        if (waitAutoFieldMap==null){
-            waitAutoFieldMap=new HashMap<>();
-        }
-        waitAutoFieldMap.put(field,null);
+        waitAutoFieldList.add(field);
     }
-
     /**
-     * 有等待注入的属性返回true
-     * @return
+     * 清除加载时用的waitAutoFieldMap
+     * 加载完后调用，否则异常
      */
-    public boolean hasWaitAutoField() {
-        return waitAutoFieldMap!=null&&waitAutoFieldMap.size()>0;
+    public void clear() {
+        waitAutoFieldList=null;
     }
 }
