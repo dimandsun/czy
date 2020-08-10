@@ -28,6 +28,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 /**
@@ -38,8 +39,9 @@ import java.util.function.Consumer;
 public class ProjectContainer implements Closeable {
     private static Log logger = LogFactory.getLog(ProjectContainer.class);
     private static ProjectContainer instance = new ProjectContainer();
+   /*ConcurrentHashMap可在遍历时添加元素*/
+    private Map<String,BeanModel> beanMap = new ConcurrentHashMap();
     /*key是 请求方法+url,value是RouteModel*/
-    private StringMap<BeanModel> beanMap = new StringMap();
     private StringMap<RouteModel> routeMap = new StringMap();
 
 
@@ -159,7 +161,7 @@ public class ProjectContainer implements Closeable {
      */
     public void setConfigClassInner() {
         beanMap.values().forEach(beanModel -> {
-            if (!beanModel.getBeanType().equals(Config.class)) {
+            if (!beanModel.getBeanType().equals(BeanTypeEnum.Config)) {
                 return;
             }
             Object bean = beanModel.getBean();
@@ -179,7 +181,7 @@ public class ProjectContainer implements Closeable {
                     }
                     var beanAnnotation = (BeanAnnotation) annotationClass.getAnnotation(BeanAnnotation.class);
                     try {
-                        beanMap.add(method.getName(), new BeanModel(method.getName(), method.invoke(bean), method.getReturnType(), beanAnnotation.value()));
+                        beanMap.put(method.getName(), new BeanModel(method.getName(), method.invoke(bean), method.getReturnType(), beanAnnotation.value()));
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     } catch (InvocationTargetException e) {
@@ -216,7 +218,7 @@ public class ProjectContainer implements Closeable {
         jedisPoolConfig.setMaxTotal(maxActive);
         jedisPoolConfig.setMaxWaitMillis(maxWait);
         jedisPoolConfig.setTestOnBorrow(testOnBorrow);
-        beanMap.add(configBeanName, new BeanModel(configBeanName, jedisPoolConfig, JedisPoolConfig.class, BeanTypeEnum.File));
+        beanMap.put(configBeanName, new BeanModel(configBeanName, jedisPoolConfig, JedisPoolConfig.class, BeanTypeEnum.File));
         /*2.2-注入JedisPool*/
         String host = StringUtil.getStr(redisProMap.get("host"), "127.0.0.1");
         Integer port = StringUtil.getInt(redisProMap.get("port"), 6379);
@@ -224,7 +226,7 @@ public class ProjectContainer implements Closeable {
         Integer database = StringUtil.getInt(redisProMap.get("database"), 0);
         Integer timeout = StringUtil.getLongByMS(redisProMap.get("timeout"), 60L).intValue();
         JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout, password, database);
-        beanMap.add(poolBeanName, new BeanModel(poolBeanName, jedisPool, JedisPool.class, BeanTypeEnum.File));
+        beanMap.put(poolBeanName, new BeanModel(poolBeanName, jedisPool, JedisPool.class, BeanTypeEnum.File));
     }
 
     private void setBeanMemcah(Map<String, Object> proMap) {
@@ -259,7 +261,7 @@ public class ProjectContainer implements Closeable {
         return routeMap;
     }
 
-    public StringMap<BeanModel> getBeanMap() {
+    public Map<String,BeanModel> getBeanMap() {
         return beanMap;
     }
 
@@ -304,7 +306,7 @@ public class ProjectContainer implements Closeable {
             /*4、添加自动注入字段信息*/
             addWaitAutoFieldMap(beanModel);
             /*5、bean放入beanMap*/
-            beanMap.add(beanModel.getBeanName(), beanModel);
+            beanMap.put(beanModel.getBeanName(), beanModel);
             /*6、controller层的接口路由注入*/
             if (c.isAnnotationPresent(Controller.class)) {
                 setRouteMap(beanModel);
