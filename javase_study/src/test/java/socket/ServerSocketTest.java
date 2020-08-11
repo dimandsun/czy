@@ -3,7 +3,11 @@ package socket;
 import com.czy.util.time.DateUtil;
 import com.czy.util.io.IOUtil;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.Scanner;
 
@@ -14,27 +18,36 @@ import static com.czy.util.tcp.SocketUtil.sendData;
  * @author chenzy
  * @since 2020-06-17
  */
-public class ServerTest {
+public class ServerSocketTest {
     public static void main(String[] args) throws IOException {
         int port = 10089;
-        var serverSocket = new ServerSocket(port);
-        while (true) {
-            //监听连接
-            var socket = serverSocket.accept();
-            new Thread(()->{
-                while (true){
-                    if (socket.isClosed() || socket.isInputShutdown() || socket.isOutputShutdown()) {
-                        IOUtil.close(socket);
-                        break;
-                    }
-                    //读取数据
-                    var data = readData(socket);
-                    System.out.println(data);
-                    //发送响应
-                    sendData(socket, data + "123");
-                }
-            }).start();
+        /*backlog:设值最大等待队列长度。等待队列满了再想连接，会报ConnectException：Connection refused：connect
+            默认50
+          bindAddr:绑定多个ip。（一台电脑多个网卡，一个网卡一个ip。或者一个网卡多个ip）
+        */
+        var server = new ServerSocket(port,3, InetAddress.getLocalHost());
+        //获取连接
+        var connect = server.accept();
+        //读取数据
+        var reader = new BufferedReader(new InputStreamReader(connect.getInputStream()));
+        String data="";
+        while (!"".equals(data=reader.readLine())){
+            System.out.println(data);
         }
+        //响应：输出数据
+        var out=connect.getOutputStream();
+        var result= """
+                HTTP/1.1 200 OK
+                
+                <html>
+                <body>兄弟，看到没！</body>
+                </html>
+                """;
+        out.write(result.getBytes());
+        out.flush();
+        //关闭资源
+        connect.close();
+        server.close();
     }
 
     public static void testServer() throws IOException {

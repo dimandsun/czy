@@ -24,8 +24,8 @@ public class RequestFactory {
     private RequestFactory() {
     }
 
-    public static Request createRequest(ApplicationContext applicationContext, SocketChannel socketChannel) throws HttpException {
-        var data= NIOUtil.readByLine(applicationContext.getServerInfo().charSet().get(), socketChannel);
+    public static Request createRequest(SocketChannel socketChannel) throws HttpException {
+        var data= NIOUtil.readByLine(ApplicationContext.getInstance().getServerInfo().charSet().get(), socketChannel);
         if (data==null||data.isEmpty()){
             throw new HttpException("创建request失败,未读取到数据");
         }

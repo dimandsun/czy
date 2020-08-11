@@ -19,12 +19,22 @@ public class ApplicationContext {
 
     private ApplicationContext() {
         servletMap = new StringMap<>();
+        isActivity(true);
     }
 
     public static ApplicationContext getInstance() {
         return instance;
     }
     private ServerInfo serverInfo;
+    private boolean isActivity;
+
+    public boolean isActivity() {
+        return isActivity;
+    }
+    public void isActivity(boolean activity) {
+        isActivity = activity;
+    }
+
     public void setServerInfo(ServerInfo serverInfo) {
         this.serverInfo = serverInfo;
     }

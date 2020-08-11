@@ -18,9 +18,18 @@ public class NetWorkInterfaceTest {
         var enumeration = NetworkInterface.getNetworkInterfaces();
         while (enumeration.hasMoreElements()) {
             var networkInterface = enumeration.nextElement();
+            networkInterface.supportsMulticast();//是否支持多播
+            networkInterface.isPointToPoint();//是否是点对点设备
             StringUtil.println("设备名称:{},设备显示名称:{}，网络接口索引:{},是否回调/回环接口：{},是否开启并运行:{}"
                     , networkInterface.getName(), networkInterface.getDisplayName(), networkInterface.getIndex()
                     , networkInterface.isLoopback(), networkInterface.isUp());
+
+            /*一个NetworkInterface有多个InterfaceAddresses,
+              一个InterfaceAddresses有一个InetAddress
+             */
+            networkInterface.getInterfaceAddresses().forEach(interfaceAddress -> {
+                interfaceAddress.getAddress();
+            });
         }
     }
     /*网络传输中以数据包为基本传输单位，可以设置MTU(Maximum Transmission Unit，最大传输单元)来规定网络传输最大数据包的大小

@@ -24,18 +24,15 @@ public class NIOUtil {
     }
 
     //按行读取数据
-    public static List<String> readByLine(String charSet, SocketChannel socketChannel) {
+    public static List<String> readByLine(String charSet, SocketChannel channel) {
         try {
-            int bufferLength =100;// 1024 * 4;
+            int bufferLength =256;// 1024 * 4;
             int lineLength = 64;
             var buffer = ByteBuffer.allocate(bufferLength);
             ByteBuffer lineBuffer = ByteBuffer.allocate(lineLength);
             List<String> data = new ArrayList<>();
-            InputStream is = socketChannel.socket().getInputStream();
-            ReadableByteChannel readCh = Channels.newChannel(is);
-            int length = -1;
-            end:
-            while ((length = readCh.read(buffer)) != -1) {
+            int len = 0;
+            while ((len = channel.read(buffer)) != 0) {
                 buffer.flip();
                 while (buffer.hasRemaining()) {
                     //空间不够扩容
@@ -44,18 +41,13 @@ public class NIOUtil {
                     }
                     byte b = buffer.get();
                     if (b == 13 && buffer.hasRemaining() && buffer.get() == 10) {
-                        addLine(charSet, lineBuffer, data);
+                        data.add(read(charSet, lineBuffer));
                     } else {
                         lineBuffer.put(b);
                     }
                 }
+                System.out.println(new String(buffer.array(), 0, len));
                 buffer.clear();
-                /*数据没有把buffer放满，说明数据已经读到尾了，直接跳出循环。如果不跳出的话，会阻塞
-                存在问题，当数据刚好把buffer装满，则此请求会阻塞。
-                * */
-                if (length < bufferLength) {
-                    break end;
-                }
             }
             return data;
         } catch (IOException e) {
@@ -63,20 +55,17 @@ public class NIOUtil {
             return null;
         }
     }
-
     /**
-     * 达到末尾时，返回true
-     *
+     * 一次读取全部数据
      * @param charSet
-     * @param lineBuffer
-     * @param data
+     * @param buffer
      * @return
      */
-    private static void addLine(String charSet, ByteBuffer lineBuffer, List<String> data) {
-        lineBuffer.flip();
-        var line = Charset.forName(charSet).decode(lineBuffer).toString();
-        data.add(line);
-        lineBuffer.clear();
+    private static String read(String charSet, ByteBuffer buffer){
+        buffer.flip();
+        var line = Charset.forName(charSet).decode(buffer).toString();
+        buffer.clear();
+        return line;
     }
 
     /**
@@ -90,33 +79,19 @@ public class NIOUtil {
             return;
         }
         try {
-            var buffer = putByte(data.getBytes(), ByteBuffer.allocate(1024 * 4));
-            buffer.flip();
-            out.write(buffer);
-            buffer.clear();
+            out.write(ByteBuffer.wrap(data.getBytes()));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * 文本和file内容都写入out
-     *
-     * @param data
-     * @param file
-     * @param out
-     */
-    public static void write(String data, File file, ByteChannel out) {
-        write(data, out);
-        write(file, out);
-    }
 
     public static void write(File file, ByteChannel out) {
         if (file == null || !file.exists()) {
             return;
         }
         try {
-            var buffer = ByteBuffer.allocate(1024 * 4);
+            var buffer = ByteBuffer.allocate((int) file.length());
             if (file != null) {
                 var fileChannel = FileChannel.open(file.toPath(), StandardOpenOption.READ);
                 while (fileChannel.read(buffer) != -1) {

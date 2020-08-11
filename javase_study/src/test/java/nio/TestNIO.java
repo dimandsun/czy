@@ -142,51 +142,70 @@ public class TestNIO {
 
     /*非阻塞式服务端,使用迭代器循环选择器55*/
     @Test
-    public void testSocketServer4() throws IOException {
-        //获取通道
-        var channel = ServerSocketChannel.open();
-        //切换成非阻塞模式
-        channel.configureBlocking(false);
-        //绑定连接
-        channel.bind(new InetSocketAddress(10089));
-
-        //获取选择器
-        var selector = Selector.open();
-        //通道注册到选择器,指定监听事件
-        channel.register(selector, SelectionKey.OP_ACCEPT);
+    public void testSocketServer4() {
+        try {
 
 
-        //轮询获取选择器上已经准备就绪的事件
-        while (selector.select() > 0) {
-            var iterator = selector.selectedKeys().iterator();
-            while (iterator.hasNext()) {
-                //获取准备就绪的事件
-                var selectionKey = iterator.next();
-                if (selectionKey.isAcceptable()) {
-                    //接收就绪
-                    var socketChannel = channel.accept();
-                    //切换非阻塞模式
-                    socketChannel.configureBlocking(false);
-                    //将该通道注册到选择器上
-                    socketChannel.register(selector, SelectionKey.OP_READ);
-                } else if (selectionKey.isReadable()) {
-                    //读就绪
-                    SocketChannel socketChannel = (SocketChannel) selectionKey.channel();
-                    //接收客户端数据
-                    var buffer = ByteBuffer.allocate(1024);
-                    int len = 0;
-                    while ((len = socketChannel.read(buffer)) > 0) {
-                        buffer.flip();
-                        System.out.println(new String(buffer.array(), 0, len));
-                        buffer.clear();
+            //获取通道
+            var channel = ServerSocketChannel.open();
+            //切换成非阻塞模式
+            channel.configureBlocking(false);
+            //绑定ip
+            channel.bind(new InetSocketAddress("localhost", 10089));
+            //通道注册到选择器,监听连接事件
+            var selector = Selector.open();
+            channel.register(selector, SelectionKey.OP_ACCEPT);
+            //
+            Boolean isActivity = true;
+            while (isActivity) {
+                //多路复用器开始监听
+                selector.select();
+                var iterator = selector.selectedKeys().iterator();
+                while (iterator.hasNext()) {
+                    //获取准备就绪的事件
+                    var key = iterator.next();
+                    if (key.isAcceptable()) {
+                        //连接事件
+                        var connect = ((ServerSocketChannel) key.channel()).accept().configureBlocking(false);
+                        //连接注册读监听
+                        connect.register(selector, SelectionKey.OP_READ);
+                    } else if (key.isReadable()) {
+                        //读连接
+                        var connect = (SocketChannel) key.channel();
+                        //读取客户端数据
+                        var buffer = ByteBuffer.allocate(1024);
+                        int len = 0;
+                        while ((len = connect.read(buffer)) != 0) {
+                            buffer.flip();
+                            System.out.println(new String(buffer.array(), 0, len));
+                            buffer.clear();
+                        }
+                        //响应 <meta charset="UTF-8" />
+                        var result = """
+                                HTTP/1.1 200 OK
+                                                
+                                <html>
+                                <head></head>
+                                <body>兄弟，看到没！</body>
+                                </html>
+                                """;
+                    /*buffer.put(result.getBytes());
+                    buffer.flip();*/
+                        connect.write(Charset.forName("utf-8").encode(result));
+//                        buffer.clear();
+                        connect.close();
                     }
+                    //取消选择建
+                    iterator.remove();
                 }
-                //取消选择建
-                iterator.remove();
             }
-
-
+        } catch (ClosedChannelException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+
         //发送反馈给客户端
  /*       buffer.put("服务端接收数据成功".getBytes());
         buffer.flip();
@@ -204,8 +223,8 @@ public class TestNIO {
         var channel = ServerSocketChannel.open();
         //切换成非阻塞模式
         channel.configureBlocking(false);
-        //绑定连接
-        channel.bind(new InetSocketAddress(10089));
+        //绑定ip
+        channel.bind(new InetSocketAddress("localhost", 10089));
 
         //获取选择器
         var selector = Selector.open();
