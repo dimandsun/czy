@@ -1,6 +1,6 @@
 package com.czy.javaLog;
 
-import com.czy.util.io.FileUtilOld;
+import com.czy.util.io.FileUtil;
 import com.czy.util.model.SettingFile;
 import com.czy.util.text.StringUtil;
 import com.czy.util.time.TimeUtil;
@@ -28,7 +28,7 @@ public class LogFactory {
         if (logMap.containsKey(logName)) {
             return logMap.get(logName);
         }
-        var filePath = FileUtilOld.getRoot().get() + File.separator + "logs" + File.separator + "log％g.log";
+        var filePath = FileUtil.getRoot().get() + File.separator + "logs" + File.separator + "log％g.log";
         var log = createLog(new FileSetting(filePath, 1024, 30), logName, LogLevel.ALL, TimeUtil.yyyyMMddHHmmssSSS);
         logMap.put(logName, log);
         return logMap.get(logName);
@@ -56,7 +56,7 @@ public class LogFactory {
         var logger = Logger.getLogger(logName);
         FileHandler fileHandler = null;
         try {
-            FileUtilOld.createFile(new File(fileSetting.filePath()));
+            FileUtil.createFile(new File(fileSetting.filePath()));
             fileHandler = new FileHandler(fileSetting.filePath(), fileSetting.fileSize(), fileSetting.fileCount(), true);
         } catch (IOException e) {
             e.printStackTrace();
@@ -71,15 +71,15 @@ public class LogFactory {
         if (settingFile==null){
             settingFile=new SettingFile("","log.yml");
         }
-        var file = FileUtilOld.getResourceFile(settingFile.moduleDir(),settingFile.fileName());
-        FileUtilOld.readConfigFileByYML(file).map(map -> (List<Map<String, Object>>) map.get("logs")).get().forEach(map -> {
+        var file = FileUtil.getResourceFile(settingFile.moduleDir(),settingFile.fileName());
+        FileUtil.readYML(file).map(map -> (List<Map<String, Object>>) map.get("logs")).get().forEach(map -> {
             String logName = map.get("logName").toString();
             if (logMap.containsKey(logName)) {
                 return;
             }
             String filePath = map.get("filePath").toString();
             if ('/' == filePath.charAt(0)) {
-                filePath = FileUtilOld.getRoot().get() + filePath;
+                filePath = FileUtil.getRoot().get() + filePath;
             }
             Integer fileSize = StringUtil.getInt(map.get("fileSize"), 1024);
             Integer fileCount = StringUtil.getInt(map.get("fileCount"), 30);

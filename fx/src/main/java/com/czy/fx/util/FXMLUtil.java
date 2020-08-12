@@ -1,6 +1,6 @@
 package com.czy.fx.util;
 
-import com.czy.util.io.FileUtilOld;
+import com.czy.util.io.FileUtil;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -27,7 +27,7 @@ public class FXMLUtil {
     public static FXMLLoader getLoader(String moduleDir, String resourePath) {
         try {
             var fxmlLoader = new FXMLLoader();
-            var url = FileUtilOld.getResourceFile(moduleDir, resourePath).toURI().toURL();
+            var url = FileUtil.getResourceFile(moduleDir, resourePath).toURI().toURL();
             fxmlLoader.setLocation(url);
             return fxmlLoader;
         } catch (MalformedURLException e) {

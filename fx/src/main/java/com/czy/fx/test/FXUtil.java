@@ -1,7 +1,7 @@
 package com.czy.fx.test;
 
 import com.czy.util.ClassUtil;
-import com.czy.util.io.FileUtilOld;
+import com.czy.util.io.FileUtil;
 import com.czy.util.text.StringUtil;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -35,7 +35,7 @@ public class FXUtil {
      */
     public static <T extends Node> T getNodeByFXML(String fileName){
         var fxmlLoader=new FXMLLoader();
-        var file = FileUtilOld.getCodeFile("fx",fileName);
+        var file = FileUtil.getCodeFile("fx",fileName);
         try {
            return fxmlLoader.load(new FileInputStream(file));
         } catch (IOException e) {

@@ -13,30 +13,32 @@ import static com.czy.util.tcp.SocketUtil.sendData;
  * @since 2020-06-17
  */
 public class ServerHTTP {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         int port = 9090;
-        var serverSocket = new ServerSocket(port);
-        while (true) {
-            //监听连接
-            var socket = serverSocket.accept();
-            new Thread(()->{
-                System.out.println(1);
-                while (true){
-                    System.out.println(2);
-                    if (socket.isClosed() || socket.isInputShutdown() || socket.isOutputShutdown()) {
-                        IOUtil.close(socket);
-                        break;
-                    }
-
-                    System.out.println(3);
-                    //读取数据
-                    var data = readData(socket);
-                    System.out.println(4);
-                    System.out.println(data);
-                    //发送响应
-                    sendData(socket, data + "123");
+        try(var serverSocket = new ServerSocket(port)) {
+            while (true) {
+                //监听连接
+                try(var socket = serverSocket.accept()) {
+                    new Thread(()->{
+                        System.out.println(1);
+                        while (true){
+                            System.out.println(2);
+                            System.out.println(3);
+                            //读取数据
+                            var data = readData(socket);
+                            System.out.println(4);
+                            System.out.println(data);
+                            //发送响应
+                            sendData(socket, data + "123");
+                        }
+                    }).start();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            }).start();
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

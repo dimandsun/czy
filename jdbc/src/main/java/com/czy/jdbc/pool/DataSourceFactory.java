@@ -1,7 +1,7 @@
 package com.czy.jdbc.pool;
 
 import com.czy.jdbc.exception.DataSourceException;
-import com.czy.util.io.FileUtilOld;
+import com.czy.util.io.FileUtil;
 import com.czy.util.json.JsonUtil;
 import com.czy.util.model.SettingFile;
 import com.czy.util.model.StringMap;
@@ -47,8 +47,8 @@ public class DataSourceFactory {
         if (settingFile == null) {
             settingFile = new SettingFile("", "jdbc.yml");
         }
-        var file = FileUtilOld.getResourceFile(settingFile.moduleDir(), settingFile.fileName());
-        init(FileUtilOld.readConfigFileByYML(file));
+        var file = FileUtil.getResourceFile(settingFile.moduleDir(), settingFile.fileName());
+        init(FileUtil.readYML(file));
     }
     public static void reloadSetting(String moduleDir, String fileName) {
         settingFile = new SettingFile(moduleDir, fileName);

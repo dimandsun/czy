@@ -34,15 +34,15 @@ public class LogFactory {
        /* if (settingFile==null){
             settingFile=new SettingFile("","log.yml");
         }
-        var file = FileUtilOld.getResourceFile(settingFile.moduleDir(),settingFile.fileName());
-        FileUtilOld.readConfigFileByYML(file).map(map -> (List<Map<String, Object>>) map.get("logs")).get().forEach(map -> {
+        var file = FileUtil.getResourceFile(settingFile.moduleDir(),settingFile.fileName());
+        FileUtil.readConfigFileByYML(file).map(map -> (List<Map<String, Object>>) map.get("logs")).get().forEach(map -> {
             String logName = map.get("logName").toString();
             if (logMap.containsKey(logName)) {
                 return;
             }
             String filePath = map.get("filePath").toString();
             if ('/' == filePath.charAt(0)) {
-                filePath = FileUtilOld.getRoot().get() + filePath;
+                filePath = FileUtil.getRoot().get() + filePath;
             }
             Integer fileSize = StringUtil.getInt(map.get("fileSize"), 1024);
             Integer fileCount = StringUtil.getInt(map.get("fileCount"), 30);
@@ -61,7 +61,7 @@ public class LogFactory {
         var logger = Logger.getLogger(logName);
         FileHandler fileHandler = null;
         try {
-            FileUtilOld.createFile(new File(fileSetting.filePath()));
+            FileUtil.createFile(new File(fileSetting.filePath()));
             fileHandler = new FileHandler(fileSetting.filePath(), fileSetting.fileSize(), fileSetting.fileCount(), true);
         } catch (IOException e) {
             e.printStackTrace();

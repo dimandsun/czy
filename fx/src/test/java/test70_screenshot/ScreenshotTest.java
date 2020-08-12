@@ -1,7 +1,7 @@
 package test70_screenshot;
 
 import com.czy.fx.test.FXUtil;
-import com.czy.util.io.FileUtilOld;
+import com.czy.util.io.FileUtil;
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Pos;
@@ -120,7 +120,7 @@ public class ScreenshotTest extends Application {
         });
         btn2.setOnAction(event -> {
             try {
-                var file= FileUtilOld.getResourceFile("fx","abc.png");
+                var file= FileUtil.getResourceFile("fx","abc.png");
                 ImageIO.write(bufferedImage,"png",file);
             } catch (IOException e) {
                 e.printStackTrace();

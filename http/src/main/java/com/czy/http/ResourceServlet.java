@@ -5,7 +5,7 @@ import com.czy.http.model.Request;
 import com.czy.http.model.Response;
 import com.czy.http.model.Servlet;
 import com.czy.http.model.ServletInfo;
-import com.czy.util.io.FileUtilOld;
+import com.czy.util.io.FileUtil;
 
 /**
  * @author chenzy
@@ -17,7 +17,7 @@ public class ResourceServlet extends Servlet {
         super.init(servletInfo);
     }
     protected void exec(Request request, Response response){
-        var file= FileUtilOld.getResourceFile(request.getRoute());
+        var file= FileUtil.getResourceFile(request.getRoute());
         if (file==null||!file.exists()){
             response.setResponseCode(ResponseCode.NotFound);
         }

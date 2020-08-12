@@ -1,7 +1,9 @@
-import com.czy.util.io.FileUtilOld;
+import com.czy.util.io.FileUtil;
 import com.czy.util.model.MyMap;
+import com.czy.util.model.StringMap;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,24 +18,23 @@ public class A {
 
     @Test
     public void a() {
-        List<MyMap> p = FileUtilOld.readConfigFileByXML("image/score/hundred.plist");
-//        FileUtil.writeConfigFileByXML2YML("cannon/bulletandnet.plist","fishGame.yaml");
+        var p = FileUtil.readXML(FileUtil.getResourceFile("image/score/hundred.plist")).get();
         printList(p);
         System.out.println(p);
     }
-    public void printList(List<MyMap> list){
-        for (MyMap map:list){
+    public void printList(List<StringMap> list){
+        for (StringMap map:list){
             printMap(map);
         }
     }
-    public void printMap(MyMap map){
+    public void printMap(StringMap map){
         Set<Map.Entry<String,Object>> entrySet=map.entrySet();
         for (Map.Entry<String,Object> entry: entrySet){
             Object value =entry.getValue();
             if (value instanceof List){
-                printList((List<MyMap>) value);
-            }else if (value instanceof MyMap){
-                printMap((MyMap) value);
+                printList((List<StringMap>) value);
+            }else if (value instanceof StringMap){
+                printMap((StringMap) value);
             }else {
                 System.out.print(value.toString()+",");
             }

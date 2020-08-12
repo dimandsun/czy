@@ -1,8 +1,8 @@
 package test68_FXML2;
 
+import com.czy.util.io.FileUtil;
 import test52_binding.User;
 import com.czy.fx.test.FXUtil;
-import com.czy.util.io.FileUtilOld;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
@@ -17,7 +17,7 @@ public class FXMLTest2 extends Application {
     public void start(Stage primaryStage) throws Exception {
         var anchorPane = new AnchorPane();
         var fxmlLoader=new FXMLLoader();
-        var file = FileUtilOld.getCodeFile("fx","test68_FXML2.test52_binding.User.fxml");
+        var file = FileUtil.getCodeFile("fx","test68_FXML2.test52_binding.User.fxml");
         fxmlLoader.setLocation(file.toURI().toURL());
         fxmlLoader.setBuilderFactory(type -> new UserBuilder());
         User user =fxmlLoader.load();

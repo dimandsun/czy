@@ -1,7 +1,7 @@
 package test57_ImageView;
 
 import com.czy.fx.test.FXUtil;
-import com.czy.util.io.FileUtilOld;
+import com.czy.util.io.FileUtil;
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.*;
@@ -104,7 +104,7 @@ public class ImageViewTest extends Application {
             }
             data += "\r\n";
         }
-        FileUtilOld.write(new File("d:/a.text"),data);
+        FileUtil.write(new File("d:/a.text"),data);
     }
 
 

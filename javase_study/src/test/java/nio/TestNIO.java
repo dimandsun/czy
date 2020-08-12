@@ -1,6 +1,6 @@
 package nio;
 
-import com.czy.util.io.FileUtilOld;
+import com.czy.util.io.FileUtil;
 import org.junit.Test;
 
 import java.io.*;
@@ -443,12 +443,11 @@ public class TestNIO {
     @Test
     public void testChannel() throws IOException {
 //        var fileInputStream=new FileInputStream("girl.png");
-        var fileInputStream = new FileInputStream(FileUtilOld.getResourceFile("girl.png"));
-        var file = FileUtilOld.getResourceFile("2.png");
+        var fileInputStream = new FileInputStream(FileUtil.getResourceFile("girl.png"));
+        var file = FileUtil.getResourceFile("2.png");
         var fileOutputStream = new FileOutputStream(file);
         var inChannel = fileInputStream.getChannel();
         var outChannel = fileOutputStream.getChannel();
-
         var buffer = ByteBuffer.allocate(1024);
         while (inChannel.read(buffer) != -1) {
             buffer.flip();

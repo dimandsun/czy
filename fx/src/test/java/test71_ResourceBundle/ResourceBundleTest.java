@@ -1,7 +1,7 @@
 package test71_ResourceBundle;
 
 import com.czy.fx.test.FXUtil;
-import com.czy.util.io.FileUtilOld;
+import com.czy.util.io.FileUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
@@ -23,7 +23,7 @@ public class ResourceBundleTest extends Application {
         locale.getCountry();//国家 CN US
         Locale.setDefault(new Locale("en","us"));
         var fxmlLoader=new FXMLLoader();
-        var file = FileUtilOld.getCodeFile("fx","test71_ResourceBundle.ResourceBundle.fxml");
+        var file = FileUtil.getCodeFile("fx","test71_ResourceBundle.ResourceBundle.fxml");
 //        var resourceBundle= ResourceBundle.getBundle("test71_ResourceBundle.language");
         var  resourceBundle= ResourceBundle.getBundle("test71_ResourceBundle.language");
         fxmlLoader.setResources(resourceBundle);

@@ -4,6 +4,7 @@ import com.czy.http.exception.HttpException;
 import com.czy.http.factory.RequestFactory;
 import com.czy.http.factory.ResponseFactory;
 import com.czy.http.model.ServerInfo;
+import com.czy.util.io.FileUtil;
 import com.czy.util.io.NIOUtil;
 import com.czy.util.model.Par;
 
@@ -22,6 +23,8 @@ import java.util.Date;
 public class Server {
     public static final String CRLF = "\r\n";
     public static final String BANK = " ";
+    public void init(){
+    }
 
     public static void main(String[] args) {
         var serverInfo = new ServerInfo(9090, "localhost", 100000, new Par<>("UTF-8"));

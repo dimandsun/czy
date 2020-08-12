@@ -3,8 +3,6 @@ package socket;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
-
-import static com.czy.util.io.IOUtil.close;
 import static com.czy.util.tcp.SocketUtil.getConnection;
 import static com.czy.util.tcp.SocketUtil.readData;
 import static com.czy.util.tcp.SocketUtil.sendData;
@@ -15,29 +13,28 @@ import static com.czy.util.tcp.SocketUtil.sendData;
  * @since 2020-06-17
  */
 public class ClientTest {
-    public static void main(String[] args) throws IOException, InterruptedException {
-        int i=1;
-        while (true){
+    public static void main(String[] args) throws InterruptedException {
+        int i = 1;
+        while (true) {
             //获取连接
-            var socket = getConnection("127.0.0.1", 10089);
-            if (socket==null){
-                System.out.println("无法连接指定服务器，请检查");
-                continue;
+            try (var socket = getConnection("127.0.0.1", 10089)) {
+                if (socket == null) {
+                    System.out.println("无法连接指定服务器，请检查");
+                    continue;
+                }
+                //发送数据
+                sendData(socket, "数据" + i);
+                //读取数据
+                String result = readData(socket);
+                System.out.println(result);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            //发送数据
-            sendData(socket, "数据" + i);
-            //读取数据
-            String result = readData(socket);
-            //关闭连接
-            close(socket);
-            System.out.println(result);
             Thread.sleep(1000);
             i++;
         }
 
     }
-
-
     public static void testClient() throws IOException {
 //        var socket = new Socket("127.0.0.1", 10089,true);
         var socket = new Socket("127.0.0.1", 10089);

@@ -4,7 +4,7 @@ import com.czy.core.ProjectContainer;
 import com.czy.core.model.ProjectInfo;
 import com.czy.question.controller.QuestionController;
 import com.czy.question.model.table.Question;
-import com.czy.util.io.FileUtilOld;
+import com.czy.util.io.FileUtil;
 
 /**
  * @author chenzy
@@ -12,7 +12,7 @@ import com.czy.util.io.FileUtilOld;
  */
 public class Main {
     public static void main(String[] args) {
-        ProjectInfo.init(FileUtilOld.getResourceFile("question_bank","application.yml"));
+        ProjectInfo.init(FileUtil.getResourceFile("question_bank","application.yml"));
         var projectContainer= ProjectContainer.getInstance();
         projectContainer.initProject();
         var questionController=(QuestionController)projectContainer.getBeanMap().get("questionController").getBean();

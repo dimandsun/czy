@@ -13,9 +13,9 @@ import com.czy.jdbc.pool.DataSourceFactory;
 import com.czy.javaLog.Log;
 import com.czy.javaLog.LogFactory;
 import com.czy.util.enums.QuestMethodEnum;
+import com.czy.util.io.FileUtil;
 import com.czy.util.list.ListUtil;
 import com.czy.util.text.StringUtil;
-import com.czy.util.io.FileUtilOld;
 import com.czy.util.model.OutPar;
 import com.czy.util.model.StringMap;
 import redis.clients.jedis.JedisPool;
@@ -84,9 +84,9 @@ public class ProjectContainer implements Closeable {
     public Map<String, Object> getBasicConfigMap() {
         var projectInfo = ProjectInfo.getInstance();
         if (projectInfo.getSettingFile() == null) {
-            ProjectInfo.init(FileUtilOld.getResourceFile("application.yml"));
+            ProjectInfo.init(FileUtil.getResourceFile("application.yml"));
         }
-        return FileUtilOld.readConfigFileByYML(projectInfo.getSettingFile()).get();
+        return FileUtil.readYML(projectInfo.getSettingFile()).get();
     }
 
     public void reloadBasicCofig() {
@@ -124,7 +124,7 @@ public class ProjectContainer implements Closeable {
         }
         String projectGroupId = ProjectInfo.getInstance().getProjectGroupId();
 //        String classPath = this.getClass().getResource("/").getPath() + projectGroupId.replace(".", File.separator);
-        classList.addAll(FileUtilOld.getClassList(ProjectInfo.getInstance().getModuleDir(), projectGroupId));
+        classList.addAll(FileUtil.getClassList(ProjectInfo.getInstance().getModuleDir(), projectGroupId));
     }
 
     private List<Class> getClassList() {

@@ -1,7 +1,7 @@
 package com.czy.util.text;
 
 
-import com.czy.util.io.FileUtilOld;
+import com.czy.util.io.FileUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.io.*;
@@ -883,7 +883,7 @@ public class StringUtil {
 //            System.out.println(result);
             String projectGroupId = "cn.lexiaotongvip.www";
             String classPath = StringUtil.class.getResource("/").getPath() + projectGroupId.replace(".", File.separator);
-            List<Class> classList = FileUtilOld.getClassList(classPath, projectGroupId);
+            List<Class> classList = FileUtil.getClassList(classPath, projectGroupId);
             System.out.println(classList.size());
         }
 

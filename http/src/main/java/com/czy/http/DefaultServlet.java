@@ -1,5 +1,6 @@
 package com.czy.http;
 
+import com.czy.http.annotation.WebServlet;
 import com.czy.http.enums.ResponseCode;
 import com.czy.http.model.Request;
 import com.czy.http.model.Response;
@@ -10,6 +11,7 @@ import com.czy.http.model.Servlet;
  * @date 2020-08-01
  * 找不到资源时调用
  */
+@WebServlet(value="/default",name="default")
 public class DefaultServlet extends Servlet {
     @Override
     protected void exec(Request request, Response response) {

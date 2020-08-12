@@ -1,6 +1,6 @@
 package test65_TableView.yiNanPing;
 
-import com.czy.util.io.FileUtilOld;
+import com.czy.util.io.FileUtil;
 import com.czy.util.json.JsonUtil;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
@@ -167,7 +167,7 @@ public class TableViewSample2 extends Application {
             file.createNewFile();
         }*/
         /*czy添加，创建文件begin*/
-        FileUtilOld.createFile(file);
+        FileUtil.createFile(file);
         /*czy添加，创建文件end*/
         final HBox add = new HBox();
 
@@ -262,7 +262,7 @@ public class TableViewSample2 extends Application {
                 //person属性没有赋值成功，这里仅测试
                 p.setName("czy");
                 p.setEmail("1234");
-                FileUtilOld.appendLine(file, JsonUtil.model2Str(p));
+                FileUtil.appendLine(file, JsonUtil.model2Str(p));
                 /*czy添加把person对象转成字符串添加到文件末尾end*/
                 /*try {
 
@@ -303,7 +303,7 @@ public class TableViewSample2 extends Application {
             public void handle(ActionEvent e) {
                 /*czy添加读取文件中的数据begin*/
                 var personList = new ArrayList<Person>();
-                FileUtilOld.readFileLine(file).forEach(personText-> personList.add(JsonUtil.str2Model(personText,Person.class)));
+                FileUtil.readByLine(file).forEach(personText-> personList.add(JsonUtil.str2Model(personText,Person.class)));
                 personList.forEach(person -> System.out.println(person));
                 /*czy添加读取文件中的数据end*/
                 for (int i = 0; i < data.size(); i++) {

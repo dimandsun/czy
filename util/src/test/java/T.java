@@ -48,4 +48,11 @@ public class T {
         var result=TimeUtil.long2Str(s,TimeUtil.yyyyMMddHHmmssSSS);
         System.out.println(result);
     }
+
+    @Test
+    public void testBoolean() {
+        Boolean b1=null;
+        boolean b2=b1;
+        System.out.println(b2);
+    }
 }

@@ -1,7 +1,8 @@
 package com.czy.util.sqltool;
 
+import com.czy.util.io.FileUtil;
+import com.czy.util.text.Line;
 import com.czy.util.time.DateUtil;
-import com.czy.util.io.FileUtilOld;
 import com.czy.util.list.ListUtil;
 import com.czy.util.text.StringUtil;
 import com.czy.util.sqltool.enums.ColumnTypeEnum;
@@ -12,7 +13,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author chenzy
@@ -43,12 +43,12 @@ public class SQLUtil {
         String date = DateUtil.data2Str(new Date(), DateUtil.yyyy_MM_dd);
         /*创建bean目录*/
         String modelPath ="src/main/java/"+beanPackage.replace(".",File.separator);
-        File modelDir = FileUtilOld.getCodeFile(null,beanPackage);
+        File modelDir = FileUtil.getCodeFile(null,beanPackage);
         if (!modelDir.exists()) {
             modelDir.mkdirs();
         }
         /*获取sql文本*/
-        String sqlContents = FileUtilOld.readFile(Optional.of(FileUtilOld.getResourceFile(sqlPath)));
+        String sqlContents = FileUtil.read(FileUtil.getResourceFile(sqlPath));
         if (!sqlContents.contains(";")) {
             return;
         }
@@ -143,9 +143,9 @@ public class SQLUtil {
                         + "\tpublic void set" + StringUtil.upFirst(columnName) + "(" + columnType.getValue() + " " + columnName + "){\n"
                         + "\t\t this." + columnName + "=" + columnName + ";\n\t}\n";
             }
-            FileUtilOld.write(new File(fileName),
-                    packageContent + importContent + classDesContent + clssHeadContent + columnContent + "\n"
-                            + columnMethodContent + "}");
+            FileUtil.write(new File(fileName),
+                    packageContent,importContent,classDesContent,clssHeadContent,columnContent, Line.separator
+                            , columnMethodContent , "}");
         }
     }
 }

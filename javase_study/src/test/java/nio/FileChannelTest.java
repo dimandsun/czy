@@ -53,7 +53,7 @@ public class FileChannelTest {
     public void read() throws IOException {
         var fileChannel = new FileInputStream("a.text").getChannel();
         System.out.println(fileChannel.size());
-        var buffer = ByteBuffer.allocate(1024);
+        var buffer = ByteBuffer.allocate((int) fileChannel.size());
         int length = 0;
         while ((length = fileChannel.read(buffer)) != -1) {
             System.out.println(length);
