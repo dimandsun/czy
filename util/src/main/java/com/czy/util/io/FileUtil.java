@@ -255,26 +255,22 @@ public class FileUtil {
 
     /**
      * 文件不存在时创建，存在则不做任何操作
-     *
      * @param file
      */
-    public static void createFile(File file) {
-        if (!file.exists()) {
-            /*如果参数是目录，直接创建目录。这里用file.isDirectory()无法区分file是否是目录，需要根据文件名是否有后缀来判断*/
-            if (file.getName().indexOf(".") == -1) {
-                file.mkdirs();
-                return;
-            }
-            /*若参数是文件，要先判断文件所在目录是否存在，若不存在，则需要创建*/
-            File pathFile = file.getParentFile();
-            if (pathFile != null && !pathFile.exists()) {
-                pathFile.mkdirs();
-            }
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    public static Boolean createFile(File file) {
+        if (file.exists()) {
+            return false;
+        }
+        File pathFile = file.getParentFile();
+        /*创建目录*/
+        if (pathFile != null && !pathFile.exists()) {
+            pathFile.mkdirs();
+        }
+        try {
+            return file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -466,12 +462,18 @@ public class FileUtil {
      * 返回当前所在盘符，两个字符。例 A:
      * @return
      */
-    public static Optional<String> getRoot() {
+    public static String getRoot() {
+        var systemName=System.getProperty("os.name");
+        if (systemName.contains("Linux")){
+            /*linux系统根目录是/*/
+            return File.separator;
+        }
         try {
-            return Optional.of(new File("").getCanonicalPath().substring(0,2));
+            /*除linux系统外都按照widow系统的根目录，以盘符开始*/
+            return new File("").getCanonicalPath().substring(0,3);
         } catch (IOException e) {
             e.printStackTrace();
-            return Optional.empty();
+            return "C:"+File.separator;//默认
         }
     }
 }

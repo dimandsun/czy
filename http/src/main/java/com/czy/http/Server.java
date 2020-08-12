@@ -15,6 +15,9 @@ import java.nio.ByteBuffer;
 import java.nio.channels.*;
 import java.nio.charset.Charset;
 import java.util.Date;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author chenzy
@@ -27,6 +30,8 @@ public class Server {
     }
 
     public static void main(String[] args) {
+        new ThreadPoolExecutor(1, 100, 60L, TimeUnit.SECONDS,new SynchronousQueue());
+
         var serverInfo = new ServerInfo(9090, "localhost", 100000, new Par<>("UTF-8"));
         var applicationContext = ApplicationContext.getInstance();
         applicationContext.setServerInfo(serverInfo);

@@ -28,7 +28,7 @@ public class LogFactory {
         if (logMap.containsKey(logName)) {
             return logMap.get(logName);
         }
-        var filePath = FileUtil.getRoot().get() + File.separator + "logs" + File.separator + "log％g.log";
+        var filePath = FileUtil.getRoot() + "logs" + File.separator + "log％g.log";
         var log = createLog(new FileSetting(filePath, 1024, 30), logName, LogLevel.ALL, TimeUtil.yyyyMMddHHmmssSSS);
         logMap.put(logName, log);
         return logMap.get(logName);
@@ -79,8 +79,9 @@ public class LogFactory {
             }
             String filePath = map.get("filePath").toString();
             if ('/' == filePath.charAt(0)) {
-                filePath = FileUtil.getRoot().get() + filePath;
+                filePath=filePath.substring(1);
             }
+            filePath = FileUtil.getRoot() + filePath;
             Integer fileSize = StringUtil.getInt(map.get("fileSize"), 1024);
             Integer fileCount = StringUtil.getInt(map.get("fileCount"), 30);
             var fileSetting = new FileSetting(filePath, fileSize, fileCount);

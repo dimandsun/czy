@@ -47,9 +47,9 @@ public class LogFactory {
             Integer fileSize = StringUtil.getInt(map.get("fileSize"), 1024);
             Integer fileCount = StringUtil.getInt(map.get("fileCount"), 30);
             var fileSetting = new FileSetting(filePath, fileSize, fileCount);
-            String datePattern = StringUtil.getStr(map.get("datePattern"), TimeUtil.yyyyMMddHHmmssSSS);
+            String dataPattern = StringUtil.getStr(map.get("dataPattern"), TimeUtil.yyyyMMddHHmmssSSS);
             LogLevel level = LogLevel.getLevel(StringUtil.getStr(map.get("level"), "all"));
-            var log = createLog(fileSetting, logName, level, datePattern);
+            var log = createLog(fileSetting, logName, level, dataPattern);
             logMap.put(logName, log);
         });*/
     }
@@ -66,7 +66,7 @@ public class LogFactory {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        var formatter = new LogFormatter(datePattern);
+        var formatter = new LogFormatter(dataPattern);
         logger.setLevel(level.getLevel());
         fileHandler.setFormatter(formatter);
         logger.addHandler(fileHandler);

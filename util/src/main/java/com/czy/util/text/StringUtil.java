@@ -112,6 +112,7 @@ public class StringUtil {
         }
         return null;
     }
+
     public static String join(String msg, Object... pars) {
         if (msg == null || !msg.contains("{}") || pars == null || pars.length == 0) {
             return msg;
@@ -121,8 +122,9 @@ public class StringUtil {
         }
         return msg;
     }
+
     public static String println(String msg, Object... pars) {
-        var result =join(msg,pars);
+        var result = join(msg, pars);
         System.out.println(result);
         return result;
     }
@@ -398,6 +400,7 @@ public class StringUtil {
         }
         return true;
     }
+
     /**
      * 判断参数是否都为空
      */
@@ -412,28 +415,33 @@ public class StringUtil {
         }
         return true;
     }
+
     /**
      * 判断字符是否是字母(a-z或者A-Z)
+     *
      * @return
      */
-    public static Boolean isLetter(Character c){
-        return Character.isLowerCase(c)||Character.isUpperCase(c);
+    public static Boolean isLetter(Character c) {
+        return Character.isLowerCase(c) || Character.isUpperCase(c);
     }
+
     /**
      * 判断字符是否都是字母(a-z或者A-Z)
+     *
      * @return
      */
-    public static Boolean isLetterAnd(Character... cs){
-        if (cs==null){
+    public static Boolean isLetterAnd(Character... cs) {
+        if (cs == null) {
             return false;
         }
-        for (Character c:cs) {
-            if (!isLetter(c)){
+        for (Character c : cs) {
+            if (!isLetter(c)) {
                 return false;
             }
         }
         return true;
     }
+
     /**
      * 判断参数是否存在空
      */
@@ -472,6 +480,7 @@ public class StringUtil {
         }
         return false;
     }
+
     /**
      * 用于处理将字符集改换成map 例:
      *
@@ -629,7 +638,7 @@ public class StringUtil {
         }
         if (value instanceof Integer integer) {
             return integer;
-        }else if (value instanceof Long l){
+        } else if (value instanceof Long l) {
             return l.intValue();
         }
         return Integer.valueOf(value.toString());
@@ -804,9 +813,6 @@ public class StringUtil {
      * @return
      */
     public static boolean matcher(String str, String patternS) {
-//        Pattern pattern = Pattern.compile(patternS);
-//        Matcher matcher = pattern.matcher(str);
-//        return matcher.matches();
         return Pattern.compile(patternS).matcher(str).matches();
     }
 
@@ -831,25 +837,29 @@ public class StringUtil {
         return matcher(str, "^[0-9]*$");
     }
 
+    /*根据正则表达式获取字符串，返回第一次出现的子串，若正则表达式没有出现，则返回""*/
+    public static String subStr(String str, String regex) {
+        return subStr(str,regex,1);
+    }
+
     /**
-     * 截取字符串，截取从0开始到子字符串第n次出现的位置。若子字符串没有出现，则返回原字符串
-     *
+     * 根据正则表达式获取字符串，返回第n次出现的子串，若正则表达式没有出现，则返回""
      * @return
      */
-    public static String subStrByIndex(String str, String childStr, Integer n) {
-        if (isBlank(str) || str.indexOf(childStr) < 0) {
-            return str;
+    public static String subStr(String str, String regex, Integer n) {
+        if (isBlankOr(str,regex)) {
+            return "";
         }
-        Matcher mat = Pattern.compile(childStr).matcher(str);
+        Matcher mat = Pattern.compile(regex).matcher(str);
         Integer index = 0;
         while (mat.find()) {
             index++;
             //第N次出现位置
             if (index.equals(n)) {
-                return str.substring(0, mat.start());
+                return str.substring(mat.start(), mat.end());
             }
         }
-        return str;
+        return "";
     }
 
 
@@ -892,32 +902,33 @@ public class StringUtil {
 
 
     public static String concat(String... msgs) {
-        if (msgs==null){
+        if (msgs == null) {
             return "";
         }
-        String result="";
+        String result = "";
         for (int i = 0; i < msgs.length; i++) {
-            result= result.concat(msgs[i]);
+            result = result.concat(msgs[i]);
         }
         return result;
     }
 
     /**
      * 字符串多倍复制，以参数三为分隔符
+     *
      * @param multiples
      * @param separator
      * @return
      */
     public static String copy(String str, int multiples, String separator) {
-        if (StringUtil.isBlank(str)||multiples==0){
+        if (StringUtil.isBlank(str) || multiples == 0) {
             return "";
         }
-        if (StringUtil.isBlank(separator)){
-            separator=",";
+        if (StringUtil.isBlank(separator)) {
+            separator = ",";
         }
         var result = str;
         for (int i = 1; i < multiples; i++) {
-            result+=separator+str;
+            result += separator + str;
         }
         return result;
     }

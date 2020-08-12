@@ -1,7 +1,9 @@
+import com.czy.util.io.FileUtil;
 import com.czy.util.text.StringUtil;
 import com.czy.util.time.TimeUtil;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,5 +56,11 @@ public class T {
         Boolean b1=null;
         boolean b2=b1;
         System.out.println(b2);
+    }
+
+    @Test
+    public void fielTest() {
+        var f=new File("/a/bc/abc.log");
+        FileUtil.createFile(f);
     }
 }
