@@ -22,6 +22,10 @@ public class Log {
     private FileChannel fileChannel;
     private ByteBuffer buffer;
 
+    public Log(LogSetting logSetting) {
+        this.logSetting = logSetting;
+    }
+
     public void error(String msg, Throwable throwable, Object... parms) {
         log(LogLevel.ERROR, msg + throwable, parms);
     }
@@ -65,8 +69,10 @@ public class Log {
     private void log(LogLevel level, String msg, Throwable throwable, Object... parms) {
         log(level, msg + throwable, parms);
     }
-
-    private void log(LogLevel level, String msg, Object... parms){
+    private void createFile(){
+        if (StringUtil.isBlank(logSetting.filePath())){
+            return;
+        }
         /*文件路径现在只支持按时间生成*/
         var file = new File(TimeUtil.nowStr(logSetting.filePath()));
         /*判断当前文件是否存在，如果不存在，创建且重新获取fileChannel对象*/
@@ -76,6 +82,12 @@ public class Log {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
+        }
+    }
+    private void log(LogLevel level, String msg, Object... parms){
+        createFile();
+        if (fileChannel==null||!fileChannel.isOpen()){
+            return;
         }
         /*日志级别大于等于设置级别才能输出*/
         if (level.compareTo(logSetting.level()) >= 0) {

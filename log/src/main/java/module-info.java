@@ -5,4 +5,5 @@
 module com.czy.log {
     requires java.logging;
     requires com.czy.util;
+    requires com.fasterxml.jackson.annotation;
 }
