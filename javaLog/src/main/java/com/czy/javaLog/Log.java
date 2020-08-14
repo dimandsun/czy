@@ -7,6 +7,7 @@ import java.util.logging.Logger;
  * @author chenzy
  * @date 2020-07-17
  */
+@Deprecated
 public class Log{
     private Logger logger;
     public Log(Logger logger) {

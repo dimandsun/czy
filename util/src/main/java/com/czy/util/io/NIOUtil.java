@@ -143,7 +143,8 @@ public class NIOUtil {
      * @return
      */
     public static ByteBuffer extend(ByteBuffer buffer,int extendSize){
-        return ByteBuffer.allocate(buffer.capacity()+extendSize).put(buffer);
+        System.out.println(buffer.limit()+"________"+extendSize);
+        return ByteBuffer.allocate(extendSize).put(buffer);
     }
 
 }

@@ -15,6 +15,7 @@ import java.util.logging.Logger;
  * @author chenzy
  * @date 2020-07-16
  */
+@Deprecated
 public class LogFactory {
     private static Map<String,Log> logMap = Collections.synchronizedMap(new HashMap<>());
     private static SettingFile settingFile;

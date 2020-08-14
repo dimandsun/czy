@@ -13,7 +13,6 @@
     requires org.yaml.snakeyaml;
     requires java.naming;
     requires org.objectweb.asm;
-    requires jyaml;
     requires com.czy.util;
     requires com.czy.log;
     requires com.czy.jdbc;

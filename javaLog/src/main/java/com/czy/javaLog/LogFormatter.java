@@ -10,6 +10,7 @@ import java.util.logging.*;
  * @author chenzy
  * @date 2020-07-16
  */
+@Deprecated
 public class LogFormatter extends Formatter {
     //日期格式
     private String datePattern;

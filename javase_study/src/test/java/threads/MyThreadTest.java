@@ -21,7 +21,6 @@ public class MyThreadTest {
                 -DelayQueue:
                 -LinkedBlockingDeque:
                 -PriorityBlockingQueue:
-                -SynchronousQueue:
             -DelayedWorkQueue:
 
          threadFactory：     线程工厂，一般用默认值

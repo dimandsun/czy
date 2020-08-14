@@ -1,6 +1,8 @@
-logs:
-- logName: test
-  dataPattern: '%d{mmssSSS} [%thread] [%level]: %msg%n'
-  filePath: /czy/logs/%d{yyyyMMddHH}/test.log
-  level: info #all/debug/info/warn/error
-  consolePrint: true
+logInfo:
+  usePool: true
+  logs:
+  - logName: test
+    dataPattern: '%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%level]: %msg%n'
+    filePath: /czy/logs/%d{yyyy-MM-dd-HH}/test.log
+    level: INFO #ALL/DEBUG/INFO/WARN/ERROR 要大写
+    consolePrint: true

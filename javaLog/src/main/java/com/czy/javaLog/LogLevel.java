@@ -8,6 +8,7 @@ import java.util.logging.Level;
  * @author chenzy
  * @date 2020-07-17
  */
+@Deprecated
 public enum LogLevel implements IEnum<String> {
     ALL("all",Level.ALL),DEBUG("debug",Level.CONFIG),INFO("info",Level.INFO),WARN("warn",Level.WARNING),ERROR("error",Level.SEVERE),;
     LogLevel(String code, Level level) {

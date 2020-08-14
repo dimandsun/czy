@@ -13,6 +13,7 @@ import static java.util.logging.Level.WARNING;
  * @author chenzy
  * @date 2020-07-16
  */
+@Deprecated
 public class Main {
     public static void main(String[] args) throws IOException {
         var logger=Logger.getLogger("czy");
