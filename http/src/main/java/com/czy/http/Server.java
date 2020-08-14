@@ -4,13 +4,17 @@ import com.czy.http.exception.HttpException;
 import com.czy.http.factory.RequestFactory;
 import com.czy.http.factory.ResponseFactory;
 import com.czy.http.model.ServerInfo;
+import com.czy.javaLog.FileSetting;
+import com.czy.log.LogFactory;
 import com.czy.util.io.FileUtil;
 import com.czy.util.io.NIOUtil;
 import com.czy.util.model.Par;
+import com.czy.util.model.SettingFile;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
 import java.nio.charset.Charset;
@@ -26,27 +30,46 @@ import java.util.concurrent.TimeUnit;
 public class Server {
     public static final String CRLF = "\r\n";
     public static final String BANK = " ";
-    public void init(){
+
+    public void start() {
+        var applicationContext = ApplicationContext.getInstance();
+
+        /*加载配置文件*/
+        applicationContext.load();
+        /*或者不加载*/
+        /*var serverInfo =ServerInfo.instance();
+        serverInfo.setPort(9090);
+        try {
+            serverInfo.setAddress(InetAddress.getByName("localhost"));
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        serverInfo.setTimeout(100000);
+        serverInfo.setCharset(Charset.forName("UTF-8"));*/
+        /*初始化服务*/
+        applicationContext.init();
+
+        new ThreadPoolExecutor(1, 100, 60L, TimeUnit.SECONDS, new SynchronousQueue());
+        /**/
     }
 
-    public static void main(String[] args) {
-        new ThreadPoolExecutor(1, 100, 60L, TimeUnit.SECONDS,new SynchronousQueue());
+    public void stop() {
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("程序结束");
+            LogFactory.close();
+            ApplicationContext.getInstance().close();
+        }));
+    }
 
-        var serverInfo = new ServerInfo(9090, "localhost", 100000, new Par<>("UTF-8"));
-        var applicationContext = ApplicationContext.getInstance();
-        applicationContext.setServerInfo(serverInfo);
-        applicationContext.addServlet("/hello", "hello", HelloServlet.class);
-        applicationContext.addServlet("/default", "default", DefaultServlet.class);
-        applicationContext.initServlet();
+    public static void main(String[] args) throws UnknownHostException {
 
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> System.out.println("程序结束")));
         try (var server = ServerSocketChannel.open()) {
             //非阻塞
             server.configureBlocking(false);
             //绑定ip
-            server.bind(new InetSocketAddress(InetAddress.getByName(serverInfo.address()), serverInfo.port()));
+            server.bind(new InetSocketAddress(serverInfo.getAddress(), serverInfo.getPort()));
             //设置延时
-            server.socket().setSoTimeout(serverInfo.timeout());
+            server.socket().setSoTimeout(serverInfo.getTimeout());
             //通道注册到选择器,监听连接事件
             var selector = Selector.open();
             server.register(selector, SelectionKey.OP_ACCEPT);
@@ -85,8 +108,6 @@ public class Server {
                     iterator.remove();
                 }
             }
-
-
         } catch (IOException e) {
             e.printStackTrace();
         } catch (HttpException e) {

@@ -1,0 +1,5 @@
+serverInfo:
+  port: 8080
+  address: 127.0.0.1
+  timeout: 10000
+  charset: UTF-8

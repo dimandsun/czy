@@ -6,9 +6,11 @@ package com.czy.log;
  */
 public class Main {
     public static void main(String[] args) {
+        LogFactory.initLog();
         var log = LogFactory.getLog("test");
         log.info("adasdf");
         log.info("去你没得");
         log.info("浅谈JAVA中的日志文件 - CSDN博客");
+        LogFactory.close();
     }
 }
