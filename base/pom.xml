@@ -10,7 +10,6 @@
     <!--父模块必须是pom类型打包-->
     <packaging>pom</packaging>
     <modules>
-        <module>../fishGame</module>
         <module>../fx</module>
         <module>../core</module>
         <module>../util</module>
@@ -18,7 +17,6 @@
         <module>../javase_study</module>
         <module>../psychology</module>
         <module>../car_server</module>
-        <module>../car_client</module>
         <module>../question_bank</module>
         <module>../http</module>
         <module>../task</module>
@@ -34,6 +32,7 @@
         <junit.version>4.12</junit.version>
         <mysql.version>8.0.13</mysql.version>
         <cglib.version>3.3.0</cglib.version>
+        <commons-lang3.version>3.3.2</commons-lang3.version>
         <jedis.version>2.6.0</jedis.version>
         <ws.rs-api.version>2.1</ws.rs-api.version>
         <org.cxf-version>3.3.2</org.cxf-version>
@@ -65,22 +64,12 @@
             </dependency>
             <dependency>
                 <groupId>com.czy</groupId>
-                <artifactId>car_client</artifactId>
-                <version>${czy.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.czy</groupId>
                 <artifactId>car_server</artifactId>
                 <version>${czy.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.czy</groupId>
                 <artifactId>core</artifactId>
-                <version>${czy.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.czy</groupId>
-                <artifactId>fishGame</artifactId>
                 <version>${czy.version}</version>
             </dependency>
             <dependency>
@@ -156,7 +145,6 @@
                 <artifactId>jedis</artifactId>
                 <version>${jedis.version}</version>
             </dependency>
-            <!--apache工具类-->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>

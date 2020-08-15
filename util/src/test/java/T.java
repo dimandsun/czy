@@ -1,4 +1,7 @@
+import com.czy.util.enums.ResCodeLevelEnum;
 import com.czy.util.io.FileUtil;
+import com.czy.util.json.JsonUtil;
+import com.czy.util.sqltool.enums.ColumnTypeEnum;
 import com.czy.util.text.StringUtil;
 import com.czy.util.time.TimeUtil;
 import org.junit.Test;
@@ -13,6 +16,11 @@ import java.util.Map;
  * @since 2020-05-14
  */
 public class T {
+    @Test
+    public void testEnum() {
+        var result=JsonUtil.str2Model("1", ResCodeLevelEnum.class);
+        System.out.println(result);
+    }
 
     @Test
     public void option() {

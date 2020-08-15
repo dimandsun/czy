@@ -26,14 +26,12 @@ public class BeanUtil {
         if (from==null||to==null){
             return null;
         }
-        Class toClass= to.getClass();
-        Class fromClass= from.getClass();
-        String key = getKey(fromClass,toClass);
+        var key = from.getClass().getName()+to.getClass().getName();
         BeanCopier beanCopier;
         if (COPIER_CACHE.containsKey(key)) {
             beanCopier = COPIER_CACHE.get(key);
         }else {
-            beanCopier=BeanCopier.create(from.getClass(), toClass, false);
+            beanCopier=BeanCopier.create(from.getClass(), to.getClass(), false);
             COPIER_CACHE.put(key,beanCopier);
         }
         beanCopier.copy(from,to,null);
@@ -56,13 +54,6 @@ public class BeanUtil {
             e.printStackTrace();
         }
         return null;
-    }
-    /**
-     * 生成key
-     * @return string
-     */
-    private static<From, To> String getKey(Class<From> srcClazz, Class<To> tgtClazz) {
-        return srcClazz.getName() + tgtClazz.getName();
     }
     public static <T> T map2Model(Map map, T model) {
         BeanMap beanMap = BeanMap.create(model);

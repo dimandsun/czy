@@ -12,25 +12,6 @@ import java.util.List;
  * @since 2020-05-11
  */
 public class ListUtil {
-    /**
-     * 对集合进行排序，集合的子对象需实现Comparable接口，
-     * 注意：String没有实现Comparable
-     * list.sort(T::compareTo);可实现此功能，此方法只用于学习stream().后续删除
-     *
-     * @param list
-     * @param <T>  需实现Comparable接口
-     * @return 排序结果
-     */
-    public static <T extends Comparable> List<T> sortList(List<T> list) {
-        if (StringUtil.isBlank(list)) {
-            return list;
-        }
-
-        Class<T> tClass = (Class<T>) list.get(0).getClass();
-        T[] result = list.stream().sorted(T::compareTo)
-                .toArray((int value) -> (T[]) Array.newInstance(tClass, list.size()));
-        return Arrays.asList(result);
-    }
     public static boolean isEmpty(Object[] array) {
         return (array == null || array.length == 0);
     }
@@ -42,11 +23,17 @@ public class ListUtil {
 return !isEmpty(list);
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> T[] list2Array(List<T> list) {
         if (isEmpty(list)){
             return null;
         }
         T[] ts= (T[]) list.toArray();
         return ts;
+    }
+    /*创建泛型数组*/
+    @SuppressWarnings("unchecked")
+    public static<T> T[] newArray(Class<T> tClass,int length){
+        return (T[]) Array.newInstance(tClass, length);
     }
 }

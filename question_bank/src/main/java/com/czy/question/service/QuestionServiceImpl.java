@@ -19,6 +19,6 @@ public class QuestionServiceImpl implements IQuestionService {
     @Override
     public ResultVO insert(Question question) {
         Integer id=questionDao.insert(TableUtil.getTableName(question.getClass()),question);
-        return new ResultVO(id);
+        return new ResultVO<>(id);
     }
 }

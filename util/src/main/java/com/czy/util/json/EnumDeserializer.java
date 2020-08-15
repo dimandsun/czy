@@ -17,6 +17,7 @@ public class EnumDeserializer<T extends IEnum> extends JsonDeserializer<T> imple
     private Class<T> targetClass = null;
 
     public EnumDeserializer() {
+        System.out.println(213);
     }
 
     public EnumDeserializer(Class<T> targetClass) {
@@ -36,7 +37,7 @@ public class EnumDeserializer<T extends IEnum> extends JsonDeserializer<T> imple
         return null;
     }
 
-    @Override
+    @Override @SuppressWarnings("unchecked")
     public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) {
         Class<T> targetClass = (Class<T>) ctxt.getContextualType().getRawClass();
         return new EnumDeserializer(targetClass);

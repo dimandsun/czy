@@ -1,5 +1,6 @@
 package com.czy.util.json;
 
+import com.czy.util.EnumUtil;
 import com.czy.util.text.StringUtil;
 import com.czy.util.enums.IEnum;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -44,7 +45,7 @@ public class JsonUtil {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         simpleModule.addDeserializer(String.class, new StringDeserializer());
         simpleModule.addDeserializer(Date.class, new DateDeserializer());
-        simpleModule.addDeserializer(IEnum.class, new EnumDeserializer<>());//反序列化枚举，
+        simpleModule.addDeserializer(IEnum.class, new EnumDeserializer());//反序列化枚举，
         simpleModule.addDeserializer(Boolean.class, new BooleanDeserializer());
         objectMapper.registerModule(simpleModule);
     }
@@ -128,6 +129,9 @@ public class JsonUtil {
         if (StringUtil.isBlank(jsonStr)) {
             return null;
         }
+      /*  if (IEnum.class.isAssignableFrom(modelClass)){
+            return (T) EnumUtil.getIEnum(modelClass,jsonStr);
+        }
         var index = jsonStr.indexOf("{");
         if (index > 0) {
             jsonStr = jsonStr.substring(index);
@@ -137,8 +141,8 @@ public class JsonUtil {
             jsonStr = jsonStr.substring(0, index + 1);
         }
         var result = str2Map(jsonStr);
-        var json = model2Str(result);
-        return str2ModelSimple(json, modelClass);
+        var json = model2Str(result==null?jsonStr:result);*/
+        return str2ModelSimple(jsonStr, modelClass);
     }
 
     /**

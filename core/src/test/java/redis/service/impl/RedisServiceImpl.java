@@ -81,9 +81,9 @@ public class RedisServiceImpl implements IRedisService {
         if (jedis==null){
             return null;
         }
-        String result =StringUtil.derializerJDK(jedis.get(key.getBytes()));
+        var result =StringUtil.derializerJDK(jedis.get(key.getBytes()));
         jedis.close();
-        return result;
+        return result==null?null:result.toString();
     }
 
     /**
