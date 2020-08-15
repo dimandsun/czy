@@ -25,7 +25,7 @@ public class DefaultServlet extends Servlet {
         response.appendLine("<title></title>");
         response.appendLine("</head>");
         response.appendLine("<body bgcolor=\"white\">");
-        response.appendLine("<h1>未找到资源</h1>");
+        response.appendLine("<h1>默认页！</h1>");
         response.appendLine("</body>");
         response.appendLine("</html>");
     }

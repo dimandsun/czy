@@ -6,8 +6,9 @@ package com.czy.http;
  */
 public class Main {
     public static void main(String[] args) {
+        /*加载配置属性*/
         ApplicationContext.instance().load();
-        var server=new Server();
-        server.start();
+        /*启动服务*/
+        new Server().start();
     }
 }

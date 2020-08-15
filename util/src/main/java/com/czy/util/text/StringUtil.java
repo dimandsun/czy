@@ -118,7 +118,11 @@ public class StringUtil {
             return msg;
         }
         for (Object par : pars) {
-            msg = msg.replaceFirst("\\{}", par == null ? "" : par.toString());
+            var temp =par == null ? "" : par.toString();
+            if (temp.contains("{}")){/*obj.toString中可能包含{}*/
+                temp=temp.replaceAll("\\{}","");
+            }
+            msg = msg.replaceFirst("\\{}", temp);
         }
         return msg;
     }

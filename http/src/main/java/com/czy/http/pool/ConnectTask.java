@@ -19,16 +19,13 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ConnectTask implements Callable<Boolean> {
     private static Log log = LogFactory.getLog("server");
     private SocketChannel connect;
-    private ReentrantLock lock;
-    public ConnectTask(SocketChannel connect,ReentrantLock lock) {
+    public ConnectTask(SocketChannel connect) {
         this.connect = connect;
-        this.lock=lock;
     }
     @Override
     public Boolean call() throws Exception {
         if (!connect.isConnected()) {
             System.err.println("连接已关闭");
-            lock.unlock();
             return false;
         }
         /*创建request、response对象*/
@@ -42,7 +39,7 @@ public class ConnectTask implements Callable<Boolean> {
         connect.write(response.getCharSet().encode(response.getResult()));
         var file=response.getFile();
         NIOUtil.write(response.getFile(), connect);
-        log.debug("处理请求：{}:[{}]---------------------data:{}file:{}"
+        log.debug("处理请求：{}:[{}],响应数据data:{}file:{}"
                 ,request.getRoute(),request.getParameterMap(),response.getBody(),file==null?"":file.getName());
         //连接关闭
         connect.shutdownInput();

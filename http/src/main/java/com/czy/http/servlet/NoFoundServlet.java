@@ -1,23 +1,19 @@
 package com.czy.http.servlet;
 
+import com.czy.http.enums.ResponseCode;
 import com.czy.http.model.Request;
 import com.czy.http.model.Response;
-import com.czy.http.model.ServletInfo;
 
 import java.nio.charset.Charset;
 
 /**
  * @author chenzy
- * @since 2020/6/26
+ * @date 2020-08-15
  */
-public class HelloServlet extends Servlet {
+public class NoFoundServlet extends Servlet {
     @Override
-    public void init(ServletInfo servletInfo) {
-        super.init(servletInfo);
-    }
-
-    @Override
-    protected void exec(Request req, Response response) {
+    protected void exec(Request request, Response response) {
+        response.setResponseCode(ResponseCode.NotFound);
         response.setContentType("text/html");
         response.setCharSet(Charset.forName("UTF-8"));
         var html= """
@@ -28,7 +24,7 @@ public class HelloServlet extends Servlet {
     <title></title>
 </head>
 <body bgcolor="white">
-    <h1>欢迎页!</h1>
+    <h1>未找到资源!</h1>
 </body>
 </html>
 """;

@@ -1,6 +1,7 @@
 package com.czy.http;
 
 import com.czy.http.model.ServerInfo;
+import com.czy.http.servlet.NoFoundServlet;
 import com.czy.http.servlet.Servlet;
 import com.czy.http.model.ServletInfo;
 import com.czy.http.servlet.DefaultServlet;
@@ -95,7 +96,11 @@ public class ApplicationContext {
             servletInfo = par.get();
         }
         if (servletInfo == null) {
-            servletInfo = servletMap.get("/default");
+            if (mapping.equals("/")){
+                servletInfo = servletMap.get("/hello");
+            }else {
+                servletInfo = servletMap.get("/noFound");
+            }
         }
         return servletInfo;
     }
@@ -108,6 +113,7 @@ public class ApplicationContext {
     /*初始化服务容器*/
     public void init() {
         addServlet("/hello", "hello", HelloServlet.class);
+        addServlet("/noFound", "noFound", NoFoundServlet.class);
         addServlet("/default", "default", DefaultServlet.class);
         initServlet();
     }

@@ -25,6 +25,7 @@ import java.util.function.Consumer;
 /**
  * @author chenzy
  * @date 2020-07-29
+ * 当前版本不支持servlet注解
  */
 public class Server {
     public static final String CRLF = "\r\n";
@@ -74,17 +75,18 @@ public class Server {
                     //获取准备就绪的事件
                     var key = iterator.next();
                     if (key.isAcceptable()) {
-                        //连接事件
-                        var connect = ((ServerSocketChannel) key.channel()).accept().configureBlocking(false);
-                        //连接注册读监听
-                        connect.register(selector, SelectionKey.OP_READ);
+                        //连接注册读事件
+                        ((ServerSocketChannel) key.channel()).accept().configureBlocking(false).register(selector, SelectionKey.OP_READ);
                     } else if (key.isReadable()) {
                         var connect = (SocketChannel) key.channel();
                         if (!connectTaskMap.containsKey(connect)){
-                            var task=new ConnectTask(connect, lock);
+                            var task=new ConnectTask(connect);
                             connectTaskMap.put(connect,task);
                             /*处理连接*/
                             Boolean result=executor().submit(task).get();
+                            /*这个if判断不能少。因为executor.submit()是在另一个线程处理，result是异步返回的。
+                                不加if直接connectTaskMap.remove(connect)，则同一个请求会重复进入此处，生成若干个重复的线程任务。
+                            */
                             if (result){
                                 connectTaskMap.remove(connect);
                             }else {
