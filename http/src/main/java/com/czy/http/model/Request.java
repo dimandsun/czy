@@ -2,19 +2,12 @@ package com.czy.http.model;
 
 import com.czy.http.ApplicationContext;
 import com.czy.http.enums.MIMEEnum;
-import com.czy.http.model.MIME;
-import com.czy.http.model.ServerInfo;
 import com.czy.util.enums.QuestMethodEnum;
-import com.czy.http.model.QuestScheme;
-import com.czy.util.list.EnumerationFactory;
 import com.czy.util.model.StringMap;
 import com.czy.util.text.StringUtil;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.security.Principal;
 import java.util.*;
 
 /**
@@ -54,7 +47,6 @@ public class Request{
 
 
     /**********************************请求体*******************************************************/
-    private String body;
 
 
     /**********************************其他信息*****************************************************/
@@ -66,7 +58,7 @@ public class Request{
 
 
     public Request() {
-        setApplicationContext(ApplicationContext.getInstance());
+        setApplicationContext(ApplicationContext.instance());
     }
 
     public QuestScheme getQuestScheme() {
@@ -163,10 +155,5 @@ public class Request{
 
     public BufferedReader getReader() throws IOException {
         return null;
-    }
-
-
-    public String getBody() {
-        return body;
     }
 }

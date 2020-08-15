@@ -24,7 +24,7 @@ public class NIOUtil {
     }
 
     //按行读取数据
-    public static List<String> readByLine(String charSet, SocketChannel channel) {
+    public static List<String> readByLine(Charset charSet, SocketChannel channel) {
         try {
             int bufferLength =256;// 1024 * 4;
             int lineLength = 64;
@@ -46,7 +46,7 @@ public class NIOUtil {
                         lineBuffer.put(b);
                     }
                 }
-                System.out.println(new String(buffer.array(), 0, len));
+//                System.out.println(new String(buffer.array(), 0, len));
                 buffer.clear();
             }
             return data;
@@ -61,9 +61,9 @@ public class NIOUtil {
      * @param buffer
      * @return
      */
-    private static String read(String charSet, ByteBuffer buffer){
+    private static String read(Charset charSet, ByteBuffer buffer){
         buffer.flip();
-        var line = Charset.forName(charSet).decode(buffer).toString();
+        var line = charSet.decode(buffer).toString();
         buffer.clear();
         return line;
     }

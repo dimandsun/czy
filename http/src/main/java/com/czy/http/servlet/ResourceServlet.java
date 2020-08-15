@@ -1,11 +1,12 @@
-package com.czy.http;
+package com.czy.http.servlet;
 
 import com.czy.http.enums.ResponseCode;
 import com.czy.http.model.Request;
 import com.czy.http.model.Response;
-import com.czy.http.model.Servlet;
 import com.czy.http.model.ServletInfo;
 import com.czy.util.io.FileUtil;
+
+import java.nio.charset.Charset;
 
 /**
  * @author chenzy
@@ -22,7 +23,7 @@ public class ResourceServlet extends Servlet {
             response.setResponseCode(ResponseCode.NotFound);
         }
         response.setContentType("text/html");
-        response.setCharSet("UTF-8");
+        response.setCharSet(Charset.forName("UTF-8"));
         response.setFile(file);
     }
 }

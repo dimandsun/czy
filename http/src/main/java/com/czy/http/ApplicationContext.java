@@ -1,10 +1,11 @@
 package com.czy.http;
 
 import com.czy.http.model.ServerInfo;
-import com.czy.http.model.Servlet;
+import com.czy.http.servlet.Servlet;
 import com.czy.http.model.ServletInfo;
+import com.czy.http.servlet.DefaultServlet;
+import com.czy.http.servlet.HelloServlet;
 import com.czy.util.io.FileUtil;
-import com.czy.util.json.JsonUtil;
 import com.czy.util.model.Par;
 import com.czy.util.model.SettingFile;
 import com.czy.util.model.StringMap;
@@ -28,14 +29,14 @@ public class ApplicationContext {
         isActivity(true);
     }
 
-    public static ApplicationContext getInstance() {
+    public static ApplicationContext instance() {
         return instance;
     }
 
     private boolean isActivity;
 
     public void close() {
-        servletMap=null;
+        servletMap = null;
     }
 
     public boolean isActivity() {
@@ -104,7 +105,7 @@ public class ApplicationContext {
         return servletInfo.getServlet();
     }
 
-    /*服务初始化*/
+    /*初始化服务容器*/
     public void init() {
         addServlet("/hello", "hello", HelloServlet.class);
         addServlet("/default", "default", DefaultServlet.class);
@@ -117,17 +118,31 @@ public class ApplicationContext {
 
     /*加载配置文件*/
     public void load(SettingFile settingFile) {
-        FileUtil.readYML(FileUtil.getResourceFile(settingFile.moduleDir(), settingFile.fileName())).ifPresent(map -> {
-            Map<String, Object> temp = (Map<String, Object>) map.get("serverInfo");
-            var serverInfo = ServerInfo.instance();
-            serverInfo.setPort(StringUtil.getInt(temp.get("port"), 8080));
-            serverInfo.setCharset(Charset.forName(StringUtil.getStr(temp.get("charset"), "UTF-8")));
-            serverInfo.setTimeout(StringUtil.getInt(temp.get("timeout"), 10000));
+        var serverInfo = ServerInfo.instance();
+        if (settingFile != null) {
+            FileUtil.readYML(FileUtil.getResourceFile(settingFile.moduleDir(), settingFile.fileName())).ifPresent(map -> {
+                Map<String, Object> temp = (Map<String, Object>) map.get("serverInfo");
+                serverInfo.setPort(StringUtil.getInt(temp.get("port"), 8080));
+                serverInfo.setCharset(Charset.forName(StringUtil.getStr(temp.get("charset"), "UTF-8")));
+                serverInfo.setTimeout(StringUtil.getInt(temp.get("timeout"), 10000));
+                try {
+                    serverInfo.setAddress(InetAddress.getByName(StringUtil.getStr(temp.get("address"), "localhost")));
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+            });
+            return;
+        }
+        if (serverInfo.getAddress() == null) {
+            serverInfo.setPort( 8080);
+            serverInfo.setCharset(Charset.forName("UTF-8"));
+            serverInfo.setTimeout( 10000);
             try {
-                serverInfo.setAddress(InetAddress.getByName(StringUtil.getStr(temp.get("address"), "localhost")));
+                serverInfo.setAddress(InetAddress.getByName("localhost"));
             } catch (UnknownHostException e) {
                 e.printStackTrace();
             }
-        });
+            return;
+        }
     }
 }

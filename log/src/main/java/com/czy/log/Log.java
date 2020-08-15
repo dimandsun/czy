@@ -22,6 +22,14 @@ public class Log {
     private static ReentrantLock lock = new ReentrantLock();
     private LogSetting logSetting;
     private FileChannel fileChannel;
+    private Boolean start=true;
+    public void start() {
+         this.start=true;
+    }
+    public void stop() {
+        this.start = false;
+    }
+
     public Log(LogSetting logSetting) {
         this.logSetting = logSetting;
     }
@@ -89,6 +97,9 @@ public class Log {
     }
 
     private void log(LogLevel level, String msg, Object... parms) {
+        if (!start){
+            return;
+        }
         if (LogInfo.instance().usePool()) {
             LogFactory.executor().execute(new LogTask(level, msg, parms));
         } else {

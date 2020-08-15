@@ -4,12 +4,12 @@ import com.czy.http.ApplicationContext;
 import com.czy.http.Server;
 import com.czy.http.enums.MIMEEnum;
 import com.czy.http.enums.ResponseCode;
-import com.czy.util.enums.QuestMethodEnum;
 import com.czy.util.model.StringMap;
 import com.czy.util.text.Line;
 import com.czy.util.time.TimeUtil;
 
 import java.io.File;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +20,7 @@ import java.util.Map;
 public class Response {
     public Response(ServletInfo servletInfo) {
         this.servletInfo = servletInfo;
-        setApplicationContext(ApplicationContext.getInstance());
+        setApplicationContext(ApplicationContext.instance());
     }
 
     /**********************************第一行*******************************************************/
@@ -43,7 +43,7 @@ public class Response {
     private ApplicationContext applicationContext;
     private File file;//返回的文件
     private StringBuilder result = new StringBuilder();//最后写入输出流的数据
-    private String charSet;
+    private Charset charSet;
 
     public ApplicationContext getApplicationContext() {
         return applicationContext;
@@ -120,13 +120,13 @@ public class Response {
         return headerMap.get("Content-type");
     }
 
-    public void setCharSet(String charSet) {
+    public void setCharSet(Charset charSet) {
         this.charSet = charSet;
     }
 
-    public String getCharSet() {
+    public Charset getCharSet() {
         if (charSet == null) {
-            setCharSet(applicationContext.getServerInfo().charSet().get());
+            setCharSet(ServerInfo.instance().getCharset());
         }
         return charSet;
     }

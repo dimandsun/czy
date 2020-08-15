@@ -5,6 +5,7 @@ import com.czy.http.Server;
 import com.czy.http.exception.HttpException;
 import com.czy.http.model.QuestScheme;
 import com.czy.http.model.Request;
+import com.czy.http.model.ServerInfo;
 import com.czy.http.model.ServletInfo;
 import com.czy.util.enums.QuestMethodEnum;
 import com.czy.util.io.NIOUtil;
@@ -25,7 +26,7 @@ public class RequestFactory {
     }
 
     public static Request createRequest(SocketChannel socketChannel) throws HttpException {
-        var data= NIOUtil.readByLine(ApplicationContext.getInstance().getServerInfo().charSet().get(), socketChannel);
+        var data= NIOUtil.readByLine(ServerInfo.instance().getCharset(), socketChannel);
         if (data==null||data.isEmpty()){
             throw new HttpException("创建request失败,未读取到数据");
         }

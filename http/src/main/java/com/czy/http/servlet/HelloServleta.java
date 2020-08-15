@@ -1,7 +1,4 @@
-package com.czy.http;
-
-import com.czy.http.model.Servlet;
-import com.czy.http.model.ServletInfo;
+package com.czy.http.servlet;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

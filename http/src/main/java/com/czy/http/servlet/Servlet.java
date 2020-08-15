@@ -1,4 +1,8 @@
-package com.czy.http.model;
+package com.czy.http.servlet;
+
+import com.czy.http.model.Request;
+import com.czy.http.model.Response;
+import com.czy.http.model.ServletInfo;
 
 /**
  * @author chenzy

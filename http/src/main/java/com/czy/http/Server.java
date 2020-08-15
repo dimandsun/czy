@@ -4,24 +4,23 @@ import com.czy.http.exception.HttpException;
 import com.czy.http.factory.RequestFactory;
 import com.czy.http.factory.ResponseFactory;
 import com.czy.http.model.ServerInfo;
-import com.czy.javaLog.FileSetting;
+import com.czy.http.pool.ConnectHandler;
+import com.czy.http.pool.ConnectTask;
+import com.czy.http.pool.ConnectThreadFactory;
 import com.czy.log.LogFactory;
-import com.czy.util.io.FileUtil;
+import com.czy.util.ThreadUtil;
 import com.czy.util.io.NIOUtil;
-import com.czy.util.model.Par;
-import com.czy.util.model.SettingFile;
+import com.czy.util.text.StringUtil;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
-import java.nio.ByteBuffer;
 import java.nio.channels.*;
-import java.nio.charset.Charset;
-import java.util.Date;
-import java.util.concurrent.SynchronousQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.*;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.Consumer;
 
 /**
  * @author chenzy
@@ -30,40 +29,32 @@ import java.util.concurrent.TimeUnit;
 public class Server {
     public static final String CRLF = "\r\n";
     public static final String BANK = " ";
+    private ForkJoinPool executor;
+    private ReentrantLock lock = new ReentrantLock();
+    /*为了防止一个请求生成多个线程任务。当前同时有n个请求连接，则connectTaskMap的个数为n*/
+    private Map<SocketChannel,ConnectTask> connectTaskMap=new HashMap<>();
+    public void close() {
+        if (executor != null) {
+            executor.shutdown();
+            while (!executor.isTerminated()) {
+                /*任务未完成，则等待*/
+            }
+        }
+        ApplicationContext.instance().close();
+    }
 
     public void start() {
-        var applicationContext = ApplicationContext.getInstance();
-
         /*加载配置文件*/
-        applicationContext.load();
-        /*或者不加载*/
-        /*var serverInfo =ServerInfo.instance();
-        serverInfo.setPort(9090);
-        try {
-            serverInfo.setAddress(InetAddress.getByName("localhost"));
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        serverInfo.setTimeout(100000);
-        serverInfo.setCharset(Charset.forName("UTF-8"));*/
-        /*初始化服务*/
-        applicationContext.init();
-
-        new ThreadPoolExecutor(1, 100, 60L, TimeUnit.SECONDS, new SynchronousQueue());
-        /**/
-    }
-
-    public void stop() {
+//        ApplicationContext.getInstance().load();
+        /*初始化服务容器*/
+        ApplicationContext.instance().init();
+        /*程序结束时调用*/
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.out.println("程序结束");
-            LogFactory.close();
-            ApplicationContext.getInstance().close();
+            stop();
         }));
-    }
-
-    public static void main(String[] args) throws UnknownHostException {
-
+        /*启动服务*/
         try (var server = ServerSocketChannel.open()) {
+            var serverInfo = ServerInfo.instance();
             //非阻塞
             server.configureBlocking(false);
             //绑定ip
@@ -75,8 +66,8 @@ public class Server {
             server.register(selector, SelectionKey.OP_ACCEPT);
             System.out.println("服务端开启了");
             System.out.println("=========================================================");
-            while (applicationContext.isActivity()) {
-                //多路复用器开始监听
+            //多路复用器开始监听
+            while (ApplicationContext.instance().isActivity()) {
                 selector.select();
                 var iterator = selector.selectedKeys().iterator();
                 while (iterator.hasNext()) {
@@ -88,31 +79,48 @@ public class Server {
                         //连接注册读监听
                         connect.register(selector, SelectionKey.OP_READ);
                     } else if (key.isReadable()) {
-                        /*连接*/
                         var connect = (SocketChannel) key.channel();
-                        /*创建request、response对象*/
-                        var request = RequestFactory.createRequest(connect);
-                        var response = ResponseFactory.createResponse(request);
-                        /*servlet执行业务方法*/
-                        var servlet = applicationContext.getServlet(request.getRoute());
-                        servlet.service(request, response);
-                        //返回数据给客户端
-                        response.beforeReturn();
-                        connect.write(Charset.forName(response.getCharSet()).encode(response.getResult()));
-                        NIOUtil.write(response.getFile(), connect);
-                        //连接关闭
-                        connect.close();
-                        connect.close();
+                        if (!connectTaskMap.containsKey(connect)){
+                            var task=new ConnectTask(connect, lock);
+                            connectTaskMap.put(connect,task);
+                            /*处理连接*/
+                            Boolean result=executor().submit(task).get();
+                            if (result){
+                                connectTaskMap.remove(connect);
+                            }else {
+                                connectTaskMap.remove(connect);
+                            }
+                        }
                     }
-                    //取消选择建
                     iterator.remove();
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (HttpException e) {
-            e.printStackTrace();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
         }
+
+    }
+    private ExecutorService executor() {
+        lock.lock();
+        /*锁确保不会生成多个线程池*/
+        if (executor == null) {
+            var threadNum = ThreadUtil.getThreadNum();
+            executor = new ForkJoinPool(threadNum, new ConnectThreadFactory(), new ConnectHandler(), false
+                    , threadNum, threadNum * 2, 1, null, 10, TimeUnit.SECONDS);
+        }
+        lock.unlock();
+        return executor;
+    }
+
+    public void stop() {
+        System.out.println("=========================================================");
+        System.out.println("程序结束");
+        LogFactory.close();
+        close();
+    }
+
+    public static void main(String[] args) throws UnknownHostException {
+
 
     }
 
