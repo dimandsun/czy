@@ -1,9 +1,7 @@
 package com.czy.util.json;
 
-import com.czy.util.ClassUtil;
 import com.czy.util.text.StringUtil;
 import com.czy.util.enums.IEnum;
-import com.czy.util.model.ResultVO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -12,10 +10,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.apache.commons.lang3.ClassUtils;
-
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -49,7 +44,7 @@ public class JsonUtil {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         simpleModule.addDeserializer(String.class, new StringDeserializer());
         simpleModule.addDeserializer(Date.class, new DateDeserializer());
-        simpleModule.addDeserializer(Enum.class,new EnumDeserializer());//反序列化枚举，
+        simpleModule.addDeserializer(IEnum.class, new EnumDeserializer<>());//反序列化枚举，
         simpleModule.addDeserializer(Boolean.class, new BooleanDeserializer());
         objectMapper.registerModule(simpleModule);
     }
@@ -60,14 +55,16 @@ public class JsonUtil {
      * @param model
      * @return
      */
-    public static Map<String, Object> model2Map(Object model) {
+    public static Map model2Map(Object model) {
         String json = model2Str(model);
         return str2Map(json);
     }
+
     public static <Model> Model map2Model(Map<String, Object> beanMap, Class<Model> modelClass) {
         String json = model2Str(beanMap);
         return str2ModelSimple(json, modelClass);
     }
+
     /**
      * 对象=>json字符串=>另一个对象
      *
@@ -75,19 +72,20 @@ public class JsonUtil {
      * @return
      */
     public static <Target> Target model2Model(Object model, Class<Target> targetClass) {
-        if (model==null){
+        if (model == null) {
             return null;
         }
-        //对象是Target类型或子类，
-        if (ClassUtils.isAssignable(model.getClass(),targetClass)){
-            return (Target) model;
+        /*对象是Target类型或子类*/
+        if (model.getClass() == targetClass||targetClass.isAssignableFrom(model.getClass())) {
+            return targetClass.cast(model);
         }
         String json = model2Str(model);
-        return str2ModelSimple(json,targetClass);
+        return str2ModelSimple(json, targetClass);
     }
 
     /**
      * 对象的字段是泛型时也能转换
+     *
      * @param modelClass1
      * @param modelClass2
      * @param <T1>        对象类型
@@ -96,7 +94,7 @@ public class JsonUtil {
      */
     public static <T1, T2> T1 model2Model(Object model, Class<T1> modelClass1, Class<T2> modelClass2) {
         String json = model2Str(model);
-        return str2Model(json,modelClass1,modelClass2);
+        return str2Model(json, modelClass1, modelClass2);
     }
 
     /**
@@ -113,6 +111,7 @@ public class JsonUtil {
         }
         return null;
     }
+
     /**
      * json->model
      * 有些json格式不正确时，str2ModelSimple会出错，只能先转Map，map再转json，json再转model
@@ -126,21 +125,19 @@ public class JsonUtil {
      * @return
      */
     public static <T> T str2Model(String jsonStr, Class<T> modelClass) {
-//        String jsonStr2 = StringEscapeUtils.unescapeJava(jsonStr);//多层json可能存在转义字符\
-        if (StringUtil.isBlank(jsonStr)){
+        if (StringUtil.isBlank(jsonStr)) {
             return null;
         }
-        Integer index = jsonStr.indexOf("{");
-        if (index>0){
-            jsonStr =jsonStr.substring(index);
+        var index = jsonStr.indexOf("{");
+        if (index > 0) {
+            jsonStr = jsonStr.substring(index);
         }
         index = jsonStr.lastIndexOf("}");
-        if (index!=-1&&index<(jsonStr.length()-1)){
-            jsonStr =jsonStr.substring(0,index+1);
+        if (index != -1 && index < (jsonStr.length() - 1)) {
+            jsonStr = jsonStr.substring(0, index + 1);
         }
-
-        Map<String, Object> result = str2Map(jsonStr);
-        String json = model2Str(result);
+        var result = str2Map(jsonStr);
+        var json = model2Str(result);
         return str2ModelSimple(json, modelClass);
     }
 
@@ -186,37 +183,41 @@ public class JsonUtil {
     }
 
     public static Map str2Map(String jsonStr) {
-        if (StringUtil.isBlank(jsonStr)){
-            return new HashMap();
+        if (StringUtil.isBlank(jsonStr)) {
+            return Map.of();
         }
-        Integer index = jsonStr.indexOf("{");
-        if (index>0){
-            jsonStr =jsonStr.substring(index);
+        var index = jsonStr.indexOf("{");
+        if (index > 0) {
+            jsonStr = jsonStr.substring(index);
         }
         return str2ModelSimple(jsonStr, Map.class);
     }
 
     /**
      * 创建一个json对象
+     *
      * @return
      */
     public static ObjectNode createJsonNode() {
         return objectMapper.createObjectNode();
     }
+
     public static void main(String[] ars) throws JsonProcessingException {
         {
-            String s= """
+            String s = """
                     {"dataSourceKey":"mysql_czy_test","driverClassName":"com.mysql.cj.jdbc.Driver","url":"jdbc:mysql://106.54.230.187:3306/czy?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT&allowPublicKeyRetrievalx=true","userName":"root","password":"chen","maxConnectNum":20,"maxFreeConnectNum":5}
                     """;
-            s= """
-                   {"dataSourceKey":"mysql_czy_test"} 
-              """;
-            var bean=JsonUtil.str2Model(s,DataSourceSetting.class);
+            s = """
+                         {"dataSourceKey":"mysql_czy_test"} 
+                    """;
+            var bean = JsonUtil.str2Model(s, DataSourceSetting.class);
             System.out.println(bean);
         }
 
     }
-    record DataSourceSetting(String dataSourceKey/*,String driverClassName, String url, String userName, String password,int maxConnectNum,int maxFreeConnectNum*/) {
+
+    record DataSourceSetting(
+            String dataSourceKey/*,String driverClassName, String url, String userName, String password,int maxConnectNum,int maxFreeConnectNum*/) {
 
 
     }

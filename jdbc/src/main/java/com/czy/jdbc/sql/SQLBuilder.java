@@ -1,10 +1,10 @@
 package com.czy.jdbc.sql;
 
-import com.czy.javaLog.Log;
-import com.czy.javaLog.LogFactory;
 import com.czy.jdbc.pool.DataSourceHolder;
 import com.czy.jdbc.exception.SQLParseException;
 import com.czy.jdbc.sql.enums.ResultTypeEnum;
+import com.czy.log.Log;
+import com.czy.log.LogFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

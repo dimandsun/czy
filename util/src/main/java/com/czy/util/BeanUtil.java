@@ -22,22 +22,21 @@ public class BeanUtil {
     public static void  clear(){
         COPIER_CACHE.clear();
     }
-    public static <From, To> To bean2Bean(From bean1,To to) {
-        if (bean1==null||to==null){
+    public static <From, To> To bean2Bean(From from,To to) {
+        if (from==null||to==null){
             return null;
         }
-        Class<To> toClass= (Class<To>) to.getClass();
-
-        Class<From> fromClass= (Class<From>) bean1.getClass();
+        Class toClass= to.getClass();
+        Class fromClass= from.getClass();
         String key = getKey(fromClass,toClass);
         BeanCopier beanCopier;
         if (COPIER_CACHE.containsKey(key)) {
             beanCopier = COPIER_CACHE.get(key);
         }else {
-            beanCopier=BeanCopier.create(bean1.getClass(), toClass, false);
+            beanCopier=BeanCopier.create(from.getClass(), toClass, false);
             COPIER_CACHE.put(key,beanCopier);
         }
-        beanCopier.copy(bean1,to,null);
+        beanCopier.copy(from,to,null);
         return to;
     }
     public static <From, To> To bean2Bean(From bean1,Class<To> toClass) {

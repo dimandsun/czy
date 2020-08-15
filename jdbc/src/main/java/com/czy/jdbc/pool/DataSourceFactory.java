@@ -61,7 +61,7 @@ public class DataSourceFactory {
         }
         dataSourceMap.values().forEach(dataSource -> dataSource.clear());
     }
-    public static void init(Optional<StringMap<Object>> optional) {
+    public static void init(Optional<StringMap> optional) {
         optional.ifPresent(dataSourcesMap-> ((List<Map<String, Object>>) dataSourcesMap.get("dataSources")).forEach(map->{
             var sourceSetting = JsonUtil.map2Model(map, DataSourceSetting.class);
             if (StringUtil.isBlank(sourceSetting.driverClassName())) {

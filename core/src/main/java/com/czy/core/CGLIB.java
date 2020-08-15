@@ -2,8 +2,8 @@ package com.czy.core;
 
 import com.czy.core.model.AspectModel;
 import com.czy.core.enums.AspectTypeEnum;
-import com.czy.javaLog.Log;
-import com.czy.javaLog.LogFactory;
+import com.czy.log.Log;
+import com.czy.log.LogFactory;
 import com.czy.util.enums.ResCodeEnum;
 import com.czy.util.model.ResultVO;
 import net.sf.cglib.proxy.Enhancer;
@@ -20,7 +20,7 @@ import java.util.List;
  * controller、service、dao接口实现此代理，其他bean，包括config注解、通过配置文件生成的bean不应该实现此代理。
  */
 public class CGLIB implements MethodInterceptor {
-    Log log = LogFactory.getLog();
+    Log log = LogFactory.getLog("cglib");
     private Object target;
 
     public CGLIB() {

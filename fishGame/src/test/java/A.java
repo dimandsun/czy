@@ -22,22 +22,23 @@ public class A {
         printList(p);
         System.out.println(p);
     }
-    public void printList(List<StringMap> list){
-        for (StringMap map:list){
-            printMap(map);
-        }
+
+    public void printList(List<?> list){
+        list.forEach(o -> {
+            if (o instanceof StringMap map){
+                printMap(map);
+            }
+        });
     }
-    public void printMap(StringMap map){
-        Set<Map.Entry<String,Object>> entrySet=map.entrySet();
-        for (Map.Entry<String,Object> entry: entrySet){
-            Object value =entry.getValue();
-            if (value instanceof List){
-                printList((List<StringMap>) value);
-            }else if (value instanceof StringMap){
-                printMap((StringMap) value);
+    public void printMap(StringMap<?> map){
+        map.values().forEach(value -> {
+            if (value instanceof List<?> list){
+                    printList(list);
+            }else if (value instanceof StringMap<?> temp){
+                printMap(temp);
             }else {
                 System.out.print(value.toString()+",");
             }
-        }
+        });
     }
 }

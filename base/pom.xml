@@ -25,7 +25,6 @@
         <module>../user</module>
         <module>../jdbc</module>
         <module>../log</module>
-        <module>../javaLog</module>
     </modules>
     <properties>
         <encoding>UTF-8</encoding>
@@ -36,10 +35,6 @@
         <mysql.version>8.0.13</mysql.version>
         <cglib.version>3.3.0</cglib.version>
         <jedis.version>2.6.0</jedis.version>
-        <commons-lang3.version>3.3.2</commons-lang3.version>
-        <commons-collections.version>3.2.2</commons-collections.version>
-        <log4j.version>2.4.1</log4j.version>
-        <slf4j.version>1.7.13</slf4j.version>
         <ws.rs-api.version>2.1</ws.rs-api.version>
         <org.cxf-version>3.3.2</org.cxf-version>
         <jackson.version>2.11.1</jackson.version>
@@ -47,26 +42,17 @@
         <druid.version>1.1.8</druid.version>
         <yaml.version>1.3</yaml.version>
         <snakeyaml.version>1.24</snakeyaml.version>
-        <commons-lang3.version>3.9</commons-lang3.version>
-        <commons-pool.version>1.5.6</commons-pool.version>
-        <mybatis.version>3.5.3</mybatis.version>
         <javafx.version>11.0.2</javafx.version>
         <junit.version>4.12</junit.version>
         <rabbitmq.version>5.9.0</rabbitmq.version>
         <servlet.version>4.0.1</servlet.version>
-        <tomcat-plugin.version>2.2</tomcat-plugin.version>
         <czy.version>1.0-SNAPSHOT</czy.version>
 
     </properties>
 
     <dependencyManagement>
         <dependencies>
-<!--            嵌入式tomcat-->
-            <dependency>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>${tomcat-plugin.version}</version>
-            </dependency>
+
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
@@ -122,8 +108,6 @@
                 <artifactId>util</artifactId>
                 <version>${czy.version}</version>
             </dependency>
-
-
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
@@ -239,6 +223,8 @@
                     <target>${java.version}</target>
                     <release>${java.version}</release>
                     <compilerArgs>
+                        <arg>-Xlint:preview</arg>
+                        <arg>-Xlint:unchecked</arg>
                         <arg>--enable-preview</arg> <!--使用新版本的预览特性-->
                         <arg>-parameters</arg><!--记录形参真实名-->
                     </compilerArgs>

@@ -113,24 +113,23 @@ public class FileUtil {
         }
     }
 
-    public static <T> StringMap<T> readProperty(String filePath) {
+    public static StringMap<String> readProperty(String filePath) {
         try {
-            Properties prop = new Properties();
-            FileInputStream in = new FileInputStream(FileUtil.getResourceFile(filePath));
+            var prop = new Properties();
+            var in = new FileInputStream(FileUtil.getResourceFile(filePath));
             prop.load(in);
-            StringMap<T> proMap = new StringMap();
-            for (String key : prop.stringPropertyNames()) {
-                proMap.put(key, (T) prop.getProperty(key));
-            }
+            var result = new StringMap<String>();
+            prop.stringPropertyNames().forEach(key->{
+                result.put(key,prop.getProperty(key));
+            });
             in.close();
-            return proMap;
+            return result;
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
     }
-
-    public static Optional<List<StringMap>> readXML(File file) {
+    public static Optional<List<StringMap<?>>> readXML(File file) {
         if (file == null || file.exists()) {
             return Optional.empty();
         }
@@ -155,8 +154,8 @@ public class FileUtil {
     }
 
     /*此方法还可以优化*/
-    private static ArrayList<StringMap> nodeList2MapList(NodeList nodeList) {
-        var list = new ArrayList<StringMap>(nodeList.getLength());
+    private static ArrayList<StringMap<?>> nodeList2MapList(NodeList nodeList) {
+        var list = new ArrayList<StringMap<?>>(nodeList.getLength());
         for (int i = 0; i < nodeList.getLength(); i++) {
             var node = nodeList.item(i);
             var nodeValue = node.getNodeValue();
@@ -166,22 +165,22 @@ public class FileUtil {
                     var temp = childNodeList.item(0);
                     /*文本作为一个#text节点，没有必要把#text作为map的key返回*/
                     if (temp.getNodeName().equals("#text") && StringUtil.isNotBlank(nodeValue)) {
-                        list.add(new StringMap(1, node.getNodeName(), temp.getNodeValue()));
+                        list.add(new StringMap<>(1, node.getNodeName(), temp.getNodeValue()));
                     }
                 } else {
                     /*递归*/
-                    list.add(new StringMap(1, node.getNodeName(), nodeList2MapList(node.getChildNodes())));
+                    list.add(new StringMap<>(1, node.getNodeName(), nodeList2MapList(node.getChildNodes())));
                 }
                 continue;
             }
             if (StringUtil.isNotBlank(nodeValue)) {
-                list.add(new StringMap(1, node.getNodeName(), nodeValue));
+                list.add(new StringMap<>(1, node.getNodeName(), nodeValue));
             }
         }
         return list;
     }
 
-    public static <T> Optional<StringMap<T>> readYML(File file) {
+    public static Optional<StringMap> readYML(File file) {
         if (file == null) {
             return Optional.empty();
         }
@@ -189,8 +188,8 @@ public class FileUtil {
             //文件未找到
             return Optional.empty();
         }
-        try (InputStream in = new FileInputStream(file)) {
-            StringMap<T> proMap = new Yaml().loadAs(in, StringMap.class);
+        try (var in = new FileInputStream(file)) {
+            var proMap = new Yaml().loadAs(in, StringMap.class);
             return Optional.ofNullable(proMap);
         } catch (IOException e) {
             //加载配置文件失败 file.getPath()
@@ -199,12 +198,12 @@ public class FileUtil {
         }
     }
 
-    public static <T> Optional<StringMap<T>> readYML(File file, String... keys) {
-        Optional<StringMap<T>> map = readYML(file);
+    public static Optional<StringMap> readYML(File file, String... keys) {
+        var map = readYML(file);
         if (keys == null || keys.length == 0||map.isEmpty()) {
             return map;
         }
-        StringMap<T> result = new StringMap<>(keys.length);
+        var result = new StringMap<>(keys.length);
         for (String key : keys) {
             result.add(key, map.get().get(key));
         }
@@ -261,7 +260,7 @@ public class FileUtil {
         if (file.exists()) {
             return false;
         }
-        File pathFile = file.getParentFile();
+        var pathFile = file.getParentFile();
         /*创建目录*/
         if (pathFile != null && !pathFile.exists()) {
             pathFile.mkdirs();
@@ -313,14 +312,14 @@ public class FileUtil {
     public static void reNameJavaList(String filePath, String newName) {
         String oldName = null;
         try {
-            File[] childFiles = new File(filePath).listFiles();
+            var childFiles = new File(filePath).listFiles();
             if (childFiles != null) {
-                for (File childFile : childFiles) {
+                for (var childFile : childFiles) {
                     if (childFile.isDirectory()) {
                         reNameJavaList(childFile.getPath(), newName);
                     } else {
                         oldName = childFile.getName();
-                        String newFileName = newName.replace("oldName"
+                        var newFileName = newName.replace("oldName"
                                 , oldName.substring(0, oldName.indexOf(".java"))) + ".java";
                         childFile.renameTo(new File(childFile.getParentFile() + "/" + newFileName));
                     }
@@ -338,16 +337,16 @@ public class FileUtil {
      * @return
      */
     public static List<File> getFileList(String filePath, String suffix) {
-        File file = new File(filePath);
-        File[] childFiles = file.listFiles();
-        List<File> files = new ArrayList();
+        var file = new File(filePath);
+        var childFiles = file.listFiles();
+        var files = new ArrayList<File>();
         if (childFiles != null) {
-            for (File childFile : childFiles) {
+            for (var childFile : childFiles) {
                 if (childFile.isDirectory()) {
                     files.addAll(getFileList(childFile.getPath(), suffix));
                 } else {
-                    String childFilePath = childFile.getPath();
-                    String fileSuffix = childFilePath.substring(childFilePath.lastIndexOf(".") + 1);
+                    var childFilePath = childFile.getPath();
+                    var fileSuffix = childFilePath.substring(childFilePath.lastIndexOf(".") + 1);
                     if (suffix == null || fileSuffix.equals(suffix)) {
                         files.add(childFile);
                     }
@@ -359,11 +358,11 @@ public class FileUtil {
 
     /*获取class所在目录*/
     public static File getClassFile(String moduleDir, String filePath) {
-        Thread.currentThread().getContextClassLoader().getResource("com/czy/frame/cash/service");
+//        Thread.currentThread().getContextClassLoader().getResource("com/czy/frame/cash/service");
         if (StringUtil.isBlank(moduleDir) && StringUtil.isBlank(filePath)) {
             return null;
         }
-        String path = StringUtil.isBlank(moduleDir) ? "" : moduleDir;
+        var path = StringUtil.isBlank(moduleDir) ? "" : moduleDir;
         if (!path.endsWith(File.separator) && path.length() > 0) {
             path += File.separator;
         }
@@ -387,11 +386,11 @@ public class FileUtil {
      * @return
      */
     public static List<Class> getClassList(String moduleDir, String groupId) {
-        List<Class> classList = new ArrayList();
+        var classList = new ArrayList<Class>();
         String filePath = null;
-        String modulePath = getPath(moduleDir) + "src" + File.separator + "main" + File.separator + "java" + File.separator;
+        var modulePath = getPath(moduleDir) + "src" + File.separator + "main" + File.separator + "java" + File.separator;
         try {
-            File[] childFiles = getCodeFile(moduleDir, groupId).listFiles();
+            var childFiles = getCodeFile(moduleDir, groupId).listFiles();
             if (childFiles != null) {
                 for (File childFile : childFiles) {
                     filePath = childFile.getPath();
@@ -427,7 +426,7 @@ public class FileUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String path = projectPath + "/src/main/java" + File.separator + getPath(beanName);
+        var path = projectPath + "/src/main/java" + File.separator + getPath(beanName);
         return new File(path);
     }
 

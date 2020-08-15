@@ -1,11 +1,4 @@
-import com.czy.core.ProjectContainer;
-import com.czy.core.annotation.db.Table;
-import com.czy.core.util.TableUtil;
-import com.czy.jdbc.pool.DataSourceFactory;
-import com.czy.question.dao.IQuestionDao;
-import com.czy.question.model.table.Question;
 import com.czy.util.sqltool.SQLUtil;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.Test;
 
 /**

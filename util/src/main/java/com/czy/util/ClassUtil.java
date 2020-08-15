@@ -64,7 +64,7 @@ public class ClassUtil {
         if (StringUtil.isBlank(objs) || StringUtil.isBlank(methodName)) {
             return objs;
         }
-        Class<T> c = (Class<T>) objs.get(0).getClass();
+        Class c = objs.get(0).getClass();
         Class[] parClasss = getClasses(pars);
         try {
             for (T o : objs) {

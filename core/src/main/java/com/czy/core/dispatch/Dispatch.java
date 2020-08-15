@@ -2,8 +2,8 @@ package com.czy.core.dispatch;
 
 import com.czy.core.ProjectContainer;
 import com.czy.core.model.RouteModel;
-import com.czy.javaLog.Log;
-import com.czy.javaLog.LogFactory;
+import com.czy.log.Log;
+import com.czy.log.LogFactory;
 import com.czy.util.ClassUtil;
 import com.czy.util.annotation.Par;
 import com.czy.util.enums.QuestMethodEnum;
@@ -19,7 +19,7 @@ import java.lang.reflect.Parameter;
  * @since 2020-04-29
  */
 public class Dispatch {
-    private static Log log = LogFactory.getLog();
+    private static Log log = LogFactory.getLog("dispatch");
     private static StringMap<RouteModel> routeModelMap = null;
     private static Dispatch instance=new Dispatch();
     public static Dispatch getInstance() {
