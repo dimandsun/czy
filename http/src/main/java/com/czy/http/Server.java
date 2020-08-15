@@ -7,6 +7,7 @@ import com.czy.http.model.ServerInfo;
 import com.czy.http.pool.ConnectHandler;
 import com.czy.http.pool.ConnectTask;
 import com.czy.http.pool.ConnectThreadFactory;
+import com.czy.log.Log;
 import com.czy.log.LogFactory;
 import com.czy.util.ThreadUtil;
 import com.czy.util.io.NIOUtil;
@@ -28,12 +29,14 @@ import java.util.function.Consumer;
  * 当前版本不支持servlet注解
  */
 public class Server {
+    private static Log log = LogFactory.getLog("server");
     public static final String CRLF = "\r\n";
     public static final String BANK = " ";
     private ForkJoinPool executor;
     private ReentrantLock lock = new ReentrantLock();
     /*为了防止一个请求生成多个线程任务。当前同时有n个请求连接，则connectTaskMap的个数为n*/
-    private Map<SocketChannel,ConnectTask> connectTaskMap=new HashMap<>();
+    private Map<SocketChannel, ConnectTask> connectTaskMap = new HashMap<>();
+
     public void close() {
         if (executor != null) {
             executor.shutdown();
@@ -65,8 +68,8 @@ public class Server {
             //通道注册到选择器,监听连接事件
             var selector = Selector.open();
             server.register(selector, SelectionKey.OP_ACCEPT);
-            System.out.println("服务端开启了");
-            System.out.println("=========================================================");
+            log.info("服务端开启了");
+            log.info("=========================================================");
             //多路复用器开始监听
             while (ApplicationContext.instance().isActivity()) {
                 selector.select();
@@ -79,17 +82,12 @@ public class Server {
                         ((ServerSocketChannel) key.channel()).accept().configureBlocking(false).register(selector, SelectionKey.OP_READ);
                     } else if (key.isReadable()) {
                         var connect = (SocketChannel) key.channel();
-                        if (!connectTaskMap.containsKey(connect)){
-                            var task=new ConnectTask(connect);
-                            connectTaskMap.put(connect,task);
+                        if (!connectTaskMap.containsKey(connect)) {
+                            var task = new ConnectTask(connect);
+                            connectTaskMap.put(connect, task);
                             /*处理连接*/
-                            Boolean result=executor().submit(task).get();
-                            /*这个if判断不能少。因为executor.submit()是在另一个线程处理，result是异步返回的。
-                                不加if直接connectTaskMap.remove(connect)，则同一个请求会重复进入此处，生成若干个重复的线程任务。
-                            */
-                            if (result){
-                                connectTaskMap.remove(connect);
-                            }else {
+                            if (executor().submit(task).isDone()){
+                                /*任务没有完成时不会remove*/
                                 connectTaskMap.remove(connect);
                             }
                         }
@@ -102,6 +100,7 @@ public class Server {
         }
 
     }
+
     private ExecutorService executor() {
         lock.lock();
         /*锁确保不会生成多个线程池*/
@@ -115,8 +114,8 @@ public class Server {
     }
 
     public void stop() {
-        System.out.println("=========================================================");
-        System.out.println("程序结束");
+        log.info("=========================================================");
+        log.info("程序结束");
         LogFactory.close();
         close();
     }

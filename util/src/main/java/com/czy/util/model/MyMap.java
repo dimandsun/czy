@@ -1,5 +1,6 @@
 package com.czy.util.model;
 
+import com.czy.util.json.JsonUtil;
 import com.czy.util.text.StringUtil;
 
 import java.util.LinkedHashMap;
@@ -40,5 +41,8 @@ public class MyMap<Key,Value extends Object> extends LinkedHashMap<Key,Value> {
             this.put(key,value);
         }
         return value;
+    }
+    public String toString(){
+        return JsonUtil.model2Str(this);
     }
 }

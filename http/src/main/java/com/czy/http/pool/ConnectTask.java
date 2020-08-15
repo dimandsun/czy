@@ -25,7 +25,7 @@ public class ConnectTask implements Callable<Boolean> {
     @Override
     public Boolean call() throws Exception {
         if (!connect.isConnected()) {
-            System.err.println("连接已关闭");
+            log.error("连接已关闭");
             return false;
         }
         /*创建request、response对象*/
@@ -38,9 +38,9 @@ public class ConnectTask implements Callable<Boolean> {
         response.beforeReturn();
         connect.write(response.getCharSet().encode(response.getResult()));
         var file=response.getFile();
-        NIOUtil.write(response.getFile(), connect);
-        log.debug("处理请求：{}:[{}],响应数据data:{}file:{}"
-                ,request.getRoute(),request.getParameterMap(),response.getBody(),file==null?"":file.getName());
+        NIOUtil.write(file, connect);
+        log.debug("处理请求：{}:参数[{}]",request.getRoute(),request.getParameterMap());
+//        log.debug("响应数据data:{}file:{}",response.getBody(),file==null?"":file.getName())
         //连接关闭
         connect.shutdownInput();
         connect.shutdownOutput();

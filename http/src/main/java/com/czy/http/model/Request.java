@@ -34,7 +34,7 @@ public class Request{
     //nelson
     private String route;
     //get请求取url的?号后值a=123
-    private StringMap<String[]> parMap=new StringMap<>();
+    private StringMap<Object> parMap=new StringMap<>();
     //HTTP/1.1
     private QuestScheme questScheme;
     /**********************************请求头信息列表，每一行都是key: value*******************************************************/
@@ -125,7 +125,7 @@ public class Request{
                 if (entry.length!=2){
                     return;
                 }
-                parMap.add(entry[0],new String[]{entry[1]});
+                parMap.add(entry[0],entry[1]);
             });
         }
     }
@@ -135,13 +135,12 @@ public class Request{
      * @return
      */
     public String getParameter(String name) {
-        var temp = parMap.get(name);
-        return temp == null ? null : temp[0];
+        return (String) parMap.get(name);
     }
     public String[] getParameterValues(String name) {
-        return parMap.get(name);
+        return (String[]) parMap.get(name);
     }
-    public Map<String, String[]> getParameterMap() {
+    public Map<String, Object> getParameterMap() {
         return parMap;
     }
 
