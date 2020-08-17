@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="学习,HTML5,前端,css" />
+    <meta name="description" content="这是从零开始学习html的社区" />
+    <title></title>
+    <style>
+      
+      .box1 {
+        width: 20rem;
+        height: 20rem;
+        background-color: #537f31;
+        float: left;
+      }
+      .box2 {
+        width: 30rem;
+        height: 20rem;
+        background-color: #ffff7f;
+        /* 通过设置外边距实现不会收其他元素的浮动影响 
+        both 清除两侧影响更大的
+        */
+        clear: both;
+      }
+      .box3{
+        border:10px #00007F solid;
+      }
+      .box4{
+        float: left;
+        height: 20rem;
+        background-color: #00FFFF;
+        width: 10rem;
+      }
+      /* 伪元素解决高度塌陷 */
+     /* .box3::after{
+        content: "";
+        clear: both;
+        display: block;
+      } */
+      /* .clearfix 解决外边距重叠及高度塌陷*/
+      .clearfix::before,.clearfix::after{
+        content: "";
+        clear: both;
+        display: table;
+      }
+    </style>
+  </head>
+  <body>
+<!--    
+如何创建BFC
+    1、float的值不是none。
+    2、position的值不是static或者relative。
+    3、display的值是inline-block、table-cell、flex、table-caption或者inline-flex
+    4、overflow的值不是visible
+BFC的作用
+    1.利用BFC避免margin重叠。
+    2.自适应两栏布局
+    3.清除浮动。
+    4.计算BFC的高度时，浮动元素也参与计算。
+BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。反之也如此。
+   -->
+    <header></header>
+    <main>
+      <div class="box1">box1</div>
+      <div class="box2">div2</div>
+      
+      <div class="box3 clearfix"><div class="box4">box4</div></div>
+      
+    </main>
+    <footer></footer>
+  </body>
+</html>

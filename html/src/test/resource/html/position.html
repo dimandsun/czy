@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="学习,HTML5,前端,css" />
+    <meta name="description" content="这是从零开始学习html的社区" />
+    <title>学习相对定位</title>
+    
+    <style>
+      body {
+        height: 100rem;
+      }
+
+      .box1,
+      .box2,
+      .box3 {
+        width: 15rem;
+        height: 15rem;
+      }
+
+      .box1 {StringUtil
+        background-color: #00007F;
+      }
+
+      .box2 {
+        background-color: #00FFFF;
+        /* position:static默认值
+            relative 相对定位 配合top/bottom/left/right使用，在什么方向偏移。以自身为坐标原点，提升元素的层级，且不会脱离文档流
+         */
+        /* position: relative;
+        left: 15rem;
+        bottom: 15rem; */
+
+        /* absolute 绝对定位 元素还在原位置，以包含块为原点 提升元素层级，从文档流脱离，元素性质改变
+              包含块(containing block)：当前元素最近的祖先元素(父元素)
+              绝对定位中的包含块：最近的开启了定位的祖先元素，没有开启定位的祖先元素，则是根元素html(初始包含块)
+           开启绝对定位后，公式要加上left和right，过度约束时，等式自动调整：属性没有auto的，则会调整right值使等式成立。
+               width、margin-left、margin-right left right可以设值为auto。left right默认为auto
+               垂直方向也要满足公式：top+margin-top/bottom+padding-top/bottom+border-top/bottom+height=包含块的高度
+               居中：margin设为auto，top bottom left right都设为0，则元素在包含块中居中
+        */
+        position: absolute;
+        margin: auto;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        
+        /* fixed 固定定位:特殊的绝对定位，特殊的是以浏览器的视口为原点。不会随网页滚动而滚动，参考牛皮癣广告
+              浏览器视口：
+         
+         */
+        /* position: fixed;
+        left: 16rem;
+        top: 0.5rem; */
+
+        /* sticky 粘滞定位 和相对定位类似，元素到达指定位置后固定不动*/
+        /*   position: sticky;
+        top: 0rem; */
+      /* 层级：对开启了定位的元素 可以用z-index设置层级，z-index越大，越在上面。若z-index一样，则结构在下面的在上面
+            祖先元素的层级再高，也盖不住后代元素
+       */
+      }
+
+      .box3 {
+        background-color: #4E64DE;
+      }
+    </style>
+  </head>
+  <body>
+   
+    <header></header>
+    <main>
+      <div class="box1">box1</div>
+      <div class="box2">box2</div>
+      <div class="box3">box3</div>
+
+    </main>
+    <footer></footer>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="学习,HTML5,前端,css" />
+    <meta name="description" content="这是从零开始学习html的社区" />
+    <title></title>
+    <style>
+      .box1{
+        width: 10rem;
+        height: 10rem;
+        background-color: #00FFFF;
+        /* 浮动 在父元素内左右移动 
+        float：none 不浮动
+              left  左、
+              right 右
+         float不为none时，
+            1、水平布局的等式不成立。
+            2、元素从文档流脱离，不占用文档流位置
+            3、元素在父元素内左/右移动。默认不会从元素中移出
+            4、浮动的元素水平排列
+            5、文字会自动环绕浮动元素周围
+            6、行内元素和块元素都会变成行内块元素
+        */
+        float: left;
+      }
+      .box2{
+        width: 10rem;
+        height: 10rem;
+        background-color: #ff641d;
+        float: left;
+      }
+      .box3{
+          width: 10rem;
+          height: 10rem;
+          background-color: #a4d0ff;
+          float: left;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <div class="box1">box1</div>
+      <div class="box2">box2</div>
+      <div class="box3">box3</div>
+      
+      
+    </main>
+    <footer></footer>
+  </body>
+</html>
