@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="学习,HTML5,前端,css" />
+    <meta name="description" content="这是从零开始学习html的社区" />
+    <title>es6学习</title>
+    <style>
+      .box div {
+        width: 5rem;
+        height: 5rem;
+        border: 0.3rem #00007f solid;
+        display: inline-block;
+      }
+
+      #add {
+        width: 5rem;
+        height: 5rem;
+        border: 0.3rem #00007f solid;
+      }
+    </style>
+  </head>
+  <body>
+
+    <header></header>
+    <main>
+      <div class="box">
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+      </div>
+      <script>
+        /* var是全局的，没有单独的作用域。onclick的匿名函数中不能用items[i].style,因为循环到最后，i为3.
+        let有作用域，i进入匿名函数后的副本不会因为循环而递增，可以使用items[i].style
+         */
+        {
+          let items = document.getElementsByClassName('item');
+          /* for(var i in items){
+            items[i].onclick=function(){
+              this.style.background='pink';
+            }
+          } */
+          for (let i in items) {
+            items[i].onclick = function() {
+              items[i].style.background = 'pink';
+            }
+          }
+        }
+        /* const:声明常量：*/
+        {
+          const CHANGLIANG = "asfdad";
+        }
+        /* 解构数组，把数组元素便捷提取为变量。按顺序提取*/
+        {
+          const F4 = ['A', 'B', 'C', 'D'];
+          let [aa, b, c, d] = F4;
+          console.log(aa);
+        }
+        /* 解构对象，把对象的属性便捷提取为变量。变量名必须与属性名一致*/
+        {
+          const chen = {
+            name: '陈志源',
+            coding: function() {
+              console.log("写bug");
+            }
+          };
+          let {
+            name,
+            coding
+          } = chen;
+          console.log(name);
+          console.log(coding);
+        }
+        /* 模版字符串，类似java的"""
+          ${变量名}
+        */
+        {
+          let a = "a";
+          let str = `asfdhlkj<html>${a}`;
+          console.log(str);
+        }
+        /*创建对象：可以用已经声明的变量或方法作为对象属性，属性名为变量名或方法名*/
+        {
+          let name = "陈志云";
+          const pserson = {
+            name,
+            say() {
+              console.log("说话");
+            }
+          }
+          console.log(pserson);
+        }
+        /* 
+          箭头方法与普通方法的区别：
+           1- 箭头方法中的this对象，为定义时的this(window)
+              普通方法中的this为实际调用时的对象(person)。例子在下面的call方法使用
+           2- 箭头方法不能作为构造方法创建对象,
+              箭头方法不能使用arguments，普通方法用此变量保存实参
+         */
+        {
+          let add = (a, b) => {
+            return a + b
+          };
+          console.log(add(1, 3));
+        } {
+          let add = a => a + a;
+          console.log(add(4));
+        } {
+          let getName = () => {
+            console.log(this.name);
+            console.log("call方法测试");
+          };
+          let getName2 = function() {
+            console.log(this.name);
+            console.log("call方法测试");
+          };
+          let person = {
+            name: "abc"
+          };
+          getName.call(person);
+          getName2.call(person);
+        } {
+          let m = function() {
+            console.log(arguments);
+          }
+          m(123, 'a');
+          let person = {
+            mm: () => console.log( /* arguments */ ), //argumentsnotdefined
+          }
+          person.mm(1, 2);
+        }
+        /* rest参数... 表示数组*/
+        {
+          // let aa=(a=2,...args)=>{console.log(a);console.log(args);};
+          /* 闭包*/
+          ((a = 2, ...args) => {
+            console.log(a);
+            console.log(args);
+          })(1, 2, 3);
+        } {
+          let ss = ['a', 'b', 'c'];
+          let ss2 = ['aa', 'bb', 'cc'];
+          (function() {
+            console.log(arguments)
+          })(...ss);
+          (() => console.log(ss))(...ss);
+          /* 合并字符串*/
+          console.log(ss.concat(ss2));
+          console.log([...ss, ...ss2]);
+        } {
+          /* 数组克隆*/
+          const a = [1, 2, 3];
+          let b = [...a, 3];
+          console.log(b);
+        } {
+          /* 伪数组转成真正的数组*/
+          const d = document.querySelectorAll("div");
+          console.log(d);
+          console.log([...d]);
+        }
+        /* Symbol数据类型，表示独一无二的值。是 js语言的第七种数据类型，前六种是：undefined、null、布尔值（Boolean）、字符串（String）、数值（Number）、对象（Object
+          不能与其他数据类型进行运算
+          Symbol定义的对象属性不能使用 for in遍历，可以使用Reflect.ownKeys来获取对象的所有键名
+        */
+        {
+          let s1 = Symbol('a'); //这里字符串a只是个标记，不是Symbol值
+          let s12 = Symbol('a');
+          console.log(s1, typeof s1);
+          console.log(Symbol('foo').description);//2019es加入
+          console.log(s1 == s12);
+          let s3 = Symbol.for('a'); //得到唯一值
+          let s4 = Symbol.for('a');
+          console.log(s3 === s4)
+        }
+        {
+          let say=Symbol();
+          let person={
+            say:()=>console.log("说话啊"),
+            sleep:()=>console.log("休息"),
+            [Symbol('kill')]:()=>console.log('杀人啦！'),
+          };
+          person[say]=()=>{console.log("说什么，别吵!")};
+          person.say();
+          person[say]();
+          console.log(person[Symbol('kill')]);//不存在
+          ;
+        }
+        {
+          /*Symbol的内置属性 */
+        }
+        {
+         /* 有迭代器的对象，可以用for of遍历
+          有迭代器的对象：Array、Arguments、Set、Map、String、TypeArray、NodeList
+         */ 
+         let as=['a','b','c','d'];
+         for(let v of as){console.log(v)};
+         let iterator=as[Symbol.iterator]();
+         let temp=iterator.next();
+         console.log(temp.done);
+        }
+        {
+          /*自定义迭代器*/
+          let person={
+            names:['a','b','c'],
+            [Symbol.iterator](){
+              let index=0;
+              return {next:()=>index<this.names.length?{value:this.names[index++],done:false}:{value:undefined,done:true}};
+            }
+          }
+          for(let name of person){
+            console.log(name);
+          }
+          person.names.forEach((value,index)=>{
+            value=1;
+          });
+          console.log(person);
+        }
+          /* 生成器：特殊的方法，可以用于异步
+            类似迭代器，yield后是next()的返回值，
+          */
+        {
+          function* a(){
+            console.log("第一次执行！");
+            yield'a';
+            console.log("第二次执行！");
+            yield'b';
+            console.log("第三次执行！");
+            yield'c';
+          }
+          for(let v of a()){
+            console.log(v);
+          }
+          let iterator=a();
+          // console.log(iterator.next());
+        }
+        /* 生成器可以接收参数。next也可以接收参数，参数值为上一个元素的yield的值*/
+        {
+          function* a(arg){
+            console.log(arg);
+            let v1=yield'a';
+            console.log(v1);
+            let v2=yield'b';
+            console.log(v2);
+            let v3=yield'c';
+            console.log(v3);
+          }
+          let iterator=a('解决');
+          iterator.next(1);
+          iterator.next(12);
+          iterator.next(123);
+          iterator.next(1234);
+        }
+        {
+          let one=()=>setTimeout(()=>{console.log('111');iterator.next();},1000);
+          let two=()=>setTimeout(()=>{console.log('222');iterator.next();},1000);
+          let threa=()=>setTimeout(()=>{console.log('333');iterator.next();},1000);
+          function*a(){
+            yield one();
+            yield two();
+            yield threa();
+            yield console.log('最后了');
+          }
+          let iterator=a();
+          // iterator.next();
+        }
+        {
+          let getUserInfo=(userId)=>setTimeout(()=>iterator.next('用户信息'),1000);
+          let getOrderInfo=()=>setTimeout(()=>iterator.next('订单信息'),1000);
+          let getGodInfo=()=>setTimeout(()=>iterator.next('商品信息'),1000);
+          function*produce(userId){
+            let userInfo=yield getUserInfo(userId);
+            let orderInfo=yield getUserInfo(userInfo);
+            let godInfo=yield getGodInfo(orderInfo);
+            console.log(godInfo);
+          }
+          let iterator=produce('chen');
+          iterator.next();
+        }
+      </script>
+      <div id="add">计时器</div>
+      <script>
+        {
+          let add = document.getElementById("add");
+          /* add.addEventListener("click",function(){
+            setTimeout(()=>this.style.background='pink',1000)
+          }); */
+          add.addEventListener("click", () => setTimeout(() => ad.style.background = 'pink', 1000));
+        }
+      </script>
+    </main>
+    <footer></footer>
+  </body>
+</html>
