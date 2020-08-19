@@ -276,6 +276,101 @@
           let iterator=produce('chen');
           iterator.next();
         }
+        /* Promise:异步编程的一种解决方案
+        从语法上说，Promise 是一个对象，从它可以获取异步操作的消息。
+        */
+        {
+          const promise=new Promise((resolve,reject)=>{
+            setTimeout(()=>{
+              let data="用户信息";
+              // resolve(data);
+              reject('失败信息');
+            },1000)
+          });
+          promise.then((data)=>{
+            console.log('成功时触发：'+data);
+          },(data)=>{
+            // console.error('失败时触发：'+data);
+          });
+        }
+        {
+          const promise=new Promise((resolve,reject)=>{
+            let xhr=new XMLHttpRequest();
+            xhr.open('GET','https://api.apiopen.top/getJoke');
+            xhr.send();
+            xhr.onreadystatechange=()=>{
+              if(xhr.readyState===4){
+                //响应
+                if(xhr.status>=200&&xhr.status<300){
+                  // resolve(xhr.response);
+                }else{
+                  reject(xhr.status);
+                  
+                }
+              }
+            }
+          });
+          promise.then(data=>{
+            console.log('成功时触发：'+data);
+          },data=>{
+            console.warn(data);
+          });
+          
+        }
+        /* 集合:set,不重复*/
+        {
+          let s=new Set();
+          s=new Set(['a','b','c','d']);
+          s.add('e');
+          s.delete('c');
+          console.log(s);
+          console.log(s.has('a'));
+        }
+        {
+          /* 数组去重*/
+          let arr=[1,2,3,3,22,2];
+          let arr2=[1,2,44];
+          console.log(...new Set(arr));
+          /* */
+          let s2=new Set(arr2);
+          let result=[...new Set(arr)].filter(item=>s2.has(item));
+          console.log(result);
+        }
+        {
+          /* map:*/
+          let map = new Map();
+          map.set('a',23);
+          map.set('change',()=>console.log('改变世界！'))
+          map.get('change')();
+        }
+        {
+          /* Class,构造方法名constructor，可以省略*/
+          class Person{
+            // static name = '中国';
+            say(){
+              console.log('我可以说话！');
+            }
+          }
+          Person.name='1sadasd';
+          let chen = new Person();
+          chen.say();
+          console.log(Person.name);
+          console.log(123);
+        }
+        {
+          class Person{
+            constructor(name,gender) {
+                this.name=name;
+                this.gender=gender;
+            }
+            say(){
+              console.log('我可以说话！');
+            }
+          }
+          class Girl ex{
+            
+          }
+        }
       </script>
       <div id="add">计时器</div>
       <script>
