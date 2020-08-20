@@ -317,6 +317,44 @@
           });
           
         }
+        /* 异步解决方案：async返回结果自动封装为promise对象，*/
+        {
+          async function abc(){
+            return 'async';
+          }
+          console.log(abc());
+          async function awaitTest(){
+            let result =await 'awaitTest方法返回值';
+            console.log(result);
+            return result;
+          }
+          console.log(awaitTest());
+          async function awaitTest2(){
+            try{
+              let result =await new Promise((resolve,reject)=>{reject('出错了');});
+              console.log(result);//不会执行
+              return '成功：'+result;
+            }catch(e){
+              console.log('错误：'+e);//会执行
+             return 'catchresult错误';//会执行
+            }finally{
+              console.log('最后');//会执行
+            }
+             return 'result错误';//不会执行
+          }
+          console.log(awaitTest2());//状态为resolve，而不是reject，因为错误已经捕获了。
+        }
+        /* 数组操作：
+          arr.includes(x);//判断arr是否存在元素x
+          arr.indexOf(x);//得到arr中元素x的索引，不存在返回-1
+        */
+        {
+          let arr=['a','b','c','d'];
+         console.log('数组操作');
+          console.log(arr.includes('a'));
+          console.log(arr.includes('e'));
+          console.log(arr.indexOf('e'));
+        }
         /* 集合:set,不重复*/
         {
           let s=new Set();
@@ -342,6 +380,25 @@
           map.set('a',23);
           map.set('change',()=>console.log('改变世界！'))
           map.get('change')();
+          
+          let person={
+            say(){
+              console.log('我可以说话！');
+            }
+          }
+          Object.keys(person);
+          Object.values(person);
+          Object.entries(person);
+          new Map(Object.entries(person));
+          Object.getOwnPropertyDescriptors(person);//得到描述person的对象
+        }
+        /*正则表达式*/
+        {
+          let str=`<a href="www.baidu.com">百度一下</a>`;
+          let reg=/<a href="(?<url>.*)">(?<text>.*)<\/a>/;
+          let result=reg.exec(str);
+          result.groups.url;
+          console.log(result);
         }
         {
           /* Class,构造方法名constructor，可以省略*/
@@ -364,14 +421,100 @@
                 this.gender=gender;
             }
             say(){
-              console.log('我可以说话！');
+              console.log(this.name+':我可以说话！');
             }
           }
-          class Girl ex{
-            
+          class Girl extends Person{
+            constructor(name,gender,size){
+              super(name,gender);
+              this.size=size;
+            }
+            set size(value){
+              this._size=value;
+            }
+            get size(){
+              return this._size;
+            }
           }
+          let xiaoHong=new Girl("小红",'女','A');
+          xiaoHong.say();
+          // xiaoHong.size='B';
+          console.log(xiaoHong.size)
         }
+        /* Number.EPSTION:js最小精度，若两个数差值小于此值，则两数相等
+          Number.isFinite(1):是否是有限数
+          Number.isNaN(i);是否是NaN
+          Number.parseInt('');字符串转整数
+          Number.parseFloat('');字符串转浮点数
+          Number.isInteger(i)
+          Math.trunc(i)//抹去小数部分：向下取整
+          Math.abs(i);//取绝对值
+          Math.sign(i);//判断是否大于0，大于0得到1，等于0得到0，小于0得到-1
+          Math.pow(2,10);//幂运算，等价于 2**10
+        */
+        {
+          function equal(a,b){
+            return Math.abs(a-b)<Number.EPSILON;
+          }
+          console.log((0.1+0.2) ===0.3);
+          console.log(equal(0.1+0.2,0.3));
+          console.log(Number.isFinite(1));//有限
+          console.log(Number.isFinite(1/0));//无限
+          
+        }
+        {
+          let n2=0b10;//二进制0b
+          let n8=0o77;//八进制0o
+          let n16=0xff;//十六进制
+          console.log(n2,n8,n16)
+        }
+        /*
+          Object.is(a,b);//判断两个值是否完全相等：is(NaN,NaN)返回true，NaN===NaN得到false
+          Object.assign(a,b);//对象合并,重名属性则后面覆盖前面
+          Object.setPrototypeOf(a,b);//设值原型对象，把b作为a的原型对象
+          Object.getPrototypeOf(a);//获取a的原型对象，得到b
+          */
+        {
+         
+        }
+        
       </script>
+      <script type="module">
+        /* 模块化：优点：防止命名冲突，代码复用，高维护性
+           
+        */
+        import * as t from './moKuaiHua.js';
+        t.test();
+        console.log(t);
+        let girl=new t.Girl();
+        console.log(girl.size);
+        t.default.sleep();
+      </script>
+      <script type="module">
+        import {Girl} from './moKuaiHua.js';
+        let girl=new Girl();
+        console.log(girl.size);
+        import {Girl as A} from './moKuaiHua.js';
+        let girl2=new A();
+        console.log(girl2.size);
+        import {default as goddness} from './moKuaiHua.js';
+        goddness.lie();
+        //导入默认
+        import defaultConnet from './moKuaiHua.js';
+        console.log(defaultConnet.age);
+      </script>
+      <script type="module">
+        console.log('啥呀');
+         import * as all from './app.js';
+         console.log(all);
+         all.printBook('book');
+       </script>
+      <!-- <script type="module" src="./app.js"></script>
+      等价于
+      <script type="module"> import './app.js';</script>
+      -->
+
+      <div id="book">幻想大陆</div>
       <div id="add">计时器</div>
       <script>
         {

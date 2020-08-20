@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="学习,HTML5,前端,css" />
+    <meta name="description" content="这是从零开始学习html的社区" />
+    <title>学习Proxy</title>
+  </head>
+  <script>
+    {
+      let person = {
+        name: '陈志源',
+      }
+      let handler = {
+        get(target, key) {
+          console.log(`读取${key}`)
+          return target[key];
+        },
+        set(target,key,value){
+          console.log(`给${key}赋值为${value}`);
+          target[key]=value;
+        }
+      }
+      let chen=new Proxy(person,handler);
+      chen.name;
+      chen.name='陈有钱';
+    }
+    {
+      let person = {
+        name: '陈志源',
+      }
+      let handler = {
+        //receiver为代理对象Proxy
+        get(target, key,receiver) {
+          console.log(`读取${key}`)
+          if(Reflect.has(target,key)){
+            return Reflect.get(target,key);
+          }else{
+            throw new ReferenceError(`目标${target}没有属性${key}`);
+          }
+        },
+        //receiver为代理对象Proxy
+        set(target,key,value,receiver){
+          console.log(`给${key}赋值为${value}`);
+          if(this.has(target,key)){
+            Reflect.set(target, key, value);
+          }else{
+            throw new ReferenceError(`目标${target}没有属性${key}`);
+          }
+        },
+        has(target,key){
+          return Reflect.has(target,key);
+        },
+        //newTarget为代理对象
+        construct(target,args,newTarget){
+          
+        } ,
+        
+      }
+      let chen=new Proxy(person,handler);
+      // chen.name2;
+      chen.name='陈有钱2';
+    }
+    {
+      function A(){name:'老吴'}
+      let handler={
+        construct(target,args,newTarget){
+          return args;
+        }
+      }
+      let NewA=new Proxy(A,handler);
+      let a=new NewA('小吴');
+      console.log(a);
+    }
+  </script>
+  <body>
+    <header></header>
+    <main></main>
+    <footer></footer>
+  </body>
+</html>

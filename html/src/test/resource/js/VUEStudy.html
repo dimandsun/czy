@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="学习,HTML5,前端,css" />
+    <meta name="description" content="这是从零开始学习html的社区" />
+    <title>实现VUE的双向绑定</title>
+  </head>
+  <body>
+    <script>
+      class VUE{
+        constructor(args) {
+            this._el=document.querySelector(args.el);
+            this.methods=args.methods;
+            this._binding={};
+            this._observer(args.data);
+        }
+        _observer(data){
+          const vue=this;
+          this._data=new Proxy(data,{
+            set(target,key,value){
+              let result = Reflect.set(target, key, value);
+              vue._binding[key].map(item=>{
+                item.update();
+              });
+              return result;
+            }
+          });
+        }
+      }
+    </script>
+    <header></header>
+    <main>
+      <div id="app">
+        <input type="text" v-model='count' />
+        <input type="button" value="增加" @click="add" />
+        <input type="button" value="减少" @click="reduce" />
+        <div v-bind="count"></div>
+      </div>
+      <script>
+        let vue=new VUE({
+          el:'#app',
+          data:{count:0,},
+          methods:{
+            add(){
+              this.count++;
+            },
+            reduce(){
+              this.count--;
+            }
+          }
+        });
+        vue._data.count++;
+      </script>
+    </main>
+    <footer></footer>
+  </body>
+</html>

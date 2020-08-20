@@ -25,6 +25,13 @@ public class Te {
 //        StringMap.class == Map.class;
         List<MyConnection> pool = Collections.synchronizedList(new LinkedList<MyConnection>());
         System.out.println(123);
+        try{
+
+        }catch (Exception e){
+
+        }finally {
+
+        }
 
     }
 
