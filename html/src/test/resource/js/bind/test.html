@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="学习,HTML5,前端,css" />
+    <meta name="description" content="这是从零开始学习html的社区" />
+    <title>实现数据的双向绑定</title>
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <div id="app">
+        <input type="text" :value="count" />
+        <input type="button" value="增加" :click="add" />
+        <input type="button" value="减少" :click="reduce" />
+        <div title="累加器">${count}</div>
+      </div>
+      <script type="module">
+        import {Binder} from './Binder.js';
+        let binder = new Binder({
+          el: '#app',
+          data: {
+            count: 0,
+          },
+          methods: {
+            add() {
+              binder.count++;
+            },
+            reduce() {
+              binder.count--;
+            }
+          }
+        });
+        console.log(binder);
+      </script>
+    </main>
+    <footer></footer>
+  </body>
+</html>

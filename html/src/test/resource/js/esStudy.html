@@ -30,6 +30,12 @@
         <div class="item"></div>
       </div>
       <script>
+        {
+          let a={name:'chen'};
+          let b=a;
+          a.name='ads';
+          console.log(`b:${b}+a:${a}`);
+        }
         /* var是全局的，没有单独的作用域。onclick的匿名函数中不能用items[i].style,因为循环到最后，i为3.
         let有作用域，i进入匿名函数后的副本不会因为循环而递增，可以使用items[i].style
          */
