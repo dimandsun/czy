@@ -20,7 +20,6 @@ public class T {
     private class LogTask implements Runnable {
         @Override
         public void run() {
-            System.out.println(213);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {

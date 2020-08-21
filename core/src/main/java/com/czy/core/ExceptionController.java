@@ -1,4 +1,4 @@
-package controller;
+package com.czy.core;
 
 import com.czy.core.annotation.bean.Controller;
 import com.czy.core.annotation.mapping.Mapping;

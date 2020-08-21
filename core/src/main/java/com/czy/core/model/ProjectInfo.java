@@ -41,7 +41,7 @@ public class ProjectInfo {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            var realPath = path.substring(0,path.lastIndexOf("."))+"-"+active.getMsg()+path.substring(path.lastIndexOf("."));
+            var realPath = path.substring(0,path.lastIndexOf("."))+"-"+active+path.substring(path.lastIndexOf("."));
             instance.setSettingFile(new File(realPath));
         });
     }
@@ -55,7 +55,7 @@ public class ProjectInfo {
     }
 
     public ActiveEnum getActive() {
-        return active==null?ActiveEnum.Default:active;
+        return active==null?ActiveEnum.other:active;
     }
 
     public String getProjectGroupId() {

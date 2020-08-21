@@ -34,6 +34,7 @@ public class Server {
     public static final String BANK = " ";
     private ForkJoinPool executor;
     private ReentrantLock lock = new ReentrantLock();
+    private Consumer stopTask;
     /*为了防止一个请求生成多个线程任务。当前同时有n个请求连接，则connectTaskMap的个数为n*/
     private Map<SocketChannel, ConnectTask> connectTaskMap = new HashMap<>();
 
@@ -46,10 +47,21 @@ public class Server {
         }
         ApplicationContext.instance().close();
     }
-
+    public void stop() {
+        log.info("=========================================================");
+        log.info("开始销毁程序");
+        if (stopTask==null){
+            close();
+            LogFactory.close();
+        }else {
+            stopTask.accept(null);
+        }
+        System.err.println("程序销毁完成");
+    }
+    public void beforeStop(Consumer consumer) {
+        stopTask=consumer;
+    }
     public void start() {
-        /*加载配置文件*/
-//        ApplicationContext.getInstance().load();
         /*初始化服务容器*/
         ApplicationContext.instance().init();
         /*程序结束时调用*/
@@ -68,7 +80,7 @@ public class Server {
             //通道注册到选择器,监听连接事件
             var selector = Selector.open();
             server.register(selector, SelectionKey.OP_ACCEPT);
-            log.info("服务端开启了");
+            log.info("服务端程序开启");
             log.info("=========================================================");
             //多路复用器开始监听
             while (ApplicationContext.instance().isActivity()) {
@@ -98,7 +110,6 @@ public class Server {
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
-
     }
 
     private ExecutorService executor() {
@@ -113,12 +124,6 @@ public class Server {
         return executor;
     }
 
-    public void stop() {
-        log.info("=========================================================");
-        log.info("程序结束");
-        LogFactory.close();
-        close();
-    }
 
     public static void main(String[] args) throws UnknownHostException {
 

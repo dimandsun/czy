@@ -63,21 +63,21 @@ public class ApplicationContext {
         var servletInfo = servletMap.get(mapping);
         if (servletInfo == null) {
             servletInfo = new ServletInfo();
-            servletInfo.setServletName(servletName);
-            try {
-                servletInfo.setServlet(servletClass.getDeclaredConstructor().newInstance());
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            }
-            servletMap.add(mapping, servletInfo);
+        }
+        servletInfo.setServletName(servletName);
+        try {
+            servletInfo.setServlet(servletClass.getDeclaredConstructor().newInstance());
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
         }
         servletInfo.addMaping(mapping);
+        servletMap.add(mapping, servletInfo);
         return servletInfo;
 
     }
@@ -96,10 +96,11 @@ public class ApplicationContext {
             servletInfo = par.get();
         }
         if (servletInfo == null) {
-            if (mapping.equals("/")){
+            if (mapping.equals("/")) {
                 servletInfo = servletMap.get("/hello");
-            }else {
-                servletInfo = servletMap.get("/noFound");
+            } else {
+//                servletInfo = servletMap.get("/noFound");
+                servletInfo = servletMap.get("/default");
             }
         }
         return servletInfo;
@@ -112,9 +113,16 @@ public class ApplicationContext {
 
     /*初始化服务容器*/
     public void init() {
-        addServlet("/hello", "hello", HelloServlet.class);
-        addServlet("/noFound", "noFound", NoFoundServlet.class);
-        addServlet("/default", "default", DefaultServlet.class);
+        if (!servletMap.containsKey("/hello")) {
+            addServlet("/hello", "hello", HelloServlet.class);
+        }
+        if (!servletMap.containsKey("/noFound")) {
+            addServlet("/noFound", "noFound", NoFoundServlet.class);
+        }
+        if (!servletMap.containsKey("/default")) {
+            addServlet("/default", "default", DefaultServlet.class);
+        }
+
         initServlet();
     }
 
@@ -140,9 +148,9 @@ public class ApplicationContext {
             return;
         }
         if (serverInfo.getAddress() == null) {
-            serverInfo.setPort( 8080);
+            serverInfo.setPort(8080);
             serverInfo.setCharset(Charset.forName("UTF-8"));
-            serverInfo.setTimeout( 10000);
+            serverInfo.setTimeout(10000);
             try {
                 serverInfo.setAddress(InetAddress.getByName("localhost"));
             } catch (UnknownHostException e) {

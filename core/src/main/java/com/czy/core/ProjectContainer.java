@@ -59,7 +59,7 @@ public class ProjectContainer implements Closeable {
 
     /*初始化项目*/
     public void initProject() {
-        System.out.println("*******************************容器正在初始化**************************");
+        System.out.println("*******************************业务容器正在初始化**************************");
         try {
             /*读取并设置配置文件application-xx.xml中的数据*/
             reloadBasicCofig();
@@ -70,10 +70,10 @@ public class ProjectContainer implements Closeable {
             /*处理等待自动注入的属性*/
             doWaitAutoFieldMap();
             classList = null;
-            System.out.println("*******************************容器初始化完成**************************");
+            System.out.println("*******************************业务容器初始化完成**************************");
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("*******************************容器初始化失败，退出系统**************************");
+            System.err.println("*******************************业务容器初始化失败，退出系统**************************");
             System.exit(-1);
         }
     }
@@ -125,6 +125,7 @@ public class ProjectContainer implements Closeable {
         String projectGroupId = ProjectInfo.getInstance().getProjectGroupId();
 //        String classPath = this.getClass().getResource("/").getPath() + projectGroupId.replace(".", File.separator);
         classList.addAll(FileUtil.getClassList(ProjectInfo.getInstance().getModuleDir(), projectGroupId));
+        classList.add(ExceptionController.class);
     }
 
     private List<Class> getClassList() {

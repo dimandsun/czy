@@ -44,7 +44,7 @@ public class Dispatch {
             url="/"+url;
         }
         var dataJson=quest.getData();
-        RouteModel routeModel= routeModelMap.get(quest.getQuestMethodEnum().getMsg()+url);
+        RouteModel routeModel= routeModelMap.get(quest.getQuestMethodEnum().toString()+url);
         if (routeModel == null) {
             //再看看是否有可以接受任意请求方式的接口
             routeModel=routeModelMap.get("all"+url);

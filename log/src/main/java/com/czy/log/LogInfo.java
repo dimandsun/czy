@@ -33,7 +33,7 @@ public class LogInfo {
         var log = logMap.get(logName);
         if (log == null) {
             //不写日志文件，只是控制台打印
-            var logSetting = new LogSetting(logName, "%d{yyyy-MM-dd-HH:mm:ss.SSS} [%thread] [%level]: %msg%n", null, LogLevel.ALL, true);
+            var logSetting = new LogSetting(logName, "%d{yyyy-MM-dd-HH:mm:ss.SSS} [%thread] [%logName] [%level]: %msg%n", null, LogLevel.ALL, true);
             log = new Log(logSetting);
             logMap.put(logName, log);
         }

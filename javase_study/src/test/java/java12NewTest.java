@@ -21,10 +21,10 @@ jvm两种模式：编译模式、解释模式
  */
 public class java12NewTest {
     @Test public void switchTest(){
-        var a= ActiveEnum.Dev;
+        var a= ActiveEnum.dev;
         switch (a){
-            case Dev-> System.out.println("ad");
-            case Pro,Test-> System.out.println("asdasd");
+            case dev-> System.out.println("ad");
+            case pro,test-> System.out.println("asdasd");
             default -> System.out.println(123);
         }
     }

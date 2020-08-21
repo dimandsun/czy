@@ -49,6 +49,6 @@ public class RouteModel<Bean> {
     }
 
     public String getRouteKey() {
-        return questMethodEnum.getMsg()+url;
+        return questMethodEnum.toString()+url;
     }
 }

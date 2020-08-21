@@ -10,19 +10,19 @@ public class java13NewTest {
     @Test
     public void switchTest() {
         {
-            var a = ActiveEnum.Dev;
+            var a = ActiveEnum.dev;
             var s = switch (a) {
-                case Dev -> "b";
-                case Pro, Test -> "a";
+                case dev -> "b";
+                case pro , test -> "a";
                 default -> "123";
             };
             System.out.println(s);
         }
         {
-            var a = ActiveEnum.Dev;
+            var a = ActiveEnum.dev;
             var s = switch (a) {
-                case Dev -> "b";
-                case Pro, Test -> "a";
+                case dev -> "b";
+                case pro, test -> "a";
                 default -> {
                     String abc="";
                     yield 12;
@@ -32,10 +32,10 @@ public class java13NewTest {
         }
 
         {
-            var a = ActiveEnum.Dev;
+            var a = ActiveEnum.dev;
             var s = switch (a) {
-                case Dev:yield "123";
-                case Pro, Test :yield "a";
+                case dev:yield "123";
+                case pro, test :yield "a";
                 default:yield 12;
             };
             System.out.println(s);

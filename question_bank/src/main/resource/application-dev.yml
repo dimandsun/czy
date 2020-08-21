@@ -1,3 +1,20 @@
+serverInfo:
+  port: 8080
+  address: 127.0.0.1
+  timeout: 10000
+  charset: UTF-8
+
+logInfo:
+  usePool: true
+  logs:
+    - logName: test
+      dataPattern: '%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%logName] [%level]: %msg%n'
+      filePath: /czy/questionBank/logs/%d{yyyy-MM-dd-HH}/test.log
+      level: INFO #ALL/DEBUG/INFO/WARN/ERROR 要大写
+      consolePrint: true
+
+
+
 dataSources:
   - dataSourceKey: mysql_czy_test
     driverClassName: com.mysql.cj.jdbc.Driver

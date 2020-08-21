@@ -140,7 +140,7 @@ public class Request{
     public String[] getParameterValues(String name) {
         return (String[]) parMap.get(name);
     }
-    public Map<String, Object> getParameterMap() {
+    public StringMap<Object> getParameterMap() {
         return parMap;
     }
 

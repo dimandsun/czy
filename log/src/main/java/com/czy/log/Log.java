@@ -128,12 +128,17 @@ public class Log {
                 var result = logSetting.dataPattern();
                 result = replaceNowStr(result);
                 result = result.replaceAll("%thread", Thread.currentThread().getName());
+                result = result.replaceAll("%logName", logSetting.logName());
                 result = result.replaceAll("%level", level.name());
                 result = result.replaceAll("%msg", data);
                 result = result.replaceAll("%n", Line.separator);
                 if (logSetting.consolePrint()) {
                     /*控制台打印*/
-                    System.out.print(result);
+                    if (level.equals(LogLevel.ERROR)){
+                        System.err.print(result);
+                    }else {
+                        System.out.print(result);
+                    }
                 }
                 if (fileChannel == null || !fileChannel.isOpen()) {
                     return;

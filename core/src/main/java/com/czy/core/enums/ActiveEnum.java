@@ -8,36 +8,21 @@ import com.czy.util.enums.IEnum;
  * @since 2020-05-11
  *  项目环境：开发、生产、测试、默认
  */
-public enum ActiveEnum implements IEnum<Integer> {
-
-    Dev(1,"dev"),Pro(2,"pro"),Test(3,"test"),Default(4,"other");
-
-    ActiveEnum(Integer id, String msg) {
-        this.id = id;
-        this.msg = msg;
-    }
-
-    private Integer id;
-    private String msg;
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public static ActiveEnum getEnum(String active) {
-        if (StringUtil.isBlank(active)){
+public enum ActiveEnum implements IEnum<String> {
+    dev,pro,test,other;
+    public static ActiveEnum getEnum(String name) {
+        if (StringUtil.isBlank(name)){
             return null;
         }
-        for (ActiveEnum activeEnum : ActiveEnum.values()) {
-            if (active.equals(activeEnum.msg)){
-                return activeEnum;
-            }
-        }
-        return null;
+        return ActiveEnum.valueOf(name.toLowerCase());
+    }
+    @Override
+    public String toString() {
+        return getValue();
     }
 
     @Override
-    public Integer getValue() {
-        return id;
+    public String getValue() {
+        return name();
     }
 }
