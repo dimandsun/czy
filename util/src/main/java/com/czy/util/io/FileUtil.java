@@ -91,7 +91,7 @@ public class FileUtil {
 
     /*指定编码格式读取文件*/
     public static String read(File file, Charset charset) {
-        if (file == null || file.exists() || !file.isFile()) {
+        if (file == null || !file.exists() || !file.isFile()) {
             return "";
         }
         try (var fileChannel = new FileInputStream(file).getChannel()) {

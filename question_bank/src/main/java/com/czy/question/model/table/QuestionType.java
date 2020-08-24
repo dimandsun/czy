@@ -2,7 +2,7 @@ package com.czy.question.model.table;
 import com.czy.core.annotation.db.Table;
 /**
  * @author chenzy
- * @date 2020-06-22
+ * @date 2020-08-23
  *  题型-填空、判断、单选、多选、不定项选择、阅读理解、完型填空、翻译、名词解释
  */
 @Table("question_type")

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" name="keywords" content="学习,HTML5,前端,css" />
+    <meta name="description" content="这是从零开始学习html的社区" />
+    <title>proxy实现双向绑定</title>
+    <script>
+      let person = {
+        name: "小明"
+      };
+      person = new Proxy(person, {
+        get(target, key) {
+          console.log('获取了getter属性');
+          return target[key];
+        }
+      });
+      console.log();
+    </script>
+  </head>
+  <body>
+    <header></header>
+    <main></main>
+    <footer></footer>
+  </body>
+</html>

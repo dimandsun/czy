@@ -2,26 +2,19 @@ package com.czy.question.model.table;
 import com.czy.core.annotation.db.Table;
 /**
  * @author chenzy
- * @date 2020-06-22
+ * @date 2020-08-23
  *  科目
  */
 @Table("subject")
 public class Subject {
 	/**/
 	private Integer id;
-	/**/
+	/*科目代码，使用全国统一专业代码*/
 	private String code;
 	/**/
 	private String name;
 	/*说明*/
 	private String des;
-
-	public Subject() {
-	}
-
-	public Subject(String name) {
-		this.name = name;
-	}
 
 	public Integer getId(){
 		return id;

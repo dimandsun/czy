@@ -2,7 +2,7 @@ package com.czy.question.model.table;
 import com.czy.core.annotation.db.Table;
 /**
  * @author chenzy
- * @date 2020-06-22
+ * @date 2020-08-23
  *  多个题目的共同题干，如英语的阅读理解
  */
 @Table("question_group_stem")

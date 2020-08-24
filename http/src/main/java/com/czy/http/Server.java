@@ -58,7 +58,7 @@ public class Server {
         }
         System.err.println("程序销毁完成");
     }
-    public void beforeStop(Consumer consumer) {
+    public void stop(Consumer consumer) {
         stopTask=consumer;
     }
     public void start() {

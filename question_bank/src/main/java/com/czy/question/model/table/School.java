@@ -2,7 +2,7 @@ package com.czy.question.model.table;
 import com.czy.core.annotation.db.Table;
 /**
  * @author chenzy
- * @date 2020-06-22
+ * @date 2020-08-23
  *  学校
  */
 @Table("school")

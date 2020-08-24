@@ -3,8 +3,8 @@ import com.czy.core.annotation.db.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * @author chenzy
- * @date 2020-06-22
- *  作文
+ * @date 2020-08-23
+ *  作文表，暂时不用
  */
 @Table("composition")
 public class Composition {
@@ -16,7 +16,7 @@ public class Composition {
 	private String name;
 	/*英语作文、语文作文*/
 	@JsonProperty("composition_type")
-	private Byte compositionType;
+	private Integer compositionType;
 	/*作文题干*/
 	@JsonProperty("question_id")
 	private Integer questionId;
@@ -46,10 +46,10 @@ public class Composition {
 	public void setName(String name){
 		 this.name=name;
 	}
-	public Byte getCompositionType(){
+	public Integer getCompositionType(){
 		return compositionType;
 	}
-	public void setCompositionType(Byte compositionType){
+	public void setCompositionType(Integer compositionType){
 		 this.compositionType=compositionType;
 	}
 	public Integer getQuestionId(){

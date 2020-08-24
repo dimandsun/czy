@@ -4,7 +4,6 @@ import com.czy.core.ProjectContainer;
 import com.czy.core.model.ProjectInfo;
 import com.czy.http.ApplicationContext;
 import com.czy.http.Server;
-import com.czy.http.servlet.DefaultServlet;
 import com.czy.log.LogFactory;
 import com.czy.util.io.FileUtil;
 import com.czy.util.model.SettingFile;
@@ -25,14 +24,14 @@ public class Main {
         ApplicationContext.instance().load(new SettingFile(null,"application-"+ProjectInfo.getInstance().getActive()+".yml"));
         ApplicationContext.instance().addServlet("/default", "default", DispatchServlet.class);
         var server=new Server();
+        /*开启服务*/
+        server.start();
         /*程序主线程停止时执行*/
-        server.beforeStop(o -> {
+        server.stop(o -> {
             server.close();
             ProjectContainer.getInstance().close();
             LogFactory.close();
         });
-        /*开启服务*/
-        server.start();
         /*var questionController=(QuestionController)projectContainer.getBeanMap().get("questionController").getBean();
         var question=new Question();
         question.setName("adsfasd");
