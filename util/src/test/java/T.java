@@ -1,13 +1,16 @@
 import com.czy.util.enums.ResCodeLevelEnum;
 import com.czy.util.io.FileUtil;
+import com.czy.util.io.office.OfficeFileUtil;
 import com.czy.util.json.JsonUtil;
-import com.czy.util.sqltool.enums.ColumnTypeEnum;
+import com.czy.util.model.StringMap;
 import com.czy.util.text.StringUtil;
 import com.czy.util.time.TimeUtil;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,6 +19,49 @@ import java.util.Map;
  * @since 2020-05-14
  */
 public class T {
+    @Test
+    public void readWord() {
+        var result=OfficeFileUtil.readWord(new File("/czy/file/a.doc"));
+        System.out.println(result);
+    }
+
+    @Test
+    public void readExcel() {
+        {
+            var result =OfficeFileUtil.readExcel(new File("/czy/file/test.xlsx"));
+            System.out.println(result);
+        }
+        var result =OfficeFileUtil.readExcel(new File("/czy/file/b.xls"));
+        System.out.println(result);
+    }
+
+    @Test
+    public void wrteExcel() {
+        var head1=new ArrayList<String>(){{
+            add("姓名");add("年龄");
+        }};
+        var head2=new ArrayList<String>(){{
+            add("姓名2");add("年龄2");
+        }};
+        var data1=new ArrayList<List<Object>>();
+        for (int i = 0; i < 10; i++) {
+            int finalI = i;
+            data1.add(new ArrayList(){{
+                add("陈志源"+ finalI);add(finalI+20);
+            }});
+        }
+        var data2=new ArrayList<List<Object>>();
+        for (int i = 0; i < 10; i++) {
+            int finalI = i;
+            data2.add(new ArrayList(){{
+                add("afds"+ finalI);add(finalI+20);
+            }});
+        }
+        var  dataMap=new StringMap<>(2,"aa",data1).add("bb",data2);
+        var headMap=new StringMap<List<String>>(2,"aa",head1).add("bb",head2);
+        OfficeFileUtil.writeExcel(new File("/czy/file/test.xlsx"),dataMap,headMap);
+    }
+
     @Test
     public void testEnum() {
         var result=JsonUtil.str2Model("1", ResCodeLevelEnum.class);

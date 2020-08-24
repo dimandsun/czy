@@ -9,6 +9,10 @@
     requires cglib;
     requires java.xml;
     requires org.yaml.snakeyaml;
+    requires poi.ooxml;
+    requires poi.scratchpad;
+    requires poi;
+    requires xmlbeans;
     exports com.czy.util;
     exports com.czy.util.model;
     exports com.czy.util.enums;

@@ -45,6 +45,7 @@
         <junit.version>4.12</junit.version>
         <rabbitmq.version>5.9.0</rabbitmq.version>
         <servlet.version>4.0.1</servlet.version>
+        <poi.version>4.1.2</poi.version>
         <czy.version>1.0-SNAPSHOT</czy.version>
 
     </properties>
@@ -108,6 +109,28 @@
                 <version>${junit.version}</version>
                 <scope>test</scope>
             </dependency>
+            <!--读写excel/word-->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-scratchpad</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml-schemas</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
@@ -226,6 +249,17 @@
                         <arg>--enable-preview</arg> <!--使用新版本的预览特性-->
                         <arg>-parameters</arg><!--记录形参真实名-->
                     </compilerArgs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <nonFilteredFileExtensions>
+                        <nonFilteredFileExtension>xlsx</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>xls</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
                 </configuration>
             </plugin>
         </plugins>
