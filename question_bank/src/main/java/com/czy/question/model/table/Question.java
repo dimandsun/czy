@@ -23,7 +23,7 @@ public class Question {
 	/*题干*/
 	private String content;
 	/*题型：填空、判断、单选、多选、不定项选择、阅读理解、完型填空、翻译、名词解释*/
-	@JsonProperty("question_type_id")
+	@JsonProperty("question_type")
 	private Integer questionTypeId;
 	/*说明*/
 	private String des;

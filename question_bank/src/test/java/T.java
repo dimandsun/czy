@@ -10,8 +10,8 @@ public class T {
     @Test public void creatBean() {
         SQLUtil.generateBeanFile("com.czy.question.model.table", "sql.sql", "chenzy");
     }
-    @Test public void byteTest(){
-        byte b = 111;
+    @Test public void IntegerTest(){
+        Integer b = 111;
         int i = b;
     }
 

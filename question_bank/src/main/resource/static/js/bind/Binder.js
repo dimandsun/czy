@@ -1,4 +1,4 @@
-import util from './util.js';
+import util from '../util.js';
 
 /* 
 使用说明，
@@ -31,7 +31,11 @@ import util from './util.js';
 </script>
  */
 export class Binder {
-  constructor({el,methods,data}) {
+  constructor({
+    el,
+    methods,
+    data
+  }) {
     this.$data = data;
     this.$methods = methods;
     /* 初始化绑定对象*/
@@ -84,18 +88,20 @@ export class Binder {
    指令解析器，对每个元素节点的指令进行扫描和解析，根据指令模板替换数据，以及绑定相对应的更新函数
   */
   _compileParent(root) {
-    if (root.hasChildNodes()) {
+    if (root.hasChildNodes() && root.children.length > 0) {
       for (let node of [...root.children]) {
-        this._compileChild(node);
+        this._compileChild(node, true);
       }
-    } else {
-      this._compileChild(root);
     }
+    this._compileChild(root, false);
   }
-  _compileChild(node) {
-    if (node.hasChildNodes()) {
+  _compileChild(node,isRecursion) {
+    if (isRecursion&&node.hasChildNodes() && node.children.length > 0) {
       this._compileParent(node);
     }
+    // <option b-for="qType in qTypeLisst">${qType}</option>
+    
+    
     /* 初始化元素属性(包括监听)*/
     for (let entry of [...node.attributes]) {
       if (entry.name.indexOf(':') !== 0) {
@@ -121,19 +127,23 @@ export class Binder {
         throw new ReferenceError(`绑定器没有为${bindData}的数据或方法`);
       }
     }
-    /* 初始化元素的文本内容*/
-    let text = node['innerHTML'].trim();
-    if (text.indexOf('${') !== -1) {
-      let bindData = util.matchingFirstStr(/\${(?<bindData>[(a-zA-Z_)]*)}/g, text).bindData;
-      if (bindData && (bindData in this.$data)) {
-        /* 绑定的是文本*/
-        /* 初始化文本*/
-        node['innerHTML'] = this.$data[bindData];
-        /* 注册观察者*/
-        this._pushWatcher(bindData, new Watcher(node, 'innerHTML'));
+    /* 初始化元素的文本内容：innerHTML，innerText都不能满足*/
+    for(let cn of[...node.childNodes]){
+      if(cn.nodeType===3){//文本元素
+        if (cn.nodeValue.indexOf('${') !== -1) {
+          let bindData = util.matchingFirstStr(/\${(?<bindData>[(a-zA-Z_)]*)}/g, cn.nodeValue).bindData;
+          if (bindData && (bindData in this.$data)) {
+            /* 绑定的是文本*/
+            /* 初始化文本*/
+            cn.nodeValue = this.$data[bindData];
+            /* 注册观察者*/
+            this._pushWatcher(bindData, new Watcher(cn, 'innerHTML'));
+          }
+        }
       }
     }
   }
+  _compileChild
 }
 /*
  watcher的作用是 链接Observer 和 Compile的桥梁，能够订阅并收到每个属性变动的通知，
@@ -145,6 +155,10 @@ class Watcher {
     this.attr = attr;
   }
   update(value) {
+    if(this.node.nodeType==3){
+     this.node.nodeValue=value;
+    }else{
     this.node[this.attr] = value;
+    }
   }
 }

@@ -30,7 +30,7 @@ create table question(
 	,subject_id int comment '所属科目'
 	,question_group_stem int comment '题干的题干，如阅读理解关联的是阅读理解的文章'
 	,content nvarchar(20) comment '题干'
-	,question_type_id int comment '题型：填空、判断、单选、多选、不定项选择、阅读理解、完型填空、翻译、名词解释'
+	,question_type int comment '题型：填空、判断、单选、多选、不定项选择、阅读理解、完型填空、翻译、名词解释'
 	,des nvarchar(20) comment '说明'
 	,option_type int comment '选项类型-英文字母、阿拉伯数字、判断对错、文本、其他'
 	,option1 nvarchar(200) comment '选项1'
