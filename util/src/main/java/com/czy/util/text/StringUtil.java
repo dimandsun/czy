@@ -31,7 +31,15 @@ public class StringUtil {
         }
         return result;
     }
-
+    public static String replaceALL(String str, String pattern, List values) {
+        if (values==null||values.isEmpty()||isBlank(str)){
+            return str;
+        }
+        for (Object value:values){
+            str=str.replaceFirst(pattern,value+"");
+        }
+        return str;
+    }
     public static String filterHtml(String htmlStr) {
         if (isBlank(htmlStr)) {
             return "";

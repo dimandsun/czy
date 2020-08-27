@@ -11,6 +11,10 @@ import java.util.stream.Collectors;
  * @date 2020-07-16
  */
 public class Te {
+    @Test
+    public void str() {
+        System.out.println("systemTime".split("\\."));
+    }
 
     @Test
     public void aVoid() {

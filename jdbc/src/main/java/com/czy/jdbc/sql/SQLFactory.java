@@ -12,8 +12,7 @@ import com.czy.util.model.StringMap;
 import com.czy.util.list.MapUtil;
 import com.czy.util.text.StringUtil;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +31,12 @@ public class SQLFactory {
         sql = sql.replace("${tableName}", tableName);
         T result = null;
         try {
-            result = sqlClass.getDeclaredConstructor(String.class, List.class).newInstance(sql, new ArrayList<>());
+            var resultSetType=switch (sqlTypeEnum){
+                case Insert -> ResultTypeEnum.PrimaryKey;
+                case Select -> ResultTypeEnum.RecordList;
+                case Delete, Update, Truncate, Create, Drop, Alter, Other -> ResultTypeEnum.AffectedLines;
+            };
+            result = sqlClass.getDeclaredConstructor(PreSql.class, ResultTypeEnum.class).newInstance(new PreSql(sql, new ArrayList<>()), resultSetType);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -68,13 +72,27 @@ public class SQLFactory {
                 //sql类型
                 Class<T> sqlClass = sqlTypeEnum.getSqlClass();
                 //创建sql对象 PreSql preSql, ResultTypeEnum returnType
-                T result = sqlClass.getDeclaredConstructor(PreSql.class, ResultTypeEnum.class).newInstance(new PreSql(sqlValue, new ArrayList<>()), resultSetType);
-                result.setResultType(resultSetType);
-                result.setReturnJavaType(method.getReturnType());
-                var parameters = method.getParameters();
-                //没有参数
+                T sqlBuilder = sqlClass.getDeclaredConstructor(PreSql.class, ResultTypeEnum.class).newInstance(new PreSql(sqlValue, new ArrayList<>()), resultSetType);
+                sqlBuilder.setResultType(resultSetType);
+                sqlBuilder.setReturnJavaType(method.getReturnType());
+                /*解析方法返回类型：暂时只支持List<Bean>形式泛型*/
+                Type type=method.getGenericReturnType();
+                if(type instanceof ParameterizedType){
+                    ParameterizedType type1= (ParameterizedType) type;
+                    if(type1.getRawType()==List.class){
+                        Type[] typeArguments = type1.getActualTypeArguments();
+                        if (typeArguments!=null&&typeArguments.length>0){
+                            sqlBuilder.setReturnJavaType((Class) typeArguments[0]);
+                        }
+                    }
+                }
+                if (sqlBuilder.getReturnJavaType()==null){
+                    sqlBuilder.setReturnJavaType(method.getReturnType());
+                }
+                /*解析方法参数*/
+                Parameter[] parameters = method.getParameters();
                 if (parameters == null || parameters.length == 0) {
-                    return result;
+                    return sqlBuilder;
                 }
                 if (parameters.length != args.length) {
                     throw new DaoException("方法参数长度错误！");
@@ -106,27 +124,27 @@ public class SQLFactory {
                     }
                 }
                 if (valueMap.isEmpty()) {
-                    return result;
+                    return sqlBuilder;
                 }
                 /*对sql中的占位标记${}用实际值代替*/
                 {
                     int i = -1, j = -1;
                     while ((i = sqlValue.indexOf("${")) != -1 && (j = sqlValue.indexOf("}")) != -1) {
                         var temp=sqlValue.substring(i + 2, j);
-                        var value = MapUtil.getValue(valueMap,temp.contains(".")?temp.split("."):temp).get();
+                        var value = MapUtil.getValue(valueMap,temp.contains(".")?temp.split("\\."):temp).get();
                         sqlValue = sqlValue.substring(0, i) + value + sqlValue.substring(j + 1);
                     }
                 }
-                result.getBasicPreSql().setSql(sqlValue);
+                sqlBuilder.getBasicPreSql().setSql(sqlValue);
                 /*
                 对sql中的占位标记#[]用#{}代替
                     $[]用${}代替
                 这些占位标记表示接受的是setBean或者whereBean
                 */
-                if (setParKey != null && result instanceof SetColumnValues setColumnValues) {
+                if (setParKey != null && sqlBuilder instanceof SetColumnValues setColumnValues) {
                     setColumnValues.setColumnValues((Map) valueMap.get(setParKey));
                 }
-                if (whereParKey != null && result instanceof WhereColumnValues whereColumnValues) {
+                if (whereParKey != null && sqlBuilder instanceof WhereColumnValues whereColumnValues) {
                     whereColumnValues.whereColumnValues((Map) valueMap.get(setParKey));
                 }
 
@@ -135,7 +153,7 @@ public class SQLFactory {
                 */
                 var orderMarking = new ArrayList<String>();
                 {
-                    sqlValue=result.getEndSql().getSql();
+                    sqlValue=sqlBuilder.getEndSql().getSql();
                     int i = -1, j = -1;
                     while ((i = sqlValue.indexOf("#{")) != -1 && (j = sqlValue.indexOf("}")) != -1) {
                         orderMarking.add(sqlValue.substring(i + 2, j));
@@ -143,10 +161,10 @@ public class SQLFactory {
                     }
                 }
                 /*对这些顺序标记给上真正的值*/
-                orderMarking.forEach(marking -> result.getEndSql().add(MapUtil.getValue(valueMap, marking.split(".")).get()));
-                result.getEndSql().setSql(sqlValue);
-                result.getEndSql().isEnd(true);
-                return result;
+                orderMarking.forEach(marking -> sqlBuilder.getEndSql().add(MapUtil.getValue(valueMap, marking.split(".")).get()));
+                sqlBuilder.getEndSql().setSql(sqlValue);
+                sqlBuilder.getEndSql().isEnd(true);
+                return sqlBuilder;
             }
         } catch (NoSuchMethodException e) {
             e.printStackTrace();

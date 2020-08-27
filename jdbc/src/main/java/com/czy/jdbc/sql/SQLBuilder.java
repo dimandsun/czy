@@ -5,6 +5,7 @@ import com.czy.jdbc.exception.SQLParseException;
 import com.czy.jdbc.sql.enums.ResultTypeEnum;
 import com.czy.log.Log;
 import com.czy.log.LogFactory;
+import com.czy.util.text.StringUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -85,7 +86,7 @@ public class SQLBuilder<T> {
         var dataSource = DataSourceHolder.getInstance().get();
         var values = preSql.getValues();
         PreparedStatement ps = null;
-        String sqlMsg = null;
+        var sqlMsg = StringUtil.replaceALL(getEndSql().getSql(),"\\?",values);
         try (var con = dataSource.getConnection()) {
             ps = getPreparedStatement(con);
             if (ps == null) {
@@ -94,11 +95,10 @@ public class SQLBuilder<T> {
             for (int i = 1; i <= values.size(); i++) {
                 ps.setObject(i, values.get(i-1));
             }
-            sqlMsg=ps.toString();
-            log.debug(ps.toString());
+            log.debug(sqlMsg);
             return getResult(ps);
         } catch (SQLException e) {
-            log.error(sqlMsg==null?ps.toString():sqlMsg);
+            log.error(sqlMsg);
             e.printStackTrace();
             return null;
         } finally {

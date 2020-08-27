@@ -75,7 +75,7 @@ public class PreSql {
         if (StringUtil.isBlank(value)){
             return this;
         }
-        values.add(values);
+        values.add(value);
         return this;
     }
 }
