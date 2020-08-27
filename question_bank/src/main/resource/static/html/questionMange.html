@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="全学科，题库系统" />
+    <meta name="description" content="全学科免费题库系统" />
+    <title>全学科免费题库系统</title>
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <form action="/question" id="qForm">
+        <input type="hidden" name="_method" value="put"/>
+        <label for="qType">题型：</label>
+        <input type="text" list="qTypeList" name="questionType" id="qType">
+       <datalist id="qTypeList">
+         <option b-for="qType of qTypeList">{{qType}}</option>
+       </datalist>
+       <label>{{title}}</label><br/>
+        <label>{{user.name}}</label>
+      </form>
+    </main>
+    <footer></footer>
+  </body>
+  <script type="module">
+    import {Binder} from '../js/app.js';
+    let binder = new Binder({
+      el: '#qForm',
+      data: {
+        qTypeList: ['填空','判断','单选','多选','不定项选择','名词解释','简答','阅读理解','完型填空','英译汉'
+        ,'汉译英','作文'],
+        title:'测试',
+        user:{name:'小红',age:18},
+      },
+      methods: {
+        add() {
+        },
+        reduce() {
+        }
+      }
+    });
+  </script>
+</html>
