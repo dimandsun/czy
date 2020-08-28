@@ -52,7 +52,7 @@ public class SQLUtil {
         if (!sqlContents.contains(";")) {
             return;
         }
-        String[] sqlContentA = StringUtil.trimSpace(sqlContents.toLowerCase()).split(";");
+        String[] sqlContentA = StringUtil.eraseSpace(sqlContents.toLowerCase()).split(";");
         String sqlStart = "create table ";
         String tableDesStart = ")comment=";
         /*循环解析每个建表语句*/

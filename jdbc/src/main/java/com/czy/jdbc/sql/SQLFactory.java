@@ -153,7 +153,7 @@ public class SQLFactory {
                 */
                 var orderMarking = new ArrayList<String>();
                 {
-                    sqlValue=sqlBuilder.getEndSql().getSql();
+                    sqlValue=sqlBuilder.beforeExec().getSql();
                     int i = -1, j = -1;
                     while ((i = sqlValue.indexOf("#{")) != -1 && (j = sqlValue.indexOf("}")) != -1) {
                         orderMarking.add(sqlValue.substring(i + 2, j));
@@ -161,9 +161,9 @@ public class SQLFactory {
                     }
                 }
                 /*对这些顺序标记给上真正的值*/
-                orderMarking.forEach(marking -> sqlBuilder.getEndSql().add(MapUtil.getValue(valueMap, marking.split(".")).get()));
-                sqlBuilder.getEndSql().setSql(sqlValue);
-                sqlBuilder.getEndSql().isEnd(true);
+                orderMarking.forEach(marking -> sqlBuilder.beforeExec().add(MapUtil.getValue(valueMap, marking.split(".")).get()));
+                sqlBuilder.beforeExec().setSql(sqlValue);
+                sqlBuilder.beforeExec().isEnd(true);
                 return sqlBuilder;
             }
         } catch (NoSuchMethodException e) {
@@ -227,7 +227,7 @@ public class SQLFactory {
      * @return
      */
     public static String truncateTable(String tableName) {
-        return createSQL(SQLTypeEnum.Truncate, tableName, TruncateSQLBuilder.class).getEndSql().getSql();
+        return createSQL(SQLTypeEnum.Truncate, tableName, TruncateSQLBuilder.class).beforeExec().getSql();
     }
 
     /**
@@ -237,7 +237,7 @@ public class SQLFactory {
      * @return
      */
     public static String dropTable(String tableName) {
-        return createSQL(SQLTypeEnum.Truncate, tableName, DropSQLBuilder.class).getEndSql().getSql();
+        return createSQL(SQLTypeEnum.Truncate, tableName, DropSQLBuilder.class).beforeExec().getSql();
     }
 
     /**

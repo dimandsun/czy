@@ -6,6 +6,7 @@ import com.czy.log.Log;
 import com.czy.log.LogFactory;
 import com.czy.util.model.StringMap;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -29,7 +30,7 @@ public class JDBCUtil {
             Object result = SQLFactory.insert(tableName, columnMap).exec();
             System.out.println(result);
             return true;
-        } catch (SQLParseException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
             return false;
         }
@@ -44,7 +45,7 @@ public class JDBCUtil {
             Object result = SQLFactory.update(tableName, setMap, whereMap).exec();
             System.out.println(result);
             return true;
-        } catch (SQLParseException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
             return false;
         }
@@ -58,7 +59,7 @@ public class JDBCUtil {
             Object result = SQLFactory.delete(tableName, whereMap).exec();
             System.out.println(result);
             return true;
-        } catch (SQLParseException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
             return false;
         }
@@ -72,7 +73,7 @@ public class JDBCUtil {
             Object result = SQLFactory.select(tableName, whereMap).exec();
             System.out.println(result);
             return (List<StringMap>) result;
-        } catch (SQLParseException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
             return null;
         }

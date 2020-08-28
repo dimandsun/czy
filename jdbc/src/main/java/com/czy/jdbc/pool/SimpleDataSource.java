@@ -59,13 +59,12 @@ public class SimpleDataSource implements DataSource {
         if (con.isClosed()) {
             con.isClosed(false);
         }
-        var connection = con.get();
-        if (connection.isClosed()) {
+        if (con.get().isClosed()) {
             realClose(con);
             return getConnection();
 //            throw new ConnectionClosedException("连接已关闭");
         }
-        return connection;
+        return con;
     }
     private void addConnection() throws SQLException {
         if (curConnectNum>maxConnectNum){

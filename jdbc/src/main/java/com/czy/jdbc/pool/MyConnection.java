@@ -10,7 +10,7 @@ import java.util.concurrent.Executor;
  * @author chenzy
  * @date 2020-07-16
  */
-public class MyConnection implements AutoCloseable{
+public class MyConnection implements Connection{
     private Connection connection;
     private SimpleDataSource dataSource;
     private Boolean isClosed = false;

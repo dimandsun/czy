@@ -51,7 +51,7 @@ public class UpdateSQLBuilder extends SQLBuilder implements SetColumnValues, Whe
     }
 
     @Override
-    public PreSql getEndSql() {
+    public PreSql beforeExec() {
         var preSql = getBasicPreSql();
         if (!preSql.isEnd()) {
             preSql.isEnd(true);

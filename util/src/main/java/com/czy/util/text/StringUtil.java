@@ -79,6 +79,12 @@ public class StringUtil {
         return null;
     }
 
+    /**
+     * msg中的{}用pars代替
+     * @param msg
+     * @param pars
+     * @return
+     */
     public static String join(String msg, Object... pars) {
         if (msg == null || !msg.contains("{}") || pars == null || pars.length == 0) {
             return msg;
@@ -135,13 +141,21 @@ public class StringUtil {
     }
 
     /**
-     * 多个空格转成一个空格
-     * 不只是首尾空格
+     * 擦除首尾空格，文本内部多个空格转成一个空格
      * @param str
      * @return
      */
-    public static String trimSpace(String str) {
-        return Pattern.compile("\\s+").matcher(str).replaceAll(" ");
+    public static String eraseSpace(String str) {
+        return Pattern.compile("\\s+").matcher(str.strip()).replaceAll(" ");
+    }
+
+    /**
+     * 擦除中文
+     * @param str
+     * @return
+     */
+    public static String eraseChinese(String str) {
+        return Pattern.compile("[\u4e00-\u9fa5]").matcher(str).replaceAll("");
     }
 
     /**
@@ -192,76 +206,6 @@ public class StringUtil {
         }
         return result;
     }
-
-    public static String trim(String str) {
-        if (str == null || str.length() < 1) {
-            return str;
-        }
-        /**
-         * 去除左边空格
-         */
-        Integer index = str.indexOf(" ");
-        //左边可能存在多个空格
-        while (index == 0) {
-            //str为" "
-            if (str.length() == 1) {
-                return "";
-            } else {
-                str = str.substring(1);
-            }
-            index = str.indexOf(" ");
-        }
-        //去除右边空格
-        index = str.lastIndexOf(" ");
-        while (index == str.length() - 1) {
-            if (str.length() == 1) {
-                return "";
-            } else {
-                str = str.substring(0, index);
-            }
-            index = str.lastIndexOf(" ");
-        }
-        return str;
-    }
-
-    public static String spaceReplaceLR(final String msg) {
-        if (msg == null || msg.equals(""))
-            return msg;
-        char[] char_msg = msg.toCharArray();
-
-        int left_space = 0;
-        // 左边空格部分
-        for (int i = 0; i < char_msg.length; i++) {
-            // 是空格的处理过程
-            if (char_msg[i] == ' ') {
-                left_space++;
-                continue;
-            } else
-                break;
-        }
-        // 右边空格部分
-        int right_space = 0;
-        for (int i = char_msg.length - 1; i >= 0; i--) {
-            // 是空格的处理过程
-            if (char_msg[i] == ' ') {
-                right_space++;
-                continue;
-            } else
-                break;
-        }
-        // 大部分情况下，认为是不需要取空格可以直接返回的
-        if (left_space == 0 && right_space == 0)
-            return msg;
-        // 取需要获取的值
-        char[] retVal = new char[msg.length() - (left_space + right_space)];
-
-        for (int i = 0; i < retVal.length; i++) {
-            retVal[i] = char_msg[left_space + i];
-        }
-
-        return String.valueOf(retVal);
-    }
-
     /**
      * 随机生成6位数(字母加数字)
      */
@@ -276,7 +220,6 @@ public class StringUtil {
         }
         return sb.toString();
     }
-
     /**
      * 都不为空
      *
@@ -519,25 +462,6 @@ public class StringUtil {
         }
         String[] arrayResult = new String[matchList.size()];
         return matchList.toArray(arrayResult);
-    }
-
-    /**
-     * studentid=140000000000389509*_typeid=6*_schoolid=1#?managerflag=0*_machineid=9912120600000339*_machinetypeid=02
-     * 把字符串转换为标准json字符串
-     */
-    public static String getStandardJsonString(String data) {
-        if (isBlank(data)) {
-            return null;
-        }
-        data = data.replaceAll("\\*_", "\",\"").replaceAll("#\\?", "\",\"").replaceAll("=", "\":\"");
-        data = "\"" + data + "\"";
-        if (!data.startsWith("{")) {
-            data = "{" + data;
-        }
-        if (!data.endsWith("}")) {
-            data += "}";
-        }
-        return data;
     }
 
     /**
@@ -833,41 +757,7 @@ public class StringUtil {
     }
 
 
-    public static void main(String[] args) throws JsonProcessingException {
-/*
-        String value ="studentid=140000000000389509*_typeid=6#?schoolid=1#?managerflag=0*_machineid=9912120600000339*_machinetypeid=02*_machinever=02*_machinedata=1B82A0FC2BB87582*_machinerandom=557EA8BD*_possystemtime=571B5A2F665E*_alleywaytype=0*_rand=J1T6AP*_clienttype=4*_model=1*_openid=o7BVO5RgHrtjYh0mE7orcYV4_dyY*_sub_appid=wx877f28b5cf3006ca*_version=1*_stateinfo=00";
-//        value ="studentid=140000000000389509";
-        value = value.replaceAll("\\*_","\",\"").replaceAll("#\\?","\",\"").replaceAll("=","\":\"");
-        value = "{\""+value+"\"}";
-//        PosDataQO authOrAnalysis = JsonUtil.str2Model(value,PosDataQO.class);
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonString = "{\"_index\":\"book_shop\",\"_type\":\"it_book\",\"_id\":\"1\",\"_score\":1.0," +
-                "\"_source\":{\"name\": \"Java编程思想（第4版）\",\"author\": \"[美] Bruce Eckel\",\"category\": \"编程语言\"," +
-                "\"price\": 109.0,\"publisher\": \"机械工业出版社\",\"date\": \"2007-06-01\",\"tags\": [ \"Java\", \"编程语言\" ]}}";
-        Mapping<String,Object>  a = objectMapper.readValue(jsonString, HashMap.class);
-        System.out.println(a);
-*/
-//        String a = "Aa";
-//        System.out.println(upFirst(a));
-        {
-//            System.out.println(getGroupId());
-            String str = "public abstract java.util.Map com.czy.frame.javafx.test.dao.ITestDao.get(com.czy.frame.model.MyMap)";
-            String par = "public * com.czy.frame.javafx.test.dao..*.*(..)";
-            str = "public abstract java.util.Map com.czy.frame.javafx.test.dao.ITestDao.get(com.czy.frame.model.MyMap)";
-            par = "public.* com.czy.frame.javafx.test.dao..*.*(..)";
-//            System.out.println(matcher(str, par));
-        }
-        {
-            String packageName = "cn.lexiaotongvip.www..*model..*dao.*";
-            Boolean result = StringUtil.matcher("cn.lexiaotongvip.www.machine.model.dao.MachinePO", packageName);
-//            System.out.println(result);
-            String projectGroupId = "cn.lexiaotongvip.www";
-            String classPath = StringUtil.class.getResource("/").getPath() + projectGroupId.replace(".", File.separator);
-            List<Class> classList = FileUtil.getClassList(classPath, projectGroupId);
-            System.out.println(classList.size());
-        }
-
-
+    public static void main(String[] args) {
     }
 
 

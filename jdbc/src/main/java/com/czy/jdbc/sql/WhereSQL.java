@@ -27,11 +27,11 @@ public class WhereSQL {
         return Optional.of(preSql);
     }
     public WhereSQL and(){
-        preSql.append("and ");
+        preSql.addSQLText("and ");
         return this;
     }
     public WhereSQL or(){
-        preSql.append("or ");
+        preSql.addSQLText("or ");
         return this;
     }
     /**
@@ -80,15 +80,16 @@ public class WhereSQL {
     public <T> WhereSQL likeRight(String columnName, T value){
         return setWhereSql(RelationEnum.LikeRight,columnName,value);
     }
-
-
     private <T> WhereSQL setWhereSql(RelationEnum relationEnum, String columnName, T value){
         if (StringUtil.isBlankOr(columnName,value)){
             return this;
         }
-        preSql.append(columnName+relationEnum.getValue());
-        var temp=relationEnum.getValue().replace("#{value}",value.toString());
-        preSql.add(temp);
+        if (preSql.isEmptyPar()){
+            preSql.addSQLText(columnName+relationEnum.getValue());
+        }else {
+            preSql.addSQLText(" and "+columnName+relationEnum.getValue());
+        }
+        preSql.addPar(value);
         return this;
     }
 }

@@ -17,15 +17,31 @@ import java.util.Optional;
  * @date 2020-07-21
  */
 public class SelectSQLBuilder<T> extends SQLBuilder<T> implements WhereColumnValues {
-
-
     private WhereSQL whereSQL;
     private PreSql orderPreSql;
+    private List<String> columnList;
 
     public SelectSQLBuilder(PreSql preSql, ResultTypeEnum returnType) {
         super(preSql, returnType);
+        columnList = new ArrayList<>();
     }
-
+    public SelectSQLBuilder selectColumns(String... columns) {
+        if (columns == null) {
+            return this;
+        }
+        for (int i = 0; i < columns.length; i++) {
+            String temp = columns[i];
+            if (StringUtil.isBlank(temp)) {
+                continue;
+            } else if (temp.contains(",")) {
+                String[] temps = temp.split(",");
+                selectColumns(temps);
+            } else {
+                columnList.add(temp);
+            }
+        }
+        return this;
+    }
     public WhereSQL where() {
         return whereSQL == null ? whereSQL = new WhereSQL(new PreSql(" where ", new ArrayList<>())) : whereSQL;
     }
@@ -60,10 +76,10 @@ public class SelectSQLBuilder<T> extends SQLBuilder<T> implements WhereColumnVal
         if (orderPreSql == null) {
             orderPreSql = new PreSql("order by ? ?", new ArrayList<>());
         } else {
-            orderPreSql.append(",? ?");
+            orderPreSql.addSQLText(",? ?");
         }
-        orderPreSql.add(columnName);
-        orderPreSql.add(orderBy);
+        orderPreSql.addPar(columnName);
+        orderPreSql.addPar(orderBy);
         return this;
     }
     @Override
@@ -77,13 +93,21 @@ public class SelectSQLBuilder<T> extends SQLBuilder<T> implements WhereColumnVal
     }
 
     @Override
-    public PreSql getEndSql() {
+    public PreSql beforeExec() {
         var preSql = getBasicPreSql();
         if (!preSql.isEnd()) {
+            if (!columnList.isEmpty()){
+                String temp=columnList.toString();
+                preSql.replace("\\$\\[columns\\]", temp.substring(1, temp.length() - 1));
+            }
             if (whereSQL != null) {
                 preSql.append(whereSQL.getEndSql());
             }
             preSql.append(Optional.ofNullable(orderPreSql));
+            if (ResultTypeEnum.RecordOne.equals(getResultType())){
+//                preSql.append(" limit 1");
+                preSql.replace("(?i)select ","select top 1 ");
+            }
             preSql.isEnd(true);
         }
         return preSql;

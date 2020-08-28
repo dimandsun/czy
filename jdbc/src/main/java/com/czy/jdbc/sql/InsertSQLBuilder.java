@@ -34,8 +34,8 @@ public class InsertSQLBuilder<T> extends SQLBuilder<T> implements SetColumnValue
 
     protected PreparedStatement getPreparedStatement(Connection con) throws SQLException {
         return switch (getResultType()) {
-            case PrimaryKey -> con.prepareStatement(getEndSql().getSql(), Statement.RETURN_GENERATED_KEYS);
-            default -> con.prepareStatement(getEndSql().getSql());
+            case PrimaryKey -> con.prepareStatement(beforeExec().getSql(), Statement.RETURN_GENERATED_KEYS);
+            default -> con.prepareStatement(beforeExec().getSql());
         };
     }
 

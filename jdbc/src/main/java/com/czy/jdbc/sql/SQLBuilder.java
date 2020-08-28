@@ -36,7 +36,7 @@ public class SQLBuilder<T> {
         this.returnJavaType = returnJavaType;
     }
 
-    public PreSql getEndSql() {
+    public PreSql beforeExec() {
         var preSql = getBasicPreSql();
         if (!preSql.isEnd()) {
             preSql.isEnd(true);
@@ -67,7 +67,7 @@ public class SQLBuilder<T> {
      * @throws SQLException
      */
     protected PreparedStatement getPreparedStatement(Connection con) throws SQLException {
-        return con.prepareStatement(getEndSql().getSql());
+        return con.prepareStatement(beforeExec().getSql());
     }
 
     /**
@@ -79,14 +79,14 @@ public class SQLBuilder<T> {
     protected Object getResult(PreparedStatement ps) throws SQLException {
         return ps.executeUpdate();
     }
-    public final Object exec() throws SQLParseException {
+    public final Object exec() throws SQLException {
         if (!preSql.isEnd()) {
             throw new SQLParseException("sql解析未结束");
         }
         var dataSource = DataSourceHolder.getInstance().get();
-        var values = preSql.getValues();
+        var values = preSql.getPars();
         PreparedStatement ps = null;
-        var sqlMsg = StringUtil.replaceALL(getEndSql().getSql(),"\\?",values);
+        var sqlMsg = StringUtil.replaceALL(beforeExec().getSql(),"\\?",values);
         try (var con = dataSource.getConnection()) {
             ps = getPreparedStatement(con);
             if (ps == null) {
@@ -98,9 +98,8 @@ public class SQLBuilder<T> {
             log.debug(sqlMsg);
             return getResult(ps);
         } catch (SQLException e) {
-            log.error(sqlMsg);
-            e.printStackTrace();
-            return null;
+            log.error(sqlMsg,e);
+            throw e;
         } finally {
             if (ps != null) {
                 try {

@@ -13,7 +13,7 @@ import java.util.Optional;
  */
 public class PreSql {
     private String sql;
-    private List<Object> values;
+    private List<Object> pars;
     /*sql拼接到末尾了*/
     private Boolean isEnd=false;
 
@@ -32,50 +32,56 @@ public class PreSql {
         this.sql = sql;
     }
 
-    public void append(String sql) {
+    public void addSQLText(String sql) {
         this.sql += sql;
     }
-
     public PreSql append(Optional<PreSql> preSql) {
         preSql.ifPresent(sql -> {
             this.sql += sql.sql;
-            this.values.addAll(sql.getValues());
+            this.pars.addAll(sql.getPars());
         });
         return this;
     }
-    public PreSql replace(String marking, Optional<PreSql> preSql) {
+    public PreSql replace(String reg, String value) {
+        this.sql = this.sql.replaceAll(reg,value);
+        return this;
+    }
+    public PreSql replace(String reg, Optional<PreSql> preSql) {
         preSql.ifPresent(sql -> {
-            this.sql = this.sql.replace(marking,sql.getSql());
-            this.values.addAll(sql.getValues());
+            this.sql = this.sql.replaceAll(reg,sql.getSql());
+            this.pars.addAll(sql.getPars());
         });
         return this;
     }
-    public List<Object> getValues() {
-        return List.copyOf(values);
+    public List<Object> getPars() {
+        return List.copyOf(pars);
     }
 
-    public void setValues(List<Object> values) {
-        this.values = values;
+    public void setPars(List<Object> pars) {
+        this.pars = pars;
     }
 
 
-    public PreSql(String sql, List<Object> values) {
+    public PreSql(String sql, List<Object> pars) {
         this.sql = sql;
-        this.values = values;
+        this.pars = pars;
     }
 
-    public PreSql addAll(Collection values) {
-        if (values==null||values.isEmpty()){
+    public PreSql addPars(Collection pars) {
+        if (pars==null||pars.isEmpty()){
             return this;
         }
-        this.values.addAll(values);
+        this.pars.addAll(pars);
         return this;
     }
-    public PreSql add(Object value) {
-        if (StringUtil.isBlank(value)){
+    public PreSql addPar(Object par) {
+        if (StringUtil.isBlank(par)){
             return this;
         }
-        values.add(value);
+        this.pars.add(par);
         return this;
+    }
+    public boolean isEmptyPar() {
+        return this.pars==null||this.pars.isEmpty();
     }
 }
