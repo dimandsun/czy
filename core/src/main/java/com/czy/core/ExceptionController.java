@@ -21,6 +21,6 @@ public class ExceptionController {
 
     @Mapping("/error_500")
     public ResultVO error_500(){
-        return new ResultVO(ResCodeEnum.DBExce);
+        return new ResultVO(ResCodeEnum.BusExce);
     }
 }

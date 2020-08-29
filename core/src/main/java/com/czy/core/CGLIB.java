@@ -93,7 +93,7 @@ public class CGLIB implements MethodInterceptor {
             return methodProxy.invokeSuper(target, args);
         }catch (IllegalAccessException e) {
             log.error("切面异常!", e);
-            return new ResultVO<>(ResCodeEnum.BusInExce,"切面异常");
+            return new ResultVO<>(ResCodeEnum.BusExce,"切面异常");
         } catch (InvocationTargetException e) {
             throw e.getTargetException();
         } catch (Throwable throwable) {
