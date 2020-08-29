@@ -42,6 +42,20 @@ public class PreSql {
         });
         return this;
     }
+    public PreSql addPars(Collection pars) {
+        if (pars==null||pars.isEmpty()){
+            return this;
+        }
+        this.pars.addAll(pars);
+        return this;
+    }
+    public PreSql addPar(Object par) {
+        if (StringUtil.isBlank(par)){
+            return this;
+        }
+        this.pars.add(par);
+        return this;
+    }
     public PreSql replace(String reg, String value) {
         this.sql = this.sql.replaceAll(reg,value);
         return this;
@@ -67,20 +81,7 @@ public class PreSql {
         this.pars = pars;
     }
 
-    public PreSql addPars(Collection pars) {
-        if (pars==null||pars.isEmpty()){
-            return this;
-        }
-        this.pars.addAll(pars);
-        return this;
-    }
-    public PreSql addPar(Object par) {
-        if (StringUtil.isBlank(par)){
-            return this;
-        }
-        this.pars.add(par);
-        return this;
-    }
+
     public boolean isEmptyPar() {
         return this.pars==null||this.pars.isEmpty();
     }

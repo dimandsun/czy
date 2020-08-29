@@ -27,14 +27,14 @@ public class SQLFactory {
     }
 
     private static <T extends SQLBuilder> T createSQL(SQLTypeEnum sqlTypeEnum, String tableName, Class<T> sqlClass) {
-        var sql = sqlTypeEnum.getMsg();
+        var sql = sqlTypeEnum.getSqlTemplate();
         sql = sql.replace("${tableName}", tableName);
         T result = null;
         try {
             var resultSetType=switch (sqlTypeEnum){
                 case Insert -> ResultTypeEnum.PrimaryKey;
                 case Select -> ResultTypeEnum.RecordList;
-                case Delete, Update, Truncate, Create, Drop, Alter, Other -> ResultTypeEnum.AffectedLines;
+                case Delete, Update, Truncate, Create, Drop, Alter, Liberty -> ResultTypeEnum.AffectedLines;
             };
             result = sqlClass.getDeclaredConstructor(PreSql.class, ResultTypeEnum.class).newInstance(new PreSql(sql, new ArrayList<>()), resultSetType);
         } catch (InstantiationException e) {
@@ -48,7 +48,9 @@ public class SQLFactory {
         }
         return result;
     }
-
+    public static SQLBuilder createSQL(String sql,Object... args){
+        return new SQLBuilder(new PreSql(sql,List.of(args)),ResultTypeEnum.AffectedLines);
+    }
     public static <T extends SQLBuilder> T createSQL(Method method, Object[] args) throws DaoException {
         try {
             for (var annotation : method.getAnnotations()) {
@@ -65,7 +67,7 @@ public class SQLFactory {
                 //sql语句
                 String sqlValue = (String) sqlValueMethod.invoke(annotation);
                 if (StringUtil.isBlank(sqlValue)) {
-                    sqlValue = sqlTypeEnum.getMsg();
+                    sqlValue = sqlTypeEnum.getSqlTemplate();
                 }
                 //sql结果集返回类型
                 ResultTypeEnum resultSetType = (ResultTypeEnum) sqlReturnTypeMethod.invoke(annotation);
@@ -135,7 +137,7 @@ public class SQLFactory {
                         sqlValue = sqlValue.substring(0, i) + value + sqlValue.substring(j + 1);
                     }
                 }
-                sqlBuilder.getBasicPreSql().setSql(sqlValue);
+                sqlBuilder.getPreSql().setSql(sqlValue);
                 /*
                 对sql中的占位标记#[]用#{}代替
                     $[]用${}代替
@@ -161,7 +163,7 @@ public class SQLFactory {
                     }
                 }
                 /*对这些顺序标记给上真正的值*/
-                orderMarking.forEach(marking -> sqlBuilder.beforeExec().add(MapUtil.getValue(valueMap, marking.split(".")).get()));
+                orderMarking.forEach(marking -> sqlBuilder.beforeExec().addPar(MapUtil.getValue(valueMap, marking.split(".")).get()));
                 sqlBuilder.beforeExec().setSql(sqlValue);
                 sqlBuilder.beforeExec().isEnd(true);
                 return sqlBuilder;
@@ -204,6 +206,12 @@ public class SQLFactory {
         sql.setColumnValues(columnMap);
         whereMap.forEach((BiConsumer<String, Object>) (key, value) -> sql.where().equal(key, value));
         return sql;
+    }
+    public static <T> SelectSQLBuilder<List<T>> selectList(String tableName, Class<T> returnType) {
+        var sqlBuilder = createSQL(SQLTypeEnum.Select, tableName, SelectSQLBuilder.class);
+        sqlBuilder.setResultType(ResultTypeEnum.RecordList);
+        sqlBuilder.setReturnJavaType(returnType);
+        return sqlBuilder;
     }
     public static <T>SelectSQLBuilder<T> select(String tableName,Class<T> returnType) {
         var sqlBuilder= createSQL(SQLTypeEnum.Select, tableName, SelectSQLBuilder.class);

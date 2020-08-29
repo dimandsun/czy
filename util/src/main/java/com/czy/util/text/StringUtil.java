@@ -792,4 +792,29 @@ public class StringUtil {
         }
         return result;
     }
+    /**
+     * 把实际上是基本类型数据转换成基本类型
+     *
+     * @param value
+     * @param basicType
+     * @param <T>
+     * @return
+     */
+    public static <T> T obj2BasicType(Object value, Class<T> basicType) {
+        if (value == null) {
+            return null;
+        }
+        try {
+            return basicType.cast(value);
+        } catch (ClassCastException e) {
+            if (basicType == Long.class) {
+                return (T) getLong(value);
+            } else if (basicType == Integer.class) {
+                return (T) getInt(value);
+            } else if (basicType == String.class) {
+                return (T) value.toString();
+            }
+        }
+        return (T) value;
+    }
 }

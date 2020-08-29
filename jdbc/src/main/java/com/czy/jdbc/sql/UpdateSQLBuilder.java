@@ -14,12 +14,17 @@ import java.util.function.BiConsumer;
  * @author chenzy
  * @date 2020-07-21
  */
-public class UpdateSQLBuilder extends SQLBuilder implements SetColumnValues, WhereColumnValues {
+public class UpdateSQLBuilder extends SQLBuilder<Integer> implements SetColumnValues, WhereColumnValues {
     private WhereSQL whereSQL;
     private PreSql setPreSql;
 
+    public WhereSQL where(WhereSQL whereSQL){
+        this.whereSQL=whereSQL;
+        return this.whereSQL;
+    }
+
     public WhereSQL where() {
-        return whereSQL == null ? whereSQL = new WhereSQL(new PreSql(" where ", new ArrayList<>())) : whereSQL;
+        return whereSQL == null ? where(WhereSQL.newInstance()) : whereSQL;
     }
 
     public UpdateSQLBuilder(PreSql preSql, ResultTypeEnum returnType) {
@@ -30,8 +35,8 @@ public class UpdateSQLBuilder extends SQLBuilder implements SetColumnValues, Whe
         if (setPreSql == null) {
             setPreSql = new PreSql(" set " + key + "=?", List.of(value));
         } else {
-            setPreSql.append("," + key + "=?");
-            setPreSql.add(value);
+            setPreSql.addSQLText("," + key + "=?");
+            setPreSql.addPar(value);
         }
         return this;
     }
@@ -52,7 +57,7 @@ public class UpdateSQLBuilder extends SQLBuilder implements SetColumnValues, Whe
 
     @Override
     public PreSql beforeExec() {
-        var preSql = getBasicPreSql();
+        var preSql = getPreSql();
         if (!preSql.isEnd()) {
             preSql.isEnd(true);
             if (setPreSql == null) {
@@ -65,7 +70,14 @@ public class UpdateSQLBuilder extends SQLBuilder implements SetColumnValues, Whe
         }
         return preSql;
     }
-
+    public UpdateSQLBuilder addSetSQL(String setSQLText) {
+        if (setPreSql == null) {
+            setPreSql = new PreSql(" set " +setSQLText,new ArrayList<>());
+        } else {
+            setPreSql.addSQLText("," + setSQLText);
+        }
+        return this;
+    }
     public void setSetPreSql(PreSql setPreSql) {
         this.setPreSql = setPreSql;
     }

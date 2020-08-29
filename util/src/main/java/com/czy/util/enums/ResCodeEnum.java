@@ -16,20 +16,22 @@ package com.czy.util.enums;
  */
 public enum ResCodeEnum implements IEnum<Integer> {
      Normal(0, ResCodeLevelEnum.Normal, "成功")
-    ,DBError(1, ResCodeLevelEnum.Lev1, "数据库系统错误")
-    , SysDataExce(2, ResCodeLevelEnum.Lev3, "系统数据异常")
-    , LoginError(2, ResCodeLevelEnum.Lev1, "用户登录接口错误")
-    , ForceLogout1(3, ResCodeLevelEnum.SysProtect, "强制下线")//系统保护，需要客户端强制用户下线，重新登录
-    , BusInfo(4, ResCodeLevelEnum.Info, "业务提示")
-    , SecretKeyError(5, ResCodeLevelEnum.Lev3, "密钥错误")//数据验证时加密信息错误
-    , ArgAnalyExce(6, ResCodeLevelEnum.Debug, "参数解析异常")
-    , BusInExce(7, ResCodeLevelEnum.Debug, "内部业务异常")
-    , UnknownExce(8, ResCodeLevelEnum.Debug, "未知异常")
-    , UnknownCodeExce(9, ResCodeLevelEnum.Debug, "未知响应码")
-    , NotFound(10, ResCodeLevelEnum.Lev3,"找不到相关资源")
-    , DBExce(11, ResCodeLevelEnum.Lev3,"数据库异常")
-    , CashExce(12, ResCodeLevelEnum.Lev3,"缓存出错")
-    , FuncNoOpen(13, ResCodeLevelEnum.Info,"功能暂未开放")
+    , DBError(10, ResCodeLevelEnum.Error, "数据库错误")
+    , DBWarn(11, ResCodeLevelEnum.Warn, "数据异常")
+    , DBInfo(12, ResCodeLevelEnum.Warn, "数据异常")
+
+    , DevError(20,ResCodeLevelEnum.Error,"开发时错误:程序漏洞弹出")
+
+    , BusExce(30, ResCodeLevelEnum.Warn, "业务异常")
+    , BusInfo(31, ResCodeLevelEnum.Info, "业务提示")
+    , ArgExce(32, ResCodeLevelEnum.Warn, "参数异常")
+    , NotFound(33, ResCodeLevelEnum.Warn,"找不到相关资源")
+    , FuncNoOpen(34, ResCodeLevelEnum.Info,"功能暂未开放")
+
+    , CashError(40, ResCodeLevelEnum.Error,"缓存出错")
+
+    , UnknownExce(-10, ResCodeLevelEnum.Debug, "未知异常")
+    , UnknownCodeExce(-11, ResCodeLevelEnum.Debug, "未知响应码")
     ;
     public boolean isError() {
         return !isNotError();

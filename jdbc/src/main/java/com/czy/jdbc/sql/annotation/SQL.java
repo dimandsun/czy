@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@SQLAnnotation(SQLTypeEnum.Other)
+@SQLAnnotation(SQLTypeEnum.Liberty)
 public @interface SQL {
     String value();
     SQLTypeEnum sqlType();

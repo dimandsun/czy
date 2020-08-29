@@ -21,12 +21,13 @@ public class DeleteSQLBuilder extends SQLBuilder {
     }
 
     public WhereSQL where() {
-        return whereSQL == null ? whereSQL = new WhereSQL(new PreSql(" where ", new ArrayList<>())) : whereSQL;
+        return whereSQL == null ? whereSQL = WhereSQL.newInstance() : whereSQL;
     }
+
 
     @Override
     public PreSql beforeExec() {
-        var preSql=getBasicPreSql();
+        var preSql=getPreSql();
         if (!preSql.isEnd()){
             if (whereSQL != null) {
                 preSql.append(whereSQL.getEndSql());

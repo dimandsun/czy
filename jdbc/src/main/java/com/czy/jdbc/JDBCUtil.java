@@ -2,8 +2,14 @@ package com.czy.jdbc;
 
 import com.czy.jdbc.exception.SQLParseException;
 import com.czy.jdbc.sql.SQLFactory;
+import com.czy.jdbc.sql.SelectSQLBuilder;
+import com.czy.jdbc.sql.UpdateSQLBuilder;
+import com.czy.jdbc.sql.WhereSQL;
+import com.czy.jdbc.sql.enums.ResultTypeEnum;
 import com.czy.log.Log;
 import com.czy.log.LogFactory;
+import com.czy.util.enums.ResCodeEnum;
+import com.czy.util.model.ResultVO;
 import com.czy.util.model.StringMap;
 
 import java.sql.SQLException;
@@ -76,6 +82,58 @@ public class JDBCUtil {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return null;
+        }
+    }
+
+    public <T> ResultVO<T> getData(String tableName, String columns, WhereSQL whereSQL, ResultTypeEnum resultTypeEnum, Class<T> resultClass, Integer limitSize){
+        var sqlBuilder = SQLFactory.select(tableName, resultClass);
+        sqlBuilder.setResultType(resultTypeEnum);
+        if (limitSize!=null&&limitSize>0){
+            sqlBuilder.limit(limitSize);
+        }
+        sqlBuilder.selectColumns(columns).where(whereSQL);
+        try {
+            T data=sqlBuilder.exec();
+            if (data==null){
+                return new ResultVO<>(ResCodeEnum.DBWarn,"没有查到数据");
+            }
+            return new ResultVO<>(data);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ResultVO<>(ResCodeEnum.DBError);
+        }
+    }
+
+    public <T> ResultVO<List<T>> getListData(String tableName, String columns, WhereSQL whereSQL, Class<T> resultClass, Integer limitSize) {
+        SelectSQLBuilder<List<T>> sqlBuilder = SQLFactory.selectList(tableName,resultClass);
+        if (limitSize!=null&&limitSize>0){
+            sqlBuilder.limit(limitSize);
+        }
+        sqlBuilder.selectColumns(columns).where(whereSQL);
+        try {
+            List<T> data=sqlBuilder.exec();
+            if (data==null||data.isEmpty()){
+                return new ResultVO<>(ResCodeEnum.DBInfo,"没有查到数据");
+            }
+            return new ResultVO<>(data);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ResultVO<>(ResCodeEnum.DBError);
+        }
+    }
+    public ResultVO<Integer> update(String tableName, StringMap<Object> setMap, String setSQLText, WhereSQL whereSQL) {
+        UpdateSQLBuilder sqlBuilder =SQLFactory.update(tableName,setMap).addSetSQL(setSQLText);
+        sqlBuilder.where(whereSQL);
+        return update(sqlBuilder);
+    }
+
+    public ResultVO<Integer> update(UpdateSQLBuilder sqlBuilder) {
+        try {
+            Integer staus=sqlBuilder.exec();
+            return new ResultVO<>(staus);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ResultVO<>(ResCodeEnum.DBError);
         }
     }
 }

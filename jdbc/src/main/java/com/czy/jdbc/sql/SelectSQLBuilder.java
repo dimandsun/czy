@@ -1,6 +1,7 @@
 package com.czy.jdbc.sql;
 
 import com.czy.jdbc.sql.enums.ResultTypeEnum;
+import com.czy.util.ClassUtil;
 import com.czy.util.json.JsonUtil;
 import com.czy.util.model.StringMap;
 import com.czy.util.text.StringUtil;
@@ -42,8 +43,12 @@ public class SelectSQLBuilder<T> extends SQLBuilder<T> implements WhereColumnVal
         }
         return this;
     }
+    public WhereSQL where(WhereSQL whereSQL){
+        this.whereSQL=whereSQL;
+        return this.whereSQL;
+    }
     public WhereSQL where() {
-        return whereSQL == null ? whereSQL = new WhereSQL(new PreSql(" where ", new ArrayList<>())) : whereSQL;
+        return whereSQL == null ? where(WhereSQL.newInstance()) : whereSQL;
     }
     public SelectSQLBuilder limit(int size) {
         if (size<1){
@@ -94,7 +99,7 @@ public class SelectSQLBuilder<T> extends SQLBuilder<T> implements WhereColumnVal
 
     @Override
     public PreSql beforeExec() {
-        var preSql = getBasicPreSql();
+        var preSql = getPreSql();
         if (!preSql.isEnd()) {
             if (!columnList.isEmpty()){
                 String temp=columnList.toString();
@@ -112,12 +117,12 @@ public class SelectSQLBuilder<T> extends SQLBuilder<T> implements WhereColumnVal
         }
         return preSql;
     }
-    protected Object getResult(PreparedStatement ps) throws SQLException {
+    protected T getResult(PreparedStatement ps) throws SQLException {
         return switch (getResultType()) {
             case Cell: {
                 var resultSet = ps.executeQuery();
                 if (resultSet.next()) {
-                    yield resultSet.getObject(1);
+                    yield (T)resultSet.getObject(1);
                 }
                 yield null;
             }
@@ -134,7 +139,11 @@ public class SelectSQLBuilder<T> extends SQLBuilder<T> implements WhereColumnVal
                     }
                     Class<T> returnClass = getReturnJavaType();
                     if (returnClass == null) {
-                        yield map;
+                        yield (T)map;
+                    }
+                    if (ClassUtil.isBasicDataType(returnClass)) {
+                        Object value=map.values().iterator().next();
+                        yield value==null?null:StringUtil.obj2BasicType(value, returnClass);
                     }
                     yield JsonUtil.map2Model(map, returnClass);
                 }
@@ -156,9 +165,9 @@ public class SelectSQLBuilder<T> extends SQLBuilder<T> implements WhereColumnVal
                 }
                 Class returnClass = getReturnJavaType();
                 if (returnClass == null) {
-                    yield mapList;
+                    yield (T)mapList;
                 }
-                yield JsonUtil.model2Model(mapList, List.class, returnClass);
+                yield (T)JsonUtil.model2Model(mapList, List.class, returnClass);
             }
             default: throw new SQLException("sql类型异常！");
         };

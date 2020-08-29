@@ -17,32 +17,31 @@ public enum SQLTypeEnum implements IEnum<String> {
     Update("update", UpdateSQLBuilder.class,"update ${tableName} #{setContent}"),
     Select("select", SelectSQLBuilder.class,"select $[columns] from {tableName}"),
     Truncate("truncate", TruncateSQLBuilder.class,"truncate table ${tableName};"),
-    Create("create",null,"${createContent}"),
-    Drop("drop",null,"drop table ${tableName};"),
-    Alter("alter",null,"alter {};"),
-    Other("exec",null,"alter {};"),
-
+    Create("create",SQLBuilder.class,"${createContent}"),
+    Drop("drop",SQLBuilder.class,"drop table ${tableName};"),
+    Alter("alter",SQLBuilder.class,"alter ${};"),
+    Liberty ("",SQLBuilder.class,""),
     ;
-    private String code;
-    private String msg;
+    private String sql;
+    private String sqlTemplate;
     private  Class<SQLBuilder> sqlClass;
 
-    SQLTypeEnum(String code,Class sqlClass, String msg) {
-        this.code = code;
+    SQLTypeEnum(String sql,Class sqlClass, String sqlTemplate) {
+        this.sql = sql;
         this.sqlClass=sqlClass;
-        this.msg = msg;
+        this.sqlTemplate = sqlTemplate;
     }
 
     @Override
     public String getValue() {
-        return code;
+        return sql;
     }
 
     public <T extends SQLBuilder>Class<T> getSqlClass() {
         return (Class<T>) sqlClass;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getSqlTemplate() {
+        return sqlTemplate;
     }
 }

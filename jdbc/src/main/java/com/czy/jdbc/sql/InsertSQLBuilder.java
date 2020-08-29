@@ -23,12 +23,12 @@ public class InsertSQLBuilder<T> extends SQLBuilder<T> implements SetColumnValue
         if (columnMap == null || columnMap.isEmpty()) {
             return this;
         }
-        var preSql = getBasicPreSql();
+        var preSql = getPreSql();
         var keys = columnMap.keySet().toString();
         var sql = preSql.getSql().replace("$[columns]", keys.substring(1, keys.length() - 1))
                 .replace("#[values]", StringUtil.copy("?",columnMap.size(),","));
         preSql.setSql(sql);
-        preSql.addAll(columnMap.values());
+        preSql.addPars(columnMap.values());
         return this;
     }
 
@@ -40,24 +40,26 @@ public class InsertSQLBuilder<T> extends SQLBuilder<T> implements SetColumnValue
     }
 
     @Override
-    protected Object getResult(PreparedStatement ps) throws SQLException {
+    protected T getResult(PreparedStatement ps) throws SQLException {
         var returnJavaType=getReturnJavaType();
         return switch (getResultType()) {
-            case AffectedLines: yield ps.executeUpdate();
+            case AffectedLines: yield super.getResult(ps);
             case PrimaryKey: {
                 ps.executeUpdate();
                 var resultSet = ps.getGeneratedKeys();
                 if (resultSet.next()) {
                     var temp =resultSet.getObject(1);
                     if (returnJavaType==Integer.class){
-                        yield StringUtil.getInt(temp);
+                        yield (T)StringUtil.getInt(temp);
                     }
-                    yield temp;
+                    yield (T)temp;
                 }
                 if (returnJavaType==Integer.TYPE||returnJavaType==Long.TYPE){
-                    yield -1;
+                    Object result=-1;
+                    yield (T)result;
                 }else {
-                    yield "-1";
+                    Object result="-1";
+                    yield (T)result;
                 }
             }
             default: throw new SQLException("sql类型异常！");

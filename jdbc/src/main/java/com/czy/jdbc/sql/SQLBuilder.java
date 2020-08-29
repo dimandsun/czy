@@ -10,6 +10,8 @@ import com.czy.util.text.StringUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Collection;
+import java.util.Optional;
 
 /**
  * @author chenzy
@@ -35,16 +37,32 @@ public class SQLBuilder<T> {
     public void setReturnJavaType(Class<T> returnJavaType) {
         this.returnJavaType = returnJavaType;
     }
+    public PreSql addSQLText(String sql){
+        this.preSql.addSQLText(sql);
+        return this.preSql;
+    }
+    public PreSql append(Optional<PreSql> preSql) {
+        this.preSql.append(preSql);
+        return this.preSql;
+    }
+    public PreSql addPars(Collection pars) {
+        this.preSql.addPars(pars);
+        return this.preSql;
+    }
+    public PreSql addPar(Object par) {
+        this.preSql.addPar(par);
+        return this.preSql;
+    }
 
     public PreSql beforeExec() {
-        var preSql = getBasicPreSql();
+        var preSql = getPreSql();
         if (!preSql.isEnd()) {
             preSql.isEnd(true);
         }
         return preSql;
     }
 
-    public PreSql getBasicPreSql() {
+    public PreSql getPreSql() {
         return preSql;
     }
 
@@ -76,10 +94,11 @@ public class SQLBuilder<T> {
      * @return
      * @throws SQLException
      */
-    protected Object getResult(PreparedStatement ps) throws SQLException {
-        return ps.executeUpdate();
+    protected T getResult(PreparedStatement ps) throws SQLException {
+        Object result= ps.executeUpdate();
+        return (T) result;
     }
-    public final Object exec() throws SQLException {
+    public final T exec() throws SQLException {
         if (!preSql.isEnd()) {
             throw new SQLParseException("sql解析未结束");
         }
