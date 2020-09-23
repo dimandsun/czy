@@ -1,3 +1,4 @@
+# git不再维护，最新代码请移步https://gitee.com/dimandsun/czy
 # czy
 我的所有java代码
 ## fx
