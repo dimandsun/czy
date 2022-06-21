@@ -30,7 +30,7 @@
         <maven-plugin.version>3.8.1</maven-plugin.version>
         <dbcp.version>1.4</dbcp.version>
         <junit.version>4.12</junit.version>
-        <mysql.version>8.0.13</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
         <cglib.version>3.3.0</cglib.version>
         <commons-lang3.version>3.3.2</commons-lang3.version>
         <jedis.version>2.6.0</jedis.version>
